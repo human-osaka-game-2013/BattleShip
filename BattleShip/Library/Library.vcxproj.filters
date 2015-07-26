@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ヘッダーファイル">
+      <UniqueIdentifier>{59d93e3c-9754-4468-9c28-5055c5e4a830}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\lib_h">
+      <UniqueIdentifier>{e3debed8-b527-4d82-a8f3-10898b246c6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル">
+      <UniqueIdentifier>{b47b3b1f-12fe-4368-9861-6de14eaa7814}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\lib_src">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ソースファイル\lib_src\directX">
+      <UniqueIdentifier>{cf3af068-1b6e-4a48-aaf9-d4235de181a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\lib_src\graphic">
+      <UniqueIdentifier>{088b39b1-9ff0-4aca-b422-c3bff7864ec6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\lib_src\input">
+      <UniqueIdentifier>{3b15841c-5fda-40a6-a8eb-38f1021fcd4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\lib_h\input">
+      <UniqueIdentifier>{4c7b14a9-a91d-4673-88ea-72f24953595d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\lib_src\GameMain">
+      <UniqueIdentifier>{f2d3a791-e9b2-4aa7-90e5-7cd5eaed11ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\lib_h\device">
+      <UniqueIdentifier>{7e1d6369-5619-4a6e-901a-dc2a6525064d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\lib_h\GameMain">
+      <UniqueIdentifier>{4d2df2ab-cf51-40d2-94dc-156dd46d12ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\lib_h\graphic">
+      <UniqueIdentifier>{6fb7b7ff-803c-4724-92fe-f7b6831e54a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\lib_h\WinMain">
+      <UniqueIdentifier>{1f99ff15-ddeb-4c54-b4b6-fc54e45430d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\lib_src\Scene">
+      <UniqueIdentifier>{070e48f2-2d3f-4452-a9ce-9dcff3a7171c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\SceneList">
+      <UniqueIdentifier>{72e61291-b0dd-4849-90e1-ef11d3ed9aec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\SceneList\Title">
+      <UniqueIdentifier>{47740850-c651-44c8-8f87-7e14410be07a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\SceneList\Logo">
+      <UniqueIdentifier>{a705b066-f429-43bf-a03a-086b414df75a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\SceneList\Battle">
+      <UniqueIdentifier>{f31a7cbf-7d87-4be1-ba7f-c33bdbd16f5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\lib_src\readFile">
+      <UniqueIdentifier>{9b3a4a35-61d5-4395-8217-891a39f6939a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\lib_h\readFile">
+      <UniqueIdentifier>{6684cfe1-60ac-4823-8126-94a2b03ea4fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\SceneList\Battle\Result">
+      <UniqueIdentifier>{e4d468d7-37b3-419a-b5be-c0d25c0397bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\SceneList\Battle\Select">
+      <UniqueIdentifier>{f153099f-e87a-4c70-b471-3cec55ca829a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\lib_h\Scene">
+      <UniqueIdentifier>{1ced0d3f-bbf9-42ed-87bc-5c54541a4564}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\lib_src\Proc">
+      <UniqueIdentifier>{b2a531cb-56e6-4f7d-baaa-08a94fb21157}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="scr\AllocateHierarchy.cpp">
+      <Filter>ソースファイル\lib_src\graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\DrawProcess.cpp">
+      <Filter>ソースファイル\lib_src\graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\FuncDraw.cpp">
+      <Filter>ソースファイル\lib_src\graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\RenderProcess.cpp">
+      <Filter>ソースファイル\lib_src\graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\Device.cpp">
+      <Filter>ソースファイル\lib_src\directX</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\Window.cpp">
+      <Filter>ソースファイル\lib_src\directX</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\GameMain.cpp">
+      <Filter>ソースファイル\lib_src\GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\GameMainManage.cpp">
+      <Filter>ソースファイル\lib_src\GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\gameObject.cpp">
+      <Filter>ソースファイル\lib_src\GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\joystick_XInput.cpp">
+      <Filter>ソースファイル\lib_src\input</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\KeyProcess.cpp">
+      <Filter>ソースファイル\lib_src\input</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\MouseProcess.cpp">
+      <Filter>ソースファイル\lib_src\input</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\read_file.cpp">
+      <Filter>ソースファイル\lib_src\readFile</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\SceneManage.cpp">
+      <Filter>ソースファイル\lib_src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\Proc.cpp">
+      <Filter>ソースファイル\lib_src\Proc</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\RenderManager.cpp">
+      <Filter>ソースファイル\lib_src\graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\DrawManager.cpp">
+      <Filter>ソースファイル\lib_src\graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\ViewManage.cpp">
+      <Filter>ソースファイル\lib_src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\FuncRender.cpp">
+      <Filter>ソースファイル\lib_src\graphic</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="scr\device.h">
+      <Filter>ヘッダーファイル\lib_h\device</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\Window.h">
+      <Filter>ヘッダーファイル\lib_h\device</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\2D_Object.h">
+      <Filter>ヘッダーファイル\lib_h\GameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\gameObject.h">
+      <Filter>ヘッダーファイル\lib_h\GameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\AllocateHierarchy.h">
+      <Filter>ヘッダーファイル\lib_h\graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\DrawFunc.h">
+      <Filter>ヘッダーファイル\lib_h\graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\graphic.h">
+      <Filter>ヘッダーファイル\lib_h\graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\AllInput.h">
+      <Filter>ヘッダーファイル\lib_h\input</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\Input.h">
+      <Filter>ヘッダーファイル\lib_h\input</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\joystick_XInput.h">
+      <Filter>ヘッダーファイル\lib_h\input</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\Key.h">
+      <Filter>ヘッダーファイル\lib_h\input</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\Mouse.h">
+      <Filter>ヘッダーファイル\lib_h\input</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\read_file.h">
+      <Filter>ヘッダーファイル\lib_h\readFile</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\SceneManage.h">
+      <Filter>ヘッダーファイル\lib_h\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\lib_head.h">
+      <Filter>ヘッダーファイル\lib_h</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\RenderManager.h">
+      <Filter>ヘッダーファイル\lib_h\graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\DrawManager.h">
+      <Filter>ヘッダーファイル\lib_h\graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\Proc.h">
+      <Filter>ヘッダーファイル\lib_h\WinMain</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

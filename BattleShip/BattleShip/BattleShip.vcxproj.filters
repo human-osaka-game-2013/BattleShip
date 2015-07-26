@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib_Interface">
+      <UniqueIdentifier>{9b351aac-749c-416e-ba54-55781f2760a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Title">
+      <UniqueIdentifier>{72b9dd42-2023-4564-a43d-eff7fa81e837}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Game">
+      <UniqueIdentifier>{a62c5642-4431-4ea8-ba97-4cbbee4b33df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Ship">
+      <UniqueIdentifier>{e30cd925-9c60-411c-8f72-daeb5199614e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\State">
+      <UniqueIdentifier>{42e1ba78-1271-481c-959f-635f72f89b84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Lib_Interface">
+      <UniqueIdentifier>{8022d2f0-bdf1-46d6-8b64-c384dd7e2a0d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Library\scr\WinMain.cpp">
+      <Filter>ソース ファイル\Lib_Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\DrawManagherInterface.cpp">
+      <Filter>ソース ファイル\Lib_Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\RenderManagherInterface.cpp">
+      <Filter>ソース ファイル\Lib_Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\SceneManagerInterface.cpp">
+      <Filter>ソース ファイル\Lib_Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\GameScene.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\SceneInterface.cpp">
+      <Filter>ソース ファイル\Lib_Interface</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="scr\GameScene.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\StateManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\StageObject.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\Player.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\AircraftCarrier.h">
+      <Filter>ヘッダー ファイル\Ship</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\Destroyer.h">
+      <Filter>ヘッダー ファイル\Ship</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\BattleShip.h">
+      <Filter>ヘッダー ファイル\Ship</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\Cruiser.h">
+      <Filter>ヘッダー ファイル\Ship</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\ShipObject.h">
+      <Filter>ヘッダー ファイル\Ship</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\Submarine.h">
+      <Filter>ヘッダー ファイル\Ship</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\SetShip.h">
+      <Filter>ヘッダー ファイル\State</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\StageEffect.h">
+      <Filter>ヘッダー ファイル\State</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\Selection.h">
+      <Filter>ヘッダー ファイル\State</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\Result.h">
+      <Filter>ヘッダー ファイル\State</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\GameState.h">
+      <Filter>ヘッダー ファイル\State</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\SceneInterface.h">
+      <Filter>ヘッダー ファイル\Lib_Interface</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
