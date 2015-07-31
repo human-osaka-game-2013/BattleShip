@@ -1,12 +1,15 @@
 #ifndef _PLAYER_H_
 #define _PLAYER_H_
 
+#include <list>
 #include "ShipObject.h"
+
+
 class Player
 {
 private:
 	int m_userID;
-	ShipObject	m_pShip[ShipObject::TYPE_MAX];
+	std::list<*ShipObject> m_pShip;
 
 public:
 	/**
@@ -17,7 +20,7 @@ public:
 	/**
 	*@brief	‹îî•ñæ“¾
 	*/
-	ShipObject* GetShip( _SHIP_TYPE_NUM_ _shipType ) { return m_pShip[_shipType]; }
+	ShipObject* GetShip( ShipObject::_SHIP_TYPE_NUM_ _shipType );
 	
 	/**
 	*@brief	ƒ†[ƒU[IDæ“¾

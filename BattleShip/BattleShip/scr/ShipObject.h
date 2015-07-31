@@ -54,7 +54,7 @@ public:
 	/**
 	*@brief	‰Šú‰»
 	*/
-	virtual void Init( _SHIP_TYPE_NUM_ _shipType, int _userID ) = 0;
+	virtual void Init( int _userID ) = 0;
 
 public:
 	/**
