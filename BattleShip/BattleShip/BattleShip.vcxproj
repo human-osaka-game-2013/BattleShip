@@ -43,7 +43,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>F:\Programming\学校用\svn\トーセ提出\BattleShip%28パクリ%29\BattleShip\Library\scr;F:\学校用\ノート\ゲームプログラミング\svn\トーセ提出\BattleShip%28パクリ%29\BattleShip\Library\scr;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>F:\Programming\学校用\svn\就活用提出\海戦ゲーム\BattleShip\Library\scr;F:\学校用\ノート\ゲームプログラミング\svn\就活用提出\海戦ゲーム\BattleShip\Library\scr</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -55,7 +55,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>F:\Programming\学校用\svn\トーセ提出\BattleShip%28パクリ%29\BattleShip\Library\scr;F:\学校用\ノート\ゲームプログラミング\svn\トーセ提出\BattleShip%28パクリ%29\BattleShip\Library\scr;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>F:\Programming\学校用\svn\就活用提出\海戦ゲーム\BattleShip\Library\scr;F:\学校用\ノート\ゲームプログラミング\svn\就活用提出\海戦ゲーム\BattleShip\Library\scr</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -67,9 +67,11 @@
     <ClCompile Include="..\Library\scr\WinMain.cpp" />
     <ClCompile Include="scr\DrawManagherInterface.cpp" />
     <ClCompile Include="scr\GameScene.cpp" />
+    <ClCompile Include="scr\Player.cpp" />
     <ClCompile Include="scr\RenderManagherInterface.cpp" />
     <ClCompile Include="scr\SceneInterface.cpp" />
     <ClCompile Include="scr\SceneManagerInterface.cpp" />
+    <ClCompile Include="scr\ShipObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Library\Library.vcxproj">

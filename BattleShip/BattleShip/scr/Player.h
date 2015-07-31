@@ -6,13 +6,23 @@ class Player
 {
 private:
 	int m_userID;
-	ShipObject*	m_pShip;
+	ShipObject	m_pShip[ShipObject::TYPE_MAX];
 
 public:
-	Player( int _userID );
+	/**
+	*@brief	‰Šú‰»
+	*/
+	void Init( int _userID );
 
-	ShipObject* GetShip( _SHIP_TYPE_NUM_ _shipType );
-
+	/**
+	*@brief	‹îî•ñæ“¾
+	*/
+	ShipObject* GetShip( _SHIP_TYPE_NUM_ _shipType ) { return m_pShip[_shipType]; }
+	
+	/**
+	*@brief	ƒ†[ƒU[IDæ“¾
+	*/
+	int GetUserID(){ return m_userID; }
 };
 
 #endif 

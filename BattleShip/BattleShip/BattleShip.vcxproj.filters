@@ -51,6 +51,12 @@
     <ClCompile Include="scr\SceneInterface.cpp">
       <Filter>ソース ファイル\Lib_Interface</Filter>
     </ClCompile>
+    <ClCompile Include="scr\Player.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\ShipObject.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="scr\GameScene.h">
