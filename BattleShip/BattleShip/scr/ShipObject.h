@@ -35,7 +35,11 @@ private:
 
 public:
 	int m_shipArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の実体配列
-	int m_actionArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の行動範囲配列。攻撃など移動、索敵範囲などに使用
+	
+protected:
+	int m_actionArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の攻撃範囲配列
+	int m_seerchArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の索敵範囲配列
+	int m_moveArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の移動範囲配列
 
 public:
 	/**
@@ -55,6 +59,10 @@ public:
 	*@brief	初期化
 	*/
 	virtual void Init( int _userID ) = 0;
+
+	void Control(){};
+
+	void Draw(){};
 
 public:
 	/**

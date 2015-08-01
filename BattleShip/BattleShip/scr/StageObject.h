@@ -21,7 +21,8 @@ public:
 	void Draw(){};
 
 	bool HitStageCheck();
-
+	
+	void SetShip( ShipObject* _pShip );
 };
 
 #endif

@@ -31,6 +31,9 @@
     <Filter Include="ヘッダー ファイル\Lib_Interface">
       <UniqueIdentifier>{8022d2f0-bdf1-46d6-8b64-c384dd7e2a0d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Ship">
+      <UniqueIdentifier>{517af516-da62-472b-bb3f-21a4c413cba0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Library\scr\WinMain.cpp">
@@ -55,7 +58,22 @@
       <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
     <ClCompile Include="scr\ShipObject.cpp">
-      <Filter>ソース ファイル\Game</Filter>
+      <Filter>ソース ファイル\Ship</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\AircraftCarrier.cpp">
+      <Filter>ソース ファイル\Ship</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\BattleShip.cpp">
+      <Filter>ソース ファイル\Ship</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\Cruiser.cpp">
+      <Filter>ソース ファイル\Ship</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\Destroyer.cpp">
+      <Filter>ソース ファイル\Ship</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\Submarine.cpp">
+      <Filter>ソース ファイル\Ship</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

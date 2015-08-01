@@ -11,7 +11,8 @@
 class Submarine : ShipObject
 {
 
-
+public:
+	void Init( int _userID );
 
 };
 

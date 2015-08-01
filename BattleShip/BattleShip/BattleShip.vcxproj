@@ -65,6 +65,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Library\scr\WinMain.cpp" />
+    <ClCompile Include="scr\AircraftCarrier.cpp" />
+    <ClCompile Include="scr\BattleShip.cpp" />
+    <ClCompile Include="scr\Cruiser.cpp" />
+    <ClCompile Include="scr\Destroyer.cpp" />
     <ClCompile Include="scr\DrawManagherInterface.cpp" />
     <ClCompile Include="scr\GameScene.cpp" />
     <ClCompile Include="scr\Player.cpp" />
@@ -72,6 +76,7 @@
     <ClCompile Include="scr\SceneInterface.cpp" />
     <ClCompile Include="scr\SceneManagerInterface.cpp" />
     <ClCompile Include="scr\ShipObject.cpp" />
+    <ClCompile Include="scr\Submarine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Library\Library.vcxproj">

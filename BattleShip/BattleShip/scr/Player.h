@@ -9,7 +9,7 @@ class Player
 {
 private:
 	int m_userID;
-	std::list<*ShipObject> m_pShip;
+	std::list<ShipObject*> m_pShip;
 
 public:
 	/**

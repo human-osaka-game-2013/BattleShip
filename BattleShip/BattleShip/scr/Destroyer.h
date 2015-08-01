@@ -11,7 +11,8 @@
 class Destroyer : ShipObject
 {
 
-
+public:
+	void Init( int _userID );
 
 };
 

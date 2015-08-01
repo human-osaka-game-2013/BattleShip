@@ -12,7 +12,6 @@ class AircraftCarrier : ShipObject
 {
 
 
-
 public:
 	void Init( int _userID );
 

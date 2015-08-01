@@ -11,7 +11,8 @@
 class BattleShip : ShipObject
 {
 
-
+public:
+	void Init( int _userID );
 
 };
 
