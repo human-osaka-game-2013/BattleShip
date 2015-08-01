@@ -7,13 +7,14 @@
 #define _SHIPOBJECT_H_
 
 #include "gameObject.h"
+#include "read_file.h"
 
 #define _SHIP_ARRAY_INDEX_	5	///<	駒の配列指数
 
 /**
 *@brief	駒の基底クラス
 */
-class ShipObject:public CGameObject
+class ShipObject:public CGameObject, public ReadFile
 {
 public:
 	/**
@@ -30,6 +31,15 @@ public:
 		TYPE_MAX,
 	};
 
+	enum _SHIP_TABLE_NUM_
+	{
+		TABLE_SHIP,
+		TABLE_ACTION = _SHIP_ARRAY_INDEX_,
+		TABLE_SEARCH = TABLE_ACTION+_SHIP_ARRAY_INDEX_,
+		TABLE_MOVE = TABLE_SEARCH+_SHIP_ARRAY_INDEX_,
+		TABLE_MAX = TABLE_MOVE+_SHIP_ARRAY_INDEX_
+	};
+
 private:
 	int m_userID;
 
@@ -38,7 +48,7 @@ public:
 	
 protected:
 	int m_actionArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の攻撃範囲配列
-	int m_seerchArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の索敵範囲配列
+	int m_searchArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の索敵範囲配列
 	int m_moveArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の移動範囲配列
 
 public:
@@ -63,6 +73,12 @@ public:
 	void Control(){};
 
 	void Draw(){};
+
+	/**
+	*@brief	読み取ったデータをテーブルにセット
+	*@details	駒データ版
+	*/
+	void SetTable( char* _p, int _iColumn, int _iLine);
 
 public:
 	/**

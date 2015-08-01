@@ -1,21 +1,35 @@
+/**
+*@file	read_file.h
+*@author	亀田
+*/
 
+#ifndef _READ_FILE_H_
+#define _READ_FILE_H_
 
-class CReadFile
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+
+/**
+*@brief	ファイルを読み込み
+*@details	textやCSV形式のファイルを読み込み、数値をテーブルにセットするためのクラス。@n
+			テーブルにセットする際はSetTable関数の実態をこのクラスを継承した先でつくること。
+*/
+class ReadFile
 {
-private:
-
-
 public:
-	//	ファイル読み込み関数
-	//	開けないファイルがあるとfalseを返し、決められたファイルを全て読み込むとtrueを返す
-	bool ReadFile();
+	/**
+	*@brief	テーブルデータの読み取り
+	*/
+	bool ReadTableData( char* _pFileName, const int _ColumnMax, const int _LineMax );
 	
-	//	ブロックの種類か向きを渡す
-	//	引数＞1：セット番号 2：種類(eTYPE)か向き(eDirection)を入れる 3：行数(STAGE_WIDTH), 4：列数(STAGE_HEIGHT)
-	int	PassStageBlock( int iSetNum, int iInfoType, int iWidth, int iHeight );
-	
-	//	ブロックの種類か向きを渡す
-	//	引数＞1：セット番号 2：種類(eTYPE)か向き(eDirection)を入れる 3：行数(STAGE_WIDTH), 4：列数(STAGE_HEIGHT)
-	int	PassAddBlock( int iSetNum, int iInfoType, int iWidth, int iHeight );
+	/**
+	*@brief	読み取ったデータをテーブルにセット
+	*@details	テーブルデータは派生クラスに1種類のファイルのみを使う事。@n
+				よってどのテーブルにデータを入れるかの調節は派生先の関数で行う事。
+	*/
+	virtual void SetTable( char* _p, int _iColumn, int _iLine)=0;
 
 };
+
+#endif _READ_FILE_H_
