@@ -42,7 +42,7 @@ private:
 	CScene*			m_sceneObj;			///<	シーンオブジェクトポインタ
 	CDevice* const	m_pDevice;			///<	デバイスクラスポインタ
 	CRenderManager* m_pRenderManager;	///<	3D描画オブジェクトポインタ
-	CDrawManagher*	m_pDrawManager;		///<	2D描画オブジェクトポインタ
+	CDrawManager*	m_pDrawManager;		///<	2D描画オブジェクトポインタ
 	CKey*			m_pKey;				///<	キー管理クラスオブジェクトポインタ
 	CMouse*			m_pMouse;			///<	マウス管理クラスオブジェクトポインタ
 	CXInput*		m_pXInput;		///<ジョイスティック管理クラス
@@ -122,7 +122,7 @@ public:
 
 	/**
 	*@brief	シーンオブジェクトの解放
-	*@todo	SceneManagher側に解放しないといけないメンバを追加した場合は、@n
+	*@todo	SceneManager側に解放しないといけないメンバを追加した場合は、@n
 			そのたびに追加してやる。
 	*/
 	virtual bool DeleteSceneObj();

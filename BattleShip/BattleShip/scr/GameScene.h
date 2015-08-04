@@ -21,7 +21,7 @@
 class GameScene : public CScene
 {
 private:
-	StateManagher	m_stateManagher;	///<	戦闘内でのステートを管理するオブジェクト
+	StateManager	m_stateManager;	///<	戦闘内でのステートを管理するオブジェクト
 	Player			m_Player[_PLAYER_NUM_];		///<	プレイヤークラス
 	StageObject		m_stageObject;		///<	ステージオブジェクト
 	int const		m_playerID;			///<	起動側のプレイヤーID
@@ -38,7 +38,7 @@ public:
 	*@param[in]	m_pMouse		マウス管理のポインタ
 	*/
 	GameScene(int _id, int _playerID, CRenderManager* const _pRenderManager,
-		CDrawManagher*	const _pDrawManager,
+		CDrawManager*	const _pDrawManager,
 		CKey* const _pKey, CMouse* const m_pMouse );
 
 	/**

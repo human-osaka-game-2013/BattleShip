@@ -71,11 +71,18 @@
     <ClCompile Include="scr\Destroyer.cpp" />
     <ClCompile Include="scr\DrawManagherInterface.cpp" />
     <ClCompile Include="scr\GameScene.cpp" />
+    <ClCompile Include="scr\GameState.cpp" />
     <ClCompile Include="scr\Player.cpp" />
     <ClCompile Include="scr\RenderManagherInterface.cpp" />
+    <ClCompile Include="scr\Result.cpp" />
     <ClCompile Include="scr\SceneInterface.cpp" />
     <ClCompile Include="scr\SceneManagerInterface.cpp" />
+    <ClCompile Include="scr\Selection.cpp" />
+    <ClCompile Include="scr\SetShip.cpp" />
     <ClCompile Include="scr\ShipObject.cpp" />
+    <ClCompile Include="scr\StageEffect.cpp" />
+    <ClCompile Include="scr\StageObject.cpp" />
+    <ClCompile Include="scr\StateManager.cpp" />
     <ClCompile Include="scr\Submarine.cpp" />
   </ItemGroup>
   <ItemGroup>

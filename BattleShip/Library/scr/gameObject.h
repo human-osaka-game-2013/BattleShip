@@ -20,8 +20,8 @@ public:
 		CH_NONE = -1,
 		CH_LEFT,
 		CH_RIGHT,
-		CH_FRONT,
-		CH_BACK,
+		CH_UP,
+		CH_DOWN,
 		CH_DIRECTION_MAX,
 		
 	};

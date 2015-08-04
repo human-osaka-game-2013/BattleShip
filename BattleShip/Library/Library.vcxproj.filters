@@ -44,29 +44,11 @@
     <Filter Include="ソースファイル\lib_src\Scene">
       <UniqueIdentifier>{070e48f2-2d3f-4452-a9ce-9dcff3a7171c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソースファイル\SceneList">
-      <UniqueIdentifier>{72e61291-b0dd-4849-90e1-ef11d3ed9aec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソースファイル\SceneList\Title">
-      <UniqueIdentifier>{47740850-c651-44c8-8f87-7e14410be07a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソースファイル\SceneList\Logo">
-      <UniqueIdentifier>{a705b066-f429-43bf-a03a-086b414df75a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソースファイル\SceneList\Battle">
-      <UniqueIdentifier>{f31a7cbf-7d87-4be1-ba7f-c33bdbd16f5c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソースファイル\lib_src\readFile">
       <UniqueIdentifier>{9b3a4a35-61d5-4395-8217-891a39f6939a}</UniqueIdentifier>
     </Filter>
     <Filter Include="ヘッダーファイル\lib_h\readFile">
       <UniqueIdentifier>{6684cfe1-60ac-4823-8126-94a2b03ea4fc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソースファイル\SceneList\Battle\Result">
-      <UniqueIdentifier>{e4d468d7-37b3-419a-b5be-c0d25c0397bb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソースファイル\SceneList\Battle\Select">
-      <UniqueIdentifier>{f153099f-e87a-4c70-b471-3cec55ca829a}</UniqueIdentifier>
     </Filter>
     <Filter Include="ヘッダーファイル\lib_h\Scene">
       <UniqueIdentifier>{1ced0d3f-bbf9-42ed-87bc-5c54541a4564}</UniqueIdentifier>

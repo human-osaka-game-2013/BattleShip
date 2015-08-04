@@ -15,7 +15,7 @@ CSceneManager::CSceneManager(  int _scene , CDevice* const _pDevice, bool _bRend
 	m_pRenderManager = new CRenderManager( m_pDevice->Getd3Device(), m_pDevice->GetMouseDevice());
 
 	//	2D描画の管理オブジェクトの生成
-	m_pDrawManager = new CDrawManagher( m_pDevice->Getd3Device() );
+	m_pDrawManager = new CDrawManager( m_pDevice->Getd3Device() );
 
 	//	キー管理クラス生成
 	m_pKey = new CKey( m_pDevice->GetKeyDevice() );

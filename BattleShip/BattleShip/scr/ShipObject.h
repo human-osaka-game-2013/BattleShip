@@ -42,7 +42,7 @@ public:
 
 private:
 	int m_userID;
-
+	
 public:
 	int m_shipArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の実体配列
 	
@@ -56,11 +56,14 @@ public:
 	*@brief	コンストラクタ
 	*@details	駒配列の初期化とCGameObjectのコンストラクタを呼び出し
 	*/
-	ShipObject::ShipObject():CGameObject(){
+	ShipObject::ShipObject() : CGameObject(){
 		for( int iColumn = 0; iColumn < _SHIP_ARRAY_INDEX_; iColumn ){
 			for( int iLine = 0; iLine < _SHIP_ARRAY_INDEX_; iLine )	{
 				m_shipArray[iColumn][iLine]=0;
 				m_actionArray[iColumn][iLine]=0;
+				m_searchArray[iColumn][iLine]=0;
+				m_moveArray[iColumn][iLine]=0;
+
 			}
 		}
 	}

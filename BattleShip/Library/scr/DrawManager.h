@@ -32,12 +32,13 @@ struct CUSTOMVERTEX
 // 使いたいテクスチャがあれば列挙子内に追加していく
 enum TEXTURES
 {
-	TEX_TEAM_LOGO,
-	
-	TEX_BACKGROUND,
 
+	_TEX_BACKGROUND_,
+	_TEX_AIRCARRIER_,
+	_TEX_BATTLESHIP_,
+	_TEX_CRUISER_,
 
-	TEXTURE_MAX
+	_TEXTURE_MAX_
 };
 
 /**
@@ -45,10 +46,10 @@ enum TEXTURES
 *@details	シーン管理クラスに実体を持たせ、各シーンクラスにポインタを渡す。	
 *@todo	アドレスをconstにするのは初めてなので、修正する可能性もあり。
 */
-class CDrawManagher
+class CDrawManager
 {
 private:
-	TEXTUREINFO m_TextureInfo [TEXTURE_MAX];	///<テクスチャ情報格納配列
+	TEXTUREINFO m_TextureInfo [_TEXTURE_MAX_];	///<テクスチャ情報格納配列
 	IDirect3DDevice9* const m_pD3Device;		///<D3Dデバイスポインタ
 
 
@@ -56,11 +57,11 @@ public:
 	/**
 	*@brief	コンストラクタ
 	*/
-	CDrawManagher( IDirect3DDevice9* const _pD3Device);
+	CDrawManager( IDirect3DDevice9* const _pD3Device);
 	/**
 	*@brief	デストラクタ
 	*/
-	~CDrawManagher();
+	~CDrawManager();
 
 public:
 	// 描画前処理

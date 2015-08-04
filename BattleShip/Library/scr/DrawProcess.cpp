@@ -1,7 +1,7 @@
 #include "DrawManager.h"
 
 // 描画前処理
-void CDrawManagher::BeginDraw ( )
+void CDrawManager::BeginDraw ( )
 {
 	if ( !m_pD3Device )
 	{
@@ -41,7 +41,7 @@ void CDrawManagher::BeginDraw ( )
 
 // テクスチャの読み込み
 // 第1引数：("画像の名前.拡張子"), 第2引数：テクスチャの番号, 透過色RGB 
-bool CDrawManagher::LoadTexture ( LPCSTR _lpFileName, int _textuerNumber, int _iColorRed, int _iColorGreen, int _iColorBlue )
+bool CDrawManager::LoadTexture ( LPCSTR _lpFileName, int _textuerNumber, int _iColorRed, int _iColorGreen, int _iColorBlue )
 {
 	// テクスチャを既に読み込んでいる場合はここで解放する
 	if ( FAILED (D3DXCreateTextureFromFileExA (
@@ -77,13 +77,13 @@ bool CDrawManagher::LoadTexture ( LPCSTR _lpFileName, int _textuerNumber, int _i
 
 // テクスチャの解放
 // 第1引数：テクスチャの番号
-void CDrawManagher::ReleaseTexture ( int _textuerNumber )
+void CDrawManager::ReleaseTexture ( int _textuerNumber )
 {
 	SAFE_RELEASE ( m_TextureInfo[_textuerNumber].pTexture );
 }
 
 // 使用している全てのテクスチャの解放
-void CDrawManagher::ReleaseAllTexture ()
+void CDrawManager::ReleaseAllTexture ()
 {
 	for ( int i = 0; i < TEXTURE_MAX; i++ )
 	{

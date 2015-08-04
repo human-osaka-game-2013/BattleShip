@@ -2,7 +2,10 @@
 #define _STATEMANAGHER_H_
 
 #include "GameState.h"
-class StateManagher
+#include "Player.h"
+#include "StageObject.h"
+
+class StateManager
 {
 public:
 	/**
@@ -17,13 +20,20 @@ public:
 	};
 
 private:
-	GameState* m_pGameState;	///<	戦闘ステートパターンオブジェクトのポインタ
-	_STATE_NUM_ m_beforeState;	///<	以前のステートパターン
-	_STATE_NUM_ m_currentState;	///<	現在のステートパターン
-	Player*		m_pPlayer;		///<	プレイヤー情報格納ポインタ
-	StageObject*	m_pStageObject;	///<	ステージ情報格納ポインタ
+	GameState*		m_pGameState;	///<	戦闘ステートパターンオブジェクトのポインタ
+	_STATE_NUM_		m_beforeState;	///<	以前のステートパターン
+	_STATE_NUM_		m_currentState;	///<	現在のステートパターン
+	Player* const 	m_pPlayer1;		///<	プレイヤー1情報格納ポインタ
+	Player* const 	m_pPlayer2;		///<	プレイヤー2情報格納ポインタ
+	StageObject* const	m_pStageObject;	///<	ステージ情報格納ポインタ
 
 public:
+	/**
+	*@brief	コンストラクタ
+	*/
+	StateManager( Player* const _pPlayer1, Player* const _pPlayer2,
+		StageObject* const	_pStageObject);
+
 	/**
 	*@brief	ステートパターンの切り替え
 	*param[in]	_stateType	

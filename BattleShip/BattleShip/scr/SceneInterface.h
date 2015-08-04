@@ -11,7 +11,7 @@ class CScene
 {
 protected:
 	CRenderManager* const m_pRenderManager;	///<	3D描画管理クラスポインタ(constポインタ)
-	CDrawManagher*	const m_pDrawManager;	///<	2D描画管理クラスポインタ(constポインタ)
+	CDrawManager*	const m_pDrawManager;	///<	2D描画管理クラスポインタ(constポインタ)
 	CKey*			const m_pKey;			///<	キー管理クラスポインタ	(constポインタ)
 	CMouse*			const m_pMouse;			///<	マウス管理クラスポインタ(constポインタ)
 
@@ -30,7 +30,7 @@ public:
 	*@param[in]	m_pMouse		マウス管理のポインタ
 	*/
 	CScene( int _id, CRenderManager* const _pRenderManager,
-		CDrawManagher*	const _pDrawManager,
+		CDrawManager*	const _pDrawManager,
 		CKey* const _pKey, CMouse* const m_pMouse );
 	/**
 	*@briefデストラクタ

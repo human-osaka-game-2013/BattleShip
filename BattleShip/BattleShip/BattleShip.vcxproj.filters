@@ -34,6 +34,9 @@
     <Filter Include="ソース ファイル\Ship">
       <UniqueIdentifier>{517af516-da62-472b-bb3f-21a4c413cba0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\State">
+      <UniqueIdentifier>{a617e599-c3f9-44bb-bfb9-0fb3a320ce70}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Library\scr\WinMain.cpp">
@@ -74,6 +77,27 @@
     </ClCompile>
     <ClCompile Include="scr\Submarine.cpp">
       <Filter>ソース ファイル\Ship</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\StageObject.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\StateManager.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\SetShip.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\Result.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\Selection.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\StageEffect.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\GameState.cpp">
+      <Filter>ソース ファイル\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
