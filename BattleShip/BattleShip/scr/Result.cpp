@@ -4,3 +4,22 @@
 */
 
 #include "Result.h"
+
+
+//	
+bool Result::Control()
+{
+
+}
+
+//	
+void Result::Draw()
+{
+
+}
+
+//	
+void Result::ComStandby()
+{
+
+}

@@ -13,6 +13,14 @@ private:
 
 public:
 	/**
+	*@brief	コンストラクタ
+	*/
+	Player( int _userID ): m_userID( _userID )
+	{
+		Init( m_userID );
+	}
+
+	/**
 	*@brief	初期化
 	*/
 	void Init( int _userID );

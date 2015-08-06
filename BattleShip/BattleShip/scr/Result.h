@@ -8,13 +8,24 @@
 
 #include "GameState.h"
 
-class Result : GameState
+class Result : public GameState
 {
 	
 
 public:
-	void StateControl();
-	void StateDraw();
+	/**
+	*@brief	ステートパターン内での描画
+	*/
+	bool Control();
+	
+	/**
+	*@brief	ステートパターン内での描画
+	*/
+	void Draw();
+	
+	/**
+	*@brief	ステートパターン内での通信時のサブルーチン処理
+	*/
 	void ComStandby();
 
 };

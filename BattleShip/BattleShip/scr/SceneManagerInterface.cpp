@@ -14,24 +14,6 @@ void CSceneManager::Manage ()
 	{
 		switch ( iCurrentScene )
 		{
-		case SCENE_LOGO:
-			CLASS_DELETE( m_sceneObj );
-			m_sceneObj = new CLogo( iCurrentScene );
-			
-			break;
-
-		case SCENE_TITLE:
-			CLASS_DELETE( m_sceneObj );
-			m_sceneObj = new CTitle( iCurrentScene );
-
-			break;
-
-		//case SELECT:
-		//	CLASS_DELETE( m_sceneObj );
-		//	m_sceneObj = new CSelect( iCurrentScene );
-		//	
-		//	break;
-
 		case SCENE_BATTLE:
 			CLASS_DELETE( m_sceneObj );
 			m_sceneObj = new GameScene();

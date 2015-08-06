@@ -5,3 +5,20 @@
 
 #include "StageEffect.h"
 
+//	
+bool StageEffect::Control()
+{
+
+}
+
+//	
+void StageEffect::Draw()
+{
+
+}
+
+//	
+void StageEffect::ComStandby()
+{
+
+}

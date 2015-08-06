@@ -26,10 +26,26 @@ private:
 	_STATE_NUM_ m_stateID;	///<	自身のステートのID	
 
 public:
-	virtual void StateControl() = 0;	///<	ステートパターン内でのサブルーチン処理
-	virtual void StateDraw() = 0;		///<	ステートパターン内での描画
-	virtual void ComStandby() = 0;		///<	ステートパターン内での通信時のサブルーチン処理
-	_STATE_NUM_ GetState(){ return m_stateID; }	///<	ステートのID取得
+	/**
+	*@brief	ステートパターン内でのサブルーチン処理
+	*/
+	virtual bool Control() = 0;
+
+	/**
+	*@brief	ステートパターン内での描画
+	*/
+	virtual void Draw() = 0;
+
+	/**
+	*@brief	ステートパターン内での通信時のサブルーチン処理
+	*/
+	virtual void ComStandby() = 0;
+
+	/**
+	*@brief	ステートのID取得
+	*/
+	_STATE_NUM_ GetState(){ return m_stateID; }
+
 };
 
 #endif

@@ -5,3 +5,20 @@
 
 #include "SetShip.h"
 
+//	
+bool SetShip::Control()
+{
+
+}
+
+//	
+void SetShip::Draw()
+{
+
+}
+
+//	
+void SetShip::ComStandby()
+{
+
+}

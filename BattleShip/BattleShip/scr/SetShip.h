@@ -8,13 +8,25 @@
 
 #include "GameState.h"
 
-class SetShip : GameState
+class SetShip : public GameState
 {
+private:
 
 
 public:
-	void StateControl();
-	void StateDraw();
+	/**
+	*@brief	ステートパターン内でのサブルーチン処理
+	*/
+	bool Control();
+
+	/**
+	*@brief	ステートパターン内でのサブルーチン処理
+	*/
+	void Draw();
+	
+	/**
+	*@brief	ステートパターン内でのサブルーチン処理
+	*/
 	void ComStandby();
 
 };

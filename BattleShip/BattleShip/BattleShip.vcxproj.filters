@@ -104,9 +104,6 @@
     <ClInclude Include="scr\GameScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="scr\StateManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="scr\StageObject.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -148,6 +145,9 @@
     </ClInclude>
     <ClInclude Include="scr\SceneInterface.h">
       <Filter>ヘッダー ファイル\Lib_Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\StateManager.h">
+      <Filter>ヘッダー ファイル\State</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
