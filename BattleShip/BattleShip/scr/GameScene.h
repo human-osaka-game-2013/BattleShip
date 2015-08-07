@@ -39,8 +39,8 @@ public:
 	*/
 	GameScene(int _id, int _playerID, CRenderManager* const _pRenderManager,
 		CDrawManager*	const _pDrawManager, CKey* const _pKey, CMouse* const m_pMouse )
-		: CScene( _id, _pRenderManager,	_pDrawManager, _pKey, m_pMouse),
-		m_stateManager(&m_Player[0],&m_Player[1],&m_stageObject)
+		: CScene( _id, _pRenderManager,	_pDrawManager, _pKey, m_pMouse)
+		
 	{
 		for( int iCount=0; iCount<_PLAYER_NUM_; iCount++  )	{
 			new (m_Player + iCount) Player(iCount);

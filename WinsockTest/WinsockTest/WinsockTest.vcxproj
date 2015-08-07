@@ -62,11 +62,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ConnectManager.h" />
+    <ClCompile Include="Client.cpp" />
+    <ClCompile Include="Connect.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Server.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ConnectManager.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClInclude Include="Client.h" />
+    <ClInclude Include="Connect.h" />
+    <ClInclude Include="Server.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,9 +1,9 @@
-#include "ConnectManager.h"
+#include "Connect.h"
 
 
 void main()
 {
-	ConnectManager connectObj;
+	Connect connectObj;
 
 	connectObj.Init();
 	connectObj.Control();
