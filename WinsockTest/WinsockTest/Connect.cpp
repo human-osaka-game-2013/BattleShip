@@ -51,20 +51,16 @@ bool Connect::Init()
 //	ソケット生成
 bool Connect::MakeSocket()
 {
+	//	ソケットの生成
 	m_sock = socket( AF_INET, SOCK_STREAM, 0 );
 	if( m_sock == INVALID_SOCKET ) 
 	{
-		printf("error : %d\n", WSAGetLastError());
+		printf("socket : %d\n", WSAGetLastError());
 		return false;
 	}
 	return true;
 }
 
-//	ルーチン処理
-void Connect::Control()
-{
-	EndConnect();
-}
 
 //	通信終了
 void Connect::EndConnect()

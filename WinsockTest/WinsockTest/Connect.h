@@ -33,12 +33,7 @@ public:
 	/**
 	*@brief	ソケット設定メソッド
 	*/
-	virtual void SettingSocket();
-
-	/**
-	*@brief	ルーチン処理
-	*/
-	void Control();
+	virtual bool SettingSocket() = 0;
 
 	/**
 	*@brief	通信終了処理

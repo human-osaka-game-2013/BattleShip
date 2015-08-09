@@ -22,7 +22,7 @@ public:
 	/**
 	*@brief	ソケット設定メソッド
 	*/
-	void SettingSocket();
+	bool SettingSocket();
 
 	/**
 	*@brief	接続要求メソッド
@@ -32,7 +32,7 @@ public:
 	/**
 	*@brief	送信メソッド
 	*/
-	void Send();
+	bool Send();
 
 	/**
 	*@brief	通信終了処理

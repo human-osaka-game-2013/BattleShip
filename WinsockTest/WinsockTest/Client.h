@@ -19,7 +19,17 @@ public:
 	/**
 	*@brief	ソケット設定メソッド
 	*/
-	void SettingSocket();
+	bool SettingSocket();
+
+	/**
+	*@brief	接続メソッド
+	*/
+	void ConnectToServer();
+
+	/**
+	*@brief	受信メソッド
+	*/
+	bool Receive();
 
 	/**
 	*@brief	通信終了処理
