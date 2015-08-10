@@ -9,10 +9,16 @@
 
 bool Server::SettingSocket()
 {
+	m_reuseFlag = false;
 	//	ソケットの設定
 	m_addr.sin_family = AF_INET;
 	m_addr.sin_port = htons(12345);
 	m_addr.sin_addr.S_un.S_addr = INADDR_ANY;
+	
+	//	SO_REUSEADDRの有効処理
+	setsockopt( *GetSocket(),
+		SOL_SOCKET, SO_REUSEADDR, (const char *)&m_reuseFlag, sizeof( m_reuseFlag ) );
+
 	//	アドレス、ポートへ結びつけ
 	if( bind( *GetSocket(), (struct sockaddr *)&m_addr, sizeof( m_addr )) != 0 )
 	{
@@ -32,6 +38,17 @@ bool Server::KeepListen()
 		return false;
 	}
 
+	//----HTTPサーバサンプルテスト用
+	//	応答用HTTPメッセージ作成
+	memset( m_buf, 0, sizeof( m_buf ) );
+	_snprintf( m_buf, sizeof( m_buf ),
+		"HTTP/1.0 200 OK\r\n"
+		"Content-Length: 20\r\n"
+		"Content-Type: text/html\r\n"
+		"\r\n"
+		"HELLO\r\n");
+	//----
+
 	while(1)	///	複数回クライアント側からの接続を受け付ける
 	{
 		//	TCPクライアントからの接続要求を受け付ける
@@ -49,19 +66,27 @@ bool Server::KeepListen()
 		Send();
 
 		// TCPセッションの終了
-		closesocket(m_sock0);
+		closesocket(m_sock0); 
 	}
 	return true;
 }
 
 bool Server::Send()
 {
+	//----HTTPサーバサンプルテスト用
+	memset( m_inbuf, 0, sizeof( m_inbuf ) );
+	recv( m_sock0, m_inbuf, sizeof( m_inbuf ), 0 );
+	printf("%s", m_inbuf);
+	send( m_sock0, m_buf, (int)strlen(m_buf), 0 );
+	//----
+	/*
 	int n = send(m_sock0, "HELLO", 5, 0);
 	if( n < 1 )
 	{
 		printf("send：%d\n", WSAGetLastError() );	///<	送信失敗
 		return false;
 	}
+	*/
 	return true;
 }
 
