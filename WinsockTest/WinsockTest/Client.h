@@ -12,8 +12,12 @@
 class Client : public Connect
 {
 private:
-	struct sockaddr_in m_server;
+	struct sockaddr_in m_server;///<	サーバ側アドレス
 	char m_buf[32];
+	
+public:
+	char* m_deststr;	///<	サーバー側のアドレス（文字列）格納ポインタ
+	unsigned int** m_addrptr;	///<	IPアドレス格納
 
 public:
 	/**
@@ -24,17 +28,13 @@ public:
 	/**
 	*@brief	接続メソッド
 	*/
-	void ConnectToServer();
-
-	/**
-	*@brief	受信メソッド
-	*/
-	bool Receive();
+	bool ConnectToServer();
 
 	/**
 	*@brief	通信終了処理
 	*/
 	void EndConnect();
+
 };
 
 #endif

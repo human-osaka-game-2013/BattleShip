@@ -19,31 +19,31 @@ bool Connect::Init()
 		switch(result)
 		{
 		case WSASYSNOTREADY:///<	ネットワークサブシステムがネットワークへの接続を準備できていない
-			printf("WSASYSNOTREADY\n");
+			DebugMsgBox("WSASYSNOTREADY\n");
 			break;
 
 		case WSAVERNOTSUPPORTED:///<	要求されたwinsockのバージョンがサポートされていない
-			printf("WSAVERNOTSUPPORTED\n");
+			DebugMsgBox("WSAVERNOTSUPPORTED\n");
 			break;
 
 		case WSAEINPROGRESS:///<	ブロッキング操作の実行中であるか、またはサービスプロバイダがコールバック関数を処理している
-			printf("WSAEINPROGRESS\n");
+			DebugMsgBox("WSAEINPROGRESS\n");
 			break;
 
 		case WSAEPROCLIM:	///<	winsockが処理できる最大プロセス数に達した
-			printf("WSAEPROCLIM\n");
+			DebugMsgBox("WSAEPROCLIM\n");
 			break;
 
 		case WSAEFAULT:		///<	第二引数であるlpWSAData は有効なポインタではない
-			printf("WSAEFAULT\n");
+			DebugMsgBox("WSAEFAULT\n");
 			break;
 		}
 		return false;
 	}
 	
-	MakeSocket();
+	MakeSocket();	///<	ソケット作成
 
-	SettingSocket();
+	SettingSocket();	///<	ソケット設定
 
 	return true;
 }
@@ -55,7 +55,40 @@ bool Connect::MakeSocket()
 	m_sock = socket( AF_INET, SOCK_STREAM, 0 );
 	if( m_sock == INVALID_SOCKET ) 
 	{
-		printf("socket : %d\n", WSAGetLastError());
+		DebugMsgBox("socket : %d\n", WSAGetLastError());
+		return false;
+	}
+	return true;
+}
+
+//	受信メソッド
+bool Connect::Receive( char* _buf )
+{
+	int n = 0;
+	do
+	{
+		memset(_buf, 0, sizeof(_buf));
+		//	サーバからのデータ受信
+		n = recv( *GetSocket(), _buf, sizeof(_buf), 0 );
+		if( n < 0 )
+		{
+			DebugMsgBox("%d, %s\n", n, _buf);
+			return false;
+		}
+		fwrite( _buf, n, 1, stdout );
+	}while( n > 0 );
+	return true;
+}
+
+//	送信メソッド
+bool Connect::Send( SOCKET* _sock, char *_buf )
+{
+
+	//	HTTPリクエスト送信
+	int n = send(*_sock, _buf, (int)strlen(_buf), 0);
+	if( n < 0 )
+	{
+		DebugMsgBox("send：%d\n", WSAGetLastError() );	///<	送信失敗
 		return false;
 	}
 	return true;

@@ -15,7 +15,7 @@ class Server : public Connect
 private:
 	SOCKET m_sock0;	///<	接続後ソケット
 	struct sockaddr_in m_addr;	///<	サーバ側アドレス
-	struct sockaddr_in m_client;///<	クライアントアドレス
+	struct sockaddr_in m_client;///<	クライアント側アドレス
 	int m_len;	///<	送信メッセージの長さ
 	bool m_reuseFlag;	///<	SO_REUSEADDR有効用
 
@@ -34,11 +34,6 @@ public:
 	*@brief	接続要求メソッド
 	*/
 	bool KeepListen();
-
-	/**
-	*@brief	送信メソッド
-	*/
-	bool Send();
 
 	/**
 	*@brief	通信終了処理

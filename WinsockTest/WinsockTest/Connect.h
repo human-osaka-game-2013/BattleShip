@@ -10,6 +10,8 @@
 #include <winsock2.h>
 #include <cstdio>
 
+#include "DebugInterface.h"
+
 /**
 *@brief	通信管理クラス
 */
@@ -34,6 +36,16 @@ public:
 	*@brief	ソケット設定メソッド
 	*/
 	virtual bool SettingSocket() = 0;
+
+	/**
+	*@brief	受信メソッド
+	*/
+	bool Receive( char* _buf );
+	
+	/**
+	*@brief	送信メソッド
+	*/
+	bool Send( SOCKET* _sock, char *_buf );
 
 	/**
 	*@brief	通信終了処理
