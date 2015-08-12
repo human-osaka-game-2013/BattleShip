@@ -8,10 +8,18 @@
 
 #include "ShipObject.h"
 
-class Submarine : ShipObject
+class Submarine : public ShipObject
 {
 
 public:
+	/**
+	*@brief コンストラクタ
+	*/
+	Submarine::Submarine():ShipObject()
+	{
+
+	}
+
 	void Init( int _userID );
 
 };

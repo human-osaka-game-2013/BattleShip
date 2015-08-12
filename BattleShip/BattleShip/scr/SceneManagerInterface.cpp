@@ -16,8 +16,8 @@ void CSceneManager::Manage ()
 		{
 		case SCENE_BATTLE:
 			CLASS_DELETE( m_sceneObj );
-			m_sceneObj = new GameScene();
-		
+			m_sceneObj = new GameScene( iCurrentScene, 0, 
+										m_pRenderManager, m_pDrawManager, m_pKey, m_pMouse);
 			break;
 
 		//case RESULT:

@@ -9,6 +9,8 @@
 bool SetShip::Control()
 {
 
+
+	return true;
 }
 
 //	

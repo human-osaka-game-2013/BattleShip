@@ -36,7 +36,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	//InitXAudio2();
 
 	//	シーン管理オブジェクトの生成
-	CSceneManager* pSceneManage = new CSceneManager( CSceneManager::SCENE_LOGO, &deviceObj, false );
+	CSceneManager* pSceneManage = new CSceneManager( CSceneManager::SCENE_BATTLE, &deviceObj, false );
 
 	srand(( unsigned )time( NULL ));
 

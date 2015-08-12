@@ -8,10 +8,18 @@
 
 #include "ShipObject.h"
 
-class BattleShip : ShipObject
+class BattleShip : public ShipObject
 {
 
 public:
+	/**
+	*@brief コンストラクタ
+	*/
+	BattleShip::BattleShip():ShipObject()
+	{
+
+	}
+
 	void Init( int _userID );
 
 };

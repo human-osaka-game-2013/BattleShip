@@ -6,6 +6,7 @@
 #ifndef _GAMESCENE_H_
 #define _GAMESCENE_H_
 #include <new>
+#include <vector>
 
 #include "SceneInterface.h"
 #include "StateManager.h"
@@ -18,12 +19,14 @@
 			Init、Control、Draw、Render関数がライブラリのサブルーチン側で呼ばれるので、宣言すること。@n
 			今回は2D描画のみの予定なのでRender関数は宣言をしているが、中身はない。
 */
+
+
 class GameScene : public CScene
 {
 private:
-	StateManager	m_stateManager;	///<	戦闘内でのステートを管理するオブジェクト
-	Player			m_Player[_PLAYER_NUM_];		///<	プレイヤークラス
-	StageObject		m_stageObject;		///<	ステージオブジェクト
+	StateManager*	m_stateManager;		///<	戦闘内でのステートを管理するオブジェクト
+	std::vector<Player*>	m_Player;	///<	プレイヤークラス
+	StageObject*	m_pStageObject;		///<	ステージオブジェクト
 	int const		m_playerID;			///<	起動側のプレイヤーID
 
 public:
@@ -39,13 +42,9 @@ public:
 	*/
 	GameScene(int _id, int _playerID, CRenderManager* const _pRenderManager,
 		CDrawManager*	const _pDrawManager, CKey* const _pKey, CMouse* const m_pMouse )
-		: CScene( _id, _pRenderManager,	_pDrawManager, _pKey, m_pMouse)
-		
+		: CScene( _id, _pRenderManager,	_pDrawManager, _pKey, m_pMouse), m_playerID( _id )
 	{
-		for( int iCount=0; iCount<_PLAYER_NUM_; iCount++  )	{
-			new (m_Player + iCount) Player(iCount);
-		}
-		Init();
+		
 	}
 
 

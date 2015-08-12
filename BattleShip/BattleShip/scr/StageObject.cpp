@@ -13,4 +13,6 @@ bool StageObject::Init()
 			m_stageArray[1][iColumn][iLine] = 0;	///<	プレイヤー2のステージデータ初期化
 		}
 	}
+
+	return true;
 }

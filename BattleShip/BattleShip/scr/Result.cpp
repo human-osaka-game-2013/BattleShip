@@ -10,12 +10,14 @@
 bool Result::Control()
 {
 
+	return true;
 }
 
 //	
 void Result::Draw()
 {
 
+	
 }
 
 //	

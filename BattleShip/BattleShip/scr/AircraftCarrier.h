@@ -8,11 +8,23 @@
 
 #include "ShipObject.h"
 
-class AircraftCarrier : ShipObject
+class AircraftCarrier : public ShipObject
 {
-
+	
 
 public:
+	/**
+	*@brief コンストラクタ
+	*/
+	AircraftCarrier::AircraftCarrier():ShipObject()
+	{
+
+	}
+	
+	/**
+	*@brief	初期化
+	*@pragma[in]	_userID	
+	*/
 	void Init( int _userID );
 
 

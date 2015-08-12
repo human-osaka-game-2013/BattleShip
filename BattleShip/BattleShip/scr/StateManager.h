@@ -24,7 +24,8 @@ private:
 	GameState*		m_pGameState;	///<	戦闘ステートパターンオブジェクトのポインタ
 	_STATE_NUM_		m_beforeState;	///<	以前のステートパターン
 	_STATE_NUM_		m_currentState;	///<	現在のステートパターン
-	Player* const 	m_pPlayer[_PLAYER_NUM_];///<	プレイヤー1情報格納ポインタ
+	Player* const 	m_pPlayer1;		///<	プレイヤー1情報格納ポインタ
+	Player* const 	m_pPlayer2;		///<	プレイヤー2情報格納ポインタ
 	StageObject* const	m_pStageObject;	///<	ステージ情報格納ポインタ
 
 public:

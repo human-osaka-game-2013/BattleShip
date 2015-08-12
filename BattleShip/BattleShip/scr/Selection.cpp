@@ -9,6 +9,7 @@
 bool Selection::Control()
 {
 
+	return true;
 }
 
 //	

@@ -85,7 +85,7 @@ void CDrawManager::ReleaseTexture ( int _textuerNumber )
 // 使用している全てのテクスチャの解放
 void CDrawManager::ReleaseAllTexture ()
 {
-	for ( int i = 0; i < TEXTURE_MAX; i++ )
+	for ( int i = 0; i < _TEXTURE_MAX_; i++ )
 	{
 		ReleaseTexture (i);
 	}

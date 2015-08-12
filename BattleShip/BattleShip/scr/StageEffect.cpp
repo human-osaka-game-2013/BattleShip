@@ -9,6 +9,8 @@
 bool StageEffect::Control()
 {
 
+
+	return true;
 }
 
 //	
