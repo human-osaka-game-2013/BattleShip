@@ -27,3 +27,4 @@ void ShipObject::SetTable( char* _p, int _iColumn, int _iLine)
 		m_moveArray[iColumnTemp][_iLine] = iTemp;
 	}
 }
+

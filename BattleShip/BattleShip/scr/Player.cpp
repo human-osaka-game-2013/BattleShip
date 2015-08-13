@@ -25,5 +25,12 @@ void Player::Init( int _userID )
 			break;
 		}
 		m_pShip[iCount]->Init( _userID );	///<	‰Šú‰»
+		iCount++;
 	}
+}
+
+Player::~Player()
+{
+	for( int iCount = 0; iCount < m_pShip.size(); iCount++ )
+		delete m_pShip[iCount];
 }

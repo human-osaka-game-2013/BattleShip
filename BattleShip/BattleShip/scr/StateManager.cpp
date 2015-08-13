@@ -108,3 +108,8 @@ void StateManager::StateDelete()
 {
 	CLASS_DELETE(m_pGameState);
 }
+
+StateManager::~StateManager()
+{
+	delete m_pGameState;
+}

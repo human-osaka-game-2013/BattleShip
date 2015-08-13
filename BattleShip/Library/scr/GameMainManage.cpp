@@ -15,12 +15,25 @@ void CSceneManager::SceneRoutingManage ()
 	{
 		m_sceneObj -> Init ();
 		UpdateChangeFlag ( false );	//	シーン変更も終わり、初期化も通ったから
+		_SceneIDTemp = GetCurrentScene();
 	}
 
-	if( _SceneIDTemp = m_sceneObj -> Control () )	//	trueが返ってきたらシーン変更
+	int iCntResult = m_sceneObj -> Control ();
+	switch( iCntResult )
 	{
-		if( _SceneIDTemp != GetCurrentScene() )	//	渡されたシーンとマネージャー側の今のシーンが違うので
-			UpdateChangeFlag(true);	//	変更フラグを立てる
-	}
+	case 0:
 
+		break;
+	case 1:
+		if( GetCurrentScene()+1 < SCENE_MAX  )
+		{
+			iCurrentScene++;
+		}
+		else
+		{
+			iCurrentScene = SCENE_NONE+1;
+		}
+		UpdateChangeFlag(true);	//	変更フラグを立てる
+		break;
+	}
 }

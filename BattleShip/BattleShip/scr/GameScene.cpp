@@ -21,10 +21,19 @@ int GameScene::Control()
 {
 	m_stateManager->StateCotrol();
 
-	return 1;
+	return 0;
 }
 
 void GameScene::Draw()
 {
 	m_stateManager->StateDraw();
+}
+
+GameScene::~GameScene()
+{
+	for( int iCount = 0; iCount < m_Player.size(); iCount++ )
+		delete m_Player[iCount];
+
+	delete m_pStageObject;
+	delete m_stateManager;
 }

@@ -9,7 +9,7 @@ int CSceneManager::GameMain ()
 
 	SceneRoutingManage();
 
-	ViewManage( true );
+	ViewManage();
 
 	return 0;
 }

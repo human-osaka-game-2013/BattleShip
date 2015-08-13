@@ -29,7 +29,7 @@ public:
 	*/
 	enum SCENE_NUM
 	{
-		SCENE_NONE,
+		SCENE_NONE = -1,
 		//SCENE_LOGO,
 		SCENE_TITLE,
 		//SCENE_SELECT,

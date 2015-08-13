@@ -36,7 +36,8 @@ void CSceneManager::Manage ()
 bool CSceneManager::DeleteSceneObj()
 {
 	CLASS_DELETE( m_sceneObj );
-	CLASS_DELETE( m_pRenderManager );
+	if( m_pRenderManager != NULL )
+		CLASS_DELETE( m_pRenderManager );
 	CLASS_DELETE( m_pDrawManager );
 	CLASS_DELETE( m_pKey );
 	CLASS_DELETE( m_pMouse );

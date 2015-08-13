@@ -23,6 +23,10 @@ public:
 	{
 		Init( m_userID );
 	}
+	/**
+	*@brief	デストラクタ
+	*/
+	~Player();
 
 	/**
 	*@brief	初期化

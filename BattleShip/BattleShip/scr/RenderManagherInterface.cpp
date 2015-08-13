@@ -5,7 +5,7 @@
 */	
 bool CRenderManager::AllLoadXFile()
 {
-	
+/*	
 	if( E_FAIL == AllocateHierarchy[AN_WAIT].Load( m_pD3Device, "resource/xfile/tiny/wait.x" ) )
 		return false;
 	if( E_FAIL == AllocateHierarchy[AN_RUN].Load( m_pD3Device, "resource/xfile/tiny/run.x" ) )
@@ -19,7 +19,7 @@ bool CRenderManager::AllLoadXFile()
 	if( false == LoadXFile( MESH_BOX_1, "resource/xfile/block.X" ) )
 		return false;
 	if( false == LoadXFile( MESH_BULLET, "resource/xfile/bullet.x") )
-		return false;
+		return false;*/
 	return true;
 
 }

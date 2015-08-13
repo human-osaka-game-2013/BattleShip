@@ -10,7 +10,7 @@ bool SetShip::Control()
 {
 
 
-	return true;
+	return false;
 }
 
 //	

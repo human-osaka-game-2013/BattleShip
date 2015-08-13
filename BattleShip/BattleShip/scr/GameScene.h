@@ -46,7 +46,10 @@ public:
 	{
 		
 	}
-
+	/**
+	*@brief	デストラクタ
+	*/
+	~GameScene();
 
 public:
 	
@@ -58,6 +61,7 @@ public:
 
 	/**
 	*@brief	ルーチン処理
+	*@return 0：シーンに変化無し　
 	*/
 	int	 Control();
 
