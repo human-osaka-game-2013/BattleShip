@@ -46,10 +46,11 @@ public:
 	{
 		
 	}
-	/**
-	*@brief	デストラクタ
+	
+	/**	
+	*@brief 解放処理
 	*/
-	~GameScene();
+	bool Free();
 
 public:
 	

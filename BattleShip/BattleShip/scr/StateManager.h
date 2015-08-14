@@ -35,9 +35,9 @@ public:
 	StateManager( Player* const _pPlayer1, Player* const _pPlayer2,
 		StageObject* const	_pStageObject);
 	/**
-	*@brief	デストラクタ
+	*@brief	解放処理
 	*/
-	~StateManager();
+	void Free();
 
 	/**
 	*@brief	ステートパターンの切り替え

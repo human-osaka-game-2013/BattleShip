@@ -41,6 +41,11 @@ public:
 	bool HitStageCheck();
 	
 	void SetShip( ShipObject* _pShip );
+
+	/**
+	*@brief	‰ğ•úˆ—
+	*/
+	void  Free();
 };
 
 #endif

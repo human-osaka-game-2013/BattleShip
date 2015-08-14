@@ -9,9 +9,3 @@ CScene::CScene( int _id, CRenderManager* const _pRenderManager,
 {
 	//m_pRenderManager->CameraInit();
 }
-
-//	デストラクタ
-CScene::~CScene()
-{
-
-}

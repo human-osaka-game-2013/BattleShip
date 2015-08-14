@@ -16,3 +16,11 @@ bool StageObject::Init()
 
 	return true;
 }
+
+/**
+*@brief	‰ğ•úˆ—
+*/
+void  StageObject::Free()
+{
+
+}

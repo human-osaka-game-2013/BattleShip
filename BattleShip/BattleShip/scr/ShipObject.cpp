@@ -28,3 +28,11 @@ void ShipObject::SetTable( char* _p, int _iColumn, int _iLine)
 	}
 }
 
+
+/**
+*@brief	‰ğ•úˆ—
+*/
+void  ShipObject::Free()
+{
+
+}

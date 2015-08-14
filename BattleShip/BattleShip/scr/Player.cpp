@@ -29,8 +29,10 @@ void Player::Init( int _userID )
 	}
 }
 
-Player::~Player()
+bool Player::Free()
 {
-	for( int iCount = 0; iCount < m_pShip.size(); iCount++ )
+	for( int iCount = 0; iCount < m_pShip.size(); iCount++ ){
 		delete m_pShip[iCount];
+	}
+	return true;
 }

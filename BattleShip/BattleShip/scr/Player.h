@@ -24,9 +24,9 @@ public:
 		Init( m_userID );
 	}
 	/**
-	*@brief	デストラクタ
+	*@brief	解放処理
 	*/
-	~Player();
+	bool Free();
 
 	/**
 	*@brief	初期化

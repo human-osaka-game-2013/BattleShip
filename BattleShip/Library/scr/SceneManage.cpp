@@ -41,14 +41,3 @@ void CSceneManager::EndRender ()
 	// 表示
 	m_pDevice->Getd3Device() -> Present ( NULL, NULL, NULL, NULL );
 }
-
-/*
-	デストラクタ
-*/
-CSceneManager::~CSceneManager()
-{
-	if( !DeleteSceneObj() )	{
-
-	}
-}
-

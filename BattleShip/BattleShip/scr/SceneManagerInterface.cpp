@@ -35,7 +35,7 @@ void CSceneManager::Manage ()
 //	シーンオブジェクトの解放
 bool CSceneManager::DeleteSceneObj()
 {
-	CLASS_DELETE( m_sceneObj );
+	m_sceneObj->Free();
 	if( m_pRenderManager != NULL )
 		CLASS_DELETE( m_pRenderManager );
 	CLASS_DELETE( m_pDrawManager );

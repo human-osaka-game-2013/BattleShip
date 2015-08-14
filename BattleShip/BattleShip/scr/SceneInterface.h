@@ -35,7 +35,7 @@ public:
 	/**
 	*@briefデストラクタ
 	*/
-	~CScene();
+	virtual bool Free() = 0;
 public:
 	virtual bool Init() = 0;		///< 初期化の仮想関数
 	virtual int	 Control()	= 0;	///< 処理の仮想関数。@n

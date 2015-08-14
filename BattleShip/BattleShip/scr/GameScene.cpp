@@ -29,11 +29,17 @@ void GameScene::Draw()
 	m_stateManager->StateDraw();
 }
 
-GameScene::~GameScene()
+//	‰ğ•úˆ—
+bool GameScene::Free()
 {
-	for( int iCount = 0; iCount < m_Player.size(); iCount++ )
+	for( int iCount = 0; iCount < m_Player.size(); iCount++ ){
+		m_Player[iCount]->Free();
 		delete m_Player[iCount];
-
+	}
+	m_pStageObject->Free();
 	delete m_pStageObject;
+	m_stateManager->Free();
 	delete m_stateManager;
+
+	return true;
 }

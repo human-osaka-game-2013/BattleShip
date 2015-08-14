@@ -59,9 +59,9 @@ public:
 	CGameObject ();	
 
 	/**
-	*@brief	デストラクタ
+	*@brief	解放処理
 	*/
-	~CGameObject ();
+	virtual void  Free() = 0;
 
 public:	
 	/**

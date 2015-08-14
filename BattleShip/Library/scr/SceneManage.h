@@ -57,11 +57,6 @@ public:
 	*/
 	CSceneManager( int _scene , CDevice* const _pDevice, bool _bRenderType );	//	コンストラクタ
 
-	/**
-	*@brief	 デストラクタ
-	*/
-	~CSceneManager();
-
 public:
 	/**
 	*@brief	 ゲームメイン関数

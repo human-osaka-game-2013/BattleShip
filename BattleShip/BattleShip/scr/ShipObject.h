@@ -83,6 +83,11 @@ public:
 	*/
 	void SetTable( char* _p, int _iColumn, int _iLine);
 
+	/**
+	*@brief	‰ğ•úˆ—
+	*/
+	void  Free();
+
 public:
 	/**
 	*@brief	‹î‚Ì‚¿åIDæ“¾
