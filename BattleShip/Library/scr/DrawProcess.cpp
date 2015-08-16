@@ -1,35 +1,33 @@
 #include "DrawManager.h"
 
 // 描画前処理
-void CDrawManager::BeginDraw ( )
+void CDrawManager::BeginDraw( bool _b3dView )
 {
+	static bool _SetStateFlag = false;
 	if ( !m_pD3Device )
 	{
 
 	}
+	if( _b3dView || !_SetStateFlag )
+	{
+		// ステージステートの設定
+		m_pD3Device -> SetTextureStageState ( 0, D3DTSS_COLORARG1,	D3DTA_TEXTURE	);
+		m_pD3Device -> SetTextureStageState ( 0, D3DTSS_COLOROP,	D3DTOP_MODULATE	);
+		m_pD3Device -> SetTextureStageState ( 0, D3DTSS_COLORARG2,	D3DTA_DIFFUSE	);
+		m_pD3Device -> SetTextureStageState ( 0, D3DTSS_ALPHAARG1,	D3DTA_TEXTURE	);
+		m_pD3Device -> SetTextureStageState ( 0, D3DTSS_ALPHAOP,	D3DTOP_MODULATE );
+		m_pD3Device -> SetTextureStageState ( 0, D3DTSS_ALPHAARG2,	D3DTA_DIFFUSE	);
+		
+		// 描画方法の設定
+		m_pD3Device -> SetRenderState ( D3DRS_ALPHABLENDENABLE,	true );
+		
+		m_pD3Device ->  SetRenderState ( D3DRS_SRCBLEND,	D3DBLEND_SRCALPHA	);
+		m_pD3Device ->  SetRenderState ( D3DRS_DESTBLEND,	D3DBLEND_INVSRCALPHA);
+		//m_pD3Device ->  SetRenderState ( D3DRS_DIFFUSEMATERIALSOURCE, D3DMCS_COLOR1		);
 
-	// ステージステートの設定
-	m_pD3Device -> SetRenderState ( D3DRS_ALPHABLENDENABLE,	true );
-	
-	m_pD3Device -> SetTextureStageState ( 0, D3DTSS_COLORARG1,	D3DTA_TEXTURE	);
-	m_pD3Device -> SetTextureStageState ( 0, D3DTSS_COLORARG2,	D3DTA_DIFFUSE	);
-
-	m_pD3Device -> SetTextureStageState ( 0, D3DTSS_COLOROP,		D3DTOP_MODULATE	);
-
-	m_pD3Device -> SetTextureStageState ( 0, D3DTSS_ALPHAARG1,	D3DTA_TEXTURE	);
-	m_pD3Device -> SetTextureStageState ( 0, D3DTSS_ALPHAARG2,	D3DTA_DIFFUSE	);
-
-	m_pD3Device -> SetTextureStageState ( 0, D3DTSS_ALPHAOP,		D3DTOP_MODULATE );
-
-
-	// 描画方法の設定
-	m_pD3Device ->  SetRenderState ( D3DRS_SRCBLEND,				D3DBLEND_SRCALPHA	);
-	m_pD3Device ->  SetRenderState ( D3DRS_DESTBLEND,				D3DBLEND_INVSRCALPHA);
-	m_pD3Device ->  SetRenderState ( D3DRS_DIFFUSEMATERIALSOURCE, D3DMCS_COLOR1		);
-	
-	
-	m_pD3Device -> SetRenderState ( D3DRS_ZENABLE, false );
-	
+		m_pD3Device -> SetRenderState ( D3DRS_ZENABLE, false );
+		_SetStateFlag = true;
+	}
 
 	// 描画の開始
 	m_pD3Device -> BeginScene();

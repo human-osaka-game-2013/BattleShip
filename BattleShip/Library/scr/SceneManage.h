@@ -81,8 +81,9 @@ public:
 	
 	/**
 	*@brief	 •`‰æŠÇ—(2D)
+	*@param[in]	_b3dView@3D•`‰æ‚à“¯‚É‚·‚é‚©”»’f‚·‚é
 	*/
-	void DrawManage ();
+	void DrawManage ( bool _b3dView );
 
 	/**
 	*@brief	 •`‰æŒãˆ—

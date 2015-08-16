@@ -13,7 +13,7 @@
 */
 CGameObject::CGameObject()	
 	: m_posX( 0.f ), m_posY( 0.f ), m_posZ( 0.f ),
-	  m_Dir( CH_LEFT ), m_State( STATE_WAIT ), m_deadFlag( false )
+	  m_Dir( CH_NONE ), m_State( STATE_NONE ), m_deadFlag( false ), m_id(0)
 {
 
 }

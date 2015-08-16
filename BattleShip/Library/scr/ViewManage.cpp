@@ -16,13 +16,13 @@ void CSceneManager::ViewManage ( bool b3dView )
 	{
 		RenderManage();
 	}
-	DrawManage( );
+	DrawManage( b3dView );
 }
 
 //	ƒŒƒ“ƒ_ƒŠƒ“ƒOŠÇ—
 void CSceneManager::RenderManage ( )
 {
-	
+	m_pRenderManager->BeginRender();
 	
 	m_sceneObj -> Render();
 
@@ -30,8 +30,9 @@ void CSceneManager::RenderManage ( )
 }
 
 //	•`‰æŠÇ—
-void CSceneManager::DrawManage (  )
+void CSceneManager::DrawManage ( bool _b3dView )
 {
+	m_pDrawManager->BeginDraw( _b3dView );
 
 	m_sceneObj -> Draw();
 

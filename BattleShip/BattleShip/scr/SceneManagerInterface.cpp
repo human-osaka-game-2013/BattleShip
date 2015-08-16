@@ -42,6 +42,7 @@ bool CSceneManager::DeleteSceneObj()
 	CLASS_DELETE( m_pKey );
 	CLASS_DELETE( m_pMouse );
 	CLASS_DELETE( m_pXInput );
+	CLASS_DELETE( m_sceneObj );
 	if( m_sceneObj != NULL )
 		return false;
 	if( m_pRenderManager != NULL )

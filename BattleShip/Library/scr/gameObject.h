@@ -56,7 +56,7 @@ public:
 	/**
 	*@brief	コンストラクタ
 	*/
-	CGameObject ();	
+	CGameObject();	
 
 	/**
 	*@brief	解放処理

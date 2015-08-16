@@ -26,7 +26,7 @@ int GameScene::Control()
 
 void GameScene::Draw()
 {
-	m_stateManager->StateDraw();
+	m_stateManager->StateDraw( m_pDrawManager );
 }
 
 //	‰ğ•úˆ—

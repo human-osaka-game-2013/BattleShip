@@ -37,6 +37,9 @@ enum TEXTURES
 	_TEX_AIRCARRIER_,
 	_TEX_BATTLESHIP_,
 	_TEX_CRUISER_,
+	_TEX_DESTROYER_,
+	_TEX_SUBMARINE_,
+	_TEX_STAGEMAP_,
 
 	_TEXTURE_MAX_
 };
@@ -64,8 +67,12 @@ public:
 	~CDrawManager();
 
 public:
-	// 描画前処理
-	void BeginDraw ( );
+	/**
+	*@brief 描画前処理
+	*param[in] _b3dView：3D描画などをする場合など、@n
+						描画設定の再設定をする場合にtrueを渡す。
+	*/
+	void BeginDraw ( bool _b3dView = false );
 
 	// テクスチャの読み込み
 	// 第1引数：("画像の名前.拡張子"), 第2引数：テクスチャの番号, 透過色RGB 

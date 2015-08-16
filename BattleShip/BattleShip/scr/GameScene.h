@@ -19,10 +19,10 @@
 			Init、Control、Draw、Render関数がライブラリのサブルーチン側で呼ばれるので、宣言すること。@n
 			今回は2D描画のみの予定なのでRender関数は宣言をしているが、中身はない。
 */
-
-
 class GameScene : public CScene
 {
+public:
+	
 private:
 	StateManager*	m_stateManager;		///<	戦闘内でのステートを管理するオブジェクト
 	std::vector<Player*>	m_Player;	///<	プレイヤークラス
