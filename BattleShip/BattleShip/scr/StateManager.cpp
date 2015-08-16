@@ -28,7 +28,8 @@ void StateManager::StateInit()
 	m_beforeState = STATE_NONE;		///<	初期化なので以前のステートはそもそも無い為、STATE_NONEに。
 	m_currentState = _FIRST_SETATE_;///<	ステートの初期化なので最初に読み込むであろうパターンの定数を入れる
 	ChangeState(m_currentState);	///<	まだステートポイントには何も入っていないので初期化も兼ねて
-	m_BoardFrame.Init();
+	m_StageFrame.Init( 0.f, 0.f, WIDTH, HEIGHT*(_STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_));
+	///<画面上部から１１マス分目まで盤面フレームがあるので11/16となる。
 }
 
 //	ステートの基本ルーチン処理
@@ -66,9 +67,9 @@ void StateManager::StateCotrol()
 void StateManager::StateDraw( CDrawManager* _drawManager)
 {
 	float tempX, tempY;
-	m_BoardFrame.GetPosition( &tempX, &tempY);
+	m_StageFrame.GetPosition( &tempX, &tempY);
 	_drawManager->VertexDraw( _TEX_STAGEMAP_, tempX, tempY, 
-		m_BoardFrame.GetWidth(),  m_BoardFrame.GetHeight(),
+		m_StageFrame.GetWidth(),  m_StageFrame.GetHeight(),
 		0.f, 0.f, 1.f, _STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_);
 	
 	m_pGameState->Draw();

@@ -28,7 +28,9 @@ public:
 
 public:
 	/**
-	*@brief	盤面のフレームオブジェクトクラス
+	*@brief	盤面のフレームオブジェクトクラス（描画用）
+	*@details	ステージのUI要素などを別のクラスとして持たせる。@n
+				ステージやプレイヤー情報は必要に応じてメンバからもらう。
 	*/
 	class BoardOfFrame : public CGameObject
 	{
@@ -39,12 +41,11 @@ public:
 		/**
 		*@brief	初期化
 		*/
-		void Init()
+		void Init( float _fx, float _fy, float _fWidth, float _fHeight )
 		{
-			SetPosition(0.f, 0.f, 0.5f);
-			fHeight = HEIGHT*(_STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_);
-				///<上から１１マス分目まで盤面フレームがあるので
-			fWidth = WIDTH;
+			SetPosition(_fx, _fy, 0.5f);
+			fHeight = _fHeight;
+			fWidth = _fWidth;
 		}
 		void Control(){};
 		void Draw(){};
@@ -60,7 +61,8 @@ private:
 	Player* const 	m_pPlayer1;		///<	プレイヤー1情報格納ポインタ
 	Player* const 	m_pPlayer2;		///<	プレイヤー2情報格納ポインタ
 	StageObject* const	m_pStageObject;	///<	ステージ情報格納ポインタ
-	BoardOfFrame	m_BoardFrame;
+	BoardOfFrame	m_StageFrame;	///<	ステージ部分のフレームオブジェクト
+	BoardOfFrame*	m_pPlayerFrame;	///<	
 
 public:
 	/**
