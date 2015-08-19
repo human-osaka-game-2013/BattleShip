@@ -32,7 +32,7 @@ void StateManager::StateInit()
 	m_beforeState = STATE_NONE;		///<	初期化なので以前のステートはそもそも無い為、STATE_NONEに。
 	m_currentState = _FIRST_SETATE_;///<	ステートの初期化なので最初に読み込むであろうパターンの定数を入れる
 	ChangeState(m_currentState);	///<	まだステートポイントには何も入っていないので初期化も兼ねて
-	m_StageFrame.Init( 0.f, 0.f, WIDTH, HEIGHT*(_STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_));
+	m_StageFrame.Init( 0.f, -2.f, WIDTH, HEIGHT*(_STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_));
 	///<画面上部から１１マス分目まで盤面フレームがあるので11/16となる。
 	m_PlayerFrame[0].Init( _POS_PLAYER1FRAME_, _SIZE_PLAYERFRAME_ );
 	m_PlayerFrame[1].Init( _POS_PLAYER2FRAME_, _SIZE_PLAYERFRAME_ );
@@ -73,13 +73,29 @@ void StateManager::StateCotrol()
 void StateManager::StateDraw( CDrawManager* _drawManager)
 {
 	float tempX, tempY;
-	//	盤面枠表示
+	
+	//	盤面枠表示（左）
 	m_StageFrame.GetPosition( &tempX, &tempY );
 	_drawManager->CustomCorolDraw( _TEX_STAGEMAP_, tempX, tempY, 
-		m_StageFrame.GetWidth(),  m_StageFrame.GetHeight(),
+		m_StageFrame.GetWidth()*(_STAGE_WIDTH_MAX_/_BLOCK_WIDTH_MAX_),  m_StageFrame.GetHeight(),
 		0.f, 0.f, 
+		_STAGE_WIDTH_MAX_/_BLOCK_WIDTH_MAX_, _STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_,
+		180, 220, 220, 220);
+
+	//	盤面枠表示（右）
+	_drawManager->CustomCorolDraw( _TEX_STAGEMAP_, tempX+_BLOCK_WIDTH_SIZE_*12, tempY, 
+		m_StageFrame.GetWidth()*(_STAGE_WIDTH_MAX_/_BLOCK_WIDTH_MAX_),  m_StageFrame.GetHeight(),
+		(_STAGE_WIDTH_MAX_+1)/_BLOCK_WIDTH_MAX_, 0.f, 
 		1.f, _STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_,
 		180, 220, 220, 220);
+
+	//	盤面枠表示（中）
+	_drawManager->CustomCorolDraw( _TEX_STAGEMAP_, tempX+_BLOCK_WIDTH_SIZE_*_STAGE_WIDTH_MAX_, tempY, 
+		_BLOCK_WIDTH_SIZE_, HEIGHT,
+		_STAGE_WIDTH_MAX_/_BLOCK_WIDTH_MAX_, 0.f,
+		(_STAGE_WIDTH_MAX_+1)/_BLOCK_WIDTH_MAX_, 1.f,
+		180, 220, 220, 220);
+
 	//	プレイヤー1枠表示
 	m_PlayerFrame[0].GetPosition( &tempX, &tempY );
 	_drawManager->CustomCorolDraw( _TEX_STAGEMAP_, tempX, tempY, 
@@ -95,6 +111,24 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 		1.f, 1.f,
 		180, 100, 100, 255);
 
+	//	ステージマス目表示
+	for( int ip=0; ip<_PLAYER_NUM_; ip++ ){
+		for( int ic=0; ic<_STAGE_COLUMN_MAX_; ic++ ){
+			for( int il=0; il<_STAGE_LINE_MAX_; il++ ){
+				
+				tempX = ( ic*( _BLOCK_WIDTH_SIZE_ ))+( _BLOCK_WIDTH_SIZE_ );
+				tempY = ( il*( _BLOCK_HEIGHT_SIZE_ ))+( _BLOCK_HEIGHT_SIZE_ );
+				if( ip == 1 )
+					tempX += _BLOCK_WIDTH_SIZE_*11;
+
+				_drawManager->CustomCorolDraw( _TEX_BLOCK_, tempX, tempY, 
+					_BLOCK_WIDTH_SIZE_,  _BLOCK_HEIGHT_SIZE_,
+					0.f, 0.f, 
+					1.f, 1.f,
+					100, 200, 200, 200);
+			}
+		}
+	}
 	m_pGameState->Draw();
 }
 

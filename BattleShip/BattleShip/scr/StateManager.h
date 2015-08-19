@@ -13,6 +13,7 @@
 #define _BLOCK_WIDTH_MAX_	(float)23	///<盤面の横幅の最大ブロック数
 #define _BLOCK_HEIGHT_MAX_	(float)16	///<盤面の縦幅の最大ブロック数
 #define _STAGE_HEIGHT_MAX_	(float)11	///<ステージ部分の縦幅の最大ブロック数
+#define _STAGE_WIDTH_MAX_ _STAGE_HEIGHT_MAX_
 
 class StateManager
 {
