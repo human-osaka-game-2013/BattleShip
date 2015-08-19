@@ -7,6 +7,8 @@
 #include "gameObject.h"
 #include <list>
 
+#define _PLAYER_ID_	1
+
 class CScene
 {
 protected:

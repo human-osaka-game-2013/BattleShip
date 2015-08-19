@@ -14,10 +14,14 @@
 //-------------------------------------------
 
 #define _FIRST_SETATE_ StateManager::STATE_SET_SHIP	///<	最初のステートパターン
+#define _POS_PLAYER1FRAME_	0.f, HEIGHT*(_STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_)						///<プレイヤー1情報の枠の表示座標
+#define _POS_PLAYER2FRAME_	_BLOCK_WIDTH_SIZE_*12, HEIGHT*(_STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_)	///<プレイヤー2情報の枠の表示座標
+#define _SIZE_PLAYERFRAME_	_BLOCK_WIDTH_SIZE_*11, _BLOCK_HEIGHT_SIZE_*5	///<プレイヤー情報の枠サイズ
 
-//	コンストラクタ
-StateManager::StateManager( Player* const _pPlayer1, Player* const _pPlayer2, StageObject* const	_pStageObject) 
-	: m_pPlayer1(_pPlayer1), m_pPlayer2(_pPlayer2), m_pStageObject( _pStageObject)
+//	コンストラクタ 
+StateManager::StateManager( Player* const _pPlayer1, Player* const _pPlayer2, 
+							StageObject* const _pStageObject, const int _playerID) 
+	: m_pPlayer1(_pPlayer1), m_pPlayer2(_pPlayer2), m_pStageObject( _pStageObject), m_playerID(_playerID)
 {
 	StateInit();
 }
@@ -30,6 +34,8 @@ void StateManager::StateInit()
 	ChangeState(m_currentState);	///<	まだステートポイントには何も入っていないので初期化も兼ねて
 	m_StageFrame.Init( 0.f, 0.f, WIDTH, HEIGHT*(_STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_));
 	///<画面上部から１１マス分目まで盤面フレームがあるので11/16となる。
+	m_PlayerFrame[0].Init( _POS_PLAYER1FRAME_, _SIZE_PLAYERFRAME_ );
+	m_PlayerFrame[1].Init( _POS_PLAYER2FRAME_, _SIZE_PLAYERFRAME_ );
 }
 
 //	ステートの基本ルーチン処理
@@ -67,11 +73,28 @@ void StateManager::StateCotrol()
 void StateManager::StateDraw( CDrawManager* _drawManager)
 {
 	float tempX, tempY;
-	m_StageFrame.GetPosition( &tempX, &tempY);
-	_drawManager->VertexDraw( _TEX_STAGEMAP_, tempX, tempY, 
+	//	盤面枠表示
+	m_StageFrame.GetPosition( &tempX, &tempY );
+	_drawManager->CustomCorolDraw( _TEX_STAGEMAP_, tempX, tempY, 
 		m_StageFrame.GetWidth(),  m_StageFrame.GetHeight(),
-		0.f, 0.f, 1.f, _STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_);
-	
+		0.f, 0.f, 
+		1.f, _STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_,
+		180, 220, 220, 220);
+	//	プレイヤー1枠表示
+	m_PlayerFrame[0].GetPosition( &tempX, &tempY );
+	_drawManager->CustomCorolDraw( _TEX_STAGEMAP_, tempX, tempY, 
+		m_PlayerFrame[0].GetWidth(),  m_PlayerFrame[0].GetHeight(),
+		0.f, _STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_, 
+		11/_BLOCK_WIDTH_MAX_, 1.f,
+		180, 255, 100, 100);
+	//	プレイヤー2枠表示
+	m_PlayerFrame[1].GetPosition( &tempX, &tempY );
+	_drawManager->CustomCorolDraw( _TEX_STAGEMAP_, tempX, tempY, 
+		m_PlayerFrame[1].GetWidth(),  m_PlayerFrame[1].GetHeight(),
+		12/_BLOCK_WIDTH_MAX_, _STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_, 
+		1.f, 1.f,
+		180, 100, 100, 255);
+
 	m_pGameState->Draw();
 }
 
@@ -120,4 +143,5 @@ void StateManager::StateDelete()
 void StateManager::Free()
 {
 	delete m_pGameState;
+
 }

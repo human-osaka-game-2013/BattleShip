@@ -7,7 +7,10 @@
 #include "StageObject.h"
 #include "DrawManager.h"
 
-#define _BLOCK_WIDTH_MAX_	23	///<盤面の横幅の最大ブロック数
+#define _BLOCK_WIDTH_SIZE_	WIDTH/_BLOCK_WIDTH_MAX_
+#define _BLOCK_HEIGHT_SIZE_	HEIGHT/_BLOCK_HEIGHT_MAX_
+
+#define _BLOCK_WIDTH_MAX_	(float)23	///<盤面の横幅の最大ブロック数
 #define _BLOCK_HEIGHT_MAX_	(float)16	///<盤面の縦幅の最大ブロック数
 #define _STAGE_HEIGHT_MAX_	(float)11	///<ステージ部分の縦幅の最大ブロック数
 
@@ -60,16 +63,17 @@ private:
 	_STATE_NUM_		m_currentState;	///<	現在のステートパターン
 	Player* const 	m_pPlayer1;		///<	プレイヤー1情報格納ポインタ
 	Player* const 	m_pPlayer2;		///<	プレイヤー2情報格納ポインタ
+	const int		m_playerID;		///<	起動側のプレイヤーID。GameScene側からもらってくる。
 	StageObject* const	m_pStageObject;	///<	ステージ情報格納ポインタ
 	BoardOfFrame	m_StageFrame;	///<	ステージ部分のフレームオブジェクト
-	BoardOfFrame*	m_pPlayerFrame;	///<	
+	BoardOfFrame	m_PlayerFrame[_PLAYER_NUM_];	///<	プレイヤー情報のフレームオブジェクト	
 
 public:
 	/**
 	*@brief	コンストラクタ
 	*/
 	StateManager( Player* const _pPlayer1, Player* const _pPlayer2,
-		StageObject* const	_pStageObject);
+		StageObject* const	_pStageObject, const int _playerID );
 	/**
 	*@brief	解放処理
 	*/

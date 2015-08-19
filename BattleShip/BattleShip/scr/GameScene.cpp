@@ -12,7 +12,7 @@ bool GameScene::Init()
 		m_Player.push_back( new Player( iCount ));	///<	プレイヤーの初期化
 	}
 	m_pStageObject = new( StageObject );		///<	StageObjectオブジェクトを生成
-	m_stateManager = new StateManager(m_Player[0], m_Player[1], m_pStageObject);	///<	StateManagerオブジェクトを初期化
+	m_stateManager = new StateManager(m_Player[0], m_Player[1], m_pStageObject, _PLAYER_ID_);	///<	StateManagerオブジェクトを初期化
 	m_background.Init();
 	
 	return true;
