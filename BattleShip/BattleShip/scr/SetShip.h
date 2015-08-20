@@ -7,13 +7,23 @@
 #define _SETSHIP_H_
 
 #include "GameState.h"
+#include "Player.h"
+#include "StageObject.h"
 
 class SetShip : public GameState
 {
 private:
-
-
+	bool m_SetCompFlag;	///<	Control返り値兼、駒の配置完了フラグ
+	int m_SetCount;		///<	駒の配置回数（どれだけ配置しているか）
+	Player* m_pShip;	///<	駒データ格納用
+	StageObject* m_pStage;	///<	ステージデータ格納用
+	
 public:
+	/**
+	*@brief	ステートパターン内での初期化
+	*/
+	bool Init();
+
 	/**
 	*@brief	ステートパターン内でのサブルーチン処理
 	*/
@@ -29,6 +39,10 @@ public:
 	*/
 	void ComStandby();
 
+	/**
+	*@brief	配置回数の取得
+	*/
+	int GetSetCount(){ return m_SetCount; }
 };
 
 #endif

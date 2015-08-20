@@ -14,6 +14,11 @@ class Selection : public GameState
 
 public:
 	/**
+	*@brief	ステートパターン内での初期化
+	*/
+	bool Init();
+
+	/**
 	*@brief	ステートパターン内での描画
 	*/
 	bool Control();

@@ -27,6 +27,11 @@ private:
 
 public:
 	/**
+	*@brief	ステートパターン内での初期化
+	*/
+	virtual bool Init() = 0;
+
+	/**
 	*@brief	ステートパターン内でのサブルーチン処理
 	*/
 	virtual bool Control() = 0;

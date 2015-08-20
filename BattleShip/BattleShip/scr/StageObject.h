@@ -19,6 +19,7 @@ class StageObject : public CGameObject
 public:
 	unsigned char m_stageArray[_PLAYER_NUM_][_STAGE_COLUMN_MAX_][_STAGE_LINE_MAX_];
 
+
 public:
 	/**
 	*@brief	コンストラクタ

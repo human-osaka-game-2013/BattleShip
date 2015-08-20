@@ -5,12 +5,21 @@
 
 #include "SetShip.h"
 
+bool SetShip::Init()
+{
+	m_SetCompFlag = false;
+	m_SetCount = ShipObject::TYPE_AIRCARRIER;
+	return false;
+}
+
 //	
 bool SetShip::Control()
 {
+	
 
 
-	return false;
+
+	return m_SetCompFlag;
 }
 
 //	
