@@ -36,6 +36,38 @@ void StateManager::StateInit()
 	///<画面上部から１１マス分目まで盤面フレームがあるので11/16となる。
 	m_PlayerFrame[0].Init( _POS_PLAYER1FRAME_, _SIZE_PLAYERFRAME_ );
 	m_PlayerFrame[1].Init( _POS_PLAYER2FRAME_, _SIZE_PLAYERFRAME_ );
+	
+	
+	for( int iPlayer=0; iPlayer<_PLAYER_NUM_; iPlayer++ )	///<表示位置などを予め初期化しておき、描画時や当たり判定時などにも利用する。
+	{
+		float tempX, tempY;	
+		for( int iShip=0; iShip<ShipObject::TYPE_MAX; iShip++ ){
+			float tempW = _BLOCK_WIDTH_SIZE_, tempH = _BLOCK_HEIGHT_SIZE_;	///<駒別に可変性があるので縦横幅の仮保存をして少し効率を上げる。
+			tempX = tempW;
+			tempY = (_STAGE_HEIGHT_MAX_*tempH)+(iShip*tempH);	///<Y座標はまずプレイヤー情報枠の基準点から
+			if( iPlayer == 0 )
+				tempX += tempW*5;	///<プレイヤー1は1マス目から5マス分ずらすので
+			else
+				tempX += tempW*11;	///<プレイヤー1は1マス目から11マス分ずらすので
+			switch( iShip )	///<	艦種別分岐
+			{
+			case ShipObject::TYPE_AIRCARRIER:	
+				m_ShipFrame[iPlayer][iShip].Init( tempX, tempY, tempW*5, tempH );
+				break;
+			case ShipObject::TYPE_BATTLESHIP:
+				m_ShipFrame[iPlayer][iShip].Init( tempX, tempY, tempW*4, tempH );
+				break;
+			case ShipObject::TYPE_CRUISER:
+				m_ShipFrame[iPlayer][iShip].Init( tempX, tempY, tempW*3, tempH );
+				break;
+			case ShipObject::TYPE_DESTROYER:
+			case ShipObject::TYPE_SUBMARINE:
+				m_ShipFrame[iPlayer][iShip].Init( tempX, tempY, tempW*2, tempH );
+				break;
+
+			}
+		}
+	}
 }
 
 //	ステートの基本ルーチン処理
@@ -80,21 +112,21 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 		m_StageFrame.GetWidth()*(_STAGE_WIDTH_MAX_/_BLOCK_WIDTH_MAX_),  m_StageFrame.GetHeight(),
 		0.f, 0.f, 
 		_STAGE_WIDTH_MAX_/_BLOCK_WIDTH_MAX_, _STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_,
-		180, 220, 220, 220);
+		180, 220, 220, 220);	///<	盤面の左側の描画
 
 	//	盤面枠表示（右）
 	_drawManager->CustomCorolDraw( _TEX_STAGEMAP_, tempX+_BLOCK_WIDTH_SIZE_*12, tempY, 
 		m_StageFrame.GetWidth()*(_STAGE_WIDTH_MAX_/_BLOCK_WIDTH_MAX_),  m_StageFrame.GetHeight(),
 		(_STAGE_WIDTH_MAX_+1)/_BLOCK_WIDTH_MAX_, 0.f, 
 		1.f, _STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_,
-		180, 220, 220, 220);
+		180, 220, 220, 220);	///<	盤面の右側の描画
 
 	//	盤面枠表示（中）
 	_drawManager->CustomCorolDraw( _TEX_STAGEMAP_, tempX+_BLOCK_WIDTH_SIZE_*_STAGE_WIDTH_MAX_, tempY, 
 		_BLOCK_WIDTH_SIZE_, HEIGHT,
 		_STAGE_WIDTH_MAX_/_BLOCK_WIDTH_MAX_, 0.f,
 		(_STAGE_WIDTH_MAX_+1)/_BLOCK_WIDTH_MAX_, 1.f,
-		180, 220, 220, 220);
+		180, 220, 220, 220);	///<	盤面の真ん中の描画
 
 	//	プレイヤー1枠表示
 	m_PlayerFrame[0].GetPosition( &tempX, &tempY );
@@ -102,30 +134,79 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 		m_PlayerFrame[0].GetWidth(),  m_PlayerFrame[0].GetHeight(),
 		0.f, _STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_, 
 		11/_BLOCK_WIDTH_MAX_, 1.f,
-		180, 255, 100, 100);
+		180, 255, 100, 100);	///<	プレイヤー1の枠描画
 	//	プレイヤー2枠表示
 	m_PlayerFrame[1].GetPosition( &tempX, &tempY );
 	_drawManager->CustomCorolDraw( _TEX_STAGEMAP_, tempX, tempY, 
 		m_PlayerFrame[1].GetWidth(),  m_PlayerFrame[1].GetHeight(),
 		12/_BLOCK_WIDTH_MAX_, _STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_, 
 		1.f, 1.f,
-		180, 100, 100, 255);
+		180, 100, 100, 255);	///<	プレイヤー2の枠描画
 
 	//	ステージマス目表示
+	//	プレイヤー数
 	for( int ip=0; ip<_PLAYER_NUM_; ip++ ){
-		for( int ic=0; ic<_STAGE_COLUMN_MAX_; ic++ ){
+		//	行
+		for( int ic=0; ic<_STAGE_COLUMN_MAX_; ic++ ){	
+			//	列
 			for( int il=0; il<_STAGE_LINE_MAX_; il++ ){
-				
+				//	基準点の計算。ただのループ回数に合わえてブロック幅分座標を調節
 				tempX = ( ic*( _BLOCK_WIDTH_SIZE_ ))+( _BLOCK_WIDTH_SIZE_ );
 				tempY = ( il*( _BLOCK_HEIGHT_SIZE_ ))+( _BLOCK_HEIGHT_SIZE_ );
-				if( ip == 1 )
+				if( ip == 1 )	//	プレイヤー2の表示のみX座標をずらす。
 					tempX += _BLOCK_WIDTH_SIZE_*11;
 
 				_drawManager->CustomCorolDraw( _TEX_BLOCK_, tempX, tempY, 
 					_BLOCK_WIDTH_SIZE_,  _BLOCK_HEIGHT_SIZE_,
 					0.f, 0.f, 
 					1.f, 1.f,
-					100, 200, 200, 200);
+					100, 200, 200, 200);	///<	マスの描画
+			}
+		}
+		//	プレイヤー別の駒情報の表示
+		for( int iShip=0; iShip<ShipObject::TYPE_MAX; iShip++ ){
+			m_ShipFrame[ip][iShip].GetPosition( &tempX, &tempY );
+			float tempW = m_ShipFrame[ip][iShip].GetWidth();
+			float tempH = m_ShipFrame[ip][iShip].GetHeight();
+			
+			switch( iShip )	///<	艦種別分岐
+			{
+			case ShipObject::TYPE_AIRCARRIER:	
+				_drawManager->CustomCorolDraw( _TEX_AIRCARRIER_, tempX, tempY, 
+					tempW,  tempH,
+					0.f, 0.f, 
+					1.f, 1.f,
+					255, 255, 255, 255);	///<空母駒の描画
+				break;
+			case ShipObject::TYPE_BATTLESHIP:
+				_drawManager->CustomCorolDraw( _TEX_BATTLESHIP_, tempX, tempY, 
+					tempW,  tempH,
+					0.f, 0.f, 
+					1.f, 1.f,
+					255, 255, 255, 255);	///<戦艦駒の描画
+				break;
+			case ShipObject::TYPE_CRUISER:
+				_drawManager->CustomCorolDraw( _TEX_CRUISER_, tempX, tempY, 
+					tempW,  tempH,
+					0.f, 0.f, 
+					1.f, 1.f,
+					255, 255, 255, 255);	///<巡洋艦駒の描画
+				break;
+			case ShipObject::TYPE_DESTROYER:
+				_drawManager->CustomCorolDraw( _TEX_DESTROYER_, tempX, tempY, 
+					tempW,  tempH,
+					0.f, 0.f, 
+					1.f, 1.f,
+					255, 255, 255, 255);	///<駆逐艦駒の描画
+				break;
+			case ShipObject::TYPE_SUBMARINE:
+				_drawManager->CustomCorolDraw( _TEX_SUBMARINE_, tempX, tempY, 
+					tempW,  tempH,
+					0.f, 0.f, 
+					1.f, 1.f,
+					255, 255, 255, 255);	///<潜水艦駒の描画
+				break;
+
 			}
 		}
 	}

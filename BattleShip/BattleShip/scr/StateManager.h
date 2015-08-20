@@ -68,7 +68,7 @@ private:
 	StageObject* const	m_pStageObject;	///<	ステージ情報格納ポインタ
 	BoardOfFrame	m_StageFrame;	///<	ステージ部分のフレームオブジェクト
 	BoardOfFrame	m_PlayerFrame[_PLAYER_NUM_];	///<	プレイヤー情報のフレームオブジェクト	
-
+	BoardOfFrame	m_ShipFrame[_PLAYER_NUM_][ShipObject::TYPE_MAX];
 public:
 	/**
 	*@brief	コンストラクタ
