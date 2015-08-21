@@ -2,7 +2,7 @@
 #include "joystick_XInput.h"
 
 //	コンストラクタ
-CDevice::CDevice( HWND _hWnd ) : m_hWnd(_hWnd)
+CDevice::CDevice( HWND* _hWnd ) : m_hWnd(_hWnd)
 {
 
 }
@@ -14,6 +14,8 @@ HRESULT	CDevice::InitDevice()
 	
 	//	キーの初期化
 	if ( FAILED ( InitDinput() ) ) return 0;
+
+	return 1;
 }
 
 // Direct3Dの初期化
@@ -41,7 +43,7 @@ HRESULT CDevice::InitD3d ()
 
 	if( FAILED( m_pDirect3D->CreateDevice( D3DADAPTER_DEFAULT,
 										 D3DDEVTYPE_HAL,
-										 m_hWnd,
+										 *m_hWnd,
 										 D3DCREATE_HARDWARE_VERTEXPROCESSING,
 										 &m_d3dpp,
 										 &m_pD3Device ) ) )
@@ -49,7 +51,7 @@ HRESULT CDevice::InitD3d ()
 		MessageBoxA(0,"HALモードでDIRECT3Dデバイスを作成できません\nREFモードで再試行します",NULL,MB_OK);
 		if( FAILED( m_pDirect3D->CreateDevice( D3DADAPTER_DEFAULT,
 											 D3DDEVTYPE_REF,
-											 m_hWnd,
+											 *m_hWnd,
 											 D3DCREATE_SOFTWARE_VERTEXPROCESSING,
 											 &m_d3dpp,
 											 &m_pD3Device ) ) )
@@ -110,7 +112,7 @@ HRESULT CDevice::InitKeyDevice ()
 		return hr;
 	}
 	//協調レベルの設定		*当該アプリケーション(ゲーム)と、windowsOS自体のキーボードデバイスの占有率設定
-	if(FAILED (hr = m_pKeyDevice->SetCooperativeLevel( m_hWnd,
+	if(FAILED (hr = m_pKeyDevice->SetCooperativeLevel( *m_hWnd,
 													 DISCL_NONEXCLUSIVE | DISCL_BACKGROUND ) ) )	// * 非排他でバック・グラウンド
 	{
 		return hr;
@@ -148,7 +150,7 @@ HRESULT CDevice::InitMouseDevice ( bool bForeGroundMode )
 	if ( bForeGroundMode )	// フォアグラウンドでマウスを使うなら
 	{
 		//	マウスの動作の設定
-		if(FAILED (hr = m_pMouseDevice->SetCooperativeLevel( m_hWnd,
+		if(FAILED (hr = m_pMouseDevice->SetCooperativeLevel( *m_hWnd,
 														   DISCL_EXCLUSIVE | DISCL_FOREGROUND ) ) )
 		{
 			return hr;
@@ -157,7 +159,7 @@ HRESULT CDevice::InitMouseDevice ( bool bForeGroundMode )
 	else
 	{
 		//	マウスの動作の設定
-		if(FAILED (hr = m_pMouseDevice->SetCooperativeLevel( m_hWnd,
+		if(FAILED (hr = m_pMouseDevice->SetCooperativeLevel( *m_hWnd,
 														   DISCL_EXCLUSIVE | DISCL_BACKGROUND ) ) )
 		{
 			/*return hr;*/

@@ -5,12 +5,17 @@
 
 #include "Result.h"
 
+bool Result::Init()
+{
+
+	return true;
+}
 
 //	
 bool Result::Control()
 {
 
-	return true;
+	return false;
 }
 
 //	

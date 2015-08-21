@@ -8,6 +8,7 @@
 
 #include "gameObject.h"
 #include "ShipObject.h"
+#include "BoardOfFrame.h"
 
 #define _STAGE_COLUMN_MAX_ 10	///<	ステージの行数
 #define _STAGE_LINE_MAX_	10	///<	ステージの列数
@@ -17,20 +18,15 @@
 class StageObject : public CGameObject
 {
 public:
-	unsigned char m_stageArray[_PLAYER_NUM_][_STAGE_COLUMN_MAX_][_STAGE_LINE_MAX_];
-
+	unsigned char	m_stageArray[_PLAYER_NUM_][_STAGE_COLUMN_MAX_][_STAGE_LINE_MAX_];	///<ステージ上の情報
+	BoardOfFrame	m_stageBlock[_PLAYER_NUM_][_STAGE_COLUMN_MAX_][_STAGE_LINE_MAX_];	///<ステージブロックの座標
 
 public:
 	/**
 	*@brief	コンストラクタ
 	*/
-	StageObject::StageObject() : CGameObject(){
-		for( int iColumn = 0; iColumn < _STAGE_COLUMN_MAX_; iColumn++ ){
-			for( int iLine = 0; iLine < _STAGE_LINE_MAX_; iLine++ )	{
-				m_stageArray[0][iColumn][iLine] = 0;	///<	プレイヤー1のステージデータ初期化
-				m_stageArray[1][iColumn][iLine] = 0;	///<	プレイヤー2のステージデータ初期化
-			}
-		}
+	StageObject() : CGameObject(){
+			
 	}
 
 	bool Init();
@@ -39,7 +35,14 @@ public:
 
 	void Draw(){};
 
-	bool HitStageCheck();
+	/**
+	*@brief	ステージブロックのチェック
+	*@param[in]	_player	プレイヤーのID
+	*@param[in]	_column	行
+	*@param[in]	_line	列
+	*@param[in]	_vol	判定するブロックと比較する値
+	*/
+	bool CheckStageBlock( int _player, int _column, int _line, unsigned char _vol );
 	
 	void SetShip( ShipObject* _pShip );
 

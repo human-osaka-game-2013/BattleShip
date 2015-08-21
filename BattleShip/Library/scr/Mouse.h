@@ -87,7 +87,7 @@ public:
 
 	//	マウス座標の取得と毎フレーム間の移動量を更新。
 	//	引数1：ウインドウハンドル
-	void CursorSet(HWND hWnd);
+	void CursorSet(HWND* hWnd);
 
 };
 

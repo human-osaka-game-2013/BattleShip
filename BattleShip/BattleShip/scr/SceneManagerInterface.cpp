@@ -6,6 +6,9 @@ void CSceneManager::Manage ()
 {
 	static int	iBeforeScene = SCENE_NONE;	//	前のシーン。最初だけNONEで初期化
 
+	m_pMouse->AllButtonCheck();	///<マウスボタンの状態更新
+	m_pMouse->CursorSet( m_pDevice->GetWindowHandle() );	///<マウス座標更新
+
 	//	シーン変更フラグが立っているので、CSceneを継承しているクラスからIDを引き抜く
 	if ( GetChangeSceneFlag() == true )
 		iCurrentScene = m_sceneObj->GetSceneID();	//	現在のシーンを切り替える

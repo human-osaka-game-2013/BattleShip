@@ -6,6 +6,11 @@
 #ifndef	_GAMESTATE_H_
 #define _GAMESTATE_H_
 
+#include "Player.h"
+#include "StageObject.h"
+#include "DrawManager.h"
+#include "Mouse.h"
+
 class GameState
 {
 public:
@@ -22,8 +27,16 @@ public:
 		STATE_STAGE_EFFECT,
 	};
 
-private:
+protected:
 	_STATE_NUM_ m_stateID;	///<	自身のステートのID	
+	Player* m_pPlayer[_PLAYER_NUM_];	///<	駒データ格納用
+	StageObject* m_pStage;	///<	ステージデータ格納用
+	int m_playerID;
+	
+//	デバイス
+protected:
+	CDrawManager*	m_pDrawManager;	///<	2D描画管理クラスポインタ(constポインタ)
+	CMouse*			m_pMouse;		///<	マウス管理クラスポインタ(constポインタ)
 
 public:
 	/**
@@ -51,6 +64,42 @@ public:
 	*/
 	_STATE_NUM_ GetState(){ return m_stateID; }
 
+	/**
+	*@brief	プレイヤークラスポインタをセット
+	*@param[in]	_pPlayer	プレイヤーオブジェクトポインタ
+	*@param[in]	_playerID	何番のプレイヤーか
+	*/
+	void SetPlayerPtr( Player* _pPlayer, int _playerID ){ 
+		m_pPlayer[_playerID] = _pPlayer;
+	}
+
+	/**
+	*@brief	ステージクラスポインタをセット
+	*@param[in]	_pPlayer	ステージクラスポインタを
+	*@param[in]	_playerID	何番のプレイヤーか
+	*/
+	void SetStagePtr( StageObject* _pStage ){ 
+		m_pStage = _pStage;
+	}
+
+	/**
+	*@brief	描画クラスセット
+	*/
+	void SetDraw( CDrawManager* const _pDrawManager ){
+		m_pDrawManager = _pDrawManager;
+	}
+
+	/**
+	*@brief	マウスクラスセット
+	*/
+	void SetMouse( CMouse* const _pMouse ){
+		m_pMouse = _pMouse;
+	}
+
+	/**
+	*@brief	プレイヤーIDセット
+	*/
+	void SetPlayerID( int _playerID ){ m_playerID = _playerID; }
 };
 
 #endif

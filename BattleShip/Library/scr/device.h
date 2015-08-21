@@ -21,14 +21,14 @@ private:
 	LPDIRECTINPUT8			m_pDinput;		///<インプット -> 入力処理
 	LPDIRECTINPUTDEVICE8	m_pKeyDevice;	///<キーデバイス -> 外部キー入力
 	LPDIRECTINPUTDEVICE8	m_pMouseDevice;	///<マウスデバイス -> 外部マウス入力
-	HWND					m_hWnd;			///<ウインドウハンドル
+	HWND*					m_hWnd;			///<ウインドウハンドル
 
 public:
 	/**
 	*@brief	コンストラクタ
 	*@param[in]	_hWnd	ウインドウハンドル
 	*/
-	CDevice( HWND _hWnd );
+	CDevice( HWND* _hWnd );
 
 	/**
 	*@brief	デストラクタ
@@ -102,7 +102,7 @@ public:
 	*@brief	ウインドウハンドル取得
 	*@return	m_hWnd
 	*/
-	HWND	GetWindowHandle(){ return m_hWnd; }
+	HWND*	GetWindowHandle(){ return m_hWnd; }
 
 };
 

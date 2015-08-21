@@ -15,8 +15,7 @@ class SetShip : public GameState
 private:
 	bool m_SetCompFlag;	///<	Control返り値兼、駒の配置完了フラグ
 	int m_SetCount;		///<	駒の配置回数（どれだけ配置しているか）
-	Player* m_pShip;	///<	駒データ格納用
-	StageObject* m_pStage;	///<	ステージデータ格納用
+	
 	
 public:
 	/**

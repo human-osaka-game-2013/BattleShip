@@ -23,7 +23,7 @@ StateManager::StateManager( Player* const _pPlayer1, Player* const _pPlayer2,
 							StageObject* const _pStageObject, const int _playerID) 
 	: m_pPlayer1(_pPlayer1), m_pPlayer2(_pPlayer2), m_pStageObject( _pStageObject), m_playerID(_playerID)
 {
-	StateInit();
+
 }
 
 //	ステートの初期化
@@ -36,7 +36,6 @@ void StateManager::StateInit()
 	///<画面上部から１１マス分目まで盤面フレームがあるので11/16となる。
 	m_PlayerFrame[0].Init( _POS_PLAYER1FRAME_, _SIZE_PLAYERFRAME_ );
 	m_PlayerFrame[1].Init( _POS_PLAYER2FRAME_, _SIZE_PLAYERFRAME_ );
-	
 	
 	for( int iPlayer=0; iPlayer<_PLAYER_NUM_; iPlayer++ )	///<表示位置などを予め初期化しておき、描画時や当たり判定時などにも利用する。
 	{
@@ -150,14 +149,11 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 		for( int ic=0; ic<_STAGE_COLUMN_MAX_; ic++ ){	
 			//	列
 			for( int il=0; il<_STAGE_LINE_MAX_; il++ ){
-				//	基準点の計算。ただのループ回数に合わえてブロック幅分座標を調節
-				tempX = ( ic*( _BLOCK_WIDTH_SIZE_ ))+( _BLOCK_WIDTH_SIZE_ );
-				tempY = ( il*( _BLOCK_HEIGHT_SIZE_ ))+( _BLOCK_HEIGHT_SIZE_ );
-				if( ip == 1 )	//	プレイヤー2の表示のみX座標をずらす。
-					tempX += _BLOCK_WIDTH_SIZE_*11;
-
+				m_pStageObject->m_stageBlock[ip][ic][il].GetPosition( &tempX, &tempY );
+				
 				_drawManager->CustomCorolDraw( _TEX_BLOCK_, tempX, tempY, 
-					_BLOCK_WIDTH_SIZE_,  _BLOCK_HEIGHT_SIZE_,
+					m_pStageObject->m_stageBlock[ip][ic][il].GetWidth(), 
+					m_pStageObject->m_stageBlock[ip][ic][il].GetHeight(),
 					0.f, 0.f, 
 					1.f, 1.f,
 					100, 200, 200, 200);	///<	マスの描画
@@ -245,6 +241,15 @@ bool StateManager::ChangeState( _STATE_NUM_ _stateType )
 		break;
 	}
 	m_currentState = _stateType;
+
+	//	ステートが変わったので、一連の初期化を行う
+	m_pGameState->SetPlayerPtr( m_pPlayer1, 0 );
+	m_pGameState->SetPlayerPtr( m_pPlayer2, 1 );
+	m_pGameState->SetStagePtr( m_pStageObject );
+	m_pGameState->SetDraw( m_pDrawManager );
+	m_pGameState->SetMouse( m_pMouse );
+	m_pGameState->SetPlayerID( m_playerID );
+	m_pGameState->Init();	///<最後に
 
 	return true;
 }

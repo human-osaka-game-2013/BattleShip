@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "StageObject.h"
 #include "DrawManager.h"
+#include "BoardOfFrame.h"
 
 #define _BLOCK_WIDTH_SIZE_	WIDTH/_BLOCK_WIDTH_MAX_
 #define _BLOCK_HEIGHT_SIZE_	HEIGHT/_BLOCK_HEIGHT_MAX_
@@ -30,34 +31,7 @@ public:
 		STATE_STAGE_EFFECT,
 	};
 
-public:
-	/**
-	*@brief	盤面のフレームオブジェクトクラス（描画用）
-	*@details	ステージのUI要素などを別のクラスとして持たせる。@n
-				ステージやプレイヤー情報は必要に応じてメンバからもらう。
-	*/
-	class BoardOfFrame : public CGameObject
-	{
-	private:
-		float fWidth ,fHeight;
-
-	public:
-		/**
-		*@brief	初期化
-		*/
-		void Init( float _fx, float _fy, float _fWidth, float _fHeight )
-		{
-			SetPosition(_fx, _fy, 0.5f);
-			fHeight = _fHeight;
-			fWidth = _fWidth;
-		}
-		void Control(){};
-		void Draw(){};
-		void Free(){};
-		float GetWidth(){ return fWidth; }
-		float GetHeight(){ return fHeight; }
-	};
-
+//	通常のメンバ変数
 private:
 	GameState*		m_pGameState;	///<	戦闘ステートパターンオブジェクトのポインタ
 	_STATE_NUM_		m_beforeState;	///<	以前のステートパターン
@@ -69,6 +43,12 @@ private:
 	BoardOfFrame	m_StageFrame;	///<	ステージ部分のフレームオブジェクト
 	BoardOfFrame	m_PlayerFrame[_PLAYER_NUM_];	///<	プレイヤー情報のフレームオブジェクト	
 	BoardOfFrame	m_ShipFrame[_PLAYER_NUM_][ShipObject::TYPE_MAX];
+
+//	デバイス
+private:
+	CDrawManager*	m_pDrawManager;	///<	2D描画管理クラスポインタ(constポインタ)
+	CMouse*			m_pMouse;			///<	マウス管理クラスポインタ(constポインタ)
+
 public:
 	/**
 	*@brief	コンストラクタ
@@ -79,7 +59,7 @@ public:
 	*@brief	解放処理
 	*/
 	void Free();
-
+	
 	/**
 	*@brief	ステートパターンの切り替え
 	*param[in]	_stateType	
@@ -107,6 +87,22 @@ public:
 	*@brief	ステートオブジェクトの消去
 	*/
 	void StateDelete();
+
+
+	/**
+	*@brief	描画クラスセット
+	*/
+	void SetDraw( CDrawManager* const _pDrawManager ){
+		m_pDrawManager = _pDrawManager;
+	}
+
+	/**
+	*@brief	マウスクラスセット
+	*/
+	void SetMouse( CMouse* const _pMouse ){
+		m_pMouse = _pMouse;
+	}
+	
 };
 
 

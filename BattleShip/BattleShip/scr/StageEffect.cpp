@@ -5,12 +5,17 @@
 
 #include "StageEffect.h"
 
-//	
+bool StageEffect::Init()
+{
+
+	return false;
+}
+
 bool StageEffect::Control()
 {
 
 
-	return true;
+	return false;
 }
 
 //	

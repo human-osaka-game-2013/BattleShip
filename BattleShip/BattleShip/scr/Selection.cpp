@@ -5,11 +5,17 @@
 
 #include "Selection.h"
 
+bool Selection::Init()
+{
+
+	return true;
+}
+
 //	
 bool Selection::Control()
 {
 
-	return true;
+	return false;
 }
 
 //	

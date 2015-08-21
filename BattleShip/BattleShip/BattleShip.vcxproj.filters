@@ -37,6 +37,9 @@
     <Filter Include="ソース ファイル\State">
       <UniqueIdentifier>{a617e599-c3f9-44bb-bfb9-0fb3a320ce70}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Game">
+      <UniqueIdentifier>{bded7a2e-8734-4092-956d-e0dad70313fd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Library\scr\WinMain.cpp">
@@ -87,9 +90,6 @@
     <ClCompile Include="scr\SetShip.cpp">
       <Filter>ソース ファイル\State</Filter>
     </ClCompile>
-    <ClCompile Include="scr\Result.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="scr\Selection.cpp">
       <Filter>ソース ファイル\State</Filter>
     </ClCompile>
@@ -99,17 +99,11 @@
     <ClCompile Include="scr\GameState.cpp">
       <Filter>ソース ファイル\State</Filter>
     </ClCompile>
+    <ClCompile Include="scr\Result.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="scr\GameScene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\StageObject.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\Player.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="scr\AircraftCarrier.h">
       <Filter>ヘッダー ファイル\Ship</Filter>
     </ClInclude>
@@ -148,6 +142,18 @@
     </ClInclude>
     <ClInclude Include="scr\StateManager.h">
       <Filter>ヘッダー ファイル\State</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\BoardOfFrame.h">
+      <Filter>ヘッダー ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\GameScene.h">
+      <Filter>ヘッダー ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\StageObject.h">
+      <Filter>ヘッダー ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\Player.h">
+      <Filter>ヘッダー ファイル\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

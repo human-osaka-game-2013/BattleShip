@@ -28,7 +28,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	
 	CreateWindowProcess ( hInstance, &hWnd );
 
-	CDevice deviceObj( hWnd );	///<デバイス管理クラスオブジェクト
+	CDevice deviceObj( &hWnd );	///<デバイス管理クラスオブジェクト
 
 	if( FAILED (deviceObj.InitDevice())) return 0;	///<デバイス管理クラスの初期化
 

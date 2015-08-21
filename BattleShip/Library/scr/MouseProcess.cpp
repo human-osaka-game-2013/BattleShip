@@ -78,11 +78,11 @@ bool CMouse::MouseStCheck ( int _st, int _mouseSt )
 
 //	マウス座標の取得と毎フレーム間の移動量を更新。
 //	引数1：ウインドウハンドル
-void CMouse::CursorSet(HWND hWnd)
+void CMouse::CursorSet(HWND* hWnd)
 {
 	GetCursorPos( &m_poCurrentCursor );
 
-	ScreenToClient( hWnd, &m_poCurrentCursor );
+	ScreenToClient( *hWnd, &m_poCurrentCursor );
 
 	m_moveMouseVol.lMVolX = m_poCurrentCursor.x - m_poBeforeCursor.x;
 	m_moveMouseVol.lMVolY = m_poCurrentCursor.y - m_poBeforeCursor.y;

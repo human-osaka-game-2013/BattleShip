@@ -94,6 +94,7 @@
   <ItemGroup>
     <ClInclude Include="scr\AircraftCarrier.h" />
     <ClInclude Include="scr\BattleShip.h" />
+    <ClInclude Include="scr\BoardOfFrame.h" />
     <ClInclude Include="scr\Cruiser.h" />
     <ClInclude Include="scr\Destroyer.h" />
     <ClInclude Include="scr\GameScene.h" />
