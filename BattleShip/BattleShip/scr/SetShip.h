@@ -39,6 +39,18 @@ public:
 	void ComStandby();
 
 	/**
+	*@brief	盤面総チェックのルーチン処理
+	*@return	判定結果	0：クリックの判定を通らなかった。@n
+				1：マスがすでに埋まっていたorそのマスだと置けない。@n
+				2：クリックしたマスに駒を配置出来た。
+	*/
+	int CheckBoard();
+
+	/**
+	*@brief	
+	*/
+
+	/**
 	*@brief	配置回数の取得
 	*/
 	int GetSetCount(){ return m_SetCount; }

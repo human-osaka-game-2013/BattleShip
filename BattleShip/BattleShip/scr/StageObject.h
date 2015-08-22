@@ -44,6 +44,16 @@ public:
 	*/
 	bool CheckStageBlock( int _player, int _column, int _line, unsigned char _vol );
 	
+	/**
+	*@brief	ステージブロックのチェック
+	*@param[in]	_player	プレイヤーのID
+	*@param[in]	_column	行
+	*@param[in]	_line	列
+	*@param[in]	_vol	判定するブロックと比較する値
+	*/
+	bool CheckStageBlock( int _player, int _column, int _line, ShipObject* _ship );
+	
+
 	void SetShip( ShipObject* _pShip );
 
 	/**

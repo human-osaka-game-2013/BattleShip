@@ -46,3 +46,10 @@ bool StageObject::CheckStageBlock( int _player, int _column, int _line, unsigned
 	return false;
 }
 
+bool StageObject::CheckStageBlock( int _player, int _column, int _line, ShipObject* _ship )
+{
+	for(  )
+
+	return false;
+}
+
