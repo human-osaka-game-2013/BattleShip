@@ -18,7 +18,13 @@ bool SetShip::Control()
 	
 	m_SetCompFlag = false;
 
-	CheckBoard();
+	int iCheckResult = 0;
+	iCheckResult = CheckBoard();
+
+	if( iCheckResult == 2 )
+		m_SetCount++;
+
+
 
 	return m_SetCompFlag;
 }
@@ -37,15 +43,22 @@ int SetShip::CheckBoard()
 			if( m_pStage->m_stageBlock[m_playerID-1][iColumn][iLine].HitBlockCheck( tempX, tempY )
 				&& m_pMouse->MouseStCheck( MOUSE_L, PUSH ))
 			{
-
-				//	マス内のデータが空白（0）なら
-				if(m_pStage->CheckStageBlock( m_playerID, iColumn, iLine, 0 ))
+				int iCheckResult=0;
+				iCheckResult = m_pStage->CheckStageBlock( m_playerID, iColumn, iLine, 
+												m_pPlayer[m_playerID]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)m_SetCount ));
+				if( iCheckResult != 0 )	///<駒を置けるマスじゃなかった。
+				{	
+					return 1;
+				}
+				else	///<置けるマス。
 				{
-					
+					return 2;
 				}
 			}
 		}
 	}
+
+	return 0;
 }
 
 //	

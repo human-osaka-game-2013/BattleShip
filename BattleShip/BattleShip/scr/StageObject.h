@@ -50,8 +50,12 @@ public:
 	*@param[in]	_column	行
 	*@param[in]	_line	列
 	*@param[in]	_vol	判定するブロックと比較する値
+	*@return	0：ステージ上の指定範囲とブロックの実体が接触していない場合。@n
+				1：ステージ外にブロックの実体があった場合。@n
+				2：指定したブロックの範囲にすでにステージ上で何かが存在していた場合。@n
+				-1：上記以外の事が発生した場合。
 	*/
-	bool CheckStageBlock( int _player, int _column, int _line, ShipObject* _ship );
+	int CheckStageBlock( int _player, int _column, int _line, ShipObject* _ship );
 	
 
 	void SetShip( ShipObject* _pShip );

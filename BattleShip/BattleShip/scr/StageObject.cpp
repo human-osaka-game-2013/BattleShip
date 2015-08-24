@@ -46,10 +46,36 @@ bool StageObject::CheckStageBlock( int _player, int _column, int _line, unsigned
 	return false;
 }
 
-bool StageObject::CheckStageBlock( int _player, int _column, int _line, ShipObject* _ship )
+int StageObject::CheckStageBlock( int _player, int _column, int _line, ShipObject* _ship )
 {
-	for(  )
+	if( _player > _PLAYER_NUM_ || _player <= 0 )	
+		return -1;	///<	プレイヤーIDが1か2以外だった場合
 
-	return false;
+	_player-=1;	///<	配列指数用に直す
+
+	for( int iColumn = 0, iStageCol = _column-2; iColumn < _SHIP_ARRAY_INDEX_; iColumn++, iStageCol++ ){
+		for( int iLine = 0, iStageLine = _line-2 ; iLine < _SHIP_ARRAY_INDEX_; iLine++, iStageLine++ ){
+		
+			bool bStageOutside = false;	///<	駒の配列情報がステージからはみ出てしまう場合のフラグ
+		
+			//	指定したブロック中心に5×5マス範囲調べる際に、ステージ外を調べてしまわない様に
+			if( iStageCol >= _STAGE_COLUMN_MAX_ || iStageCol < 0 ||
+				iStageLine >= _STAGE_LINE_MAX_ || iStageLine < 0 ) {
+				bStageOutside = true;
+			}
+	
+			//	指定したブロック範囲がステージからはみ出た場合
+			if( bStageOutside ){
+				if( _ship->m_shipArray[iColumn][iLine] != 0 )
+					return 1;	///<	ステージから出ていて、駒の一部が存在していれば駒自体がはみ出ている場合なので、指定した場所は無効である。
+			} else if( m_stageArray[_player][iStageCol][iStageLine] != 0 ) {
+				if( _ship->m_shipArray[iColumn][iLine] != 0 )
+					return 2;
+
+			}
+		}
+
+	}
+	return 0;
 }
 

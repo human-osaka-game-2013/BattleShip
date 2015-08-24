@@ -29,6 +29,13 @@ void Player::Init( int _userID )
 	}
 }
 
+ShipObject* Player::GetShip( ShipObject::_SHIP_TYPE_NUM_ _shipType )
+{
+	if( _shipType < ShipObject::TYPE_MAX && _shipType > ShipObject::TYPE_NONE )
+		return m_pShip[_shipType];
+	return NULL;	
+}
+
 bool Player::Free()
 {
 	for( int iCount = 0; iCount < m_pShip.size(); iCount++ ){

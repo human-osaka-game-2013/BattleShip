@@ -7,6 +7,6 @@
 
 void Destroyer::Init( int _userID )
 {
-	ReadTableData( "../table/testTable.csv", ShipObject::TABLE_MAX, _SHIP_ARRAY_INDEX_);
-	//SetDirection();
+	//	ファイル読み込みテスト
+	ReadTableData( "table/testTable.csv", ShipObject::TABLE_MAX, _SHIP_ARRAY_INDEX_);
 }
