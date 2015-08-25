@@ -44,10 +44,17 @@ void StateManager::StateInit()
 			float tempW = _BLOCK_WIDTH_SIZE_, tempH = _BLOCK_HEIGHT_SIZE_;	///<駒別に可変性があるので縦横幅の仮保存をして少し効率を上げる。
 			tempX = tempW;
 			tempY = (_STAGE_HEIGHT_MAX_*tempH)+(iShip*tempH);	///<Y座標はまずプレイヤー情報枠の基準点から
-			if( iPlayer == 0 )
+			
+			//	駒の向きの初期化
+			ShipObject* tempShip;
+			
+			if( iPlayer == 0 ){
 				tempX += tempW*5;	///<プレイヤー1は1マス目から5マス分ずらすので
-			else
-				tempX += tempW*11;	///<プレイヤー1は1マス目から11マス分ずらすので
+				tempShip = m_pPlayer1->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
+			}else{
+				tempX += tempW*11;	///<プレイヤー2は1マス目から11マス分ずらすので
+				tempShip = m_pPlayer2->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
+			}
 			switch( iShip )	///<	艦種別分岐
 			{
 			case ShipObject::TYPE_AIRCARRIER:	
@@ -65,6 +72,7 @@ void StateManager::StateInit()
 				break;
 
 			}
+			m_ShipFrame[iPlayer][iShip].SetDirection( tempShip->GetDirection() );///<	m_pShipの向き情報をコチラにも適用
 		}
 	}
 }
@@ -151,7 +159,20 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 			for( int il=0; il<_STAGE_LINE_MAX_; il++ ){
 				m_pStageObject->m_stageBlock[ip][ic][il].GetPosition( &tempX, &tempY );
 				
+				int tempA = 0, tempR = 200, tempG = 200, tempB = 200;
+
+				if( m_pStageObject->m_stageArray[ip][ic][il] != 0 )	///<駒があった場所は塗りつぶす（Test）
+				{
+					tempA = 100;
+
 				_drawManager->CustomCorolDraw( _TEX_BLOCK_, tempX, tempY, 
+					m_pStageObject->m_stageBlock[ip][ic][il].GetWidth(), 
+					m_pStageObject->m_stageBlock[ip][ic][il].GetHeight(),
+					0.f, 0.f, 
+					1.f, 1.f,
+					tempA, tempR, tempG, tempB);	///<	マスの描画
+				}
+				_drawManager->CustomCorolDraw( _TEX_BLOCKFRAME_, tempX, tempY, 
 					m_pStageObject->m_stageBlock[ip][ic][il].GetWidth(), 
 					m_pStageObject->m_stageBlock[ip][ic][il].GetHeight(),
 					0.f, 0.f, 

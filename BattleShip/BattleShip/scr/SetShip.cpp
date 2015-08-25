@@ -18,12 +18,18 @@ bool SetShip::Control()
 	
 	m_SetCompFlag = false;
 
-	int iCheckResult = 0;
-	iCheckResult = CheckBoard();
+	if( m_SetCount >= ShipObject::TYPE_MAX )
+		m_SetCompFlag = true;
 
-	if( iCheckResult == 2 )
-		m_SetCount++;
+	
+	if( !m_SetCompFlag )
+	{
+		int iCheckResult = 0;
+		iCheckResult = CheckBoard();
 
+		if( iCheckResult == 2 )
+			m_SetCount++;
+	}
 
 
 	return m_SetCompFlag;
@@ -52,6 +58,8 @@ int SetShip::CheckBoard()
 				}
 				else	///<置けるマス。
 				{
+					m_pStage->SetShip(  m_playerID, iColumn, iLine, 
+												m_pPlayer[m_playerID]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)m_SetCount ) );
 					return 2;
 				}
 			}

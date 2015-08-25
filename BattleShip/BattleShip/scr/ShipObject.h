@@ -8,8 +8,10 @@
 
 #include "gameObject.h"
 #include "read_file.h"
+#include "BoardOfFrame.h"
 
 #define _SHIP_ARRAY_INDEX_	5	///<	駒の配列指数
+#define _SHIP_INIT_DIR_	CGameObject::CH_UP
 
 /**
 *@brief	駒の基底クラス
@@ -51,6 +53,8 @@ protected:
 	int m_searchArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の索敵範囲配列
 	int m_moveArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の移動範囲配列
 
+	
+
 public:
 	/**
 	*@brief	コンストラクタ
@@ -66,6 +70,7 @@ public:
 
 			}
 		}
+		SetDirection( _SHIP_INIT_DIR_ );
 	}
 
 	/**

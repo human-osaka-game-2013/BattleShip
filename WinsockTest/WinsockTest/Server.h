@@ -19,11 +19,8 @@ private:
 	int m_len;	///<	送信メッセージの長さ
 	bool m_reuseFlag;	///<	SO_REUSEADDR有効用
 
-	//----HTTPサーバサンプルテスト用
-	char m_buf[2048];
 	char m_inbuf[2048];
 
-	//----
 public:
 	/**
 	*@brief	ソケット設定メソッド
@@ -39,6 +36,11 @@ public:
 	*@brief	通信終了処理
 	*/
 	void EndConnect();
+
+	/**
+	*@brief	接続後ソケットの取得
+	*/
+	SOCKET* GetConnectedSocket(){ return &m_sock0; }
 };
 
 #endif

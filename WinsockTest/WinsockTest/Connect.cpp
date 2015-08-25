@@ -65,18 +65,16 @@ bool Connect::MakeSocket()
 bool Connect::Receive( char* _buf )
 {
 	int n = 0;
-	do
+	memset(_buf, 0, sizeof(_buf));
+	//	サーバからのデータ受信
+	n = recv( *GetSocket(), _buf, sizeof(_buf), 0 );
+	if( n < 0 )
 	{
-		memset(_buf, 0, sizeof(_buf));
-		//	サーバからのデータ受信
-		n = recv( *GetSocket(), _buf, sizeof(_buf), 0 );
-		if( n < 0 )
-		{
-			DebugMsgBox("%d, %s\n", n, _buf);
-			return false;
-		}
-		fwrite( _buf, n, 1, stdout );
-	}while( n > 0 );
+		DebugMsgBox("%d, %s\n", n, _buf);
+		return false;
+	}
+	printf_s(_buf);
+		
 	return true;
 }
 
@@ -84,13 +82,13 @@ bool Connect::Receive( char* _buf )
 bool Connect::Send( SOCKET* _sock, char *_buf )
 {
 
-	//	HTTPリクエスト送信
 	int n = send(*_sock, _buf, (int)strlen(_buf), 0);
 	if( n < 0 )
 	{
 		DebugMsgBox("send：%d\n", WSAGetLastError() );	///<	送信失敗
 		return false;
 	}
+
 	return true;
 }
 

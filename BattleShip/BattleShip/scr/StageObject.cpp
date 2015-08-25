@@ -19,8 +19,8 @@ bool StageObject::Init()
 				m_stageArray[iPlayer][iColumn][iLine] = 0;	///<	プレイヤー1のステージデータ初期化
 				
 				//	基準点の計算。ただのループ回数に合わえてブロック幅分座標を調節
-				tempX = ( iColumn*( _BLOCK_WIDTH_SIZE_ ))+( _BLOCK_WIDTH_SIZE_ );
-				tempY = ( iLine*( _BLOCK_HEIGHT_SIZE_ ))+( _BLOCK_HEIGHT_SIZE_ );
+				tempX = ( iLine*( _BLOCK_WIDTH_SIZE_ ))+( _BLOCK_WIDTH_SIZE_ );
+				tempY = ( iColumn*( _BLOCK_HEIGHT_SIZE_ ))+( _BLOCK_HEIGHT_SIZE_ );
 				if( iPlayer == 1 )	//	プレイヤー2の表示のみX座標をずらす。
 					tempX += _BLOCK_WIDTH_SIZE_*11;
 
@@ -79,3 +79,32 @@ int StageObject::CheckStageBlock( int _player, int _column, int _line, ShipObjec
 	return 0;
 }
 
+
+bool StageObject::SetShip( int _player, int _column, int _line, ShipObject* _ship )
+{
+	if( _player > _PLAYER_NUM_ || _player <= 0 )	
+		return false;	///<	プレイヤーIDが1か2以外だった場合
+
+	_player-=1;	///<	配列指数用に直す
+
+	for( int iColumn = 0, iStageCol = _column-2; iColumn < _SHIP_ARRAY_INDEX_; iColumn++, iStageCol++ ){
+		for( int iLine = 0, iStageLine = _line-2 ; iLine < _SHIP_ARRAY_INDEX_; iLine++, iStageLine++ ){
+		
+			bool bStageOutside = false;	///<	駒の配列情報がステージからはみ出てしまう場合のフラグ
+		
+			//	指定したブロック中心に5×5マス範囲調べる際に、ステージ外を調べてしまわない様に
+			if( iStageCol >= _STAGE_COLUMN_MAX_ || iStageCol < 0 ||
+				iStageLine >= _STAGE_LINE_MAX_ || iStageLine < 0 ) {
+				bStageOutside = true;
+			}
+	
+			//	指定したブロック範囲がステージからはみ出た場合
+			if( !bStageOutside &&  m_stageArray[_player][iStageCol][iStageLine] == 0 ){
+				if( _ship->m_shipArray[iColumn][iLine] != 0 )
+					m_stageArray[_player][iStageCol][iStageLine] = _ship->m_shipArray[iColumn][iLine];
+			}
+		}
+
+	}
+	return true;
+}

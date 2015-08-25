@@ -13,10 +13,14 @@ void main(int argc, char *argv[])
 	}*/
 	if(ctemp=='c'){
 		Client client;
-		client.m_deststr = "www.google.co.jp";
+		client.m_deststr = "localhost";
 		client.Init();
 		client.ConnectToServer();
-	//	client.Receive();
+	
+		while(1){
+			//client.Receive( client.GetBuf() );
+			client.Send(  client.GetSocket() ,client.GetBuf() );
+		}
 		client.EndConnect();
 	}
 	else if(ctemp=='s')
@@ -24,7 +28,10 @@ void main(int argc, char *argv[])
 		Server server;
 		server.Init();
 		server.KeepListen();
-	//	server.Send();	
+		while(1){
+			//server.Send(  server.GetConnectedSocket() ,server.GetBuf() );
+			server.Receive( server.GetBuf() );
+		}
 		server.EndConnect();
 	}
 	while(1);

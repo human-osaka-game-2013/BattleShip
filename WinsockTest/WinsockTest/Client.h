@@ -13,7 +13,6 @@ class Client : public Connect
 {
 private:
 	struct sockaddr_in m_server;///<	サーバ側アドレス
-	char m_buf[32];
 	
 public:
 	char* m_deststr;	///<	サーバー側のアドレス（文字列）格納ポインタ

@@ -71,7 +71,6 @@
   <ItemGroup>
     <ClInclude Include="Client.h" />
     <ClInclude Include="Connect.h" />
-    <ClInclude Include="ConnectData.h" />
     <ClInclude Include="DebugInterface.h" />
     <ClInclude Include="Server.h" />
   </ItemGroup>

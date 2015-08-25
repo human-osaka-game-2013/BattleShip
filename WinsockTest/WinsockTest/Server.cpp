@@ -37,26 +37,19 @@ bool Server::KeepListen()
 	{
 		DebugMsgBox("listen：%d\n", WSAGetLastError());	///<接続待ちが失敗
 		return false;
+
+		
 	}
-#ifdef _TEST_HTTP_
-	//----HTTPサーバサンプルテスト用
-	//	応答用HTTPメッセージ作成
-	memset( m_buf, 0, sizeof( m_buf ) );
-	_snprintf( m_buf, sizeof( m_buf ),
-		"HTTP/1.0 200 OK\r\n"
-		"Content-Length: 20\r\n"
-		"Content-Type: text/html\r\n"
-		"\r\n"
-		"HELLO\r\n");
-	//----
-#endif
 	while(1)	///	複数回クライアント側からの接続を受け付ける
 	{
+		memset( m_buf, 0, sizeof( m_buf ) );
+		_snprintf( m_buf, sizeof( m_buf ),"Server側から送られた文字列です\n");
+		
 		//	TCPクライアントからの接続要求を受け付ける
 		m_len = sizeof(m_client);
 		m_sock0 = accept( *GetSocket(), (struct sockaddr *)&m_client, &m_len );
 
-		DebugMsgBox("accepted connection from %s, port=%d\n",
+		printf_s("accepted connection from %s, port=%d\n",
           inet_ntoa(m_client.sin_addr), ntohs(m_client.sin_port));
 
 		if( m_sock0 == INVALID_SOCKET ) 
@@ -64,10 +57,11 @@ bool Server::KeepListen()
 			DebugMsgBox("accept : %d\n", WSAGetLastError());	///<	接続失敗
 			return false;
 		}
-		Send( &m_sock0, m_buf );
-
-		// TCPセッションの終了
-		closesocket(m_sock0); 
+		else
+		{
+			break;
+		}
+		
 	}
 	return true;
 }
@@ -75,6 +69,9 @@ bool Server::KeepListen()
 
 void Server::EndConnect()
 {
+	// TCPセッションの終了
+	closesocket(m_sock0); 
+
 	// winsock2の終了処理
 	WSACleanup();
 }

@@ -21,6 +21,9 @@ private:
 	WSADATA	m_wsaData;	///<	Winsockデータ
 	SOCKET	m_sock;		///<	ソケットメンバ
 
+protected:
+	char	m_buf[2048];
+
 public:
 	/**
 	*@brief	初期化
@@ -51,6 +54,11 @@ public:
 	*@brief	通信終了処理
 	*/
 	virtual void EndConnect();
+
+	/**
+	*@brief	文字列取得
+	*/
+	char* GetBuf(){ return m_buf; }
 
 public:
 	WSADATA* GetWsaData(){ return &m_wsaData; }	///<	Winsockデータの取得

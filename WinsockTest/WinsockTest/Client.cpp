@@ -11,7 +11,7 @@ bool Client::SettingSocket()
 {
 	// 接続先指定用構造体の準備
 	m_server.sin_family = AF_INET;
-	m_server.sin_port = htons(80);	///<	ポート番号
+	m_server.sin_port = htons(12345);	///<	ポート番号
 	m_server.sin_addr.S_un.S_addr = inet_addr( m_deststr );
 
 	return true;
@@ -71,13 +71,8 @@ bool Client::ConnectToServer()
 		}
 	}
 
-	//---HTTPで「/」をリクエストする文字列を生成
 	memset( m_buf, 0, sizeof(m_buf) );
-	_snprintf(m_buf, sizeof(m_buf), "GET / HTTP/1.0\r\n\r\n");
-
-	Send( GetSocket(), m_buf );
-
-	Receive( m_buf );
+	_snprintf(m_buf, sizeof(m_buf), "Client側が文字列を送りました。");
 
 	return true;
 }

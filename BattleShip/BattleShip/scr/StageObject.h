@@ -45,11 +45,11 @@ public:
 	bool CheckStageBlock( int _player, int _column, int _line, unsigned char _vol );
 	
 	/**
-	*@brief	ステージブロックのチェック
+	*@brief	ステージブロックのチェック(駒との判定)
 	*@param[in]	_player	プレイヤーのID
 	*@param[in]	_column	行
 	*@param[in]	_line	列
-	*@param[in]	_vol	判定するブロックと比較する値
+	*@param[in]	_ship	指定したブロック中心に比較する駒のポインタ
 	*@return	0：ステージ上の指定範囲とブロックの実体が接触していない場合。@n
 				1：ステージ外にブロックの実体があった場合。@n
 				2：指定したブロックの範囲にすでにステージ上で何かが存在していた場合。@n
@@ -57,8 +57,16 @@ public:
 	*/
 	int CheckStageBlock( int _player, int _column, int _line, ShipObject* _ship );
 	
-
-	void SetShip( ShipObject* _pShip );
+	/**
+	*@brief	ステージブロックへ駒情報をセット
+	*@param[in]	_player	プレイヤーのID
+	*@param[in]	_column	行
+	*@param[in]	_line	列
+	*@param[in]	_ship	指定したブロック中心にセットする駒のポインタ
+	*@return	false：何らかの原因でセットが失敗。@n
+				true：無事に情報をセット完了。
+	*/
+	bool SetShip( int _player, int _column, int _line, ShipObject* _ship );
 
 	/**
 	*@brief	解放処理
