@@ -160,10 +160,16 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 				m_pStageObject->m_stageBlock[ip][ic][il].GetPosition( &tempX, &tempY );
 				
 				int tempA = 0, tempR = 200, tempG = 200, tempB = 200;
-
-				if( m_pStageObject->m_stageArray[ip][ic][il] != 0 )	///<‹î‚ª‚ ‚Á‚½êŠ‚Í“h‚è‚Â‚Ô‚·iTestj
+				int tempArrayData = m_pStageObject->m_stageArray[ip][ic][il];
+			
+				if( tempArrayData != 0 )	///<‹î‚ª‚ ‚Á‚½êŠ‚Í“h‚è‚Â‚Ô‚·iTestj
 				{
 					tempA = 100;
+					if( tempArrayData/100 == 1 ){
+						
+					}else{
+						tempR = 0; tempG = 0; tempB = 0;
+					}
 
 				_drawManager->CustomCorolDraw( _TEX_BLOCK_, tempX, tempY, 
 					m_pStageObject->m_stageBlock[ip][ic][il].GetWidth(), 

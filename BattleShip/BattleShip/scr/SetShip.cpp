@@ -16,12 +16,6 @@ bool SetShip::Init()
 bool SetShip::Control()
 {
 	
-	m_SetCompFlag = false;
-
-	if( m_SetCount >= ShipObject::TYPE_MAX )
-		m_SetCompFlag = true;
-
-	
 	if( !m_SetCompFlag )
 	{
 		int iCheckResult = 0;
@@ -31,6 +25,8 @@ bool SetShip::Control()
 			m_SetCount++;
 	}
 
+	if( m_SetCount >= ShipObject::TYPE_MAX )
+		m_SetCompFlag = true;
 
 	return m_SetCompFlag;
 }
@@ -39,6 +35,8 @@ bool SetShip::Control()
 int SetShip::CheckBoard()
 {
 	bool tempFlag = false;	///<	ネストが深くなる事を防止するために、ブロックのクリック判定がtrue
+	m_pStage->ResetSelect();	///<	ステージの選択状態をリセット
+	
 	//	行
 	for( int iColumn=0; iColumn<_STAGE_COLUMN_MAX_; iColumn++ ){	
 		//	列
@@ -46,8 +44,7 @@ int SetShip::CheckBoard()
 			
 			float tempX = m_pMouse->GetCursorPosX(), tempY = m_pMouse->GetCursorPosY();
 			
-			if( m_pStage->m_stageBlock[m_playerID-1][iColumn][iLine].HitBlockCheck( tempX, tempY )
-				&& m_pMouse->MouseStCheck( MOUSE_L, PUSH ))
+			if( m_pStage->m_stageBlock[m_playerID-1][iColumn][iLine].HitBlockCheck( tempX, tempY ))
 			{
 				int iCheckResult=0;
 				iCheckResult = m_pStage->CheckStageBlock( m_playerID, iColumn, iLine, 
@@ -56,11 +53,17 @@ int SetShip::CheckBoard()
 				{	
 					return 1;
 				}
-				else	///<置けるマス。
+				else ///<置けるマス。
 				{
-					m_pStage->SetShip(  m_playerID, iColumn, iLine, 
+					ShipObject* tempShip = m_pPlayer[m_playerID]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)m_SetCount );
+
+					m_pStage->SetRange( m_playerID, iColumn, iLine, tempShip->m_shipArray);
+
+					if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )) {
+						m_pStage->SetShip( m_playerID, iColumn, iLine, 
 												m_pPlayer[m_playerID]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)m_SetCount ) );
 					return 2;
+					}
 				}
 			}
 		}
