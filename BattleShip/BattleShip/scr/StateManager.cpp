@@ -285,10 +285,11 @@ bool StateManager::ChangeState( _STATE_NUM_ _stateType )
 void StateManager::StateDelete()
 {
 	CLASS_DELETE(m_pGameState);
+	
 }
 
 void StateManager::Free()
 {
+	StateDelete();
 	delete m_pGameState;
-
 }

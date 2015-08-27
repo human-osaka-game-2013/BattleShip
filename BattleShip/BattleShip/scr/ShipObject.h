@@ -53,8 +53,6 @@ protected:
 	int m_searchArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の索敵範囲配列
 	int m_moveArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の移動範囲配列
 
-	
-
 public:
 	/**
 	*@brief	コンストラクタ
@@ -87,6 +85,13 @@ public:
 	*@details	駒データ版
 	*/
 	void SetTable( char* _p, int _iColumn, int _iLine);
+
+	/**
+	*@brief	駒回転処理
+	*@param[in]	_array	回転させる配列
+	*@param[in] _rotType	回転させる方向。true：右回転, false：左回転。
+	*/
+	bool RotationShip( int _arrayType, bool _rotType );
 
 	/**
 	*@brief	解放処理

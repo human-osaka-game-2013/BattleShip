@@ -33,11 +33,7 @@ bool GameScene::Init()
 
 int GameScene::Control()
 {
-	float tempX, tempY;
-	m_background.GetPosition( &tempX, &tempY);
-	m_pDrawManager->VertexDraw( _TEX_BACKGROUND_, tempX, tempY, 
-		m_background.GetWidth(),  m_background.GetHeight(),
-		0.f, 0.f, 1.f, 1.f);
+	
 	m_stateManager->StateCotrol();
 	
 	return 0;
@@ -45,7 +41,11 @@ int GameScene::Control()
 
 void GameScene::Draw()
 {
-
+	float tempX, tempY;
+	m_background.GetPosition( &tempX, &tempY);
+	m_pDrawManager->VertexDraw( _TEX_BACKGROUND_, tempX, tempY, 
+		m_background.GetWidth(),  m_background.GetHeight(),
+		0.f, 0.f, 1.f, 1.f);
 	m_stateManager->StateDraw( m_pDrawManager );
 }
 

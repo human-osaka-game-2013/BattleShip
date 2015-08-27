@@ -19,8 +19,8 @@ public:
 	enum CHARADIRECTION {
 		CH_NONE = -1,
 		CH_LEFT,
-		CH_RIGHT,
 		CH_UP,
+		CH_RIGHT,
 		CH_DOWN,
 		CH_DIRECTION_MAX,
 		

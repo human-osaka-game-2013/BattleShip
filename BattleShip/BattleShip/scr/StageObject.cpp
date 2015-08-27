@@ -17,7 +17,7 @@ bool StageObject::Init()
 			//	列
 			for( int iLine=0; iLine<_STAGE_LINE_MAX_; iLine++ ){
 				m_stageArray[iPlayer][iColumn][iLine] = 0;	///<	プレイヤー1のステージデータ初期化
-				
+
 				//	基準点の計算。ただのループ回数に合わえてブロック幅分座標を調節
 				tempX = ( iLine*( _BLOCK_WIDTH_SIZE_ ))+( _BLOCK_WIDTH_SIZE_ );
 				tempY = ( iColumn*( _BLOCK_HEIGHT_SIZE_ ))+( _BLOCK_HEIGHT_SIZE_ );
@@ -55,15 +55,15 @@ int StageObject::CheckStageBlock( int _player, int _column, int _line, ShipObjec
 
 	for( int iColumn = 0, iStageCol = _column-2; iColumn < _SHIP_ARRAY_INDEX_; iColumn++, iStageCol++ ){
 		for( int iLine = 0, iStageLine = _line-2 ; iLine < _SHIP_ARRAY_INDEX_; iLine++, iStageLine++ ){
-		
+
 			bool bStageOutside = false;	///<	駒の配列情報がステージからはみ出てしまう場合のフラグ
-		
+
 			//	指定したブロック中心に5×5マス範囲調べる際に、ステージ外を調べてしまわない様に
 			if( iStageCol >= _STAGE_COLUMN_MAX_ || iStageCol < 0 ||
 				iStageLine >= _STAGE_LINE_MAX_ || iStageLine < 0 ) {
 				bStageOutside = true;
 			}
-	
+
 			//	指定したブロック範囲がステージからはみ出た場合
 			if( bStageOutside ){
 				if( _ship->m_shipArray[iColumn][iLine] != 0 )
@@ -71,10 +71,8 @@ int StageObject::CheckStageBlock( int _player, int _column, int _line, ShipObjec
 			} else if( m_stageArray[_player][iStageCol][iStageLine] != 0 ) {
 				if( _ship->m_shipArray[iColumn][iLine] != 0 )	///<	ステージに駒が置ける場所
 					return 2;
-
 			}
 		}
-
 	}
 	return 0;
 }
@@ -117,15 +115,15 @@ bool StageObject::SetRange( int _player, int _column, int _line, const int(*_arr
 
 	for( int iColumn = 0, iStageCol = _column-2; iColumn < _SHIP_ARRAY_INDEX_; iColumn++, iStageCol++ ){
 		for( int iLine = 0, iStageLine = _line-2 ; iLine < _SHIP_ARRAY_INDEX_; iLine++, iStageLine++ ){
-		
+
 			bool bStageOutside = false;	///<	駒の配列情報がステージからはみ出てしまう場合のフラグ
-		
+
 			//	指定したブロック中心に5×5マス範囲調べる際に、ステージ外を調べてしまわない様に
 			if( iStageCol >= _STAGE_COLUMN_MAX_ || iStageCol < 0 ||
 				iStageLine >= _STAGE_LINE_MAX_ || iStageLine < 0 ) {
 				bStageOutside = true;
 			}
-	
+
 			//	ステージ内で、今調べてる配列情報の中身が0じゃ無かったら（駒や攻撃などの範囲情報があれば）
 			if( !bStageOutside && _array[iColumn][iLine] != 0  ){
 				m_stageArray[_player][iStageCol][iStageLine] += 100;

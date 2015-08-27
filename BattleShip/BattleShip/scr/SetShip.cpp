@@ -15,19 +15,26 @@ bool SetShip::Init()
 //	
 bool SetShip::Control()
 {
-	
+	m_pStage->ResetSelect();	///<	ステージの選択状態をリセット
+
 	if( !m_SetCompFlag )
 	{
 		int iCheckResult = 0;
+		//	駒が置ける置けない関係なく、右クリックで駒を回転させる
+		if( m_pMouse->MouseStCheck( MOUSE_R, PUSH ) ) {
+			ShipObject* tempShip = m_pPlayer[m_playerID]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)m_SetCount );
+			tempShip->RotationShip( 0, true );
+		}
 		iCheckResult = CheckBoard();
 
 		if( iCheckResult == 2 )
 			m_SetCount++;
 	}
 
-	if( m_SetCount >= ShipObject::TYPE_MAX )
+	if( m_SetCount >= ShipObject::TYPE_MAX ){
 		m_SetCompFlag = true;
-
+		m_pStage->ResetSelect();
+	}
 	return m_SetCompFlag;
 }
 
@@ -35,8 +42,7 @@ bool SetShip::Control()
 int SetShip::CheckBoard()
 {
 	bool tempFlag = false;	///<	ネストが深くなる事を防止するために、ブロックのクリック判定がtrue
-	m_pStage->ResetSelect();	///<	ステージの選択状態をリセット
-	
+
 	//	行
 	for( int iColumn=0; iColumn<_STAGE_COLUMN_MAX_; iColumn++ ){	
 		//	列
@@ -58,7 +64,7 @@ int SetShip::CheckBoard()
 					ShipObject* tempShip = m_pPlayer[m_playerID]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)m_SetCount );
 
 					m_pStage->SetRange( m_playerID, iColumn, iLine, tempShip->m_shipArray);
-
+					//	駒が置けるマスであり、左クリックを押した時
 					if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )) {
 						m_pStage->SetShip( m_playerID, iColumn, iLine, 
 												m_pPlayer[m_playerID]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)m_SetCount ) );
