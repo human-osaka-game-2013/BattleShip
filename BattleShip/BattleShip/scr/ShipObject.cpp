@@ -82,17 +82,52 @@ bool ShipObject::RotationShip( int _arrayType, bool _rotType )
 		for( int iLine = 0; iLine < _SHIP_ARRAY_INDEX_; iLine++)
 		{
 			if( _rotType ){
-				_array[iColumn][iLine] = tempArray[iLine][(_SHIP_ARRAY_INDEX_-1)-iColumn];
+				_array[iColumn][iLine] = tempArray[(_SHIP_ARRAY_INDEX_-1)-iLine][iColumn];
 				if( _array2 != NULL )
 					_array2[iColumn][iLine] = tempArray2[iLine][(_SHIP_ARRAY_INDEX_-1)-iColumn];
 			} else {
-				_array[iColumn][iLine] = tempArray[(_SHIP_ARRAY_INDEX_-1)-iColumn][iLine];
+				_array[iLine][iColumn] = tempArray[(_SHIP_ARRAY_INDEX_-1)-iColumn][iLine];
 				if( _array2 != NULL )
-					_array2[iColumn][iLine] = tempArray2[(_SHIP_ARRAY_INDEX_-1)-iColumn][iLine];
+					_array2[iLine][iColumn] = tempArray2[(_SHIP_ARRAY_INDEX_-1)-iColumn][iLine];
 			}
 		}
 	}
 	return false;
+}
+
+void ShipObject::InitVertex( _SHIP_TYPE_NUM_ _shipType )
+{
+	int frontBlockNum;
+	int backBlockNum;
+	switch( _shipType )
+	{
+		case TYPE_AIRCARRIER:
+			frontBlockNum = 2;
+			backBlockNum = 2;
+			break;
+		case TYPE_BATTLESHIP:
+			frontBlockNum = 2;
+			backBlockNum = 1;
+			break;
+		case TYPE_CRUISER:
+			frontBlockNum = 1;
+			backBlockNum = 1;
+			break;
+		case TYPE_DESTROYER:
+		case TYPE_SUBMARINE:
+			frontBlockNum = 1;
+			backBlockNum = 0;
+			break;
+	}
+
+	m_vertex[0].x = -_BLOCK_WIDTH_SIZE_/2;
+	m_vertex[1].x = _BLOCK_WIDTH_SIZE_/2;
+	m_vertex[2].x = _BLOCK_WIDTH_SIZE_/2;
+	m_vertex[3].x = -_BLOCK_WIDTH_SIZE_/2;
+	m_vertex[0].y = -_BLOCK_HEIGHT_SIZE_/2 -(_BLOCK_HEIGHT_SIZE_*frontBlockNum);
+	m_vertex[1].y = -_BLOCK_HEIGHT_SIZE_/2 -(_BLOCK_HEIGHT_SIZE_*frontBlockNum);
+	m_vertex[2].y = _BLOCK_HEIGHT_SIZE_/2 +(_BLOCK_HEIGHT_SIZE_*backBlockNum);
+	m_vertex[3].y = _BLOCK_HEIGHT_SIZE_/2 +(_BLOCK_HEIGHT_SIZE_*backBlockNum);
 }
 
 void  ShipObject::Free()

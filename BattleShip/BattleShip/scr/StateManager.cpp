@@ -162,15 +162,18 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 				int tempA = 0, tempR = 200, tempG = 200, tempB = 200;
 				int tempArrayData = m_pStageObject->m_stageArray[ip][ic][il];
 			
-				if( tempArrayData != 0 )	///<駒があった場所は塗りつぶす（Test）
+				if( tempArrayData != 0 )	///<駒のある場所は塗りつぶす
 				{
 					tempA = 100;
-					if( tempArrayData/100 == 1 ){
-						
-					}else{
+					if( tempArrayData/100 == 1 ){	///<選択されているマス
+						tempR = 200, tempG = 200, tempB = 200;
+
+					}else if( tempArrayData/100 == 2) {	///<駒が置けないor選択範囲が何かに接触しているマス
+						tempR = 255; tempG = 0; tempB = 0;
+					}
+					if( tempArrayData%100 != 0 ) {	///<選択マスより駒が置かれてる場合を優先
 						tempR = 0; tempG = 0; tempB = 0;
 					}
-
 				_drawManager->CustomCorolDraw( _TEX_BLOCK_, tempX, tempY, 
 					m_pStageObject->m_stageBlock[ip][ic][il].GetWidth(), 
 					m_pStageObject->m_stageBlock[ip][ic][il].GetHeight(),

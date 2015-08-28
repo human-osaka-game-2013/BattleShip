@@ -9,6 +9,7 @@
 #include "gameObject.h"
 #include "read_file.h"
 #include "BoardOfFrame.h"
+#include "StageObject.h"
 
 #define _SHIP_ARRAY_INDEX_	5	///<	駒の配列指数
 #define _SHIP_INIT_DIR_	CGameObject::CH_UP
@@ -44,14 +45,17 @@ public:
 
 private:
 	int m_userID;
-	
+	int m_posColumn;
+	int m_posLine;
+
 public:
 	int m_shipArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の実体配列
-	
+			
 protected:
 	int m_actionArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の攻撃範囲配列
 	int m_searchArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の索敵範囲配列
 	int m_moveArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の移動範囲配列
+	CUSTOMVERTEX	m_vertex[4];
 
 public:
 	/**
@@ -94,6 +98,11 @@ public:
 	bool RotationShip( int _arrayType, bool _rotType );
 
 	/**
+	*@brief	頂点情報の初期化
+	*/
+	void InitVertex( _SHIP_TYPE_NUM_ _shipType );
+
+	/**
 	*@brief	解放処理
 	*/
 	void  Free();
@@ -103,6 +112,24 @@ public:
 	*@brief	駒の持ち主ID取得
 	*/
 	int GetUserID(){ return m_userID; }	
+
+	/**
+	*@brief	ステージ上での駒の中心位置のセット
+	*/
+	void SetArrayPos( int _column, int _line ){ 
+		m_posColumn = _column;
+		m_posLine	= _line;
+	}
+
+	/**
+	*@brief	ステージ上での駒の中心位置のセット
+	*/
+	void GetArrayPos( int& _column, int& _line ){ 
+		_column	= m_posColumn;
+		_line	= m_posLine;
+	}
+
+
 };
 
 

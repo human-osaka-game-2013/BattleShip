@@ -53,22 +53,23 @@ int SetShip::CheckBoard()
 			if( m_pStage->m_stageBlock[m_playerID-1][iColumn][iLine].HitBlockCheck( tempX, tempY ))
 			{
 				int iCheckResult=0;
-				iCheckResult = m_pStage->CheckStageBlock( m_playerID, iColumn, iLine, 
-												m_pPlayer[m_playerID]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)m_SetCount ));
+				ShipObject* tempShip = m_pPlayer[m_playerID]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)m_SetCount );
+				//	ステージブロックのチェック
+				iCheckResult = m_pStage->CheckStageBlock( m_playerID, iColumn, iLine, tempShip);
+				
 				if( iCheckResult != 0 )	///<駒を置けるマスじゃなかった。
 				{	
+					//	置けない範囲だった場合も、置けないという情報をステージにセットする
+					m_pStage->SetRange( m_playerID, iColumn, iLine, tempShip->m_shipArray, 2 );
 					return 1;
 				}
 				else ///<置けるマス。
 				{
-					ShipObject* tempShip = m_pPlayer[m_playerID]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)m_SetCount );
-
-					m_pStage->SetRange( m_playerID, iColumn, iLine, tempShip->m_shipArray);
+					m_pStage->SetRange( m_playerID, iColumn, iLine, tempShip->m_shipArray, 1);
 					//	駒が置けるマスであり、左クリックを押した時
 					if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )) {
-						m_pStage->SetShip( m_playerID, iColumn, iLine, 
-												m_pPlayer[m_playerID]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)m_SetCount ) );
-					return 2;
+						m_pStage->SetShip( m_playerID, iColumn, iLine, tempShip );
+						return 2;
 					}
 				}
 			}

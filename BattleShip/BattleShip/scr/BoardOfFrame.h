@@ -4,6 +4,7 @@
 #define _BOARDOFFRAME_H_
 
 #include "gameObject.h"
+#include "DrawManager.h"
 /**
 *@brief	盤面のフレームオブジェクトクラス（描画用）
 *@details	ステージのUI要素などを別のクラスとして持たせる。@n
