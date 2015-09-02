@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.10"/>
+<title>BattleShip_GameMain: BattleShip/BattleShip/scr/BoardOfFrame.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">BattleShip_GameMain
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.8.10 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'検索');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>総合概要</span></a></li>
+      <li><a href="annotated.html"><span>クラス</span></a></li>
+      <li class="current"><a href="files.html"><span>ファイル</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>ファイル一覧</span></a></li>
+      <li><a href="globals.html"><span>ファイルメンバ</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_a9d599a6b348fd9fd367e6b8aa8d955e.html">BattleShip</a></li><li class="navelem"><a class="el" href="dir_d19b2e3ff0684ed00d65f0677d3376c5.html">BattleShip</a></li><li class="navelem"><a class="el" href="dir_0d19cb98a64b197d6bd8598db6030f62.html">scr</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">BoardOfFrame.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="_board_of_frame_8h.html">[詳解]</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;</div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#ifndef _BOARDOFFRAME_H_</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#define _BOARDOFFRAME_H_</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;gameObject.h&quot;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;DrawManager.h&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="class_board_of_frame.html">   13</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_board_of_frame.html">BoardOfFrame</a> : <span class="keyword">public</span> CGameObject</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;{</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keywordtype">float</span> fWidth ,fHeight;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="class_board_of_frame.html#a658489c1d38abe32a6d142259fd32a98">   22</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_board_of_frame.html#a658489c1d38abe32a6d142259fd32a98">Init</a>( <span class="keywordtype">float</span> _fx, <span class="keywordtype">float</span> _fy, <span class="keywordtype">float</span> _fWidth, <span class="keywordtype">float</span> _fHeight )</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    {</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        SetPosition(_fx, _fy, 0.5f);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        fHeight = _fHeight;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        fWidth = _fWidth;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    }</div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="class_board_of_frame.html#a6357737331e2c7e0d9a7bb10732bb3a0">   28</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_board_of_frame.html#a6357737331e2c7e0d9a7bb10732bb3a0">Control</a>(){};</div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="class_board_of_frame.html#ae8b2a6ba8c65718cf1cac60941a7de3d">   29</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_board_of_frame.html#ae8b2a6ba8c65718cf1cac60941a7de3d">Draw</a>(){};</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="class_board_of_frame.html#af777de1d19a7b5c0180bef4e01a992ee">   30</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_board_of_frame.html#af777de1d19a7b5c0180bef4e01a992ee">Free</a>(){};</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="class_board_of_frame.html#ac908efac51436be38ba070a9a55c95c2">   31</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="class_board_of_frame.html#ac908efac51436be38ba070a9a55c95c2">GetWidth</a>(){ <span class="keywordflow">return</span> fWidth; }</div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="class_board_of_frame.html#a4c26bfaa04d62fdd45c0c62aa53dd80d">   32</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="class_board_of_frame.html#a4c26bfaa04d62fdd45c0c62aa53dd80d">GetHeight</a>(){ <span class="keywordflow">return</span> fHeight; }</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="class_board_of_frame.html#a789b72ef538e5f5eb0d9fe765ceac9d2">   40</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_board_of_frame.html#a789b72ef538e5f5eb0d9fe765ceac9d2">HitBlockCheck</a>( <span class="keywordtype">float</span> _x, <span class="keywordtype">float</span> _y )</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    {</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keywordtype">float</span> tempX = GetPositionX(), tempY = GetPositionY();</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keywordflow">if</span>( tempX &lt; _x &amp;&amp; tempX + fWidth &gt; _x )</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        {</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <span class="keywordflow">if</span>( tempY &lt; _y &amp;&amp; tempY + fHeight &gt; _y )</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            {</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            }</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        }</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    }</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;};</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="class_board_of_frame_html_a658489c1d38abe32a6d142259fd32a98"><div class="ttname"><a href="class_board_of_frame.html#a658489c1d38abe32a6d142259fd32a98">BoardOfFrame::Init</a></div><div class="ttdeci">void Init(float _fx, float _fy, float _fWidth, float _fHeight)</div><div class="ttdoc">初期化 </div><div class="ttdef"><b>Definition:</b> BoardOfFrame.h:22</div></div>
+<div class="ttc" id="class_board_of_frame_html"><div class="ttname"><a href="class_board_of_frame.html">BoardOfFrame</a></div><div class="ttdoc">盤面のフレームオブジェクトクラス（描画用） </div><div class="ttdef"><b>Definition:</b> BoardOfFrame.h:13</div></div>
+<div class="ttc" id="class_board_of_frame_html_a4c26bfaa04d62fdd45c0c62aa53dd80d"><div class="ttname"><a href="class_board_of_frame.html#a4c26bfaa04d62fdd45c0c62aa53dd80d">BoardOfFrame::GetHeight</a></div><div class="ttdeci">float GetHeight()</div><div class="ttdef"><b>Definition:</b> BoardOfFrame.h:32</div></div>
+<div class="ttc" id="class_board_of_frame_html_a789b72ef538e5f5eb0d9fe765ceac9d2"><div class="ttname"><a href="class_board_of_frame.html#a789b72ef538e5f5eb0d9fe765ceac9d2">BoardOfFrame::HitBlockCheck</a></div><div class="ttdeci">bool HitBlockCheck(float _x, float _y)</div><div class="ttdoc">当たり判定処理 </div><div class="ttdef"><b>Definition:</b> BoardOfFrame.h:40</div></div>
+<div class="ttc" id="class_board_of_frame_html_af777de1d19a7b5c0180bef4e01a992ee"><div class="ttname"><a href="class_board_of_frame.html#af777de1d19a7b5c0180bef4e01a992ee">BoardOfFrame::Free</a></div><div class="ttdeci">void Free()</div><div class="ttdef"><b>Definition:</b> BoardOfFrame.h:30</div></div>
+<div class="ttc" id="class_board_of_frame_html_a6357737331e2c7e0d9a7bb10732bb3a0"><div class="ttname"><a href="class_board_of_frame.html#a6357737331e2c7e0d9a7bb10732bb3a0">BoardOfFrame::Control</a></div><div class="ttdeci">void Control()</div><div class="ttdef"><b>Definition:</b> BoardOfFrame.h:28</div></div>
+<div class="ttc" id="class_board_of_frame_html_ac908efac51436be38ba070a9a55c95c2"><div class="ttname"><a href="class_board_of_frame.html#ac908efac51436be38ba070a9a55c95c2">BoardOfFrame::GetWidth</a></div><div class="ttdeci">float GetWidth()</div><div class="ttdef"><b>Definition:</b> BoardOfFrame.h:31</div></div>
+<div class="ttc" id="class_board_of_frame_html_ae8b2a6ba8c65718cf1cac60941a7de3d"><div class="ttname"><a href="class_board_of_frame.html#ae8b2a6ba8c65718cf1cac60941a7de3d">BoardOfFrame::Draw</a></div><div class="ttdeci">void Draw()</div><div class="ttdef"><b>Definition:</b> BoardOfFrame.h:29</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+構築: &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.10
+</small></address>
+</body>
+</html>

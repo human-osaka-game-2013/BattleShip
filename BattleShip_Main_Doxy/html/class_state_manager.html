@@ -1,0 +1,410 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.10"/>
+<title>BattleShip_GameMain: StateManager クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">BattleShip_GameMain
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.8.10 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'検索');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>総合概要</span></a></li>
+      <li class="current"><a href="annotated.html"><span>クラス</span></a></li>
+      <li><a href="files.html"><span>ファイル</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>クラス一覧</span></a></li>
+      <li><a href="classes.html"><span>クラス索引</span></a></li>
+      <li><a href="hierarchy.html"><span>クラス階層</span></a></li>
+      <li><a href="functions.html"><span>クラスメンバ</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-types">公開型</a> &#124;
+<a href="#pub-methods">公開メンバ関数</a> &#124;
+<a href="class_state_manager-members.html">全メンバ一覧</a>  </div>
+  <div class="headertitle">
+<div class="title">StateManager クラス</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_state_manager_8h_source.html">StateManager.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+公開型</h2></td></tr>
+<tr class="memitem:a74f8a0a1bc6b3a463b169fd62f2bfa5d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state_manager.html#a74f8a0a1bc6b3a463b169fd62f2bfa5d">_STATE_NUM_</a> { <br />
+&#160;&#160;<a class="el" href="class_state_manager.html#a74f8a0a1bc6b3a463b169fd62f2bfa5da71fbf3b3441f35c2ae4a9e1f14b139ec">STATE_NONE</a> = -1, 
+<a class="el" href="class_state_manager.html#a74f8a0a1bc6b3a463b169fd62f2bfa5dace96418d1ed71ce966e10b4119bbbdbc">STATE_SET_SHIP</a>, 
+<a class="el" href="class_state_manager.html#a74f8a0a1bc6b3a463b169fd62f2bfa5dadf159e1e050baec08785b8a10fa0fcaa">STATE_SELECTION</a>, 
+<a class="el" href="class_state_manager.html#a74f8a0a1bc6b3a463b169fd62f2bfa5da617902a270ca756f076cd78464955101">STATE_RESULT</a>, 
+<br />
+&#160;&#160;<a class="el" href="class_state_manager.html#a74f8a0a1bc6b3a463b169fd62f2bfa5dae623957e8138a2dc64acfa46993c853e">STATE_STAGE_EFFECT</a>
+<br />
+ }<tr class="memdesc:a74f8a0a1bc6b3a463b169fd62f2bfa5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">戦闘ステートパターンの列挙  <a href="class_state_manager.html#a74f8a0a1bc6b3a463b169fd62f2bfa5d">[詳解]</a><br /></td></tr>
+<tr class="separator:a74f8a0a1bc6b3a463b169fd62f2bfa5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a42866b0a09e37b5126a28f1266c13997"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state_manager.html#a42866b0a09e37b5126a28f1266c13997">StateManager</a> (<a class="el" href="class_player.html">Player</a> *const _pPlayer1, <a class="el" href="class_player.html">Player</a> *const _pPlayer2, <a class="el" href="class_stage_object.html">StageObject</a> *const _pStageObject, const int _playerID)</td></tr>
+<tr class="memdesc:a42866b0a09e37b5126a28f1266c13997"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ  <a href="#a42866b0a09e37b5126a28f1266c13997">[詳解]</a><br /></td></tr>
+<tr class="separator:a42866b0a09e37b5126a28f1266c13997"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc78004cf015bcea80087ae36bd0a292"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state_manager.html#adc78004cf015bcea80087ae36bd0a292">Free</a> ()</td></tr>
+<tr class="memdesc:adc78004cf015bcea80087ae36bd0a292"><td class="mdescLeft">&#160;</td><td class="mdescRight">解放処理  <a href="#adc78004cf015bcea80087ae36bd0a292">[詳解]</a><br /></td></tr>
+<tr class="separator:adc78004cf015bcea80087ae36bd0a292"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2aef54e013b9568fc5ef61521b78b863"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state_manager.html#a2aef54e013b9568fc5ef61521b78b863">ChangeState</a> (<a class="el" href="class_state_manager.html#a74f8a0a1bc6b3a463b169fd62f2bfa5d">_STATE_NUM_</a> _stateType)</td></tr>
+<tr class="memdesc:a2aef54e013b9568fc5ef61521b78b863"><td class="mdescLeft">&#160;</td><td class="mdescRight">ステートパターンの切り替え param[in] _stateType  <a href="#a2aef54e013b9568fc5ef61521b78b863">[詳解]</a><br /></td></tr>
+<tr class="separator:a2aef54e013b9568fc5ef61521b78b863"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a917561e9f1fe9e5f8576dc47770cebcf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state_manager.html#a917561e9f1fe9e5f8576dc47770cebcf">StateInit</a> ()</td></tr>
+<tr class="memdesc:a917561e9f1fe9e5f8576dc47770cebcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">ステートの初期化  <a href="#a917561e9f1fe9e5f8576dc47770cebcf">[詳解]</a><br /></td></tr>
+<tr class="separator:a917561e9f1fe9e5f8576dc47770cebcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a900f1323da988b12f7844ef3c5c94da3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state_manager.html#a900f1323da988b12f7844ef3c5c94da3">StateCotrol</a> ()</td></tr>
+<tr class="memdesc:a900f1323da988b12f7844ef3c5c94da3"><td class="mdescLeft">&#160;</td><td class="mdescRight">ステートの基本ルーチン処理  <a href="#a900f1323da988b12f7844ef3c5c94da3">[詳解]</a><br /></td></tr>
+<tr class="separator:a900f1323da988b12f7844ef3c5c94da3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c60733b90f70c02e9e22e6ae1bfe495"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state_manager.html#a4c60733b90f70c02e9e22e6ae1bfe495">StateDraw</a> (CDrawManager *_drawManager)</td></tr>
+<tr class="memdesc:a4c60733b90f70c02e9e22e6ae1bfe495"><td class="mdescLeft">&#160;</td><td class="mdescRight">ステートの基本描画  <a href="#a4c60733b90f70c02e9e22e6ae1bfe495">[詳解]</a><br /></td></tr>
+<tr class="separator:a4c60733b90f70c02e9e22e6ae1bfe495"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a508c406fba3f6408379c23c0d2d92487"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state_manager.html#a508c406fba3f6408379c23c0d2d92487">StateDelete</a> ()</td></tr>
+<tr class="memdesc:a508c406fba3f6408379c23c0d2d92487"><td class="mdescLeft">&#160;</td><td class="mdescRight">ステートオブジェクトの消去  <a href="#a508c406fba3f6408379c23c0d2d92487">[詳解]</a><br /></td></tr>
+<tr class="separator:a508c406fba3f6408379c23c0d2d92487"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a732013972ced0e43d6beaaa4bccd52"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state_manager.html#a6a732013972ced0e43d6beaaa4bccd52">SetDraw</a> (CDrawManager *const _pDrawManager)</td></tr>
+<tr class="memdesc:a6a732013972ced0e43d6beaaa4bccd52"><td class="mdescLeft">&#160;</td><td class="mdescRight">描画クラスセット  <a href="#a6a732013972ced0e43d6beaaa4bccd52">[詳解]</a><br /></td></tr>
+<tr class="separator:a6a732013972ced0e43d6beaaa4bccd52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13c7eb42b376b2c2c8e7933f8aea000f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state_manager.html#a13c7eb42b376b2c2c8e7933f8aea000f">SetMouse</a> (CMouse *const _pMouse)</td></tr>
+<tr class="memdesc:a13c7eb42b376b2c2c8e7933f8aea000f"><td class="mdescLeft">&#160;</td><td class="mdescRight">マウスクラスセット  <a href="#a13c7eb42b376b2c2c8e7933f8aea000f">[詳解]</a><br /></td></tr>
+<tr class="separator:a13c7eb42b376b2c2c8e7933f8aea000f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">列挙型メンバ詳解</h2>
+<a class="anchor" id="a74f8a0a1bc6b3a463b169fd62f2bfa5d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="class_state_manager.html#a74f8a0a1bc6b3a463b169fd62f2bfa5d">StateManager::_STATE_NUM_</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>戦闘ステートパターンの列挙 </p>
+<table class="fieldtable">
+<tr><th colspan="2">列挙値</th></tr><tr><td class="fieldname"><a class="anchor" id="a74f8a0a1bc6b3a463b169fd62f2bfa5da71fbf3b3441f35c2ae4a9e1f14b139ec"></a>STATE_NONE&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a74f8a0a1bc6b3a463b169fd62f2bfa5dace96418d1ed71ce966e10b4119bbbdbc"></a>STATE_SET_SHIP&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a74f8a0a1bc6b3a463b169fd62f2bfa5dadf159e1e050baec08785b8a10fa0fcaa"></a>STATE_SELECTION&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a74f8a0a1bc6b3a463b169fd62f2bfa5da617902a270ca756f076cd78464955101"></a>STATE_RESULT&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a74f8a0a1bc6b3a463b169fd62f2bfa5dae623957e8138a2dc64acfa46993c853e"></a>STATE_STAGE_EFFECT&#160;</td><td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">構築子と解体子</h2>
+<a class="anchor" id="a42866b0a09e37b5126a28f1266c13997"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">StateManager::StateManager </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_player.html">Player</a> *const&#160;</td>
+          <td class="paramname"><em>_pPlayer1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_player.html">Player</a> *const&#160;</td>
+          <td class="paramname"><em>_pPlayer2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_stage_object.html">StageObject</a> *const&#160;</td>
+          <td class="paramname"><em>_pStageObject</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int&#160;</td>
+          <td class="paramname"><em>_playerID</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>コンストラクタ </p>
+
+</div>
+</div>
+<h2 class="groupheader">関数詳解</h2>
+<a class="anchor" id="a2aef54e013b9568fc5ef61521b78b863"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool StateManager::ChangeState </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_state_manager.html#a74f8a0a1bc6b3a463b169fd62f2bfa5d">_STATE_NUM_</a>&#160;</td>
+          <td class="paramname"><em>_stateType</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ステートパターンの切り替え param[in] _stateType </p>
+<dl class="section return"><dt>戻り値</dt><dd>true：ステートパターンの変更完了。*n false：変更失敗 </dd></dl>
+<p>&lt;最後に </p>
+
+</div>
+</div>
+<a class="anchor" id="adc78004cf015bcea80087ae36bd0a292"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StateManager::Free </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>解放処理 </p>
+
+</div>
+</div>
+<a class="anchor" id="a6a732013972ced0e43d6beaaa4bccd52"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StateManager::SetDraw </td>
+          <td>(</td>
+          <td class="paramtype">CDrawManager *const&#160;</td>
+          <td class="paramname"><em>_pDrawManager</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>描画クラスセット </p>
+
+</div>
+</div>
+<a class="anchor" id="a13c7eb42b376b2c2c8e7933f8aea000f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StateManager::SetMouse </td>
+          <td>(</td>
+          <td class="paramtype">CMouse *const&#160;</td>
+          <td class="paramname"><em>_pMouse</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>マウスクラスセット </p>
+
+</div>
+</div>
+<a class="anchor" id="a900f1323da988b12f7844ef3c5c94da3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StateManager::StateCotrol </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ステートの基本ルーチン処理 </p>
+<p>&lt; ルーチン的にな処理で前フレーム時のステートを現在のステートに合わせる。</p>
+<p>&lt; ステートのルーチン処理の結果シーンが変わる必要があれば</p>
+<p>&lt; 変更するステートは順番がある程度決まっているので分岐 </p>
+
+</div>
+</div>
+<a class="anchor" id="a508c406fba3f6408379c23c0d2d92487"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StateManager::StateDelete </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ステートオブジェクトの消去 </p>
+
+</div>
+</div>
+<a class="anchor" id="a4c60733b90f70c02e9e22e6ae1bfe495"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StateManager::StateDraw </td>
+          <td>(</td>
+          <td class="paramtype">CDrawManager *&#160;</td>
+          <td class="paramname"><em>_drawManager</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ステートの基本描画 </p>
+<p>&lt; 盤面の左側の描画</p>
+<p>&lt; 盤面の右側の描画</p>
+<p>&lt; 盤面の真ん中の描画</p>
+<p>&lt; プレイヤー1の枠描画</p>
+<p>&lt; プレイヤー2の枠描画</p>
+<p>&lt;駒のある場所は塗りつぶす</p>
+<p>&lt;選択されているマス</p>
+<p>&lt;駒が置けないor選択範囲が何かに接触しているマス</p>
+<p>&lt;選択マスより駒が置かれてる場合を優先</p>
+<p>&lt; マスの描画</p>
+<p>&lt; マスの描画</p>
+<p>&lt; 艦種別分岐</p>
+<p>&lt;空母駒の描画</p>
+<p>&lt;戦艦駒の描画</p>
+<p>&lt;巡洋艦駒の描画</p>
+<p>&lt;駆逐艦駒の描画</p>
+<p>&lt;潜水艦駒の描画 </p>
+
+</div>
+</div>
+<a class="anchor" id="a917561e9f1fe9e5f8576dc47770cebcf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StateManager::StateInit </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ステートの初期化 </p>
+<p>&lt; 初期化なので以前のステートはそもそも無い為、STATE_NONEに。</p>
+<p>&lt; ステートの初期化なので最初に読み込むであろうパターンの定数を入れる</p>
+<p>&lt; まだステートポイントには何も入っていないので初期化も兼ねて</p>
+<p>&lt;画面上部から１１マス分目まで盤面フレームがあるので11/16となる。</p>
+<p>&lt;表示位置などを予め初期化しておき、描画時や当たり判定時などにも利用する。</p>
+<p>&lt;駒別に可変性があるので縦横幅の仮保存をして少し効率を上げる。</p>
+<p>&lt;Y座標はまずプレイヤー情報枠の基準点から</p>
+<p>&lt;プレイヤー1は1マス目から5マス分ずらすので</p>
+<p>&lt;プレイヤー2は1マス目から11マス分ずらすので</p>
+<p>&lt; 艦種別分岐</p>
+<p>&lt; m_pShipの向き情報をコチラにも適用 </p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>BattleShip/BattleShip/scr/<a class="el" href="_state_manager_8h_source.html">StateManager.h</a></li>
+<li>BattleShip/BattleShip/scr/<a class="el" href="_state_manager_8cpp.html">StateManager.cpp</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+構築: &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.10
+</small></address>
+</body>
+</html>

@@ -69,7 +69,7 @@ int StageObject::CheckStageBlock( int _player, int _column, int _line, ShipObjec
 				if( _ship->m_shipArray[iColumn][iLine] != 0 )
 					return 1;	///<	ステージから出ていて、駒の一部が存在していれば駒自体がはみ出ている場合なので、指定した場所は無効である。
 			} else if( m_stageArray[_player][iStageCol][iStageLine] != 0 ) {
-				if( _ship->m_shipArray[iColumn][iLine] != 0 )	///<すでに駒か何かが存在していた
+				if( _ship->m_shipArray[iColumn][iLine] != 0 )	///<	ステージに駒が置ける場所
 					return 2;
 			}
 		}
@@ -100,18 +100,13 @@ bool StageObject::SetShip( int _player, int _column, int _line, ShipObject* _shi
 				if( _ship->m_shipArray[iColumn][iLine] != 0 )
 					m_stageArray[_player][iStageCol][iStageLine] = _ship->m_shipArray[iColumn][iLine];
 			}
-			//	中心のマスを調べている時
-			if( iColumn == 2 && iLine == 2 ) {
-				_ship->SetArrayPos( iStageCol, iStageLine );
-			}
 		}
 
 	}
 	return true;
 }
 
-bool StageObject::SetRange( int _player, int _column, int _line, 
-							const int(*_array)[_SHIP_ARRAY_INDEX_], int _setType )
+bool StageObject::SetRange( int _player, int _column, int _line, const int(*_array)[_SHIP_ARRAY_INDEX_], int _setType)
 {
 	if( _player > _PLAYER_NUM_ || _player <= 0 )	
 		return false;	///<	プレイヤーIDが1か2以外だった場合
@@ -131,7 +126,7 @@ bool StageObject::SetRange( int _player, int _column, int _line,
 
 			//	ステージ内で、今調べてる配列情報の中身が0じゃ無かったら（駒や攻撃などの範囲情報があれば）
 			if( !bStageOutside && _array[iColumn][iLine] != 0  ){
-				m_stageArray[_player][iStageCol][iStageLine] += 100*_setType;	///<ステージ情報の1桁目は選択情報
+				m_stageArray[_player][iStageCol][iStageLine] += 100*_setType;
 			}
 		}
 
@@ -141,19 +136,18 @@ bool StageObject::SetRange( int _player, int _column, int _line,
 
 void StageObject::ResetSelect()
 {
-	//	プレイヤー数
+	//        プレイヤー数
 	for( int iPlayer=0; iPlayer<_PLAYER_NUM_; iPlayer++ )
-	{
-		//	行
+	{	
+		//        行
 		for( int iColumn=0; iColumn<_STAGE_COLUMN_MAX_; iColumn++ )
-		{	
-			//	列
+		{	 
+			//        列
 			for( int iLine=0; iLine<_STAGE_LINE_MAX_; iLine++ )
-			{
-				//	3桁目は選択情報なので、選択情報だけ消せる様にしている
+			{	
+				//        3桁目は選択情報なので、選択情報だけ消せる様にしている
 				m_stageArray[iPlayer][iColumn][iLine] -= 100*(m_stageArray[iPlayer][iColumn][iLine]/100);
-			}
-		}
+			}		
+		}	
 	}
-
 }

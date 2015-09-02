@@ -6,21 +6,12 @@
 #ifndef _STAGEOBJECT_H_
 #define _STAGEOBJECT_H_
 
-#include "Window.h"
 #include "gameObject.h"
 #include "ShipObject.h"
 #include "BoardOfFrame.h"
 
 #define _STAGE_COLUMN_MAX_ 10	///<	ステージの行数
 #define _STAGE_LINE_MAX_	10	///<	ステージの列数
-
-#define _BLOCK_WIDTH_SIZE_	WIDTH/_BLOCK_WIDTH_MAX_
-#define _BLOCK_HEIGHT_SIZE_	HEIGHT/_BLOCK_HEIGHT_MAX_
-
-#define _BLOCK_WIDTH_MAX_	(float)23	///<盤面の横幅の最大ブロック数
-#define _BLOCK_HEIGHT_MAX_	(float)16	///<盤面の縦幅の最大ブロック数
-#define _STAGE_HEIGHT_MAX_	(float)11	///<ステージ部分の縦幅の最大ブロック数
-#define _STAGE_WIDTH_MAX_ _STAGE_HEIGHT_MAX_
 
 #define _PLAYER_NUM_ 2
 
@@ -83,13 +74,10 @@ public:
 	*@param[in]	_column	行
 	*@param[in]	_line	列
 	*@param[in]	_array	指定したブロック中心にセットする配列情報
-	*@param[in]	_setType	指定範囲にセットする情報のタイプ。@n
-							1：指定範囲には何も存在していない。@n
-							2：指定範囲に何らかがすでに置かれている。
 	*@return	false：何らかの原因でセットが失敗。@n
 				true：無事に情報をセット完了。
 	*/
-	bool SetRange( int _player, int _column, int _line, const int(*_array)[_SHIP_ARRAY_INDEX_], int _setType );
+	bool SetRange( int _player, int _column, int _line, const int(*_array)[_SHIP_ARRAY_INDEX_], int _setType);
 
 	/**
 	*@brief	ステージブロックの選択状態を解除

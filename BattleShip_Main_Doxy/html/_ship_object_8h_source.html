@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.10"/>
+<title>BattleShip_GameMain: BattleShip/BattleShip/scr/ShipObject.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">BattleShip_GameMain
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.8.10 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'検索');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>総合概要</span></a></li>
+      <li><a href="annotated.html"><span>クラス</span></a></li>
+      <li class="current"><a href="files.html"><span>ファイル</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>ファイル一覧</span></a></li>
+      <li><a href="globals.html"><span>ファイルメンバ</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_a9d599a6b348fd9fd367e6b8aa8d955e.html">BattleShip</a></li><li class="navelem"><a class="el" href="dir_d19b2e3ff0684ed00d65f0677d3376c5.html">BattleShip</a></li><li class="navelem"><a class="el" href="dir_0d19cb98a64b197d6bd8598db6030f62.html">scr</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">ShipObject.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="_ship_object_8h.html">[詳解]</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef _SHIPOBJECT_H_</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define _SHIPOBJECT_H_</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;gameObject.h&quot;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;read_file.h&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_board_of_frame_8h.html">BoardOfFrame.h</a>&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_stage_object_8h.html">StageObject.h</a>&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="_ship_object_8h.html#a08e2bf2e126c50aff84382070b6e80eb">   14</a></span>&#160;<span class="preprocessor">#define _SHIP_ARRAY_INDEX_  5   </span></div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="_ship_object_8h.html#ab0e296dd172698ab006fd461d0e70567">   15</a></span>&#160;<span class="preprocessor">#define _SHIP_INIT_DIR_ CGameObject::CH_UP</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="class_ship_object.html">   20</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_ship_object.html">ShipObject</a>:<span class="keyword">public</span> CGameObject, <span class="keyword">public</span> ReadFile</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="class_ship_object.html#a19acc3da3c2b0262054c95cca03663dd">   26</a></span>&#160;    <span class="keyword">enum</span> <a class="code" href="class_ship_object.html#a19acc3da3c2b0262054c95cca03663dd">_SHIP_TYPE_NUM_</a></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    {</div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="class_ship_object.html#a19acc3da3c2b0262054c95cca03663ddacb452eac8a719e8246ec4fb6e0586a9f">   28</a></span>&#160;        <a class="code" href="class_ship_object.html#a19acc3da3c2b0262054c95cca03663ddacb452eac8a719e8246ec4fb6e0586a9f">TYPE_NONE</a>=-1,</div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="class_ship_object.html#a19acc3da3c2b0262054c95cca03663dda0472246a7056dcec55e101d7764d8f7a">   29</a></span>&#160;        <a class="code" href="class_ship_object.html#a19acc3da3c2b0262054c95cca03663dda0472246a7056dcec55e101d7764d8f7a">TYPE_AIRCARRIER</a>,</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="class_ship_object.html#a19acc3da3c2b0262054c95cca03663dda741c55cbdabe3372e59eccac5d48c323">   30</a></span>&#160;        <a class="code" href="class_ship_object.html#a19acc3da3c2b0262054c95cca03663dda741c55cbdabe3372e59eccac5d48c323">TYPE_BATTLESHIP</a>,</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="class_ship_object.html#a19acc3da3c2b0262054c95cca03663dda6e4cb95b4665669fbaaca12b84e73595">   31</a></span>&#160;        <a class="code" href="class_ship_object.html#a19acc3da3c2b0262054c95cca03663dda6e4cb95b4665669fbaaca12b84e73595">TYPE_CRUISER</a>,</div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="class_ship_object.html#a19acc3da3c2b0262054c95cca03663dda3c8f5e3ec3ebacbabecfeea9cea56fb8">   32</a></span>&#160;        <a class="code" href="class_ship_object.html#a19acc3da3c2b0262054c95cca03663dda3c8f5e3ec3ebacbabecfeea9cea56fb8">TYPE_DESTROYER</a>,</div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="class_ship_object.html#a19acc3da3c2b0262054c95cca03663dda0b79ec965d246311c3c340471777d5c6">   33</a></span>&#160;        <a class="code" href="class_ship_object.html#a19acc3da3c2b0262054c95cca03663dda0b79ec965d246311c3c340471777d5c6">TYPE_SUBMARINE</a>,</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="class_ship_object.html#a19acc3da3c2b0262054c95cca03663ddaac96af83447454bcd057493fcaaac713">   34</a></span>&#160;        <a class="code" href="class_ship_object.html#a19acc3da3c2b0262054c95cca03663ddaac96af83447454bcd057493fcaaac713">TYPE_MAX</a>,</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    };</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="class_ship_object.html#a330797819568ba8b4140195c4de9dda7">   37</a></span>&#160;    <span class="keyword">enum</span> <a class="code" href="class_ship_object.html#a330797819568ba8b4140195c4de9dda7">_SHIP_TABLE_NUM_</a></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    {</div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="class_ship_object.html#a330797819568ba8b4140195c4de9dda7a9f4e2a0195861564440a3afc5bfd8c9f">   39</a></span>&#160;        <a class="code" href="class_ship_object.html#a330797819568ba8b4140195c4de9dda7a9f4e2a0195861564440a3afc5bfd8c9f">TABLE_SHIP</a>,</div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="class_ship_object.html#a330797819568ba8b4140195c4de9dda7a0a0bfe33d80551dcdbf88607eb52a99c">   40</a></span>&#160;        <a class="code" href="class_ship_object.html#a330797819568ba8b4140195c4de9dda7a0a0bfe33d80551dcdbf88607eb52a99c">TABLE_ACTION</a> = <a class="code" href="_ship_object_8h.html#a08e2bf2e126c50aff84382070b6e80eb">_SHIP_ARRAY_INDEX_</a>,</div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="class_ship_object.html#a330797819568ba8b4140195c4de9dda7a8717cd12d83c08d1331fabc4e025b83b">   41</a></span>&#160;        <a class="code" href="class_ship_object.html#a330797819568ba8b4140195c4de9dda7a8717cd12d83c08d1331fabc4e025b83b">TABLE_SEARCH</a> = <a class="code" href="class_ship_object.html#a330797819568ba8b4140195c4de9dda7a0a0bfe33d80551dcdbf88607eb52a99c">TABLE_ACTION</a>+<a class="code" href="_ship_object_8h.html#a08e2bf2e126c50aff84382070b6e80eb">_SHIP_ARRAY_INDEX_</a>,</div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="class_ship_object.html#a330797819568ba8b4140195c4de9dda7a9eaf320dc0f9cbc06ebd5a020cb6dfc9">   42</a></span>&#160;        <a class="code" href="class_ship_object.html#a330797819568ba8b4140195c4de9dda7a9eaf320dc0f9cbc06ebd5a020cb6dfc9">TABLE_MOVE</a> = <a class="code" href="class_ship_object.html#a330797819568ba8b4140195c4de9dda7a8717cd12d83c08d1331fabc4e025b83b">TABLE_SEARCH</a>+<a class="code" href="_ship_object_8h.html#a08e2bf2e126c50aff84382070b6e80eb">_SHIP_ARRAY_INDEX_</a>,</div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="class_ship_object.html#a330797819568ba8b4140195c4de9dda7a5913cf66b88c95d7b711c5ab5d508551">   43</a></span>&#160;        <a class="code" href="class_ship_object.html#a330797819568ba8b4140195c4de9dda7a5913cf66b88c95d7b711c5ab5d508551">TABLE_MAX</a> = <a class="code" href="class_ship_object.html#a330797819568ba8b4140195c4de9dda7a9eaf320dc0f9cbc06ebd5a020cb6dfc9">TABLE_MOVE</a>+_SHIP_ARRAY_INDEX_</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    };</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordtype">int</span> m_userID;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordtype">int</span> m_posColumn;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">int</span> m_posLine;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="class_ship_object.html#acf9bf2ba21e0b110c9ec53bf66af6503">   52</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="class_ship_object.html#acf9bf2ba21e0b110c9ec53bf66af6503">m_shipArray</a>[<a class="code" href="_ship_object_8h.html#a08e2bf2e126c50aff84382070b6e80eb">_SHIP_ARRAY_INDEX_</a>][<a class="code" href="_ship_object_8h.html#a08e2bf2e126c50aff84382070b6e80eb">_SHIP_ARRAY_INDEX_</a>];    </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="class_ship_object.html#a9f38d1704be08b23cd0dacca313c4e6e">   55</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="class_ship_object.html#a9f38d1704be08b23cd0dacca313c4e6e">m_actionArray</a>[<a class="code" href="_ship_object_8h.html#a08e2bf2e126c50aff84382070b6e80eb">_SHIP_ARRAY_INDEX_</a>][<a class="code" href="_ship_object_8h.html#a08e2bf2e126c50aff84382070b6e80eb">_SHIP_ARRAY_INDEX_</a>];  </div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="class_ship_object.html#ac0ae4d655d1157028df6ae1ea2cb3ef7">   56</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="class_ship_object.html#ac0ae4d655d1157028df6ae1ea2cb3ef7">m_searchArray</a>[<a class="code" href="_ship_object_8h.html#a08e2bf2e126c50aff84382070b6e80eb">_SHIP_ARRAY_INDEX_</a>][<a class="code" href="_ship_object_8h.html#a08e2bf2e126c50aff84382070b6e80eb">_SHIP_ARRAY_INDEX_</a>];  </div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="class_ship_object.html#a84758643577c903f37f21b073f385b78">   57</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="class_ship_object.html#a84758643577c903f37f21b073f385b78">m_moveArray</a>[<a class="code" href="_ship_object_8h.html#a08e2bf2e126c50aff84382070b6e80eb">_SHIP_ARRAY_INDEX_</a>][<a class="code" href="_ship_object_8h.html#a08e2bf2e126c50aff84382070b6e80eb">_SHIP_ARRAY_INDEX_</a>];    </div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="class_ship_object.html#afc0336e8b814ee056682ce7ad0769e15">   58</a></span>&#160;    CUSTOMVERTEX    <a class="code" href="class_ship_object.html#afc0336e8b814ee056682ce7ad0769e15">m_vertex</a>[4];</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="class_ship_object.html#a7323aae7cd89bbb407cf0d14f5451488">   65</a></span>&#160;    <a class="code" href="class_ship_object.html#a7323aae7cd89bbb407cf0d14f5451488">ShipObject::ShipObject</a>() : CGameObject(){</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keywordflow">for</span>( <span class="keywordtype">int</span> iColumn = 0; iColumn &lt; <a class="code" href="_ship_object_8h.html#a08e2bf2e126c50aff84382070b6e80eb">_SHIP_ARRAY_INDEX_</a>; iColumn++ ){</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <span class="keywordflow">for</span>( <span class="keywordtype">int</span> iLine = 0; iLine &lt; <a class="code" href="_ship_object_8h.html#a08e2bf2e126c50aff84382070b6e80eb">_SHIP_ARRAY_INDEX_</a>; iLine++ )   {</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;                m_shipArray[iColumn][iLine]=0;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                m_actionArray[iColumn][iLine]=0;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                m_searchArray[iColumn][iLine]=0;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                m_moveArray[iColumn][iLine]=0;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            }</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        }</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        SetDirection( <a class="code" href="_ship_object_8h.html#ab0e296dd172698ab006fd461d0e70567">_SHIP_INIT_DIR_</a> );</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    }</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> Init( <span class="keywordtype">int</span> _userID ) = 0;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
+<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="class_ship_object.html#ae2961b23e5532292d932ba8e03272f4e">   83</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_ship_object.html#ae2961b23e5532292d932ba8e03272f4e">Control</a>(){};</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="class_ship_object.html#a7bbfe226a567872302a39da5e4949853">   85</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_ship_object.html#a7bbfe226a567872302a39da5e4949853">Draw</a>(){};</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keywordtype">void</span> SetTable( <span class="keywordtype">char</span>* _p, <span class="keywordtype">int</span> _iColumn, <span class="keywordtype">int</span> _iLine);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keywordtype">bool</span> RotationShip( <span class="keywordtype">int</span> _arrayType, <span class="keywordtype">bool</span> _rotType );</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keywordtype">void</span> InitVertex( _SHIP_TYPE_NUM_ _shipType );</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keywordtype">void</span>  Free();</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00114"></a><span class="lineno"><a class="line" href="class_ship_object.html#a58112a0c35bd88833504cf0083f7cf6a">  114</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="class_ship_object.html#a58112a0c35bd88833504cf0083f7cf6a">GetUserID</a>(){ <span class="keywordflow">return</span> m_userID; } </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
+<div class="line"><a name="l00119"></a><span class="lineno"><a class="line" href="class_ship_object.html#a542ebd7785792b9ef91284f8090fbbde">  119</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_ship_object.html#a542ebd7785792b9ef91284f8090fbbde">SetArrayPos</a>( <span class="keywordtype">int</span> _column, <span class="keywordtype">int</span> _line ){ </div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        m_posColumn = _column;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        m_posLine   = _line;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    }</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
+<div class="line"><a name="l00127"></a><span class="lineno"><a class="line" href="class_ship_object.html#aa50f991185191c6abd4dc5fe09e1c421">  127</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_ship_object.html#aa50f991185191c6abd4dc5fe09e1c421">GetArrayPos</a>( <span class="keywordtype">int</span>&amp; _column, <span class="keywordtype">int</span>&amp; _line ){ </div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        _column = m_posColumn;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        _line   = m_posLine;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    }</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;};</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="class_ship_object_html_a84758643577c903f37f21b073f385b78"><div class="ttname"><a href="class_ship_object.html#a84758643577c903f37f21b073f385b78">ShipObject::m_moveArray</a></div><div class="ttdeci">int m_moveArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_]</div><div class="ttdoc">駒の移動範囲配列 </div><div class="ttdef"><b>Definition:</b> ShipObject.h:57</div></div>
+<div class="ttc" id="class_ship_object_html_afc0336e8b814ee056682ce7ad0769e15"><div class="ttname"><a href="class_ship_object.html#afc0336e8b814ee056682ce7ad0769e15">ShipObject::m_vertex</a></div><div class="ttdeci">CUSTOMVERTEX m_vertex[4]</div><div class="ttdef"><b>Definition:</b> ShipObject.h:58</div></div>
+<div class="ttc" id="class_ship_object_html_a330797819568ba8b4140195c4de9dda7a9eaf320dc0f9cbc06ebd5a020cb6dfc9"><div class="ttname"><a href="class_ship_object.html#a330797819568ba8b4140195c4de9dda7a9eaf320dc0f9cbc06ebd5a020cb6dfc9">ShipObject::TABLE_MOVE</a></div><div class="ttdef"><b>Definition:</b> ShipObject.h:42</div></div>
+<div class="ttc" id="class_ship_object_html_a330797819568ba8b4140195c4de9dda7a8717cd12d83c08d1331fabc4e025b83b"><div class="ttname"><a href="class_ship_object.html#a330797819568ba8b4140195c4de9dda7a8717cd12d83c08d1331fabc4e025b83b">ShipObject::TABLE_SEARCH</a></div><div class="ttdef"><b>Definition:</b> ShipObject.h:41</div></div>
+<div class="ttc" id="class_ship_object_html_a19acc3da3c2b0262054c95cca03663dda6e4cb95b4665669fbaaca12b84e73595"><div class="ttname"><a href="class_ship_object.html#a19acc3da3c2b0262054c95cca03663dda6e4cb95b4665669fbaaca12b84e73595">ShipObject::TYPE_CRUISER</a></div><div class="ttdef"><b>Definition:</b> ShipObject.h:31</div></div>
+<div class="ttc" id="class_ship_object_html_a7323aae7cd89bbb407cf0d14f5451488"><div class="ttname"><a href="class_ship_object.html#a7323aae7cd89bbb407cf0d14f5451488">ShipObject::ShipObject</a></div><div class="ttdeci">ShipObject()</div><div class="ttdoc">コンストラクタ </div><div class="ttdef"><b>Definition:</b> ShipObject.h:65</div></div>
+<div class="ttc" id="class_ship_object_html_a58112a0c35bd88833504cf0083f7cf6a"><div class="ttname"><a href="class_ship_object.html#a58112a0c35bd88833504cf0083f7cf6a">ShipObject::GetUserID</a></div><div class="ttdeci">int GetUserID()</div><div class="ttdoc">駒の持ち主ID取得 </div><div class="ttdef"><b>Definition:</b> ShipObject.h:114</div></div>
+<div class="ttc" id="class_ship_object_html_a330797819568ba8b4140195c4de9dda7a0a0bfe33d80551dcdbf88607eb52a99c"><div class="ttname"><a href="class_ship_object.html#a330797819568ba8b4140195c4de9dda7a0a0bfe33d80551dcdbf88607eb52a99c">ShipObject::TABLE_ACTION</a></div><div class="ttdef"><b>Definition:</b> ShipObject.h:40</div></div>
+<div class="ttc" id="class_ship_object_html_a330797819568ba8b4140195c4de9dda7a9f4e2a0195861564440a3afc5bfd8c9f"><div class="ttname"><a href="class_ship_object.html#a330797819568ba8b4140195c4de9dda7a9f4e2a0195861564440a3afc5bfd8c9f">ShipObject::TABLE_SHIP</a></div><div class="ttdef"><b>Definition:</b> ShipObject.h:39</div></div>
+<div class="ttc" id="_ship_object_8h_html_a08e2bf2e126c50aff84382070b6e80eb"><div class="ttname"><a href="_ship_object_8h.html#a08e2bf2e126c50aff84382070b6e80eb">_SHIP_ARRAY_INDEX_</a></div><div class="ttdeci">#define _SHIP_ARRAY_INDEX_</div><div class="ttdoc">駒の配列指数 </div><div class="ttdef"><b>Definition:</b> ShipObject.h:14</div></div>
+<div class="ttc" id="class_ship_object_html_a330797819568ba8b4140195c4de9dda7"><div class="ttname"><a href="class_ship_object.html#a330797819568ba8b4140195c4de9dda7">ShipObject::_SHIP_TABLE_NUM_</a></div><div class="ttdeci">_SHIP_TABLE_NUM_</div><div class="ttdef"><b>Definition:</b> ShipObject.h:37</div></div>
+<div class="ttc" id="class_ship_object_html_a19acc3da3c2b0262054c95cca03663ddaac96af83447454bcd057493fcaaac713"><div class="ttname"><a href="class_ship_object.html#a19acc3da3c2b0262054c95cca03663ddaac96af83447454bcd057493fcaaac713">ShipObject::TYPE_MAX</a></div><div class="ttdef"><b>Definition:</b> ShipObject.h:34</div></div>
+<div class="ttc" id="class_ship_object_html_a542ebd7785792b9ef91284f8090fbbde"><div class="ttname"><a href="class_ship_object.html#a542ebd7785792b9ef91284f8090fbbde">ShipObject::SetArrayPos</a></div><div class="ttdeci">void SetArrayPos(int _column, int _line)</div><div class="ttdoc">ステージ上での駒の中心位置のセット </div><div class="ttdef"><b>Definition:</b> ShipObject.h:119</div></div>
+<div class="ttc" id="class_ship_object_html_a330797819568ba8b4140195c4de9dda7a5913cf66b88c95d7b711c5ab5d508551"><div class="ttname"><a href="class_ship_object.html#a330797819568ba8b4140195c4de9dda7a5913cf66b88c95d7b711c5ab5d508551">ShipObject::TABLE_MAX</a></div><div class="ttdef"><b>Definition:</b> ShipObject.h:43</div></div>
+<div class="ttc" id="_board_of_frame_8h_html"><div class="ttname"><a href="_board_of_frame_8h.html">BoardOfFrame.h</a></div></div>
+<div class="ttc" id="class_ship_object_html_a19acc3da3c2b0262054c95cca03663dda741c55cbdabe3372e59eccac5d48c323"><div class="ttname"><a href="class_ship_object.html#a19acc3da3c2b0262054c95cca03663dda741c55cbdabe3372e59eccac5d48c323">ShipObject::TYPE_BATTLESHIP</a></div><div class="ttdef"><b>Definition:</b> ShipObject.h:30</div></div>
+<div class="ttc" id="class_ship_object_html_a9f38d1704be08b23cd0dacca313c4e6e"><div class="ttname"><a href="class_ship_object.html#a9f38d1704be08b23cd0dacca313c4e6e">ShipObject::m_actionArray</a></div><div class="ttdeci">int m_actionArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_]</div><div class="ttdoc">駒の攻撃範囲配列 </div><div class="ttdef"><b>Definition:</b> ShipObject.h:55</div></div>
+<div class="ttc" id="class_ship_object_html_ae2961b23e5532292d932ba8e03272f4e"><div class="ttname"><a href="class_ship_object.html#ae2961b23e5532292d932ba8e03272f4e">ShipObject::Control</a></div><div class="ttdeci">void Control()</div><div class="ttdef"><b>Definition:</b> ShipObject.h:83</div></div>
+<div class="ttc" id="class_ship_object_html_acf9bf2ba21e0b110c9ec53bf66af6503"><div class="ttname"><a href="class_ship_object.html#acf9bf2ba21e0b110c9ec53bf66af6503">ShipObject::m_shipArray</a></div><div class="ttdeci">int m_shipArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_]</div><div class="ttdoc">駒の実体配列 </div><div class="ttdef"><b>Definition:</b> ShipObject.h:52</div></div>
+<div class="ttc" id="class_ship_object_html_a19acc3da3c2b0262054c95cca03663dda0b79ec965d246311c3c340471777d5c6"><div class="ttname"><a href="class_ship_object.html#a19acc3da3c2b0262054c95cca03663dda0b79ec965d246311c3c340471777d5c6">ShipObject::TYPE_SUBMARINE</a></div><div class="ttdef"><b>Definition:</b> ShipObject.h:33</div></div>
+<div class="ttc" id="class_ship_object_html_a19acc3da3c2b0262054c95cca03663dda0472246a7056dcec55e101d7764d8f7a"><div class="ttname"><a href="class_ship_object.html#a19acc3da3c2b0262054c95cca03663dda0472246a7056dcec55e101d7764d8f7a">ShipObject::TYPE_AIRCARRIER</a></div><div class="ttdef"><b>Definition:</b> ShipObject.h:29</div></div>
+<div class="ttc" id="class_ship_object_html_aa50f991185191c6abd4dc5fe09e1c421"><div class="ttname"><a href="class_ship_object.html#aa50f991185191c6abd4dc5fe09e1c421">ShipObject::GetArrayPos</a></div><div class="ttdeci">void GetArrayPos(int &amp;_column, int &amp;_line)</div><div class="ttdoc">ステージ上での駒の中心位置のセット </div><div class="ttdef"><b>Definition:</b> ShipObject.h:127</div></div>
+<div class="ttc" id="_stage_object_8h_html"><div class="ttname"><a href="_stage_object_8h.html">StageObject.h</a></div></div>
+<div class="ttc" id="class_ship_object_html"><div class="ttname"><a href="class_ship_object.html">ShipObject</a></div><div class="ttdoc">駒の基底クラス </div><div class="ttdef"><b>Definition:</b> ShipObject.h:20</div></div>
+<div class="ttc" id="class_ship_object_html_ac0ae4d655d1157028df6ae1ea2cb3ef7"><div class="ttname"><a href="class_ship_object.html#ac0ae4d655d1157028df6ae1ea2cb3ef7">ShipObject::m_searchArray</a></div><div class="ttdeci">int m_searchArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_]</div><div class="ttdoc">駒の索敵範囲配列 </div><div class="ttdef"><b>Definition:</b> ShipObject.h:56</div></div>
+<div class="ttc" id="_ship_object_8h_html_ab0e296dd172698ab006fd461d0e70567"><div class="ttname"><a href="_ship_object_8h.html#ab0e296dd172698ab006fd461d0e70567">_SHIP_INIT_DIR_</a></div><div class="ttdeci">#define _SHIP_INIT_DIR_</div><div class="ttdef"><b>Definition:</b> ShipObject.h:15</div></div>
+<div class="ttc" id="class_ship_object_html_a19acc3da3c2b0262054c95cca03663dda3c8f5e3ec3ebacbabecfeea9cea56fb8"><div class="ttname"><a href="class_ship_object.html#a19acc3da3c2b0262054c95cca03663dda3c8f5e3ec3ebacbabecfeea9cea56fb8">ShipObject::TYPE_DESTROYER</a></div><div class="ttdef"><b>Definition:</b> ShipObject.h:32</div></div>
+<div class="ttc" id="class_ship_object_html_a7bbfe226a567872302a39da5e4949853"><div class="ttname"><a href="class_ship_object.html#a7bbfe226a567872302a39da5e4949853">ShipObject::Draw</a></div><div class="ttdeci">void Draw()</div><div class="ttdef"><b>Definition:</b> ShipObject.h:85</div></div>
+<div class="ttc" id="class_ship_object_html_a19acc3da3c2b0262054c95cca03663dd"><div class="ttname"><a href="class_ship_object.html#a19acc3da3c2b0262054c95cca03663dd">ShipObject::_SHIP_TYPE_NUM_</a></div><div class="ttdeci">_SHIP_TYPE_NUM_</div><div class="ttdoc">駒の種類列挙 </div><div class="ttdef"><b>Definition:</b> ShipObject.h:26</div></div>
+<div class="ttc" id="class_ship_object_html_a19acc3da3c2b0262054c95cca03663ddacb452eac8a719e8246ec4fb6e0586a9f"><div class="ttname"><a href="class_ship_object.html#a19acc3da3c2b0262054c95cca03663ddacb452eac8a719e8246ec4fb6e0586a9f">ShipObject::TYPE_NONE</a></div><div class="ttdef"><b>Definition:</b> ShipObject.h:28</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+構築: &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.10
+</small></address>
+</body>
+</html>
