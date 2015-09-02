@@ -15,6 +15,10 @@
 
 #define _PLAYER_NUM_ 2
 
+/**
+*@brief	ステージオブジェクトクラス
+*@details	ゲーム中のステージを管理するクラス
+*/
 class StageObject : public CGameObject
 {
 public:
