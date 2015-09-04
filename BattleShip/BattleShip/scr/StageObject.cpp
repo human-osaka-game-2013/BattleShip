@@ -6,6 +6,7 @@
 #include "StageObject.h"
 #include "StateManager.h"
 
+
 bool StageObject::Init()
 {
 	float tempX, tempY;

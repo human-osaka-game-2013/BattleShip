@@ -9,7 +9,7 @@
 #include "gameObject.h"
 #include "read_file.h"
 #include "BoardOfFrame.h"
-#include "StageObject.h"
+#include "StageDefineList.h"
 
 #define _SHIP_ARRAY_INDEX_	5	///<	‹î‚Ì”z—ñŽw”
 #define _SHIP_INIT_DIR_	CGameObject::CH_UP

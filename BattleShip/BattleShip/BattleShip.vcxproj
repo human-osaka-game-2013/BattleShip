@@ -105,6 +105,7 @@
     <ClInclude Include="scr\Selection.h" />
     <ClInclude Include="scr\SetShip.h" />
     <ClInclude Include="scr\ShipObject.h" />
+    <ClInclude Include="scr\StageDefineList.h" />
     <ClInclude Include="scr\StageEffect.h" />
     <ClInclude Include="scr\StageObject.h" />
     <ClInclude Include="scr\StateManager.h" />

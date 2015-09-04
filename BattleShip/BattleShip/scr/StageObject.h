@@ -6,12 +6,9 @@
 #ifndef _STAGEOBJECT_H_
 #define _STAGEOBJECT_H_
 
-#include "gameObject.h"
+#include "StageDefineList.h"
 #include "ShipObject.h"
 #include "BoardOfFrame.h"
-
-#define _STAGE_COLUMN_MAX_ 10	///<	ステージの行数
-#define _STAGE_LINE_MAX_	10	///<	ステージの列数
 
 #define _PLAYER_NUM_ 2
 
