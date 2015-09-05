@@ -43,12 +43,12 @@ bool ShipObject::RotationShip( int _arrayType, bool _rotType )
 			if( dir+1 < CH_DIRECTION_MAX )
 				SetDirection( (CHARADIRECTION)(dir+1) );
 			else
-				SetDirection( CH_LEFT );
+				SetDirection( (CHARADIRECTION)((int)CH_NONE+1) );
 		} else {		///<左回転	
 			if( dir-1 > CH_NONE )
 				SetDirection( (CHARADIRECTION)(dir-1) );
 			else
-				SetDirection( CH_DOWN );
+				SetDirection( (CHARADIRECTION)((int)CH_DIRECTION_MAX-1) );
 		}
 		_array = m_shipArray;
 		_array2 = m_moveArray;	///<	駒を回転させたら移動配列も回転させる。
@@ -92,14 +92,16 @@ bool ShipObject::RotationShip( int _arrayType, bool _rotType )
 			}
 		}
 	}
-	return false;
+
+
+	return true;
 }
 
 void ShipObject::InitVertex( _SHIP_TYPE_NUM_ _shipType )
 {
-	int frontBlockNum;
-	int backBlockNum;
-	switch( _shipType )
+	int frontBlockNum;	///<	中心ブロックの前方にあるブロックの数
+	int backBlockNum;	///<	中心ブロックの後方にあるブロックの数
+	switch( _shipType )	///<	艦種別に設定
 	{
 		case TYPE_AIRCARRIER:
 			frontBlockNum = 2;
@@ -119,7 +121,7 @@ void ShipObject::InitVertex( _SHIP_TYPE_NUM_ _shipType )
 			backBlockNum = 0;
 			break;
 	}
-
+	//	一ブロックのサイズは固定のため、↑で指定した数値基準で駒の中心ブロック基準の矩形を生成
 	m_vertex[0].x = -_BLOCK_WIDTH_SIZE_/2;
 	m_vertex[1].x = _BLOCK_WIDTH_SIZE_/2;
 	m_vertex[2].x = _BLOCK_WIDTH_SIZE_/2;
@@ -128,6 +130,20 @@ void ShipObject::InitVertex( _SHIP_TYPE_NUM_ _shipType )
 	m_vertex[1].y = -_BLOCK_HEIGHT_SIZE_/2 -(_BLOCK_HEIGHT_SIZE_*frontBlockNum);
 	m_vertex[2].y = _BLOCK_HEIGHT_SIZE_/2 +(_BLOCK_HEIGHT_SIZE_*backBlockNum);
 	m_vertex[3].y = _BLOCK_HEIGHT_SIZE_/2 +(_BLOCK_HEIGHT_SIZE_*backBlockNum);
+
+	for (int i = 0; i < 4; i++) {
+		m_vertex[i].z = 0.5f;
+		m_vertex[i].rhw = 1.0f;
+		m_vertex[i].color = 0xFFFFFFFF;
+	}
+	m_vertex[0].tu = 1.f;
+	m_vertex[0].tv = 0.f;
+	m_vertex[1].tu = 1.f;
+	m_vertex[1].tv = 1.f;
+	m_vertex[2].tu = 0.f;
+	m_vertex[2].tv = 1.f;
+	m_vertex[3].tu = 0.f;
+	m_vertex[3].tv = 0.f;
 }
 
 void  ShipObject::Free()

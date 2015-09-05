@@ -25,6 +25,8 @@ void Player::Init( int _userID )
 			break;
 		}
 		m_pShip[iCount]->Init( _userID );	///<	‰Šú‰»
+		m_pShip[iCount]->InitVertex( (ShipObject::_SHIP_TYPE_NUM_)iCount );
+
 		iCount++;
 	}
 }

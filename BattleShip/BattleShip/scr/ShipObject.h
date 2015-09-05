@@ -10,6 +10,7 @@
 #include "read_file.h"
 #include "BoardOfFrame.h"
 #include "StageDefineList.h"
+#include "DrawManager.h"
 
 #define _SHIP_ARRAY_INDEX_	5	///<	駒の配列指数
 #define _SHIP_INIT_DIR_	CGameObject::CH_UP
@@ -50,13 +51,13 @@ private:
 
 public:
 	int m_shipArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の実体配列
-			
+	CUSTOMVERTEX	m_vertex[4];	///<	駒の矩形生成時のローカル座標
+
 protected:
 	int m_actionArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の攻撃範囲配列
 	int m_searchArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の索敵範囲配列
 	int m_moveArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の移動範囲配列
-	CUSTOMVERTEX	m_vertex[4];
-
+	
 public:
 	/**
 	*@brief	コンストラクタ
@@ -99,6 +100,9 @@ public:
 
 	/**
 	*@brief	頂点情報の初期化
+	*@details	駒の描画はShipObject内の配置情報を頼りにするため、
+				通常の描画（中心点or左上基準の矩形生成描画）では出来ないので
+				駒ごとに矩形のローカル座標を作ってやる必要がある。
 	*/
 	void InitVertex( _SHIP_TYPE_NUM_ _shipType );
 
@@ -128,7 +132,6 @@ public:
 		_column	= m_posColumn;
 		_line	= m_posLine;
 	}
-
 
 };
 
