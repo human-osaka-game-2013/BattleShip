@@ -5,13 +5,13 @@
 
 #include "StageEffect.h"
 
-bool StageEffect::Init()
+bool StageEffect::Init( ShipObject::_SHIP_TYPE_NUM_ _type )
 {
 
 	return false;
 }
 
-bool StageEffect::Control()
+int StageEffect::Control()
 {
 
 

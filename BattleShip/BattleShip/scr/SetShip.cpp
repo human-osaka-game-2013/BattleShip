@@ -5,15 +5,15 @@
 
 #include "SetShip.h"
 
-bool SetShip::Init()
+bool SetShip::Init( ShipObject::_SHIP_TYPE_NUM_ _type )
 {
 	m_SetCompFlag = false;
-	m_SetCount = ShipObject::TYPE_AIRCARRIER;
+	m_SetCount = _type;		///< 呼び出し元（StateManager）から初期艦種の値をもらうので
 	return false;
 }
 
 //	
-bool SetShip::Control()
+int SetShip::Control()
 {
 	m_pStage->ResetSelect();	///<	ステージの選択状態をリセット
 
@@ -35,7 +35,7 @@ bool SetShip::Control()
 		m_SetCompFlag = true;
 		m_pStage->ResetSelect();
 	}
-	return m_SetCompFlag;
+	return m_SetCount;
 }
 
 //
@@ -69,6 +69,8 @@ int SetShip::CheckBoard()
 					//	駒が置けるマスであり、左クリックを押した時
 					if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )) {
 						m_pStage->SetShip( m_playerID, iColumn, iLine, tempShip );
+						tempShip->SetArrayPos( iColumn, iLine );
+						tempShip->SetDeadFlag( false );///<駒を設置したのでオブジェクトの死亡フラグを下げる
 						return 2;
 					}
 				}

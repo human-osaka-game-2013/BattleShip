@@ -42,12 +42,12 @@ public:
 	/**
 	*@brief	ステートパターン内での初期化
 	*/
-	virtual bool Init() = 0;
+	virtual bool Init( ShipObject::_SHIP_TYPE_NUM_ _type ) = 0;
 
 	/**
 	*@brief	ステートパターン内でのサブルーチン処理
 	*/
-	virtual bool Control() = 0;
+	virtual int Control() = 0;
 
 	/**
 	*@brief	ステートパターン内での描画

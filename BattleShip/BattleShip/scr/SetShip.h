@@ -14,30 +14,35 @@ class SetShip : public GameState
 {
 private:
 	bool m_SetCompFlag;	///<	Control返り値兼、駒の配置完了フラグ
-	int m_SetCount;		///<	駒の配置回数（どれだけ配置しているか）
+	int	m_SetCount;		///<	駒の配置回数（どれだけ配置しているか）
 	
 	
 public:
 	/**
-	*@brief	ステートパターン内での初期化
+	*@brief	駒配置での初期化
 	*/
-	bool Init();
+	bool Init( ShipObject::_SHIP_TYPE_NUM_ _type );
 
 	/**
-	*@brief	ステートパターン内でのサブルーチン処理
+	*@brief	駒配置でのサブルーチン処理
+	*@return	m_SetCount	現在の選択駒が分かれば、結果を受け取ったStateManagerは、@n
+				それに応じて違うステートに切り替えたりさせればいい。
 	*/
-	bool Control();
+	int Control();
 
 	/**
-	*@brief	ステートパターン内でのサブルーチン処理
+	*@brief	駒配置でのサブルーチン描画
 	*/
 	void Draw();
 	
 	/**
-	*@brief	ステートパターン内でのサブルーチン処理
+	*@brief	駒配置での通信待機処理
 	*/
 	void ComStandby();
 
+	
+	
+private:	
 	/**
 	*@brief	盤面総チェックのルーチン処理
 	*@return	判定結果	0：クリックの判定を通らなかった。@n
@@ -45,10 +50,6 @@ public:
 				2：クリックしたマスに駒を配置出来た。
 	*/
 	int CheckBoard();
-
-	/**
-	*@brief	
-	*/
 
 	/**
 	*@brief	配置回数の取得

@@ -5,14 +5,14 @@
 
 #include "Result.h"
 
-bool Result::Init()
+bool Result::Init( ShipObject::_SHIP_TYPE_NUM_ _type )
 {
 
 	return true;
 }
 
 //	
-bool Result::Control()
+int Result::Control()
 {
 
 	return false;

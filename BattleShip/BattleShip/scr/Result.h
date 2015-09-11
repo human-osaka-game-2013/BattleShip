@@ -14,22 +14,22 @@ class Result : public GameState
 
 public:
 	/**
-	*@brief	ステートパターン内での初期化
+	*@brief	戦闘結果での初期化
 	*/
-	bool Init();
+	bool Init( ShipObject::_SHIP_TYPE_NUM_ _type );
 
 	/**
-	*@brief	ステートパターン内での描画
+	*@brief	戦闘結果でのサブルーチン処理
 	*/
-	bool Control();
+	int Control();
 	
 	/**
-	*@brief	ステートパターン内での描画
+	*@brief	戦闘結果での描画
 	*/
 	void Draw();
 	
 	/**
-	*@brief	ステートパターン内での通信時のサブルーチン処理
+	*@brief	戦闘結果での通信待機処理
 	*/
 	void ComStandby();
 

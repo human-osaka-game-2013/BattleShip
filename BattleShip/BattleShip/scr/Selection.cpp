@@ -5,17 +5,17 @@
 
 #include "Selection.h"
 
-bool Selection::Init()
+bool Selection::Init( ShipObject::_SHIP_TYPE_NUM_ _type )
 {
 
 	return true;
 }
 
 //	
-bool Selection::Control()
+int Selection::Control()
 {
 
-	return false;
+	return 0;
 }
 
 //	

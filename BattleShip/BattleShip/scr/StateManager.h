@@ -34,6 +34,11 @@ private:
 	Player* const 	m_pPlayer2;		///<	プレイヤー2情報格納ポインタ
 	const int		m_playerID;		///<	起動側のプレイヤーID。GameScene側からもらってくる。
 	StageObject* const	m_pStageObject;	///<	ステージ情報格納ポインタ
+	
+	ShipObject::_SHIP_TYPE_NUM_	m_currentShip;	///<	現在選択対象の駒
+
+//	ステート共通の描画オブジェクトの情報
+private:
 	BoardOfFrame	m_StageFrame;	///<	ステージ部分のフレームオブジェクト
 	BoardOfFrame	m_PlayerFrame[_PLAYER_NUM_];	///<	プレイヤー情報のフレームオブジェクト	
 	BoardOfFrame	m_ShipFrame[_PLAYER_NUM_][ShipObject::TYPE_MAX];
@@ -49,19 +54,7 @@ public:
 	*/
 	StateManager( Player* const _pPlayer1, Player* const _pPlayer2,
 		StageObject* const	_pStageObject, const int _playerID );
-	/**
-	*@brief	解放処理
-	*/
-	void Free();
-	
-	/**
-	*@brief	ステートパターンの切り替え
-	*param[in]	_stateType	
-	*@return true：ステートパターンの変更完了。*n
-			false：変更失敗
-	*/
-	bool ChangeState( _STATE_NUM_ _stateType );
-	
+
 	/**
 	*@brief	ステートの初期化
 	*/
@@ -82,7 +75,28 @@ public:
 	*/
 	void StateDelete();
 
+	/**
+	*@brief	解放処理
+	*/
+	void Free();
 
+private:
+	/**
+	*@brief	ステートパターンの切り替え
+	*@return true：ステートパターンの変更の必要あり。*n
+			false：変更の必要無し
+	*/
+	bool CheckState();
+
+	/**
+	*@brief	ステートパターンの切り替え
+	*param[in]	_stateType	
+	*@return true：ステートパターンの変更完了。*n
+			false：変更失敗
+	*/
+	bool ChangeState( _STATE_NUM_ _stateType );
+
+public:
 	/**
 	*@brief	描画クラスセット
 	*/
@@ -97,6 +111,7 @@ public:
 		m_pMouse = _pMouse;
 	}
 	
+
 };
 
 

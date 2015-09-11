@@ -29,14 +29,15 @@ StateManager::StateManager( Player* const _pPlayer1, Player* const _pPlayer2,
 //	ステートの初期化
 void StateManager::StateInit()
 {
-	m_beforeState = STATE_NONE;		///<	初期化なので以前のステートはそもそも無い為、STATE_NONEに。
-	m_currentState = _FIRST_SETATE_;///<	ステートの初期化なので最初に読み込むであろうパターンの定数を入れる
+	m_beforeState	= STATE_NONE;		///<	初期化なので以前のステートはそもそも無い為、STATE_NONEに。
+	m_currentState	= _FIRST_SETATE_;///<	ステートの初期化なので最初に読み込むであろうパターンの定数を入れる
+	m_currentShip	= ShipObject::TYPE_AIRCARRIER;	///<	初期選択駒は空母なので数値を空母にセット。
 	ChangeState(m_currentState);	///<	まだステートポイントには何も入っていないので初期化も兼ねて
 	m_StageFrame.Init( 0.f, -2.f, WIDTH, HEIGHT*(_STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_));
 	///<画面上部から１１マス分目まで盤面フレームがあるので11/16となる。
 	m_PlayerFrame[0].Init( _POS_PLAYER1FRAME_, _SIZE_PLAYERFRAME_ );
 	m_PlayerFrame[1].Init( _POS_PLAYER2FRAME_, _SIZE_PLAYERFRAME_ );
-	
+
 	for( int iPlayer=0; iPlayer<_PLAYER_NUM_; iPlayer++ )	///<表示位置などを予め初期化しておき、描画時や当たり判定時などにも利用する。
 	{
 		float tempX, tempY;	
@@ -87,7 +88,7 @@ void StateManager::StateCotrol()
 {
 	m_beforeState = m_currentState;	///<	ルーチン的にな処理で前フレーム時のステートを現在のステートに合わせる。
 
-	if( m_pGameState->Control() )	///<	ステートのルーチン処理の結果シーンが変わる必要があれば
+	if( this->CheckState() )	///<	ステートのルーチン処理の結果シーンが変わる必要があれば
 	{
 		switch( m_currentState )	///<	変更するステートは順番がある程度決まっているので分岐
 		{
@@ -111,6 +112,33 @@ void StateManager::StateCotrol()
 	}
 
 
+}
+
+bool StateManager::CheckState()
+{
+	
+	int stateResult = m_pGameState->Control();	///<	ステートごとの処理に移行
+	bool checkResult = false;
+
+	switch( m_currentState )	///<	シーン毎にステートの結果への対処が変わるので分岐
+	{
+	case STATE_SET_SHIP:
+		m_currentShip = (ShipObject::_SHIP_TYPE_NUM_)stateResult;
+		if( m_currentShip >= ShipObject::TYPE_MAX )
+			checkResult = true;
+		break;
+	case STATE_SELECTION:
+		
+	
+		break;
+	case STATE_RESULT:
+		
+		break;
+	case STATE_STAGE_EFFECT:
+		
+		break;
+	}
+	return checkResult;
 }
 
 //	ステートの基本描画
@@ -239,8 +267,21 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 				break;
 
 			}
+			//	ステージ上の駒の表示
+			ShipObject* tempShip = m_pPlayer1->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
+				
+			if( !tempShip->GetDeadFlag() ){
+				int tempColumn, tempLine;
+				tempW = _BLOCK_WIDTH_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
+				tempH = _BLOCK_HEIGHT_SIZE_;	///<	ステージ上の1コマのサイズの入力を簡略化
+				tempShip->GetArrayPos(tempColumn, tempLine);
+				tempX = tempLine*tempW + tempW*1.5f ;
+				tempY = tempColumn*tempH + tempH*1.5f;
+				m_pDrawManager->VertexTransform( iShip + _TEX_AIRCARRIER_, tempShip->m_vertex, tempX, tempY, 1.f, 1.f, tempShip->GetDirection()*90.f );
+			}
 		}
 	}
+	//	ステート別の描画
 	m_pGameState->Draw();
 }
 
@@ -275,7 +316,10 @@ bool StateManager::ChangeState( _STATE_NUM_ _stateType )
 
 		break;
 	}
-	m_currentState = _stateType;
+	m_currentState = _stateType;	///<	現在のステート変数を更新
+	
+	if( m_currentShip >= ShipObject::TYPE_MAX )	///<	ステート変更のついでに選択駒が範囲を超えているかチェック
+		m_currentShip = ShipObject::TYPE_AIRCARRIER;	///<	空母に変更
 
 	//	ステートが変わったので、一連の初期化を行う
 	m_pGameState->SetPlayerPtr( m_pPlayer1, 0 );
@@ -284,7 +328,7 @@ bool StateManager::ChangeState( _STATE_NUM_ _stateType )
 	m_pGameState->SetDraw( m_pDrawManager );
 	m_pGameState->SetMouse( m_pMouse );
 	m_pGameState->SetPlayerID( m_playerID );
-	m_pGameState->Init();	///<最後に
+	m_pGameState->Init( m_currentShip );	///<最後にステート側の初期化も行う（引数はこのクラスが持っている現在の選択駒）
 
 	return true;
 }
@@ -293,11 +337,10 @@ bool StateManager::ChangeState( _STATE_NUM_ _stateType )
 void StateManager::StateDelete()
 {
 	CLASS_DELETE(m_pGameState);
-	
+	delete m_pGameState;
 }
 
 void StateManager::Free()
 {
 	StateDelete();
-	delete m_pGameState;
 }
