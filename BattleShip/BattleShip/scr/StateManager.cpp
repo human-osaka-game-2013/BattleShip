@@ -101,12 +101,12 @@ void StateManager::StateCotrol()
 
 			break;
 		case STATE_RESULT:
-			ChangeState(STATE_SELECTION);
+			ChangeState(STATE_STAGE_EFFECT);
 
 			break;
 		case STATE_STAGE_EFFECT:
-			//ChangeState(STATE_SELECTION);
-			//
+			ChangeState(STATE_SELECTION);
+			
 			break;
 		}
 	}
@@ -117,19 +117,19 @@ void StateManager::StateCotrol()
 bool StateManager::CheckState()
 {
 	
-	int stateResult = m_pGameState->Control();	///<	ステートごとの処理に移行
+	int stateResult = m_pGameState->Control();	///<　ステートごとの処理に移行
 	bool checkResult = false;
 
-	switch( m_currentState )	///<	シーン毎にステートの結果への対処が変わるので分岐
+	switch( m_currentState )	///<　シーン毎にステートの結果への対処が変わるので分岐
 	{
 	case STATE_SET_SHIP:
-		m_currentShip = (ShipObject::_SHIP_TYPE_NUM_)stateResult;
-		if( m_currentShip >= ShipObject::TYPE_MAX )
+		m_currentShip = (ShipObject::_SHIP_TYPE_NUM_)stateResult;	///<　SetShipでの結果（今選択している駒）を更新
+		if( m_currentShip >= ShipObject::TYPE_MAX )	///<　全ての駒がセットされた
 			checkResult = true;
 		break;
 	case STATE_SELECTION:
-		
-	
+		if( m_currentShip != (ShipObject::_SHIP_TYPE_NUM_)stateResult )	///<　結果と選択中の駒が違う＝行動選択完了なので
+			checkResult = true;	///<　選択結果に移る
 		break;
 	case STATE_RESULT:
 		

@@ -32,7 +32,9 @@ protected:
 	Player* m_pPlayer[_PLAYER_NUM_];	///<	駒データ格納用
 	StageObject* m_pStage;	///<	ステージデータ格納用
 	int m_playerID;
-	
+	bool m_StateCompFlag;	///<	Control返り値兼、現在のステートでのタスクを完了フラグ。基本的にはStateManagerと共有のため取り扱いに注意！
+	int	m_ShipCount;		///<	今見ている駒を見るカウンタ
+
 //	デバイス
 protected:
 	CDrawManager*	m_pDrawManager;	///<	2D描画管理クラスポインタ(constポインタ)

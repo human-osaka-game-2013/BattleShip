@@ -35,7 +35,7 @@ private:
 	const int		m_playerID;		///<	起動側のプレイヤーID。GameScene側からもらってくる。
 	StageObject* const	m_pStageObject;	///<	ステージ情報格納ポインタ
 	
-	ShipObject::_SHIP_TYPE_NUM_	m_currentShip;	///<	現在選択対象の駒
+	ShipObject::_SHIP_TYPE_NUM_	m_currentShip;	///<	現在選択対象の駒。GameStateと共有するため取り扱いに注意！
 
 //	ステート共通の描画オブジェクトの情報
 private:

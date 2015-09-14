@@ -7,8 +7,8 @@
 
 bool SetShip::Init( ShipObject::_SHIP_TYPE_NUM_ _type )
 {
-	m_SetCompFlag = false;
-	m_SetCount = _type;		///< 呼び出し元（StateManager）から初期艦種の値をもらうので
+	m_StateCompFlag = false;
+	m_ShipCount = _type;		///< 呼び出し元（StateManager）から初期艦種の値をもらうので
 	return false;
 }
 
@@ -17,25 +17,25 @@ int SetShip::Control()
 {
 	m_pStage->ResetSelect();	///<	ステージの選択状態をリセット
 
-	if( !m_SetCompFlag )
+	if( !m_StateCompFlag )
 	{
 		int iCheckResult = 0;
 		//	駒が置ける置けない関係なく、右クリックで駒を回転させる
 		if( m_pMouse->MouseStCheck( MOUSE_R, PUSH ) ) {
-			ShipObject* tempShip = m_pPlayer[m_playerID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)m_SetCount );
+			ShipObject* tempShip = m_pPlayer[m_playerID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)m_ShipCount );
 			tempShip->RotationShip( 0, true );
 		}
 		iCheckResult = CheckBoard();
 
 		if( iCheckResult == 2 )
-			m_SetCount++;
+			m_ShipCount++;
 	}
 
-	if( m_SetCount >= ShipObject::TYPE_MAX ){
-		m_SetCompFlag = true;
+	if( m_ShipCount >= ShipObject::TYPE_MAX ){
+		m_StateCompFlag = true;
 		m_pStage->ResetSelect();
 	}
-	return m_SetCount;
+	return m_ShipCount;
 }
 
 //
@@ -53,7 +53,7 @@ int SetShip::CheckBoard()
 			if( m_pStage->m_stageBlock[m_playerID-1][iColumn][iLine].HitBlockCheck( tempX, tempY ))
 			{
 				int iCheckResult=0;
-				ShipObject* tempShip = m_pPlayer[m_playerID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)m_SetCount );
+				ShipObject* tempShip = m_pPlayer[m_playerID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)m_ShipCount );
 				//	ステージブロックのチェック
 				iCheckResult = m_pStage->CheckStageBlock( m_playerID, iColumn, iLine, tempShip);
 				
@@ -85,10 +85,10 @@ int SetShip::CheckBoard()
 void SetShip::Draw()
 {
 	float tempX = m_pMouse->GetCursorPosX(), tempY = m_pMouse->GetCursorPosY();
-	if( m_SetCount < ShipObject::TYPE_MAX )
+	if( m_ShipCount < ShipObject::TYPE_MAX )
 	{
-		ShipObject* tempShip = m_pPlayer[m_playerID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)m_SetCount );
-		m_pDrawManager->VertexTransform( m_SetCount + _TEX_AIRCARRIER_, tempShip->m_vertex, tempX, tempY, 1.f, 1.f, tempShip->GetDirection()*90.f );
+		ShipObject* tempShip = m_pPlayer[m_playerID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)m_ShipCount );
+		m_pDrawManager->VertexTransform( m_ShipCount + _TEX_AIRCARRIER_, tempShip->m_vertex, tempX, tempY, 1.f, 1.f, tempShip->GetDirection()*90.f );
 	}
 }
 

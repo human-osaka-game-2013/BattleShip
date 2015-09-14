@@ -13,8 +13,7 @@
 class SetShip : public GameState
 {
 private:
-	bool m_SetCompFlag;	///<	Control返り値兼、駒の配置完了フラグ
-	int	m_SetCount;		///<	駒の配置回数（どれだけ配置しているか）
+	
 	
 	
 public:
@@ -25,7 +24,7 @@ public:
 
 	/**
 	*@brief	駒配置でのサブルーチン処理
-	*@return	m_SetCount	現在の選択駒が分かれば、結果を受け取ったStateManagerは、@n
+	*@return	m_ShipCount	現在の選択駒が分かれば、結果を受け取ったStateManagerは、@n
 				それに応じて違うステートに切り替えたりさせればいい。
 	*/
 	int Control();
@@ -54,7 +53,7 @@ private:
 	/**
 	*@brief	配置回数の取得
 	*/
-	int GetSetCount(){ return m_SetCount; }
+	int GetSetCount(){ return m_ShipCount; }
 };
 
 #endif
