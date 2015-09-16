@@ -5,7 +5,7 @@
 
 #include "StageEffect.h"
 
-bool StageEffect::Init( ShipObject::_SHIP_TYPE_NUM_ _type )
+bool StageEffect::Init()
 {
 
 	return false;

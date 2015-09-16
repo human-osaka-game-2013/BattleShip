@@ -117,18 +117,18 @@ void StateManager::StateCotrol()
 bool StateManager::CheckState()
 {
 	
-	int stateResult = m_pGameState->Control();	///<　ステートごとの処理に移行
+	int beforeShip = m_currentShip;
+	m_pGameState->Control();	///<　ステートごとの処理に移行
 	bool checkResult = false;
 
 	switch( m_currentState )	///<　シーン毎にステートの結果への対処が変わるので分岐
 	{
 	case STATE_SET_SHIP:
-		m_currentShip = (ShipObject::_SHIP_TYPE_NUM_)stateResult;	///<　SetShipでの結果（今選択している駒）を更新
 		if( m_currentShip >= ShipObject::TYPE_MAX )	///<　全ての駒がセットされた
 			checkResult = true;
 		break;
 	case STATE_SELECTION:
-		if( m_currentShip != (ShipObject::_SHIP_TYPE_NUM_)stateResult )	///<　結果と選択中の駒が違う＝行動選択完了なので
+		if( m_currentShip != (ShipObject::_SHIP_TYPE_NUM_)beforeShip )	///<　結果と選択中の駒が違う＝行動選択完了なので
 			checkResult = true;	///<　選択結果に移る
 		break;
 	case STATE_RESULT:
@@ -271,13 +271,9 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 			ShipObject* tempShip = m_pPlayer1->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
 				
 			if( !tempShip->GetDeadFlag() ){
-				int tempColumn, tempLine;
-				tempW = _BLOCK_WIDTH_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
-				tempH = _BLOCK_HEIGHT_SIZE_;	///<	ステージ上の1コマのサイズの入力を簡略化
-				tempShip->GetArrayPos(tempColumn, tempLine);
-				tempX = tempLine*tempW + tempW*1.5f ;
-				tempY = tempColumn*tempH + tempH*1.5f;
-				m_pDrawManager->VertexTransform( iShip + _TEX_AIRCARRIER_, tempShip->m_vertex, tempX, tempY, 1.f, 1.f, tempShip->GetDirection()*90.f );
+				
+				m_pDrawManager->VertexTransform( iShip + _TEX_AIRCARRIER_, tempShip->m_vertex, 
+					tempShip->GetPositionX(), tempShip->GetPositionY(), 1.f, 1.f, tempShip->GetDirection()*90.f );
 			}
 		}
 	}
@@ -294,25 +290,26 @@ bool StateManager::ChangeState( _STATE_NUM_ _stateType )
 		MessageBoxA(0,"ステートパターンの変更に失敗しました！\n引数を確認して下さい！(＞＜;)",NULL,MB_OK);
 		return false;
 	}
-	
+
+	if( m_beforeState != STATE_NONE )
+		CLASS_DELETE( m_pGameState );
+
 	switch( _stateType )
 	{
-	StateDelete();
-
 	case STATE_SET_SHIP:
-		m_pGameState = new SetShip();
+		m_pGameState = new SetShip( m_currentShip );
 
 		break;
 	case STATE_SELECTION:
-		m_pGameState = new Selection();
+		m_pGameState = new Selection( m_currentShip );
 
 		break;
 	case STATE_RESULT:
-		m_pGameState = new Result();
+		m_pGameState = new Result( m_currentShip );
 
 		break;
 	case STATE_STAGE_EFFECT:
-		m_pGameState = new StageEffect();
+		m_pGameState = new StageEffect( m_currentShip );
 
 		break;
 	}
@@ -328,7 +325,7 @@ bool StateManager::ChangeState( _STATE_NUM_ _stateType )
 	m_pGameState->SetDraw( m_pDrawManager );
 	m_pGameState->SetMouse( m_pMouse );
 	m_pGameState->SetPlayerID( m_playerID );
-	m_pGameState->Init( m_currentShip );	///<最後にステート側の初期化も行う（引数はこのクラスが持っている現在の選択駒）
+	m_pGameState->Init();	///<最後にステート側の初期化も行う（引数はこのクラスが持っている現在の選択駒）
 
 	return true;
 }
@@ -336,7 +333,6 @@ bool StateManager::ChangeState( _STATE_NUM_ _stateType )
 //	ステートオブジェクトの消去
 void StateManager::StateDelete()
 {
-	CLASS_DELETE(m_pGameState);
 	delete m_pGameState;
 }
 

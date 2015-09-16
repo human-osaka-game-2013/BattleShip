@@ -47,12 +47,31 @@ bool StageObject::CheckStageBlock( int _player, int _column, int _line, unsigned
 	return false;
 }
 
-int StageObject::CheckStageBlock( int _player, int _column, int _line, ShipObject* _ship )
+int StageObject::CheckStageBlock( int _player, int _column, int _line, ShipObject* _ship, ShipObject::_SHIP_ARRAY_TYPE_ _arrayType )
 {
 	if( _player > _PLAYER_NUM_ || _player <= 0 )	
 		return -1;	///<	プレイヤーIDが1か2以外だった場合
 
+	int(*_array)[_SHIP_ARRAY_INDEX_];	///<どの配列データとのチェックを行うかの格納用
 	_player--;	///<	配列指数用に直す
+	
+	//---	どの配列データをチェックするかの分岐---
+	switch( _arrayType )
+	{
+	case ShipObject::ARRAY_TYPE_SHIP:
+		_array = _ship->m_shipArray;
+		break;
+	case ShipObject::ARRAY_TYPE_ACTION:
+		_array = _ship->m_actionArray;
+		break;
+	case ShipObject::ARRAY_TYPE_SEARCH:
+		_array = _ship->m_searchArray;
+		break;
+	case ShipObject::ARRAY_TYPE_MOVE:
+		_array = _ship->m_moveArray;
+		break;
+	
+	}//---
 
 	for( int iColumn = 0, iStageCol = _column-2; iColumn < _SHIP_ARRAY_INDEX_; iColumn++, iStageCol++ ){
 		for( int iLine = 0, iStageLine = _line-2 ; iLine < _SHIP_ARRAY_INDEX_; iLine++, iStageLine++ ){
@@ -67,10 +86,10 @@ int StageObject::CheckStageBlock( int _player, int _column, int _line, ShipObjec
 
 			//	指定したブロック範囲がステージからはみ出た場合
 			if( bStageOutside ){
-				if( _ship->m_shipArray[iColumn][iLine] != 0 )
+				if( _array[iColumn][iLine] != 0 )
 					return 1;	///<	ステージから出ていて、駒の一部が存在していれば駒自体がはみ出ている場合なので、指定した場所は無効である。
 			} else if( m_stageArray[_player][iStageCol][iStageLine] != 0 ) {
-				if( _ship->m_shipArray[iColumn][iLine] != 0 )	///<	ステージに駒が置ける場所
+				if( _array[iColumn][iLine] != 0 )	///<	ステージに駒が置ける場所
 					return 2;
 			}
 		}

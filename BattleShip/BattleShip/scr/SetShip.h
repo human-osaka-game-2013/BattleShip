@@ -18,9 +18,15 @@ private:
 	
 public:
 	/**
+	*@brief	コンストラクタ
+	*@param	_type	現在選択している艦の種類
+	*/
+	SetShip( ShipObject::_SHIP_TYPE_NUM_& _type ): GameState( _type ){}
+
+	/**
 	*@brief	駒配置での初期化
 	*/
-	bool Init( ShipObject::_SHIP_TYPE_NUM_ _type );
+	bool Init();
 
 	/**
 	*@brief	駒配置でのサブルーチン処理

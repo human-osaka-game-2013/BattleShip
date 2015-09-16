@@ -22,7 +22,7 @@ class ShipObject:public CGameObject, public ReadFile
 {
 public:
 	/**
-	*@brief	駒の種類列挙
+	*@brief	駒の艦種類列挙
 	*/
 	enum _SHIP_TYPE_NUM_
 	{
@@ -35,6 +35,21 @@ public:
 		TYPE_MAX,
 	};
 
+	/**
+	*@brief	駒の配列種類
+	*/
+	enum _SHIP_ARRAY_TYPE_
+	{
+		ARRAY_TYPE_SHIP,
+		ARRAY_TYPE_ACTION,
+		ARRAY_TYPE_SEARCH,
+		ARRAY_TYPE_MOVE,
+		ARRAY_TYPE_MAX,
+	};
+
+	/**
+	*@brief	駒のテーブル情報種類
+	*/
 	enum _SHIP_TABLE_NUM_
 	{
 		TABLE_SHIP,
@@ -53,7 +68,6 @@ public:
 	int m_shipArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の実体配列
 	CUSTOMVERTEX	m_vertex[4];	///<	駒の矩形生成時のローカル座標
 
-protected:
 	int m_actionArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の攻撃範囲配列
 	int m_searchArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の索敵範囲配列
 	int m_moveArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の移動範囲配列

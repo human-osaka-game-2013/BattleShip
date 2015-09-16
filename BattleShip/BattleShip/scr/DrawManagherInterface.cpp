@@ -12,5 +12,6 @@ bool CDrawManager::AllLoadTexture ()
 	LoadTexture ( "../BattleShip/texture/StageMap2.png", _TEX_STAGEMAP_,	0, 255, 255 );
 	LoadTexture ( "../BattleShip/texture/Block.png", _TEX_BLOCK_,	0, 255, 255 );
 	LoadTexture ( "../BattleShip/texture/BlockFrame.png", _TEX_BLOCKFRAME_,	0, 255, 255 );
+	LoadTexture ( "../BattleShip/texture/tab_1.png", _TEX_TABFRAME_,	0, 255, 255 );
 	return true;
 }

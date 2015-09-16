@@ -5,7 +5,7 @@
 
 #include "Result.h"
 
-bool Result::Init( ShipObject::_SHIP_TYPE_NUM_ _type )
+bool Result::Init()
 {
 
 	return true;

@@ -5,10 +5,9 @@
 
 #include "SetShip.h"
 
-bool SetShip::Init( ShipObject::_SHIP_TYPE_NUM_ _type )
+bool SetShip::Init()
 {
 	m_StateCompFlag = false;
-	m_ShipCount = _type;		///< 呼び出し元（StateManager）から初期艦種の値をもらうので
 	return false;
 }
 
@@ -16,14 +15,16 @@ bool SetShip::Init( ShipObject::_SHIP_TYPE_NUM_ _type )
 int SetShip::Control()
 {
 	m_pStage->ResetSelect();	///<	ステージの選択状態をリセット
-
+	m_tempX = m_pMouse->GetCursorPosX();	///<	マウス座標の更新
+	m_tempY = m_pMouse->GetCursorPosY();	///<	マウス座標の更新
+	m_tempShip = m_pPlayer[m_playerID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)m_ShipCount );
+			
 	if( !m_StateCompFlag )
 	{
 		int iCheckResult = 0;
 		//	駒が置ける置けない関係なく、右クリックで駒を回転させる
 		if( m_pMouse->MouseStCheck( MOUSE_R, PUSH ) ) {
-			ShipObject* tempShip = m_pPlayer[m_playerID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)m_ShipCount );
-			tempShip->RotationShip( 0, true );
+			m_tempShip->RotationShip( 0, true );
 		}
 		iCheckResult = CheckBoard();
 
@@ -48,29 +49,34 @@ int SetShip::CheckBoard()
 		//	列
 		for( int iLine=0; iLine<_STAGE_LINE_MAX_; iLine++ ){
 			
-			float tempX = m_pMouse->GetCursorPosX(), tempY = m_pMouse->GetCursorPosY();
-			
-			if( m_pStage->m_stageBlock[m_playerID-1][iColumn][iLine].HitBlockCheck( tempX, tempY ))
+			if( m_pStage->m_stageBlock[m_playerID-1][iColumn][iLine].HitBlockCheck( m_tempX, m_tempY ))
 			{
 				int iCheckResult=0;
-				ShipObject* tempShip = m_pPlayer[m_playerID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)m_ShipCount );
+				
 				//	ステージブロックのチェック
-				iCheckResult = m_pStage->CheckStageBlock( m_playerID, iColumn, iLine, tempShip);
+				iCheckResult = m_pStage->CheckStageBlock( m_playerID, iColumn, iLine, m_tempShip, ShipObject::ARRAY_TYPE_SHIP );
 				
 				if( iCheckResult != 0 )	///<駒を置けるマスじゃなかった。
 				{	
 					//	置けない範囲だった場合も、置けないという情報をステージにセットする
-					m_pStage->SetRange( m_playerID, iColumn, iLine, tempShip->m_shipArray, 2 );
+					m_pStage->SetRange( m_playerID, iColumn, iLine, m_tempShip->m_shipArray, 2 );
 					return 1;
 				}
 				else ///<置けるマス。
 				{
-					m_pStage->SetRange( m_playerID, iColumn, iLine, tempShip->m_shipArray, 1);
+					m_pStage->SetRange( m_playerID, iColumn, iLine, m_tempShip->m_shipArray, 1);
 					//	駒が置けるマスであり、左クリックを押した時
 					if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )) {
-						m_pStage->SetShip( m_playerID, iColumn, iLine, tempShip );
-						tempShip->SetArrayPos( iColumn, iLine );
-						tempShip->SetDeadFlag( false );///<駒を設置したのでオブジェクトの死亡フラグを下げる
+						m_pStage->SetShip( m_playerID, iColumn, iLine, m_tempShip );
+						m_tempShip->SetArrayPos( iColumn, iLine );
+						m_tempShip->SetDeadFlag( false );///<駒を設置したのでオブジェクトの死亡フラグを下げる
+						
+						//	駒の基準点（中心点）を予め算出させておく
+						float tempW = _BLOCK_WIDTH_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
+						float tempH = _BLOCK_HEIGHT_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
+						m_tempX = iLine*tempW + tempW*1.5f ;		
+						m_tempY = iColumn*tempH + tempH*1.5f;
+						m_tempShip->SetPosition( m_tempX, m_tempY, 0.5f );
 						return 2;
 					}
 				}
@@ -84,11 +90,9 @@ int SetShip::CheckBoard()
 //	
 void SetShip::Draw()
 {
-	float tempX = m_pMouse->GetCursorPosX(), tempY = m_pMouse->GetCursorPosY();
 	if( m_ShipCount < ShipObject::TYPE_MAX )
 	{
-		ShipObject* tempShip = m_pPlayer[m_playerID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)m_ShipCount );
-		m_pDrawManager->VertexTransform( m_ShipCount + _TEX_AIRCARRIER_, tempShip->m_vertex, tempX, tempY, 1.f, 1.f, tempShip->GetDirection()*90.f );
+		m_pDrawManager->VertexTransform( m_ShipCount + _TEX_AIRCARRIER_, m_tempShip->m_vertex, m_tempX, m_tempY, 1.f, 1.f, m_tempShip->GetDirection()*90.f );
 	}
 }
 

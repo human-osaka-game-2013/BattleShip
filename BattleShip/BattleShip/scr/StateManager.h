@@ -25,6 +25,7 @@ public:
 		STATE_STAGE_EFFECT,
 	};
 
+	
 //	通常のメンバ変数
 private:
 	GameState*		m_pGameState;	///<	戦闘ステートパターンオブジェクトのポインタ

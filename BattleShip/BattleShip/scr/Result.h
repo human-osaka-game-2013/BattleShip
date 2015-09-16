@@ -14,9 +14,15 @@ class Result : public GameState
 
 public:
 	/**
+	*@brief	コンストラクタ
+	*@param	_type	現在選択している艦の種類
+	*/
+	Result( ShipObject::_SHIP_TYPE_NUM_& _type ): GameState( _type ){}
+
+	/**
 	*@brief	戦闘結果での初期化
 	*/
-	bool Init( ShipObject::_SHIP_TYPE_NUM_ _type );
+	bool Init();
 
 	/**
 	*@brief	戦闘結果でのサブルーチン処理

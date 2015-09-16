@@ -27,13 +27,35 @@ public:
 		STATE_STAGE_EFFECT,
 	};
 
+	/**
+	*@brief	行動タイプ
+	*/
+	enum _SELECT_NUM_
+	{
+		_SELECT_NONE_ = -1,
+		_SELECT_ACTION_,
+		_SELECT_SEARCH_,
+		_SELECT_MOVE_,
+		_SELECT_MAX_
+	};
+
+//	メンバ変数など
 protected:
 	_STATE_NUM_ m_stateID;	///<	自身のステートのID	
 	Player* m_pPlayer[_PLAYER_NUM_];	///<	駒データ格納用
 	StageObject* m_pStage;	///<	ステージデータ格納用
-	int m_playerID;
+	int m_playerID;			///<	起動側のID
 	bool m_StateCompFlag;	///<	Control返り値兼、現在のステートでのタスクを完了フラグ。基本的にはStateManagerと共有のため取り扱いに注意！
-	int	m_ShipCount;		///<	今見ている駒を見るカウンタ
+	int	&m_ShipCount;		///<	今見ている駒を見るカウンタ
+	
+	/*
+	*@detals	あまりにもマウス座標や駒オブジェクトの取得を何度もしていたため、
+				この場合だとコストが掛かると思い、メンバ変数にしてこちらに
+				毎フレーム保存していれば楽になると思い作った
+	*/
+	float m_tempX;	///<	マウスなどの座標の仮保存変数
+	float m_tempY;	///<	マウスなどの座標の仮保存変数
+	ShipObject* m_tempShip;	///<	駒の仮保存変数
 
 //	デバイス
 protected:
@@ -42,9 +64,18 @@ protected:
 
 public:
 	/**
+	*@brief	コンストラクタ
+	*@param	_type	現在選択している艦の種類
+	*/
+	GameState( ShipObject::_SHIP_TYPE_NUM_& _type ) : m_ShipCount( (int &)_type )
+	{
+
+	}
+
+	/**
 	*@brief	ステートパターン内での初期化
 	*/
-	virtual bool Init( ShipObject::_SHIP_TYPE_NUM_ _type ) = 0;
+	virtual bool Init() = 0;
 
 	/**
 	*@brief	ステートパターン内でのサブルーチン処理

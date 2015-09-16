@@ -14,9 +14,15 @@ class StageEffect : public GameState
 
 public:
 	/**
+	*@brief	コンストラクタ
+	*@param	_type	現在選択している艦の種類
+	*/
+	StageEffect( ShipObject::_SHIP_TYPE_NUM_& _type ): GameState( _type ){}
+
+	/**
 	*@brief	戦闘エフェクトでの初期化
 	*/
-	bool Init( ShipObject::_SHIP_TYPE_NUM_ _type );
+	bool Init();
 
 	/**
 	*@brief	戦闘エフェクトでのサブルーチン処理

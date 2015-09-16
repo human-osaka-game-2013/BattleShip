@@ -14,7 +14,8 @@ class BoardOfFrame : public CGameObject
 {
 private:
 	float fWidth ,fHeight;
-
+	int iA, iR, iG, iB; 
+	
 public:
 	/**
 	*@brief	初期化
@@ -28,9 +29,22 @@ public:
 	void Control(){};
 	void Draw(){};
 	void Free(){};
-	float GetWidth(){ return fWidth; }
-	float GetHeight(){ return fHeight; }
+	inline float GetWidth(){ return fWidth; }
+	inline float GetHeight(){ return fHeight; }
 
+	inline int GetAlpha()	{ return iA; }
+	inline int GetRed()		{ return iR; }
+	inline int GetGreen()	{ return iG; }
+	inline int GetBlue()	{ return iB; }
+
+	void SetColor( int _iA, int _iR, int _iG, int _iB )
+	{
+		iA = _iA;
+		iR = _iR;
+		iG = _iG;
+		iB = _iB;
+	}
+	
 	/**
 	*@brief	当たり判定処理
 	*@details	引数内のxy座標が、自身のオブジェクト内に入っているかを判定
