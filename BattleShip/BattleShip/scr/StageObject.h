@@ -70,6 +70,8 @@ public:
 	*/
 	bool SetShip( int _player, int _column, int _line, ShipObject* _ship );
 
+
+
 	/**
 	*@brief	ステージブロックへ指定範囲情報をセット
 	*@param[in]	_player	プレイヤーのID

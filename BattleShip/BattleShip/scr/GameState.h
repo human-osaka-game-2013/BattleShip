@@ -57,6 +57,7 @@ protected:
 	float m_tempY;	///<	マウスなどの座標の仮保存変数
 	ShipObject* m_tempShip;	///<	駒の仮保存変数
 
+
 //	デバイス
 protected:
 	CDrawManager*	m_pDrawManager;	///<	2D描画管理クラスポインタ(constポインタ)

@@ -72,11 +72,15 @@ private:
 	int SelectArrayCheck();
 
 	/**
+	*@brief	
+	*/
+
+
+	/**
 	*@brief	タブの情報をリセット
 	*@details	主にタブ情報のカラー値をリセット
 	*/
 	void ResetTabFrame();
-
 };
 
 #endif

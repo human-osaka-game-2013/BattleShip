@@ -40,7 +40,7 @@ ShipObject* Player::GetShip( ShipObject::_SHIP_TYPE_NUM_ _shipType )
 
 bool Player::Free()
 {
-	for( int iCount = 0; iCount < m_pShip.size(); iCount++ ){
+	for( unsigned int iCount = 0; iCount < m_pShip.size(); iCount++ ){
 		delete m_pShip[iCount];
 	}
 	return true;

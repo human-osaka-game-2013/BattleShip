@@ -15,8 +15,8 @@ bool SetShip::Init()
 int SetShip::Control()
 {
 	m_pStage->ResetSelect();	///<	ステージの選択状態をリセット
-	m_tempX = m_pMouse->GetCursorPosX();	///<	マウス座標の更新
-	m_tempY = m_pMouse->GetCursorPosY();	///<	マウス座標の更新
+	m_tempX = (float)m_pMouse->GetCursorPosX();	///<	マウス座標の更新
+	m_tempY = (float)m_pMouse->GetCursorPosY();	///<	マウス座標の更新
 	m_tempShip = m_pPlayer[m_playerID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)m_ShipCount );
 			
 	if( !m_StateCompFlag )

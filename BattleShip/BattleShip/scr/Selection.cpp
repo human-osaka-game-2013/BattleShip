@@ -13,7 +13,7 @@ bool Selection::Init()
 
 	m_tempShip = m_pPlayer[m_playerID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)m_ShipCount );
 		
-	m_actionFrame.Init( m_tempShip->GetPositionX(), m_tempShip->GetPositionY(),
+	m_actionFrame.Init( m_tempShip->GetPositionX(), m_tempShip->GetPositionY()+_TAB_HEIGHT_*2, 
 						_TAB_WIDTH_, _TAB_HEIGHT_ );
 	m_actionFrame.SetColor( 255, 255, 255, 255 );
 	
@@ -21,7 +21,7 @@ bool Selection::Init()
 						_TAB_WIDTH_, _TAB_HEIGHT_ );
 	m_searchFrame.SetColor( 255, 255, 255, 255 );
 
-	m_moveFrame.Init( m_tempShip->GetPositionX(), m_tempShip->GetPositionY()+_TAB_HEIGHT_*2, 
+	m_moveFrame.Init( m_tempShip->GetPositionX(), m_tempShip->GetPositionY(),
 						_TAB_WIDTH_, _TAB_HEIGHT_ );
 	m_moveFrame.SetColor( 255, 255, 255, 255 );
 
@@ -32,8 +32,8 @@ bool Selection::Init()
 //	
 int Selection::Control()
 {
-	m_tempX = m_pMouse->GetCursorPosX();
-	m_tempY = m_pMouse->GetCursorPosY();
+	m_tempX = (float)m_pMouse->GetCursorPosX();
+	m_tempY = (float)m_pMouse->GetCursorPosY();
 
 	if( !m_StateCompFlag )
 	{
@@ -42,7 +42,8 @@ int Selection::Control()
 		}else if( !m_areaSelectFlag ){
 			m_areaSelectFlag = SetTypeArray();
 		}else{
-
+			m_pStage->ResetSelect();
+			SelectArrayCheck();
 		}
 	}
 
@@ -104,9 +105,81 @@ bool Selection::SetTypeArray()
 	return true;
 }
 
-int Selection::SelectArrayCheck()
+int Selection::SelectArrayCheck(  )
 {
+	int tempID = m_playerID;	///<どちらのプレイヤーのステージ配列を示すかの判定用にコピー
+	int (*tempArray)[_SHIP_ARRAY_INDEX_];
 
+	//	攻撃と索敵なら相手側ID、移動なら自分側のIDを使うつもり
+	switch( m_selectType )
+	{
+	case _SELECT_ACTION_:
+	case _SELECT_SEARCH_:
+		if( --tempID <= 0 )	///<チェックするステージ配列の指数の判定
+			tempID+=2;
+		break;
+	case _SELECT_MOVE_:
+		
+		break;
+	}
+
+	//	行
+	for( int iColumn=0; iColumn<_STAGE_COLUMN_MAX_; iColumn++ ){	
+		//	列
+		for( int iLine=0; iLine<_STAGE_LINE_MAX_; iLine++ ){
+			
+			if( m_pStage->m_stageBlock[tempID-1][iColumn][iLine].HitBlockCheck( m_tempX, m_tempY ))
+			{
+				int iCheckResult=0;
+				//	ステージブロックのチェック
+				switch( m_selectType )
+				{
+				case _SELECT_ACTION_:
+					iCheckResult = m_pStage->CheckStageBlock( tempID, iColumn, iLine, m_tempShip, ShipObject::ARRAY_TYPE_ACTION );
+					tempArray = m_tempShip->m_actionArray;
+					break;
+				case _SELECT_SEARCH_:
+					iCheckResult = m_pStage->CheckStageBlock( tempID, iColumn, iLine, m_tempShip, ShipObject::ARRAY_TYPE_SEARCH );
+					tempArray = m_tempShip->m_searchArray;
+					break;
+				case _SELECT_MOVE_:
+					iCheckResult = m_pStage->CheckStageBlock( tempID, iColumn, iLine, m_tempShip, ShipObject::ARRAY_TYPE_MOVE );
+					tempArray = m_tempShip->m_moveArray;
+					break;
+				}
+
+				
+				
+				
+				if( iCheckResult == 2 )	///<駒を置けるマスじゃなかった。
+				{	
+					//	置けない範囲だった場合も、置けないという情報をステージにセットする
+					m_pStage->SetRange( tempID, iColumn, iLine, tempArray, 2 );
+					return 1;
+				}
+				else ///<置けるマス。
+				{
+					m_pStage->SetRange( tempID, iColumn, iLine, tempArray, 1);
+					//	駒が置けるマスであり、左クリックを押した時
+					if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )) {
+						m_pStage->SetShip( tempID, iColumn, iLine, m_tempShip );
+						m_tempShip->SetArrayPos( iColumn, iLine );
+						m_tempShip->SetDeadFlag( false );///<駒を設置したのでオブジェクトの死亡フラグを下げる
+						
+						//	駒の基準点（中心点）を予め算出させておく
+						float tempW = _BLOCK_WIDTH_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
+						float tempH = _BLOCK_HEIGHT_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
+						m_tempX = iLine*tempW + tempW*1.5f ;		
+						m_tempY = iColumn*tempH + tempH*1.5f;
+						m_tempShip->SetPosition( m_tempX, m_tempY, 0.5f );
+						return 2;
+					}
+				}
+			}
+		}
+	}
+
+	
 
 	return 0;
 }
@@ -125,7 +198,7 @@ void Selection::Draw()
 	if( !m_tabSelectFlag ){
 		m_pDrawManager->VertexDraw( _TEX_TABFRAME_, m_actionFrame.GetPositionX(), m_actionFrame.GetPositionY(),
 			m_actionFrame.GetWidth(), m_actionFrame.GetHeight(),
-			0.f, 0.f, 1.f, _TAB_HEIGHT_/_TAB_WIDTH_,
+			0.f, (_TAB_HEIGHT_*2)/_TAB_WIDTH_, 1.f, 1.f,
 			m_actionFrame.GetAlpha(), m_actionFrame.GetRed(), m_actionFrame.GetGreen(), m_actionFrame.GetBlue() );
 		
 		m_pDrawManager->VertexDraw( _TEX_TABFRAME_, m_searchFrame.GetPositionX(), m_searchFrame.GetPositionY(),
@@ -135,7 +208,7 @@ void Selection::Draw()
 		
 		m_pDrawManager->VertexDraw( _TEX_TABFRAME_, m_moveFrame.GetPositionX(), m_moveFrame.GetPositionY(),
 			m_moveFrame.GetWidth(), m_moveFrame.GetHeight(), 
-			0.f, (_TAB_HEIGHT_*2)/_TAB_WIDTH_, 1.f, 1.f,
+			0.f, 0.f, 1.f, _TAB_HEIGHT_/_TAB_WIDTH_,
 			m_moveFrame.GetAlpha(), m_moveFrame.GetRed(), m_moveFrame.GetGreen(), m_moveFrame.GetBlue() );
 
 	}

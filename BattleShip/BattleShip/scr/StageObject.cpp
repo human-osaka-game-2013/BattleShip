@@ -87,14 +87,14 @@ int StageObject::CheckStageBlock( int _player, int _column, int _line, ShipObjec
 			//	指定したブロック範囲がステージからはみ出た場合
 			if( bStageOutside ){
 				if( _array[iColumn][iLine] != 0 )
-					return 1;	///<	ステージから出ていて、駒の一部が存在していれば駒自体がはみ出ている場合なので、指定した場所は無効である。
+					return 1;	///<	ステージ外にブロックの実体があった場合
 			} else if( m_stageArray[_player][iStageCol][iStageLine] != 0 ) {
-				if( _array[iColumn][iLine] != 0 )	///<	ステージに駒が置ける場所
-					return 2;
+				if( _array[iColumn][iLine] != 0 )	
+					return 2;	///<	指定したブロックの範囲にすでにステージ上で何かが存在していた場合
 			}
 		}
 	}
-	return 0;
+	return 0;	///<指定した範囲は何にも接触をしなかった
 }
 
 
