@@ -60,7 +60,23 @@ public:
 	int CheckStageBlock( int _player, int _column, int _line, ShipObject* _ship,  ShipObject::_SHIP_ARRAY_TYPE_ _arrayType );
 	
 	/**
-	*@brief	ステージブロックへ駒情報をセット
+	*@brief		ステージブロックのチェック(駒と指定範囲の判定)
+	*@details	駒中心に配列範囲を重ねあわせて、指定した行列位置と合致していた場合
+	*@param[in]	_player	プレイヤーのID
+	*@param[in]	_column	行
+	*@param[in]	_line	列
+	*@param[in]	_ship	配列範囲の中心とする為の駒のポインタ
+	*@param[in] _tempArray	配列範囲
+	*@return	0：ステージ上の指定範囲と指定行列座標がが接触していない場合。@n
+				1：指定した座標にブロックの実体があった場合。@n
+				2：指定したブロックの範囲にすでにステージ上で何かが存在していた場合。@n
+				-1：上記以外の事が発生した場合。
+	*/
+	int CheckStageBlock( int _player, int _column, int _line, ShipObject* _ship, 
+		const int(*_array)[_SHIP_ARRAY_INDEX_], int _shipCount );
+
+	/**
+	*@brief	ステージブロックへ選択情報をセット
 	*@param[in]	_player	プレイヤーのID
 	*@param[in]	_column	行
 	*@param[in]	_line	列
@@ -70,7 +86,16 @@ public:
 	*/
 	bool SetShip( int _player, int _column, int _line, ShipObject* _ship );
 
-
+	/**
+	*@brief	ステージブロックへ指定範囲情報をセット
+	*@param[in]	_player	プレイヤーのID
+	*@param[in]	_column	行
+	*@param[in]	_line	列
+	*@param[in]	_setType	範囲情報を何の値でセットするか
+	*@return	false：何らかの原因でセットが失敗。@n
+				true：無事に情報をセット完了。
+	*/
+	bool SetRange( int _player, int _column, int _line, int _setType );
 
 	/**
 	*@brief	ステージブロックへ指定範囲情報をセット
@@ -78,6 +103,7 @@ public:
 	*@param[in]	_column	行
 	*@param[in]	_line	列
 	*@param[in]	_array	指定したブロック中心にセットする配列情報
+	*@param[in]	_setType	範囲情報を何の値でセットするか
 	*@return	false：何らかの原因でセットが失敗。@n
 				true：無事に情報をセット完了。
 	*/

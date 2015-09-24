@@ -140,13 +140,20 @@ public:
 	}
 
 	/**
-	*@brief	ステージ上での駒の中心位置のセット
+	*@brief	ステージ上での駒の中心位置の取得
 	*/
 	void GetArrayPos( int& _column, int& _line ){ 
 		_column	= m_posColumn;
 		_line	= m_posLine;
 	}
-
+	/**
+	*@brief	ステージ上での駒の中心位置の取得（行）
+	*/
+	inline int GetArrayColumn(){ return m_posColumn; }
+	/**
+	*@brief	ステージ上での駒の中心位置の取得（列）
+	*/
+	inline int GetArrayLine(){ return m_posLine; }
 };
 
 

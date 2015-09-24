@@ -11,7 +11,7 @@ bool Selection::Init()
 	m_tabSelectFlag = false;
 	m_areaSelectFlag= false;
 
-	m_tempShip = m_pPlayer[m_playerID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)m_ShipCount );
+	m_tempShip = m_pPlayer[m_playerID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)(m_ShipCount+1) );
 		
 	m_actionFrame.Init( m_tempShip->GetPositionX(), m_tempShip->GetPositionY()+_TAB_HEIGHT_*2, 
 						_TAB_WIDTH_, _TAB_HEIGHT_ );
@@ -37,10 +37,12 @@ int Selection::Control()
 
 	if( !m_StateCompFlag )
 	{
-		if( !m_tabSelectFlag ){
+		if( !m_tabSelectFlag ){	
 			m_tabSelectFlag = TabCheck();
 		}else if( !m_areaSelectFlag ){
 			m_areaSelectFlag = SetTypeArray();
+			if( !m_areaSelectFlag )	///< 選択した範囲にデータが無い（orその行動は出来ない）場合、タブの選択も解除する。
+				m_tabSelectFlag = false;
 		}else{
 			m_pStage->ResetSelect();
 			SelectArrayCheck();
@@ -99,13 +101,24 @@ bool Selection::SetTypeArray()
 		break;
 	case _SELECT_MOVE_:
 		m_tempArray = m_tempShip->m_moveArray;
+		
 		break;
 	}
 
-	return true;
+	for( int iColumn = 0; iColumn < _SHIP_ARRAY_INDEX_; iColumn++ ){
+		for( int iLine = 0; iLine < _SHIP_ARRAY_INDEX_; iLine++ ){
+		if( m_tempArray[iColumn][iLine] != 0)
+			return true;
+		}
+	}
+
+	MessageBoxA(0,"この行動は選択出来ない。\n申し訳ないが、他の行動を選択してくれ",NULL,MB_OK);
+	return false;
 }
 
-int Selection::SelectArrayCheck(  )
+
+
+int Selection::SelectArrayCheck( )
 {
 	int tempID = m_playerID;	///<どちらのプレイヤーのステージ配列を示すかの判定用にコピー
 	int (*tempArray)[_SHIP_ARRAY_INDEX_];
@@ -143,43 +156,48 @@ int Selection::SelectArrayCheck(  )
 					tempArray = m_tempShip->m_searchArray;
 					break;
 				case _SELECT_MOVE_:
-					iCheckResult = m_pStage->CheckStageBlock( tempID, iColumn, iLine, m_tempShip, ShipObject::ARRAY_TYPE_MOVE );
 					tempArray = m_tempShip->m_moveArray;
+					iCheckResult = m_pStage->CheckStageBlock( tempID, iColumn, iLine, m_tempShip, tempArray, m_ShipCount );
+					
 					break;
 				}
 
-				
-				
-				
-				if( iCheckResult == 2 )	///<駒を置けるマスじゃなかった。
-				{	
-					//	置けない範囲だった場合も、置けないという情報をステージにセットする
-					m_pStage->SetRange( tempID, iColumn, iLine, tempArray, 2 );
-					return 1;
-				}
-				else ///<置けるマス。
-				{
-					m_pStage->SetRange( tempID, iColumn, iLine, tempArray, 1);
-					//	駒が置けるマスであり、左クリックを押した時
-					if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )) {
-						m_pStage->SetShip( tempID, iColumn, iLine, m_tempShip );
-						m_tempShip->SetArrayPos( iColumn, iLine );
-						m_tempShip->SetDeadFlag( false );///<駒を設置したのでオブジェクトの死亡フラグを下げる
-						
-						//	駒の基準点（中心点）を予め算出させておく
-						float tempW = _BLOCK_WIDTH_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
-						float tempH = _BLOCK_HEIGHT_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
-						m_tempX = iLine*tempW + tempW*1.5f ;		
-						m_tempY = iColumn*tempH + tempH*1.5f;
-						m_tempShip->SetPosition( m_tempX, m_tempY, 0.5f );
-						return 2;
-					}
-				}
+				StageCheck( tempID, iColumn, iLine, m_tempArray );
+
+				//if( iCheckResult == 2 )	///<駒を置けるマスじゃなかった。
+				//{	
+				//	//	置けない範囲だった場合も、置けないという情報をステージにセットする
+				//	m_pStage->SetRange( tempID, iColumn, iLine, tempArray, 2 );
+				//	return 1;
+				//}
+				//else ///<置けるマス。
+				//{
+				//	m_pStage->SetRange( tempID, iColumn, iLine, tempArray, 1);
+				//	//	駒が置けるマスであり、左クリックを押した時
+				//	if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )) {
+				//		m_pStage->SetShip( tempID, iColumn, iLine, m_tempShip );
+				//		m_tempShip->SetArrayPos( iColumn, iLine );
+				//		m_tempShip->SetDeadFlag( false );///<駒を設置したのでオブジェクトの死亡フラグを下げる
+				//		
+				//		//	駒の基準点（中心点）を予め算出させておく
+				//		float tempW = _BLOCK_WIDTH_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
+				//		float tempH = _BLOCK_HEIGHT_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
+				//		m_tempX = iLine*tempW + tempW*1.5f ;		
+				//		m_tempY = iColumn*tempH + tempH*1.5f;
+				//		m_tempShip->SetPosition( m_tempX, m_tempY, 0.5f );
+				//		return 2;
+				//	}
+				//}
 			}
 		}
 	}
 
-	
+	return 0;
+}
+
+int Selection::StageCheck( const int& _id, const int& _column, const int& _line, const int(*_array)[_SHIP_ARRAY_INDEX_])
+{
+
 
 	return 0;
 }

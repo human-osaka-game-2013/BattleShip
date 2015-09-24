@@ -186,42 +186,7 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 	//	ステージマス目表示
 	//	プレイヤー数
 	for( int ip=0; ip<_PLAYER_NUM_; ip++ ){
-		//	行
-		for( int ic=0; ic<_STAGE_COLUMN_MAX_; ic++ ){	
-			//	列
-			for( int il=0; il<_STAGE_LINE_MAX_; il++ ){
-				m_pStageObject->m_stageBlock[ip][ic][il].GetPosition( &tempX, &tempY );
-				
-				int tempA = 0, tempR = 200, tempG = 200, tempB = 200;
-				int tempArrayData = m_pStageObject->m_stageArray[ip][ic][il];
-			
-				if( tempArrayData != 0 )	///<駒のある場所は塗りつぶす
-				{
-					tempA = 100;
-					if( tempArrayData/100 == 1 ){	///<選択されているマス
-						tempR = 200, tempG = 200, tempB = 200;
 
-					}else if( tempArrayData/100 == 2) {	///<駒が置けないor選択範囲が何かに接触しているマス
-						tempR = 255; tempG = 0; tempB = 0;
-					}
-					if( tempArrayData%100 != 0 ) {	///<選択マスより駒が置かれてる場合を優先
-						tempR = 0; tempG = 0; tempB = 0;
-					}
-				_drawManager->VertexDraw( _TEX_BLOCK_, tempX, tempY, 
-					m_pStageObject->m_stageBlock[ip][ic][il].GetWidth(), 
-					m_pStageObject->m_stageBlock[ip][ic][il].GetHeight(),
-					0.f, 0.f, 
-					1.f, 1.f,
-					tempA, tempR, tempG, tempB);	///<	マスの描画
-				}
-				_drawManager->VertexDraw( _TEX_BLOCKFRAME_, tempX, tempY, 
-					m_pStageObject->m_stageBlock[ip][ic][il].GetWidth(), 
-					m_pStageObject->m_stageBlock[ip][ic][il].GetHeight(),
-					0.f, 0.f, 
-					1.f, 1.f,
-					100, 200, 200, 200);	///<	マスの描画
-			}
-		}
 		//	プレイヤー別の駒情報の表示
 		for( int iShip=0; iShip<ShipObject::TYPE_MAX; iShip++ ){
 			m_ShipFrame[ip][iShip].GetPosition( &tempX, &tempY );
@@ -272,10 +237,47 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 				
 			if( !tempShip->GetDeadFlag() ){
 				
-				m_pDrawManager->VertexTransform( iShip + _TEX_AIRCARRIER_, tempShip->m_vertex, 
-					tempShip->GetPositionX(), tempShip->GetPositionY(), 1.f, 1.f, tempShip->GetDirection()*90.f );
+				//m_pDrawManager->VertexTransform( iShip + _TEX_AIRCARRIER_, tempShip->m_vertex, 
+				//	tempShip->GetPositionX(), tempShip->GetPositionY(), 1.f, 1.f, tempShip->GetDirection()*90.f );
 			}
 		}
+		//	行
+		for( int ic=0; ic<_STAGE_COLUMN_MAX_; ic++ ){	
+			//	列
+			for( int il=0; il<_STAGE_LINE_MAX_; il++ ){
+				m_pStageObject->m_stageBlock[ip][ic][il].GetPosition( &tempX, &tempY );
+				
+				int tempA = 0, tempR = 200, tempG = 200, tempB = 200;
+				int tempArrayData = m_pStageObject->m_stageArray[ip][ic][il];
+			
+				if( tempArrayData != 0 )	///<駒のある場所は塗りつぶす
+				{
+					tempA = 100;
+					if( tempArrayData/100 == 1 ){	///<選択されているマス
+						tempR = 200, tempG = 200, tempB = 200;
+
+					}else if( tempArrayData/100 == 2) {	///<駒が置けないor選択範囲が何かに接触しているマス
+						tempR = 255; tempG = 0; tempB = 0;
+					}
+					if( tempArrayData%100 != 0 ) {	///<選択マスより駒が置かれてる場合を優先
+						tempA = 0; tempR = 200; tempG = 200; tempB = 200;
+					}
+				_drawManager->VertexDraw( _TEX_BLOCK_, tempX, tempY, 
+					m_pStageObject->m_stageBlock[ip][ic][il].GetWidth(), 
+					m_pStageObject->m_stageBlock[ip][ic][il].GetHeight(),
+					0.f, 0.f, 
+					1.f, 1.f,
+					tempA, tempR, tempG, tempB);	///<	マスの描画
+				}
+				_drawManager->VertexDraw( _TEX_BLOCKFRAME_, tempX, tempY, 
+					m_pStageObject->m_stageBlock[ip][ic][il].GetWidth(), 
+					m_pStageObject->m_stageBlock[ip][ic][il].GetHeight(),
+					0.f, 0.f, 
+					1.f, 1.f,
+					100, 200, 200, 200);	///<	マスの描画
+			}
+		}
+		
 	}
 	//	ステート別の描画
 	m_pGameState->Draw();
