@@ -10,8 +10,9 @@ bool Selection::Init()
 	m_StateCompFlag = false;
 	m_tabSelectFlag = false;
 	m_areaSelectFlag= false;
+	m_arrayCheckResult = 0;
 
-	m_tempShip = m_pPlayer[m_playerID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)(m_ShipCount+1) );
+	m_tempShip = m_pPlayer[m_playerID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)(m_ShipCount) );
 		
 	m_actionFrame.Init( m_tempShip->GetPositionX(), m_tempShip->GetPositionY()+_TAB_HEIGHT_*2, 
 						_TAB_WIDTH_, _TAB_HEIGHT_ );
@@ -122,6 +123,9 @@ int Selection::SelectArrayCheck( )
 {
 	int tempID = m_playerID;	///<どちらのプレイヤーのステージ配列を示すかの判定用にコピー
 	int (*tempArray)[_SHIP_ARRAY_INDEX_];
+	int iCheckResult = 0;
+	int iColumn;	
+	int iLine;
 
 	//	攻撃と索敵なら相手側ID、移動なら自分側のIDを使うつもり
 	switch( m_selectType )
@@ -130,67 +134,97 @@ int Selection::SelectArrayCheck( )
 	case _SELECT_SEARCH_:
 		if( --tempID <= 0 )	///<チェックするステージ配列の指数の判定
 			tempID+=2;
+		//	行
+		for( iColumn=0; iColumn<_STAGE_COLUMN_MAX_; iColumn++ ){	
+			//	列
+			for( iLine=0; iLine<_STAGE_LINE_MAX_; iLine++ ){
+				
+				if( m_pStage->m_stageBlock[tempID-1][iColumn][iLine].HitBlockCheck( m_tempX, m_tempY ))
+				{
+					//	ステージブロックのチェック
+					switch( m_selectType )
+					{
+					case _SELECT_ACTION_:
+						iCheckResult = m_pStage->CheckStageBlock( tempID, iColumn, iLine, m_tempShip, ShipObject::ARRAY_TYPE_ACTION, m_ShipCount );
+						tempArray = m_tempShip->m_actionArray;
+						break;
+					case _SELECT_SEARCH_:
+						iCheckResult = m_pStage->CheckStageBlock( tempID, iColumn, iLine, m_tempShip, ShipObject::ARRAY_TYPE_SEARCH, m_ShipCount );
+						tempArray = m_tempShip->m_searchArray;
+						break;
+					}
+
+					StageCheck( tempID, iColumn, iLine, m_tempArray );
+
+					if( iCheckResult == -1 )	///<駒を置けるマスじゃなかった。
+					{	
+						return -1;
+					}
+					else ///<置けるマス。
+					{
+						m_pStage->SetRange( tempID, iColumn, iLine, tempArray, 1);
+						//	駒が置けるマスであり、左クリックを押した時
+						if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )) {
+							m_pStage->SetRange( tempID, iColumn, iLine, tempArray, 4 );
+							
+							//	駒の基準点（中心点）を予め算出させておく
+							float tempW = _BLOCK_WIDTH_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
+							float tempH = _BLOCK_HEIGHT_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
+							m_tempX = iLine*tempW + tempW*1.5f ;		
+							m_tempY = iColumn*tempH + tempH*1.5f;
+							m_tempShip->SetPosition( m_tempX, m_tempY, 0.5f );
+							return 2;
+						}
+					}
+				}
+			}
+		}
 		break;
+
 	case _SELECT_MOVE_:
+		tempArray = m_tempShip->m_moveArray;
+		m_pStage->SetStageToRange( tempID, m_tempShip, tempArray, m_ShipCount );
+		
+		iCheckResult =  m_pStage->CheckRangeOnStage( iColumn, iLine, tempID, m_tempX, m_tempY, m_tempShip, ShipObject::ARRAY_TYPE_SHIP );
+
+		if( iCheckResult == -1 )	///<駒を置けるマスじゃなかった。
+		{	
+			return -1;
+		}
+		else if( iCheckResult == 1  )	///<置けるマス。
+		{
+			float tempW = _BLOCK_WIDTH_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
+			float tempH = _BLOCK_HEIGHT_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
+			m_tempX = iLine*tempW + tempW*1.5f ;		
+			m_tempY = iColumn*tempH + tempH*1.5f;
+			m_tempShip->SetPosition( m_tempX, m_tempY, 0.5f );
+			
+			if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )) 
+			{
+				float tempW = _BLOCK_WIDTH_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
+				float tempH = _BLOCK_HEIGHT_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
+				m_tempX = iLine*tempW + tempW*1.5f ;		
+				m_tempY = iColumn*tempH + tempH*1.5f;
+				m_tempShip->SetPosition( m_tempX, m_tempY, 0.5f );
+				return 2;
+			}
+			return 1;
+		}
+		else
+		{
+			m_tempShip->GetArrayPos( iColumn, iLine );
+
+			float tempW = _BLOCK_WIDTH_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
+			float tempH = _BLOCK_HEIGHT_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
+			m_tempX = iLine*tempW + tempW*1.5f ;		
+			m_tempY = iColumn*tempH + tempH*1.5f;
+			m_tempShip->SetPosition( m_tempX, m_tempY, 0.5f );
+		}
 		
 		break;
 	}
 
-	//	行
-	for( int iColumn=0; iColumn<_STAGE_COLUMN_MAX_; iColumn++ ){	
-		//	列
-		for( int iLine=0; iLine<_STAGE_LINE_MAX_; iLine++ ){
-			
-			if( m_pStage->m_stageBlock[tempID-1][iColumn][iLine].HitBlockCheck( m_tempX, m_tempY ))
-			{
-				int iCheckResult=0;
-				//	ステージブロックのチェック
-				switch( m_selectType )
-				{
-				case _SELECT_ACTION_:
-					iCheckResult = m_pStage->CheckStageBlock( tempID, iColumn, iLine, m_tempShip, ShipObject::ARRAY_TYPE_ACTION );
-					tempArray = m_tempShip->m_actionArray;
-					break;
-				case _SELECT_SEARCH_:
-					iCheckResult = m_pStage->CheckStageBlock( tempID, iColumn, iLine, m_tempShip, ShipObject::ARRAY_TYPE_SEARCH );
-					tempArray = m_tempShip->m_searchArray;
-					break;
-				case _SELECT_MOVE_:
-					tempArray = m_tempShip->m_moveArray;
-					iCheckResult = m_pStage->CheckStageBlock( tempID, iColumn, iLine, m_tempShip, tempArray, m_ShipCount );
-					
-					break;
-				}
-
-				StageCheck( tempID, iColumn, iLine, m_tempArray );
-
-				//if( iCheckResult == 2 )	///<駒を置けるマスじゃなかった。
-				//{	
-				//	//	置けない範囲だった場合も、置けないという情報をステージにセットする
-				//	m_pStage->SetRange( tempID, iColumn, iLine, tempArray, 2 );
-				//	return 1;
-				//}
-				//else ///<置けるマス。
-				//{
-				//	m_pStage->SetRange( tempID, iColumn, iLine, tempArray, 1);
-				//	//	駒が置けるマスであり、左クリックを押した時
-				//	if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )) {
-				//		m_pStage->SetShip( tempID, iColumn, iLine, m_tempShip );
-				//		m_tempShip->SetArrayPos( iColumn, iLine );
-				//		m_tempShip->SetDeadFlag( false );///<駒を設置したのでオブジェクトの死亡フラグを下げる
-				//		
-				//		//	駒の基準点（中心点）を予め算出させておく
-				//		float tempW = _BLOCK_WIDTH_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
-				//		float tempH = _BLOCK_HEIGHT_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
-				//		m_tempX = iLine*tempW + tempW*1.5f ;		
-				//		m_tempY = iColumn*tempH + tempH*1.5f;
-				//		m_tempShip->SetPosition( m_tempX, m_tempY, 0.5f );
-				//		return 2;
-				//	}
-				//}
-			}
-		}
-	}
+	
 
 	return 0;
 }
@@ -231,7 +265,7 @@ void Selection::Draw()
 
 	}
 	else{
-
+		
 	}
 }
 

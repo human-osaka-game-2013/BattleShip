@@ -54,7 +54,7 @@ int SetShip::CheckBoard()
 				int iCheckResult=0;
 				
 				//	ステージブロックのチェック
-				iCheckResult = m_pStage->CheckStageBlock( m_playerID, iColumn, iLine, m_tempShip, ShipObject::ARRAY_TYPE_SHIP );
+				iCheckResult = m_pStage->CheckStageBlock( m_playerID, iColumn, iLine, m_tempShip, ShipObject::ARRAY_TYPE_SHIP, m_ShipCount );
 				
 				if( iCheckResult != 0 )	///<駒を置けるマスじゃなかった。
 				{	
@@ -68,7 +68,6 @@ int SetShip::CheckBoard()
 					//	駒が置けるマスであり、左クリックを押した時
 					if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )) {
 						m_pStage->SetShip( m_playerID, iColumn, iLine, m_tempShip );
-						m_tempShip->SetArrayPos( iColumn, iLine );
 						m_tempShip->SetDeadFlag( false );///<駒を設置したのでオブジェクトの死亡フラグを下げる
 						
 						//	駒の基準点（中心点）を予め算出させておく

@@ -237,8 +237,8 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 				
 			if( !tempShip->GetDeadFlag() ){
 				
-				//m_pDrawManager->VertexTransform( iShip + _TEX_AIRCARRIER_, tempShip->m_vertex, 
-				//	tempShip->GetPositionX(), tempShip->GetPositionY(), 1.f, 1.f, tempShip->GetDirection()*90.f );
+				m_pDrawManager->VertexTransform( iShip + _TEX_AIRCARRIER_, tempShip->m_vertex, 
+					tempShip->GetPositionX(), tempShip->GetPositionY(), 1.f, 1.f, tempShip->GetDirection()*90.f );
 			}
 		}
 		//	行
@@ -259,9 +259,9 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 					}else if( tempArrayData/100 == 2) {	///<駒が置けないor選択範囲が何かに接触しているマス
 						tempR = 255; tempG = 0; tempB = 0;
 					}
-					if( tempArrayData%100 != 0 ) {	///<選択マスより駒が置かれてる場合を優先
+					/*if( tempArrayData%100 != 0 ) {	///<選択マスより駒が置かれてる場合を優先
 						tempA = 0; tempR = 200; tempG = 200; tempB = 200;
-					}
+					}*/
 				_drawManager->VertexDraw( _TEX_BLOCK_, tempX, tempY, 
 					m_pStageObject->m_stageBlock[ip][ic][il].GetWidth(), 
 					m_pStageObject->m_stageBlock[ip][ic][il].GetHeight(),

@@ -37,43 +37,54 @@ public:
 	void Draw(){};
 
 	/**
-	*@brief	ステージブロックのチェック
-	*@param[in]	_player	プレイヤーのID
-	*@param[in]	_column	行
-	*@param[in]	_line	列
-	*@param[in]	_vol	判定するブロックと比較する値
-	*/
-	bool CheckStageBlock( int _player, int _column, int _line, unsigned char _vol );
-	
-	/**
 	*@brief	ステージブロックのチェック(駒との判定)
 	*@param[in]	_player	プレイヤーのID
 	*@param[in]	_column	行
 	*@param[in]	_line	列
 	*@param[in]	_ship	指定したブロック中心に比較する駒のポインタ
 	*@param[in] _arrayType	チェックする配列のタイプ（ShipObject::_SHIP_ARRAY_TYPE_から）
+	*@param[in]	_shipNum	自分自身の駒に接触していた場合
 	*@return	0：ステージ上の指定範囲とブロックの実体が接触していない場合。@n
 				1：ステージ外にブロックの実体があった場合。@n
 				2：指定したブロックの範囲にすでにステージ上で何かが存在していた場合。@n
 				-1：上記以外の事が発生した場合。
 	*/
-	int CheckStageBlock( int _player, int _column, int _line, ShipObject* _ship,  ShipObject::_SHIP_ARRAY_TYPE_ _arrayType );
+	int CheckStageBlock( int _player, int _column, int _line, ShipObject* _ship,  
+							ShipObject::_SHIP_ARRAY_TYPE_ _arrayType, int _shipNum );
 	
 	/**
-	*@brief		ステージブロックのチェック(駒と指定範囲の判定)
-	*@details	駒中心に配列範囲を重ねあわせて、指定した行列位置と合致していた場合
+	*@brief	あるステージ上の範囲と画面上の座標XYとの判定
+	*@details	主に画面上の座標が指しているブロックの中身を調べる。@n
+	*@todo		今回は移動可能範囲を指している場合を調べるための関数として作りました。
+	*@param[out] _column	指している座標の行の値
+	*@param[out] _line		指している座標の列の値	
 	*@param[in]	_player	プレイヤーのID
-	*@param[in]	_column	行
-	*@param[in]	_line	列
+	*@param[in]	_x		画面上の調べたい座標X
+	*@param[in]	_y		画面上の調べたい座標Y
+	*@param[in]	_ship	範囲の中心となる駒オブジェクトのポインタ
+	*@param[in] _arrayType	チェックする配列のタイプ（ShipObject::_SHIP_ARRAY_TYPE_から）
+	*@return	0：選択されていないブロックを指している場合。@n
+				1：選択可能ブロックを指している場合。@n
+				2：選択不可能ブロックを指している場合。@n
+				-1：上記以外の事が発生した場合（またはそもそもブロックに接触していない場合）。
+	*/
+	int CheckRangeOnStage( int& _column, int& _line, 
+							int _player, float _x, float _y, ShipObject* _ship, ShipObject::_SHIP_ARRAY_TYPE_ _arrayType );
+
+	/**
+	*@brief		ステージブロックと指定範囲のセット
+	*@details	駒中心に配列範囲を重ねあわせて、その指定範囲とステージとの判定に応じて
+				範囲情報をステージにセットする。@n
+	*@todo		この関数は移動範囲のチェックを行う為に作ったもの。出来ることならすでにある関数で代用したい。
+	*@param[in]	_player	プレイヤーのID
 	*@param[in]	_ship	配列範囲の中心とする為の駒のポインタ
 	*@param[in] _tempArray	配列範囲
-	*@return	0：ステージ上の指定範囲と指定行列座標がが接触していない場合。@n
-				1：指定した座標にブロックの実体があった場合。@n
-				2：指定したブロックの範囲にすでにステージ上で何かが存在していた場合。@n
-				-1：上記以外の事が発生した場合。
+	*@param[in]	_shipNum	自分自身の駒に接触していた場合判定を取らないようにする
+	*@return	true：範囲セットが成功
+				false：範囲セットが失敗した場合。
 	*/
-	int CheckStageBlock( int _player, int _column, int _line, ShipObject* _ship, 
-		const int(*_array)[_SHIP_ARRAY_INDEX_], int _shipCount );
+	bool SetStageToRange( int _player, ShipObject* _ship, 
+		const int(*_array)[_SHIP_ARRAY_INDEX_], int _shipNum );
 
 	/**
 	*@brief	ステージブロックへ選択情報をセット
