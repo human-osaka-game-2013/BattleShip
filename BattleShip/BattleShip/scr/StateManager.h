@@ -42,7 +42,7 @@ private:
 private:
 	BoardOfFrame	m_StageFrame;	///<	ステージ部分のフレームオブジェクト
 	BoardOfFrame	m_PlayerFrame[_PLAYER_NUM_];	///<	プレイヤー情報のフレームオブジェクト	
-	BoardOfFrame	m_ShipFrame[_PLAYER_NUM_][ShipObject::TYPE_MAX];
+//	BoardOfFrame	m_ShipFrame[_PLAYER_NUM_][ShipObject::TYPE_MAX];
 
 //	デバイス
 private:

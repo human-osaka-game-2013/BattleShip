@@ -39,8 +39,8 @@ void  StageObject::Free()
 }
 
 
-int StageObject::CheckStageBlock( int _player, int _column, int _line, ShipObject* _ship, 
-								ShipObject::_SHIP_ARRAY_TYPE_ _arrayType, int _shipNum )
+int StageObject::CheckStageBlock( int _player, const int _column, const int _line, ShipObject* _ship, 
+								ShipObject::_SHIP_ARRAY_TYPE_ _arrayType, const int _shipNum )
 {
 	if( _player > _PLAYER_NUM_ || _player <= 0 )	
 		return -1;	///<	プレイヤーIDが1か2以外だった場合
@@ -93,7 +93,7 @@ int StageObject::CheckStageBlock( int _player, int _column, int _line, ShipObjec
 
 
 int StageObject::CheckRangeOnStage(  int& _column, int& _line, 
-							int _player, float _x, float _y, ShipObject* _ship, ShipObject::_SHIP_ARRAY_TYPE_ _arrayType)
+							int _player, const float _x, const float _y, ShipObject* _ship, ShipObject::_SHIP_ARRAY_TYPE_ _arrayType)
 {
 	if( _player > _PLAYER_NUM_ || _player <= 0 )	
 		return -1;	///<	プレイヤーIDが1か2以外だった場合
@@ -136,7 +136,7 @@ int StageObject::CheckRangeOnStage(  int& _column, int& _line,
 }
 
 
-bool StageObject::SetStageToRange( int _player, ShipObject* _ship, const int(*_array)[_SHIP_ARRAY_INDEX_], int _shipCount )
+bool StageObject::SetStageToRange( int _player, ShipObject* _ship, const int(*_array)[_SHIP_ARRAY_INDEX_], const int _shipCount )
 {
 	if( _player > _PLAYER_NUM_ || _player <= 0 )	
 		return false;	///<	プレイヤーIDが1か2以外だった場合
@@ -161,14 +161,14 @@ bool StageObject::SetStageToRange( int _player, ShipObject* _ship, const int(*_a
 				}
 			}
 			//	指定範囲と今チェックしているブロックに自分の駒以外の情報があった場合（中心座標は今は調べる必要はない）
-			else if( (m_stageArray[_player][iStageCol][iStageLine]%10) != _shipCount
-					||( iStageCol == 0 && iStageLine == 0 )) {
+			else if( (m_stageArray[_player][iStageCol][iStageLine]%10) != _shipCount) 
+			{
 				if( _array[iColumn][iLine] != 0 ){
 					SetRange( _player+1, iStageCol, iStageLine, 2 );
-					
 				}
 			}
-			else if( _array[iColumn][iLine] != 0 ){
+			else if( _array[iColumn][iLine] != 0 )
+			{
 				//----ここで移動後の予定位置（での駒とステージ）のチェックも行う----
 				//	移動先は移動出来ない場所だった場合	(_playerに1足しているのは（配列の指数から）元々のプレイヤーIDに直す為)
 				if( CheckStageBlock( _player+1, iStageCol, iStageLine, _ship, ShipObject::ARRAY_TYPE_SHIP, _shipCount ) !=0 ){
@@ -188,7 +188,7 @@ bool StageObject::SetStageToRange( int _player, ShipObject* _ship, const int(*_a
 	return true;
 }
 
-bool StageObject::SetShip( int _player, int _column, int _line, ShipObject* _ship )
+bool StageObject::SetShip( int _player, const int _column, const int _line, ShipObject* _ship )
 {
 	if( _player > _PLAYER_NUM_ || _player <= 0 )	
 		return false;	///<	プレイヤーIDが1か2以外だった場合
@@ -215,11 +215,19 @@ bool StageObject::SetShip( int _player, int _column, int _line, ShipObject* _shi
 	}
 
 	_ship->SetArrayPos( _column, _line );	///<　配置する行と列の座標をセット
+	_ship->SetDeadFlag( false );///<駒を設置したのでオブジェクトの死亡フラグを下げる
+						
+	//	駒の基準点（中心点）を予め算出させておく
+	float tempW = _BLOCK_WIDTH_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
+	float tempH = _BLOCK_HEIGHT_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
+	float tempX = _line*tempW + tempW*1.5f ;		
+	float tempY = _column*tempH + tempH*1.5f;
+	_ship->SetPosition( tempX, tempY, 0.5f );
 
 	return true;
 }
 
-bool StageObject::SetRange( int _player, int _column, int _line, int _setType )
+bool StageObject::SetRange( int _player, const int _column, const int _line, const int _setType )
 {
 	if( _player > _PLAYER_NUM_ || _player <= 0 )	
 		return false;	///<	プレイヤーIDが1か2以外だった場合
@@ -238,7 +246,7 @@ bool StageObject::SetRange( int _player, int _column, int _line, int _setType )
 	return true;
 }
 
-bool StageObject::SetRange( int _player, int _column, int _line, const int(*_array)[_SHIP_ARRAY_INDEX_], int _setType)
+bool StageObject::SetRange( int _player, const int _column, const int _line, const int(*_array)[_SHIP_ARRAY_INDEX_], const int _setType)
 {
 	if( _player > _PLAYER_NUM_ || _player <= 0 )	
 		return false;	///<	プレイヤーIDが1か2以外だった場合
@@ -263,6 +271,69 @@ bool StageObject::SetRange( int _player, int _column, int _line, const int(*_arr
 		}
 
 	}
+	return true;
+}
+
+
+bool StageObject::RelocationShip( int _player, const int _column, const int _line, ShipObject* _ship, const int _shipNum )
+{
+	if( _player > _PLAYER_NUM_ || _player <= 0 )	
+		return false;	///<	プレイヤーIDが1か2以外だった場合
+
+	_player--;	///<	配列指数用に直す
+
+	int tempColunm;
+	int tempLine;
+	_ship->GetArrayPos( tempColunm, tempLine );
+
+	for( int iColumn = 0, iStageCol = tempColunm-2; iColumn < _SHIP_ARRAY_INDEX_; iColumn++, iStageCol++ ){
+		for( int iLine = 0, iStageLine = tempLine-2 ; iLine < _SHIP_ARRAY_INDEX_; iLine++, iStageLine++ ){
+		
+			bool bStageOutside = false;	///<	駒の配列情報がステージからはみ出てしまう場合のフラグ
+		
+			//	指定したブロック中心に5×5マス範囲調べる際に、ステージ外を調べてしまわない様に
+			if( iStageCol >= _STAGE_COLUMN_MAX_ || iStageCol < 0 ||
+				iStageLine >= _STAGE_LINE_MAX_ || iStageLine < 0 ) {
+				bStageOutside = true;
+			}
+			//	ステージ内で、駒がなければ
+			if( !bStageOutside &&  m_stageArray[_player][iStageCol][iStageLine]%100 == _shipNum )
+			{
+				m_stageArray[_player][iStageCol][iStageLine] -= m_stageArray[_player][iStageCol][iStageLine]%100;
+			}
+		}
+
+	}
+
+	for( int iColumn = 0, iStageCol = _column-2; iColumn < _SHIP_ARRAY_INDEX_; iColumn++, iStageCol++ ){
+		for( int iLine = 0, iStageLine = _line-2 ; iLine < _SHIP_ARRAY_INDEX_; iLine++, iStageLine++ ){
+		
+			bool bStageOutside = false;	///<	駒の配列情報がステージからはみ出てしまう場合のフラグ
+		
+			//	指定したブロック中心に5×5マス範囲調べる際に、ステージ外を調べてしまわない様に
+			if( iStageCol >= _STAGE_COLUMN_MAX_ || iStageCol < 0 ||
+				iStageLine >= _STAGE_LINE_MAX_ || iStageLine < 0 ) {
+				bStageOutside = true;
+			}
+			//	ステージ内で、駒がなければ
+			if( !bStageOutside &&  m_stageArray[_player][iStageCol][iStageLine]%100 == 0 ){
+				if( _ship->m_shipArray[iColumn][iLine] != 0 )
+					m_stageArray[_player][iStageCol][iStageLine] += _ship->m_shipArray[iColumn][iLine];
+			}
+		}
+
+	}
+
+	_ship->SetArrayPos( _column, _line );	///<　配置する行と列の座標をセット
+	_ship->SetDeadFlag( false );///<駒を設置したのでオブジェクトの死亡フラグを下げる
+						
+	//	駒の基準点（中心点）を予め算出させておく
+	float tempW = _BLOCK_WIDTH_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
+	float tempH = _BLOCK_HEIGHT_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
+	float tempX = _line*tempW + tempW*1.5f ;		
+	float tempY = _column*tempH + tempH*1.5f;
+	_ship->SetPosition( tempX, tempY, 0.5f );
+
 	return true;
 }
 

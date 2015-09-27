@@ -69,18 +69,20 @@ private:
 
 	/**
 	*@brief	行動選択時の範囲チェック
+	*@details	この関数では選択した行動別に座標を指定するときの分岐や処理を行う
 	*/
 	int SelectArrayCheck();
 
-	/**
-	*@brief	ステージの範囲チェック
-	*@details	SelectArrayCheck関数に書くと今以上にネストが深くなると思ったため、コチラに処理を分ける事にする。@n
-	*@param[in]	_id		チェックするステージのプレイヤーID
-	*@param[in]	_column	チェックする行
-	*@param[in]	_line	チェックする列
-	*@param[in]	_array	セットしたい配列データ
-	*/
-	int StageCheck( const int& _id, const int& _column, const int& _line, const int(*_array)[_SHIP_ARRAY_INDEX_]);
+	///**
+	//*@brief	ステージの範囲チェック
+	//*@details	SelectArrayCheck関数に書くと今以上にネストが深くなると思ったため、コチラに処理を分ける事にする。@n
+	//			
+	//*@param[in]	_id		チェックするステージのプレイヤーID
+	//*@param[in]	_column	チェックする行
+	//*@param[in]	_line	チェックする列
+	//*@param[in]	_array	セットしたい配列データ
+	//*/
+	//int StageCheck( const int& _id, const int& _column, const int& _line, const int(*_array)[_SHIP_ARRAY_INDEX_]);
 
 	/**
 	*@brief	タブの情報をリセット

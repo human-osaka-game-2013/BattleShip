@@ -68,14 +68,7 @@ int SetShip::CheckBoard()
 					//	駒が置けるマスであり、左クリックを押した時
 					if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )) {
 						m_pStage->SetShip( m_playerID, iColumn, iLine, m_tempShip );
-						m_tempShip->SetDeadFlag( false );///<駒を設置したのでオブジェクトの死亡フラグを下げる
 						
-						//	駒の基準点（中心点）を予め算出させておく
-						float tempW = _BLOCK_WIDTH_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
-						float tempH = _BLOCK_HEIGHT_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
-						m_tempX = iLine*tempW + tempW*1.5f ;		
-						m_tempY = iColumn*tempH + tempH*1.5f;
-						m_tempShip->SetPosition( m_tempX, m_tempY, 0.5f );
 						return 2;
 					}
 				}

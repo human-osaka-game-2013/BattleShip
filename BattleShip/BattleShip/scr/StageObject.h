@@ -49,8 +49,8 @@ public:
 				2：指定したブロックの範囲にすでにステージ上で何かが存在していた場合。@n
 				-1：上記以外の事が発生した場合。
 	*/
-	int CheckStageBlock( int _player, int _column, int _line, ShipObject* _ship,  
-							ShipObject::_SHIP_ARRAY_TYPE_ _arrayType, int _shipNum );
+	int CheckStageBlock( int _player, const int _column, const int _line, ShipObject* _ship,  
+							ShipObject::_SHIP_ARRAY_TYPE_ _arrayType, const int _shipNum );
 	
 	/**
 	*@brief	あるステージ上の範囲と画面上の座標XYとの判定
@@ -69,7 +69,7 @@ public:
 				-1：上記以外の事が発生した場合（またはそもそもブロックに接触していない場合）。
 	*/
 	int CheckRangeOnStage( int& _column, int& _line, 
-							int _player, float _x, float _y, ShipObject* _ship, ShipObject::_SHIP_ARRAY_TYPE_ _arrayType );
+							int _player, const float _x, const float _y, ShipObject* _ship, ShipObject::_SHIP_ARRAY_TYPE_ _arrayType );
 
 	/**
 	*@brief		ステージブロックと指定範囲のセット
@@ -84,10 +84,10 @@ public:
 				false：範囲セットが失敗した場合。
 	*/
 	bool SetStageToRange( int _player, ShipObject* _ship, 
-		const int(*_array)[_SHIP_ARRAY_INDEX_], int _shipNum );
+		const int(*_array)[_SHIP_ARRAY_INDEX_], const int _shipNum );
 
 	/**
-	*@brief	ステージブロックへ選択情報をセット
+	*@brief	ステージブロックへ駒情報をセット
 	*@param[in]	_player	プレイヤーのID
 	*@param[in]	_column	行
 	*@param[in]	_line	列
@@ -95,7 +95,7 @@ public:
 	*@return	false：何らかの原因でセットが失敗。@n
 				true：無事に情報をセット完了。
 	*/
-	bool SetShip( int _player, int _column, int _line, ShipObject* _ship );
+	bool SetShip( int _player, const int _column, const int _line, ShipObject* _ship );
 
 	/**
 	*@brief	ステージブロックへ指定範囲情報をセット
@@ -106,7 +106,7 @@ public:
 	*@return	false：何らかの原因でセットが失敗。@n
 				true：無事に情報をセット完了。
 	*/
-	bool SetRange( int _player, int _column, int _line, int _setType );
+	bool SetRange( int _player, const int _column, const int _line, const int _setType );
 
 	/**
 	*@brief	ステージブロックへ指定範囲情報をセット
@@ -118,7 +118,19 @@ public:
 	*@return	false：何らかの原因でセットが失敗。@n
 				true：無事に情報をセット完了。
 	*/
-	bool SetRange( int _player, int _column, int _line, const int(*_array)[_SHIP_ARRAY_INDEX_], int _setType);
+	bool SetRange( int _player, const int _column, const int _line, const int(*_array)[_SHIP_ARRAY_INDEX_], const int _setType );
+
+	/**
+	*@brief	ステージブロックへ駒情報を再配置
+	*@param[in]	_player	プレイヤーのID
+	*@param[in]	_column	行
+	*@param[in]	_line	列
+	*@param[in]	_ship	指定したブロック中心にセットする駒のポインタ
+	*@param[in]	_shipNum	自分自身の駒に接触していた場合判定を取らないようにする
+	*@return	false：何らかの原因でセットが失敗。@n
+				true：無事に情報をセット完了。
+	*/
+	bool RelocationShip( int _player, const int _column, const int _line, ShipObject* _ship, const int _shipNum );
 
 	/**
 	*@brief	ステージブロックの選択状態を解除

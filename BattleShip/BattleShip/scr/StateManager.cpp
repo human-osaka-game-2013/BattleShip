@@ -59,7 +59,7 @@ void StateManager::StateInit()
 				tempX += tempW*11;	///<プレイヤー2は1マス目から11マス分ずらすので
 				tempShip = m_pPlayer2->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
 			}
-			switch( iShip )	///<	艦種別分岐
+		/*	switch( iShip )	///<	艦種別分岐
 			{
 			case ShipObject::TYPE_AIRCARRIER:	
 				m_ShipFrame[iPlayer][iShip].Init( tempX, tempY, tempW*5, tempH );
@@ -77,7 +77,7 @@ void StateManager::StateInit()
 
 			}
 			m_ShipFrame[iPlayer][iShip].SetDirection( tempShip->GetDirection() );///<	m_pShipの向き情報をコチラにも適用
-			
+			*/
 		//------------------------------------------------------
 		}
 	}
@@ -185,66 +185,38 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 
 	//	ステージマス目表示
 	//	プレイヤー数
-	for( int ip=0; ip<_PLAYER_NUM_; ip++ ){
-
+	for( int ip=0; ip<_PLAYER_NUM_; ip++ )
+	{
 		//	プレイヤー別の駒情報の表示
-		for( int iShip=0; iShip<ShipObject::TYPE_MAX; iShip++ ){
-			m_ShipFrame[ip][iShip].GetPosition( &tempX, &tempY );
-			float tempW = m_ShipFrame[ip][iShip].GetWidth();
-			float tempH = m_ShipFrame[ip][iShip].GetHeight();
-			
-			switch( iShip )	///<	艦種別分岐
-			{
-			case ShipObject::TYPE_AIRCARRIER:	
-				_drawManager->VertexDraw( _TEX_AIRCARRIER_, tempX, tempY, 
-					tempW,  tempH,
-					0.f, 0.f, 
-					1.f, 1.f,
-					255, 255, 255, 255);	///<空母駒の描画
-				break;
-			case ShipObject::TYPE_BATTLESHIP:
-				_drawManager->VertexDraw( _TEX_BATTLESHIP_, tempX, tempY, 
-					tempW,  tempH,
-					0.f, 0.f, 
-					1.f, 1.f,
-					255, 255, 255, 255);	///<戦艦駒の描画
-				break;
-			case ShipObject::TYPE_CRUISER:
-				_drawManager->VertexDraw( _TEX_CRUISER_, tempX, tempY, 
-					tempW,  tempH,
-					0.f, 0.f, 
-					1.f, 1.f,
-					255, 255, 255, 255);	///<巡洋艦駒の描画
-				break;
-			case ShipObject::TYPE_DESTROYER:
-				_drawManager->VertexDraw( _TEX_DESTROYER_, tempX, tempY, 
-					tempW,  tempH,
-					0.f, 0.f, 
-					1.f, 1.f,
-					255, 255, 255, 255);	///<駆逐艦駒の描画
-				break;
-			case ShipObject::TYPE_SUBMARINE:
-				_drawManager->VertexDraw( _TEX_SUBMARINE_, tempX, tempY, 
-					tempW,  tempH,
-					0.f, 0.f, 
-					1.f, 1.f,
-					255, 255, 255, 255);	///<潜水艦駒の描画
-				break;
-
-			}
+		for( int iShip=0; iShip<ShipObject::TYPE_MAX; iShip++ )
+		{
 			//	ステージ上の駒の表示
-			ShipObject* tempShip = m_pPlayer1->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
-				
-			if( !tempShip->GetDeadFlag() ){
-				
-				m_pDrawManager->VertexTransform( iShip + _TEX_AIRCARRIER_, tempShip->m_vertex, 
-					tempShip->GetPositionX(), tempShip->GetPositionY(), 1.f, 1.f, tempShip->GetDirection()*90.f );
+			float tempW = _BLOCK_WIDTH_SIZE_;	
+			float tempH = _BLOCK_HEIGHT_SIZE_;
+			
+			if( ip == m_playerID-1 )	///<今は自分のプレイヤーの駒しか表示しない
+			{
+				ShipObject* tempShip = m_pPlayer1->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
+					
+				if( !tempShip->GetDeadFlag() )
+				{
+					//	盤面上に置かれている自分の駒を描画
+					m_pDrawManager->VertexTransform( iShip + _TEX_AIRCARRIER_, tempShip->m_vertex, 
+						tempShip->GetPositionX(), tempShip->GetPositionY(), 1.f, 1.f, tempShip->GetDirection()*90.f );
+					
+					//	配置したものからプレイヤー側の所持駒情報も描画
+					m_pDrawManager->VertexTransform( iShip + _TEX_AIRCARRIER_, tempShip->m_vertex, 
+						(_BOARD_OF_SHIPDATA_LINE_P1_*tempW)+(tempW/2), ((_BOARD_OF_SHIPDATA_COLUMN_+iShip)*tempH) + (tempH/2),
+						1.f, 1.f, CGameObject::CH_RIGHT*90.f );
+				}
 			}
 		}
 		//	行
-		for( int ic=0; ic<_STAGE_COLUMN_MAX_; ic++ ){	
+		for( int ic=0; ic<_STAGE_COLUMN_MAX_; ic++ )
+		{	
 			//	列
-			for( int il=0; il<_STAGE_LINE_MAX_; il++ ){
+			for( int il=0; il<_STAGE_LINE_MAX_; il++ )
+			{
 				m_pStageObject->m_stageBlock[ip][ic][il].GetPosition( &tempX, &tempY );
 				
 				int tempA = 0, tempR = 200, tempG = 200, tempB = 200;
@@ -252,16 +224,16 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 			
 				if( tempArrayData != 0 )	///<駒のある場所は塗りつぶす
 				{
-					tempA = 100;
-					if( tempArrayData/100 == 1 ){	///<選択されているマス
-						tempR = 200, tempG = 200, tempB = 200;
-
-					}else if( tempArrayData/100 == 2) {	///<駒が置けないor選択範囲が何かに接触しているマス
-						tempR = 255; tempG = 0; tempB = 0;
-					}
-					/*if( tempArrayData%100 != 0 ) {	///<選択マスより駒が置かれてる場合を優先
+					/*if( tempArrayData%100 != 0 ) {	///<咲に駒の有無を確認して、駒があれば初期設定にする
 						tempA = 0; tempR = 200; tempG = 200; tempB = 200;
 					}*/
+					if( tempArrayData/100 == 1 ){	///<選択されているマス
+						tempA = 100;
+
+					}else if( tempArrayData/100 == 2) {	///<駒が置けないor選択範囲が何かに接触しているマス
+						tempA = 100, tempR = 255, tempG = 0, tempB = 0;
+					}
+					
 				_drawManager->VertexDraw( _TEX_BLOCK_, tempX, tempY, 
 					m_pStageObject->m_stageBlock[ip][ic][il].GetWidth(), 
 					m_pStageObject->m_stageBlock[ip][ic][il].GetHeight(),

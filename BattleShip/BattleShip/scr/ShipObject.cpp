@@ -133,7 +133,7 @@ void ShipObject::InitVertex( _SHIP_TYPE_NUM_ _shipType )
 
 	for (int i = 0; i < 4; i++) {
 		m_vertex[i].z = 0.5f;
-		m_vertex[i].rhw = 1.0f;
+		m_vertex[i].rhw = 0.0f;
 		m_vertex[i].color = 0xFFFFFFFF;
 	}
 	m_vertex[0].tu = 1.f;

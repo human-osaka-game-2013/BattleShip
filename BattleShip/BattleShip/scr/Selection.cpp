@@ -154,8 +154,6 @@ int Selection::SelectArrayCheck( )
 						break;
 					}
 
-					StageCheck( tempID, iColumn, iLine, m_tempArray );
-
 					if( iCheckResult == -1 )	///<駒を置けるマスじゃなかった。
 					{	
 						return -1;
@@ -201,11 +199,7 @@ int Selection::SelectArrayCheck( )
 			
 			if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )) 
 			{
-				float tempW = _BLOCK_WIDTH_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
-				float tempH = _BLOCK_HEIGHT_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
-				m_tempX = iLine*tempW + tempW*1.5f ;		
-				m_tempY = iColumn*tempH + tempH*1.5f;
-				m_tempShip->SetPosition( m_tempX, m_tempY, 0.5f );
+				m_pStage->RelocationShip( tempID, iColumn, iLine, m_tempShip, m_ShipCount );
 				return 2;
 			}
 			return 1;
@@ -229,12 +223,6 @@ int Selection::SelectArrayCheck( )
 	return 0;
 }
 
-int Selection::StageCheck( const int& _id, const int& _column, const int& _line, const int(*_array)[_SHIP_ARRAY_INDEX_])
-{
-
-
-	return 0;
-}
 
 void Selection::ResetTabFrame()
 {
