@@ -78,12 +78,12 @@ int StageObject::CheckStageBlock( int _player, const int _column, const int _lin
 
 			//	指定したブロック範囲がステージからはみ出た場合
 			if( bStageOutside ){
-				if( _array[iColumn][iLine] != 0 )
+				if( _array[iColumn][iLine] != _CONDITION_NONE_ )
 					return 1;	///<	ステージ外にブロックの実体があった場合
-			} else if( m_stageArray[_player][iStageCol][iStageLine] != 0 )	{
+			} else if( m_stageArray[_player][iStageCol][iStageLine] != _CONDITION_NONE_ )	{
 				if( (m_stageArray[_player][iStageCol][iStageLine])%10 == _shipNum )
 					continue;	///<	自分と同じ艦種（現時点では自分自身）の場合
-				if( _array[iColumn][iLine] != 0 )	
+				if( _array[iColumn][iLine] != _CONDITION_NONE_ )	
 					return 2;	///<	指定したブロックの範囲にすでにステージ上で(自駒以外の)何かが存在していた場合
 			}
 		}
@@ -156,28 +156,28 @@ bool StageObject::SetStageToRange( int _player, ShipObject* _ship, const int(*_a
 
 			//	指定したブロック範囲がステージからはみ出た場合
 			if( bStageOutside ){
-				if( _array[iColumn][iLine] != 0 ){
+				if( _array[iColumn][iLine] != _CONDITION_NONE_ ){
 					continue;	///<	ステージ外に指定範囲の実体があると、範囲のセットのしようが無いので飛ばす
 				}
 			}
 			//	指定範囲と今チェックしているブロックに自分の駒以外の情報があった場合（中心座標は今は調べる必要はない）
 			else if( (m_stageArray[_player][iStageCol][iStageLine]%10) != _shipCount) 
 			{
-				if( _array[iColumn][iLine] != 0 ){
-					SetRange( _player+1, iStageCol, iStageLine, 2 );
+				if( _array[iColumn][iLine] != _CONDITION_NONE_ ){
+					SetRange( _player+1, iStageCol, iStageLine, _SELECT_FALSE_ );
 				}
 			}
-			else if( _array[iColumn][iLine] != 0 )
+			else if( _array[iColumn][iLine] != _CONDITION_NONE_ )
 			{
 				//----ここで移動後の予定位置（での駒とステージ）のチェックも行う----
 				//	移動先は移動出来ない場所だった場合	(_playerに1足しているのは（配列の指数から）元々のプレイヤーIDに直す為)
 				if( CheckStageBlock( _player+1, iStageCol, iStageLine, _ship, ShipObject::ARRAY_TYPE_SHIP, _shipCount ) !=0 ){
-					SetRange( _player+1, iStageCol, iStageLine, 2 );	
+					SetRange( _player+1, iStageCol, iStageLine, _SELECT_FALSE_ );	
 				}
 				//	移動先は駒の配置が可能だった場合
 				else{
 					
-					SetRange( _player+1, iStageCol, iStageLine, 1 );	
+					SetRange( _player+1, iStageCol, iStageLine, _SELECT_TRUE_ );	
 				}
 				//--------
 			}
@@ -206,8 +206,8 @@ bool StageObject::SetShip( int _player, const int _column, const int _line, Ship
 				bStageOutside = true;
 			}
 			//	ステージ内で、駒がなければ
-			if( !bStageOutside &&  m_stageArray[_player][iStageCol][iStageLine]%100 == 0 ){
-				if( _ship->m_shipArray[iColumn][iLine] != 0 )
+			if( !bStageOutside &&  m_stageArray[_player][iStageCol][iStageLine]%100 == _CONDITION_NONE_ ){
+				if( _ship->m_shipArray[iColumn][iLine] != _CONDITION_NONE_ )
 					m_stageArray[_player][iStageCol][iStageLine] = _ship->m_shipArray[iColumn][iLine];
 			}
 		}
@@ -235,7 +235,7 @@ bool StageObject::SetRange( int _player, const int _column, const int _line, con
 	_player--;	///<	配列指数用に直す
 
 	//	ステージ内で、今調べてる配列情報の中身が0じゃ無かったら（駒や攻撃などの範囲情報があれば）
-	if( (m_stageArray[_player][_column][_line] / 100) != 0 ){
+	if( (m_stageArray[_player][_column][_line] / 100) != _CONDITION_NONE_ ){
 		//        3桁目は選択情報なので、選択情報だけ消せる様にしている
 		m_stageArray[_player][_column][_line] -= 100*(m_stageArray[_player][_column][_line]/100);
 		m_stageArray[_player][_column][_line] += 100*_setType;
@@ -265,7 +265,7 @@ bool StageObject::SetRange( int _player, const int _column, const int _line, con
 			}
 
 			//	ステージ内で、今調べてる配列情報の中身が0じゃ無かったら（駒や攻撃などの範囲情報があれば）
-			if( !bStageOutside && _array[iColumn][iLine] != 0  ){
+			if( !bStageOutside && _array[iColumn][iLine] != _CONDITION_NONE_  ){
 				m_stageArray[_player][iStageCol][iStageLine] += 100*_setType;
 			}
 		}
@@ -317,7 +317,7 @@ bool StageObject::RelocationShip( int _player, const int _column, const int _lin
 			}
 			//	ステージ内で、駒がなければ
 			if( !bStageOutside &&  m_stageArray[_player][iStageCol][iStageLine]%100 == 0 ){
-				if( _ship->m_shipArray[iColumn][iLine] != 0 )
+				if( _ship->m_shipArray[iColumn][iLine] != _CONDITION_NONE_ )
 					m_stageArray[_player][iStageCol][iStageLine] += _ship->m_shipArray[iColumn][iLine];
 			}
 		}

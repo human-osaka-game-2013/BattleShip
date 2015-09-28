@@ -59,12 +59,12 @@ int SetShip::CheckBoard()
 				if( iCheckResult != 0 )	///<駒を置けるマスじゃなかった。
 				{	
 					//	置けない範囲だった場合も、置けないという情報をステージにセットする
-					m_pStage->SetRange( m_playerID, iColumn, iLine, m_tempShip->m_shipArray, 2 );
+					m_pStage->SetRange( m_playerID, iColumn, iLine, m_tempShip->m_shipArray, StageObject::_SELECT_FALSE_ );
 					return 1;
 				}
 				else ///<置けるマス。
 				{
-					m_pStage->SetRange( m_playerID, iColumn, iLine, m_tempShip->m_shipArray, 1);
+					m_pStage->SetRange( m_playerID, iColumn, iLine, m_tempShip->m_shipArray, StageObject::_SELECT_TRUE_);
 					//	駒が置けるマスであり、左クリックを押した時
 					if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )) {
 						m_pStage->SetShip( m_playerID, iColumn, iLine, m_tempShip );

@@ -108,7 +108,7 @@ bool Selection::SetTypeArray()
 
 	for( int iColumn = 0; iColumn < _SHIP_ARRAY_INDEX_; iColumn++ ){
 		for( int iLine = 0; iLine < _SHIP_ARRAY_INDEX_; iLine++ ){
-		if( m_tempArray[iColumn][iLine] != 0)
+			if( m_tempArray[iColumn][iLine] != StageObject::_CONDITION_NONE_)
 			return true;
 		}
 	}
@@ -160,10 +160,10 @@ int Selection::SelectArrayCheck( )
 					}
 					else ///<置けるマス。
 					{
-						m_pStage->SetRange( tempID, iColumn, iLine, tempArray, 1);
+						m_pStage->SetRange( tempID, iColumn, iLine, tempArray, StageObject::_SELECT_TRUE_ );
 						//	駒が置けるマスであり、左クリックを押した時
 						if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )) {
-							m_pStage->SetRange( tempID, iColumn, iLine, tempArray, 4 );
+							m_pStage->SetRange( tempID, iColumn, iLine, tempArray, StageObject::_SEARCH_ALL_ );
 							
 							//	駒の基準点（中心点）を予め算出させておく
 							float tempW = _BLOCK_WIDTH_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化

@@ -59,26 +59,6 @@ void StateManager::StateInit()
 				tempX += tempW*11;	///<プレイヤー2は1マス目から11マス分ずらすので
 				tempShip = m_pPlayer2->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
 			}
-		/*	switch( iShip )	///<	艦種別分岐
-			{
-			case ShipObject::TYPE_AIRCARRIER:	
-				m_ShipFrame[iPlayer][iShip].Init( tempX, tempY, tempW*5, tempH );
-				break;
-			case ShipObject::TYPE_BATTLESHIP:
-				m_ShipFrame[iPlayer][iShip].Init( tempX, tempY, tempW*4, tempH );
-				break;
-			case ShipObject::TYPE_CRUISER:
-				m_ShipFrame[iPlayer][iShip].Init( tempX, tempY, tempW*3, tempH );
-				break;
-			case ShipObject::TYPE_DESTROYER:
-			case ShipObject::TYPE_SUBMARINE:
-				m_ShipFrame[iPlayer][iShip].Init( tempX, tempY, tempW*2, tempH );
-				break;
-
-			}
-			m_ShipFrame[iPlayer][iShip].SetDirection( tempShip->GetDirection() );///<	m_pShipの向き情報をコチラにも適用
-			*/
-		//------------------------------------------------------
 		}
 	}
 }
@@ -222,15 +202,13 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 				int tempA = 0, tempR = 200, tempG = 200, tempB = 200;
 				int tempArrayData = m_pStageObject->m_stageArray[ip][ic][il];
 			
-				if( tempArrayData != 0 )	///<駒のある場所は塗りつぶす
+				if( tempArrayData != StageObject::_CONDITION_NONE_ )	///<駒のある場所は塗りつぶす
 				{
-					/*if( tempArrayData%100 != 0 ) {	///<咲に駒の有無を確認して、駒があれば初期設定にする
-						tempA = 0; tempR = 200; tempG = 200; tempB = 200;
-					}*/
-					if( tempArrayData/100 == 1 ){	///<選択されているマス
+					
+					if( tempArrayData/100 == StageObject::_SELECT_TRUE_ ){	///<選択されているマス
 						tempA = 100;
 
-					}else if( tempArrayData/100 == 2) {	///<駒が置けないor選択範囲が何かに接触しているマス
+					}else if( tempArrayData/100 == StageObject::_SELECT_FALSE_ ) {	///<駒が置けないor選択範囲が何かに接触しているマス
 						tempA = 100, tempR = 255, tempG = 0, tempB = 0;
 					}
 					

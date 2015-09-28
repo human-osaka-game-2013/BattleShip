@@ -19,6 +19,36 @@
 class StageObject : public CGameObject
 {
 public:
+	/*
+	*@brief	ステージの配列データの種類の列挙（選択など）
+	*@details	盤面のマスが選択されているかや、行動可能範囲などの種類の列挙。
+				索敵や攻撃位置の情報もこちらで管理する。
+	*/
+	enum _ARRAY_DATA_TYPE_SELECT_
+	{
+		_SELECT_NOMAL_,	///<選択されていない
+		_SELECT_TRUE_,	///<選択されている
+		_SELECT_FALSE_,	///<選択出来ない
+		_SEARCH_NOMAL_,	///<索敵をする範囲
+		_SEARCH_ALL_,	///<索敵をする範囲（全ての艦）
+		_ACTION_NOMAL_,	///<攻撃する範囲
+		_ACTION_ALL_	///<攻撃する範囲（全ての艦）
+	
+	};
+	
+	/*
+	*@brief	ステージの配列データの種類の列挙（損害状況）
+	*@details	盤面のマスの駒があるかどうかは、ステージでは2桁目が0の時点で駒は存在しないはずです。
+	*/
+	enum _ARRAY_DATA_TYPE_CONDITION_
+	{
+		_CONDITION_NONE_,	///<駒が無い
+		_CONDITION_NOMAL_,	///<駒がある
+		_CONDITION_DAMAGE_	///<駒が損傷している
+	};
+
+
+public:
 	int				m_stageArray[_PLAYER_NUM_][_STAGE_COLUMN_MAX_][_STAGE_LINE_MAX_];	///<ステージ上の情報
 	BoardOfFrame	m_stageBlock[_PLAYER_NUM_][_STAGE_COLUMN_MAX_][_STAGE_LINE_MAX_];	///<ステージブロックの座標
 
