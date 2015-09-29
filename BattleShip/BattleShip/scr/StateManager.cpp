@@ -204,12 +204,26 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 			
 				if( tempArrayData != StageObject::_CONDITION_NONE_ )	///<駒のある場所は塗りつぶす
 				{
-					
-					if( tempArrayData/100 == StageObject::_SELECT_TRUE_ ){	///<選択されているマス
+					switch( tempArrayData/100 )
+					{
+					case StageObject::_SELECT_TRUE_:	///<選択されているマス
 						tempA = 100;
-
-					}else if( tempArrayData/100 == StageObject::_SELECT_FALSE_ ) {	///<駒が置けないor選択範囲が何かに接触しているマス
+						break;
+					case StageObject::_SELECT_FALSE_:	///<駒が置けないor選択範囲が何かに接触しているマス
 						tempA = 100, tempR = 255, tempG = 0, tempB = 0;
+						break;
+					case StageObject::_SEARCH_NOMAL_:
+						tempA = 100, tempR = 0, tempG = 255, tempB = 0;
+						break;
+					case StageObject::_SEARCH_ALL_:
+						tempA = 255, tempR = 0, tempG = 255, tempB = 0;
+						break;
+					case StageObject::_ACTION_NOMAL_:
+						tempA = 100, tempR = 0, tempG = 0, tempB = 255;
+						break;
+					case StageObject::_ACTION_ALL_:
+						tempA = 255, tempR = 0, tempG = 0, tempB = 255;
+						break;
 					}
 					
 				_drawManager->VertexDraw( _TEX_BLOCK_, tempX, tempY, 

@@ -227,7 +227,7 @@ bool StageObject::SetShip( int _player, const int _column, const int _line, Ship
 	return true;
 }
 
-bool StageObject::SetRange( int _player, const int _column, const int _line, const int _setType )
+bool StageObject::SetRange( int _player, const int _column, const int _line, const _ARRAY_DATA_TYPE_SELECT_ _setType )
 {
 	if( _player > _PLAYER_NUM_ || _player <= 0 )	
 		return false;	///<	プレイヤーIDが1か2以外だった場合
@@ -246,7 +246,66 @@ bool StageObject::SetRange( int _player, const int _column, const int _line, con
 	return true;
 }
 
-bool StageObject::SetRange( int _player, const int _column, const int _line, const int(*_array)[_SHIP_ARRAY_INDEX_], const int _setType)
+
+bool StageObject::SetRange( int _player, const int _column, const int _line, 
+							const int(*_array)[_SHIP_ARRAY_INDEX_], const int _selectNum )
+{
+	if( _player > _PLAYER_NUM_ || _player <= 0 )	
+		return false;	///<	プレイヤーIDが1か2以外だった場合
+
+	_player--;	///<	配列指数用に直す
+
+	for( int iColumn = 0, iStageCol = _column-2; iColumn < _SHIP_ARRAY_INDEX_; iColumn++, iStageCol++ ){
+		for( int iLine = 0, iStageLine = _line-2 ; iLine < _SHIP_ARRAY_INDEX_; iLine++, iStageLine++ ){
+
+			bool bStageOutside = false;	///<	駒の配列情報がステージからはみ出てしまう場合のフラグ
+
+			//	指定したブロック中心に5×5マス範囲調べる際に、ステージ外を調べてしまわない様に
+			if( iStageCol >= _STAGE_COLUMN_MAX_ || iStageCol < 0 ||
+				iStageLine >= _STAGE_LINE_MAX_ || iStageLine < 0 ) {
+				bStageOutside = true;
+			}
+
+			//	ステージ内で、今調べてる配列情報の中身が0じゃ無かったら（駒や攻撃などの範囲情報があれば）
+			if( !bStageOutside && _array[iColumn][iLine] != _CONDITION_NONE_  ){
+				switch( _selectNum )
+				{
+				case GameState::_SELECT_ACTION_:
+					//	ステージ内で、今調べてる配列情報の中身が0じゃ無かったら（駒や攻撃などの範囲情報があれば）
+					if( (m_stageArray[_player][_column][_line] / 100) != _CONDITION_NONE_ ){
+						//        3桁目は選択情報なので、選択情報だけ消せる様にしている
+						m_stageArray[_player][iStageCol][iStageLine] -= 100*(m_stageArray[_player][iStageCol][iStageLine]/100);
+						m_stageArray[_player][iStageCol][iStageLine] += 100*(_array[iColumn][iLine]+(_ACTION_NOMAL_-1));
+					}
+					else{
+						m_stageArray[_player][_column][_line] += 100*(_array[iColumn][iLine]+(_ACTION_NOMAL_-1));
+					}
+
+					break;
+				case GameState::_SELECT_SEARCH_:
+					//	ステージ内で、今調べてる配列情報の中身が0じゃ無かったら（駒や攻撃などの範囲情報があれば）
+					if( (m_stageArray[_player][iStageCol][iStageLine] / 100) != _CONDITION_NONE_ ){
+						//        3桁目は選択情報なので、選択情報だけ消せる様にしている
+						m_stageArray[_player][iStageCol][iStageLine] -= 100*(m_stageArray[_player][iStageCol][iStageLine]/100);
+						m_stageArray[_player][iStageCol][iStageLine] += 100*(_array[iColumn][iLine]+(_SEARCH_NOMAL_-1));
+					}
+					else{
+						m_stageArray[_player][iStageCol][iStageLine] += 100*(_array[iColumn][iLine]+(_SEARCH_NOMAL_-1));
+					}
+
+					break;
+				}
+			}
+			
+		}
+
+	}
+	return true;
+}
+
+
+bool StageObject::SetRange( int _player, const int _column, const int _line, const int(*_array)[_SHIP_ARRAY_INDEX_],
+					const _ARRAY_DATA_TYPE_SELECT_ _setType )
 {
 	if( _player > _PLAYER_NUM_ || _player <= 0 )	
 		return false;	///<	プレイヤーIDが1か2以外だった場合

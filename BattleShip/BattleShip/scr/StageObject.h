@@ -128,7 +128,8 @@ public:
 	bool SetShip( int _player, const int _column, const int _line, ShipObject* _ship );
 
 	/**
-	*@brief	ステージブロックへ指定範囲情報をセット
+	*@brief	ステージブロックへ指定範囲情報をセット（1マスのみ）
+	*@details	1マスのみステージブロックの3桁目に情報（_ARRAY_DATA_TYPE_SELECT_）をセットする
 	*@param[in]	_player	プレイヤーのID
 	*@param[in]	_column	行
 	*@param[in]	_line	列
@@ -136,10 +137,26 @@ public:
 	*@return	false：何らかの原因でセットが失敗。@n
 				true：無事に情報をセット完了。
 	*/
-	bool SetRange( int _player, const int _column, const int _line, const int _setType );
+	bool SetRange( int _player, const int _column, const int _line, const _ARRAY_DATA_TYPE_SELECT_ _setType );
 
 	/**
 	*@brief	ステージブロックへ指定範囲情報をセット
+	*@details	_arrayの範囲でデータを_selectNumの内容に応じてステージにセット。
+				現在は索敵or攻撃の情報をセットする専用
+	*@param[in]	_player	プレイヤーのID
+	*@param[in]	_column	行
+	*@param[in]	_line	列
+	*@param[in]	_array	指定したブロック中心にセットする配列情報
+	*@param[in]	_selectNum	範囲情報を何の値でセットするか
+	*@return	false：何らかの原因でセットが失敗。@n
+				true：無事に情報をセット完了。
+	*/
+	bool SetRange( int _player, const int _column, const int _line, 
+					const int(*_array)[_SHIP_ARRAY_INDEX_], const int _selectNum );
+
+	/**
+	*@brief	ステージブロックへ指定範囲情報をセット
+	*@details	_arrayの範囲でデータを_setTypeで3桁目にステージにセット
 	*@param[in]	_player	プレイヤーのID
 	*@param[in]	_column	行
 	*@param[in]	_line	列
@@ -148,7 +165,9 @@ public:
 	*@return	false：何らかの原因でセットが失敗。@n
 				true：無事に情報をセット完了。
 	*/
-	bool SetRange( int _player, const int _column, const int _line, const int(*_array)[_SHIP_ARRAY_INDEX_], const int _setType );
+	bool SetRange( int _player, const int _column, const int _line, const int(*_array)[_SHIP_ARRAY_INDEX_], 
+					const _ARRAY_DATA_TYPE_SELECT_ _setType );
+
 
 	/**
 	*@brief	ステージブロックへ駒情報を再配置
