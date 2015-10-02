@@ -43,7 +43,7 @@ public:
 	/**
 	*@brief	受信メソッド
 	*/
-	bool Receive( char* _buf );
+	bool Receive( char* _buf, int bfSize );
 	
 	/**
 	*@brief	送信メソッド

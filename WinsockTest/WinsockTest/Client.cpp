@@ -10,7 +10,7 @@
 bool Client::SettingSocket()
 {
 	// 接続先指定用構造体の準備
-	m_server.sin_family = AF_INET;
+	m_server.sin_family = PF_INET;
 	m_server.sin_port = htons(12345);	///<	ポート番号
 	m_server.sin_addr.S_un.S_addr = inet_addr( m_deststr );
 
@@ -51,6 +51,11 @@ bool Client::ConnectToServer()
 				break;
 			}
 			m_addrptr++;
+
+			//recvをノンブロッキングモードにする
+			unsigned long val=1;
+			ioctlsocket(*GetSocket(), FIONBIO, &val);
+			
 			//	connectが失敗したら次のアドレスを試す
 		}
 		//	connectが全て失敗した場合

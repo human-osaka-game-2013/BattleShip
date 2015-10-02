@@ -12,7 +12,7 @@ bool Server::SettingSocket()
 {
 	m_reuseFlag = false;
 	//	ソケットの設定
-	m_addr.sin_family = AF_INET;
+	m_addr.sin_family = PF_INET;
 	m_addr.sin_port = htons(12345);
 	m_addr.sin_addr.S_un.S_addr = INADDR_ANY;
 	

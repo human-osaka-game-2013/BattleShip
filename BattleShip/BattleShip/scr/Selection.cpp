@@ -48,8 +48,10 @@ int Selection::Control()
 			m_pStage->ResetSelect();
 			m_arrayCheckResult = SelectArrayCheck();
 		}
-		if( m_arrayCheckResult == 2 )
+		if( m_arrayCheckResult == 2 ){
 			m_StateCompFlag = true;
+			m_ShipCount++;
+		}
 	}
 
 	
