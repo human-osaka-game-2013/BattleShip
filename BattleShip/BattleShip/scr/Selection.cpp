@@ -38,24 +38,28 @@ int Selection::Control()
 
 	if( !m_StateCompFlag )
 	{
-		if( !m_tabSelectFlag ){	
+		if( !m_tabSelectFlag )
+		{	
 			m_tabSelectFlag = TabCheck();
-		}else if( !m_areaSelectFlag ){
+		}
+		else if( !m_areaSelectFlag )
+		{
 			m_areaSelectFlag = SetTypeArray();
 			if( !m_areaSelectFlag )	///< 選択した範囲にデータが無い（orその行動は出来ない）場合、タブの選択も解除する。
 				m_tabSelectFlag = false;
-		}else{
+		}
+		else if( m_arrayCheckResult != 2 )
+		{
 			m_pStage->ResetSelect();
 			m_arrayCheckResult = SelectArrayCheck();
 		}
-		if( m_arrayCheckResult == 2 ){
+		else{
 			m_StateCompFlag = true;
-			m_ShipCount++;
 		}
+		
 	}
 
-	
-	return m_ShipCount;
+	return ((m_StateCompFlag) ? 0 : 1);
 }
 
 

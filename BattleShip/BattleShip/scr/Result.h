@@ -39,6 +39,11 @@ public:
 	*/
 	void ComStandby();
 
+private:
+	/**
+	*@brief	s“®‘I‘ğ‚É‚æ‚éí“¬‚ÌŒ‹‰Ê
+	*/
+	int ResultOfAction();
 };
 
 #endif

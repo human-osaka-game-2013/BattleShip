@@ -30,3 +30,8 @@ void Result::ComStandby()
 {
 
 }
+
+int Result::ResultOfAction()
+{
+
+}

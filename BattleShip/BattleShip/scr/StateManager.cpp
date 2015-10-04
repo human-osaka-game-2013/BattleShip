@@ -98,9 +98,11 @@ bool StateManager::CheckState()
 {
 	
 	int beforeShip = m_currentShip;
-	m_pGameState->Control();	///<　ステートごとの処理に移行
 	bool checkResult = false;
+	int stageResult = 0;
 
+	stageResult = m_pGameState->Control();	///<　ステートごとの処理に移行
+	
 	switch( m_currentState )	///<　シーン毎にステートの結果への対処が変わるので分岐
 	{
 	case STATE_SET_SHIP:
@@ -108,7 +110,7 @@ bool StateManager::CheckState()
 			checkResult = true;
 		break;
 	case STATE_SELECTION:
-		if( m_currentShip != (ShipObject::_SHIP_TYPE_NUM_)beforeShip )	///<　結果と選択中の駒が違う＝行動選択完了なので
+		if( stageResult )	///<　結果と選択中の駒が違う＝行動選択完了なので
 			checkResult = true;	///<　選択結果に移る
 		break;
 	case STATE_RESULT:
