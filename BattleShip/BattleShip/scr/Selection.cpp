@@ -271,7 +271,9 @@ void Selection::Draw()
 bool Selection::ComStandby()
 {
 #ifdef	_COM_TEST_
-	if(  )
+	//本来なら相手側のステージ情報が来るまで、「通信中」などの画像を表示して、待たせて置くが、
+	//今はテストの為、自分自身のステージ情報を相手と見立てて、マージする。
+	if( MargeStage( m_pStage ) )
 
 	return true;
 #else
@@ -279,7 +281,17 @@ bool Selection::ComStandby()
 #endif
 }
 
-bool Selection::MargeStage( int(*_array)[_STAGE_COLUMN_MAX_] )
+bool Selection::MargeStage( StageObject* _pStage )
 {
-
-}
+	for( int iColumn = 0; iColumn < _STAGE_COLUMN_MAX_; iColumn++ )
+	{
+		for( int iLine = 0; iLine < _STAGE_LINE_MAX_; iLine++ )
+		{
+			//	相手側（_pStage）から貰ってきた、お互いのステージに対して行った、選択情報（3桁目）と、
+			//	お互い自身の駒に対しての行動（移動）情報を更新してやる。
+			if()
+			m_pStage->m_stageArray[m_playerID-1][iColumn][iLine] =
+				_pStage->m_stageArray[m_playerID-1][iColumn][iLine];
+		}
+	}
+}	

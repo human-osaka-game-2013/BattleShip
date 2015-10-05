@@ -93,7 +93,7 @@ private:
 	/**
 	*@brief	ステージデータの結合
 	*/
-	bool MargeStage( int(*_array)[_STAGE_COLUMN_MAX_] );
+	bool MargeStage( StageObject* _pStage );
 };
 
 #endif
