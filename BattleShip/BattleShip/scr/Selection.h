@@ -50,7 +50,7 @@ public:
 	/**
 	*@brief	戦闘行動選択での通信待機処理
 	*/
-	void ComStandby();
+	bool ComStandby();
 
 private:
 
@@ -89,6 +89,11 @@ private:
 	*@details	主にタブ情報のカラー値をリセット
 	*/
 	void ResetTabFrame();
+
+	/**
+	*@brief	ステージデータの結合
+	*/
+	bool MargeStage( int(*_array)[_STAGE_COLUMN_MAX_] );
 };
 
 #endif

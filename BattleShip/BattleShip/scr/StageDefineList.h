@@ -22,9 +22,4 @@
 #define _BOARD_OF_SHIPDATA_LINE_P2_ (float)14	///<自駒の詳細データの表示列位置（プレイヤー2）
 #define _BOARD_OF_SHIPDATA_COLUMN_	(float)_STAGE_HEIGHT_MAX_	///<自駒の詳細データの表示行位置
 
-
-
-
-
-
 #endif

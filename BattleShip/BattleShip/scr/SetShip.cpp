@@ -89,7 +89,7 @@ void SetShip::Draw()
 }
 
 //	
-void SetShip::ComStandby()
+bool SetShip::ComStandby()
 {
 
 }

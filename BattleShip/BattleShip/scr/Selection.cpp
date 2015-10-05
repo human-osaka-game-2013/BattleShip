@@ -35,6 +35,7 @@ int Selection::Control()
 {
 	m_tempX = (float)m_pMouse->GetCursorPosX();
 	m_tempY = (float)m_pMouse->GetCursorPosY();
+	bool bMargeStageDataFlag = false;
 
 	if( !m_StateCompFlag )
 	{
@@ -54,7 +55,12 @@ int Selection::Control()
 			m_arrayCheckResult = SelectArrayCheck();
 		}
 		else{
-			m_StateCompFlag = true;
+			if( !bMargeStageDataFlag ){
+				
+			}
+			else{
+				m_StateCompFlag = true;
+			}
 		}
 		
 	}
@@ -260,8 +266,20 @@ void Selection::Draw()
 	}
 }
 
+#define _COM_TEST_
 //	
-void Selection::ComStandby()
+bool Selection::ComStandby()
+{
+#ifdef	_COM_TEST_
+	if(  )
+
+	return true;
+#else
+	return true;
+#endif
+}
+
+bool Selection::MargeStage( int(*_array)[_STAGE_COLUMN_MAX_] )
 {
 
 }

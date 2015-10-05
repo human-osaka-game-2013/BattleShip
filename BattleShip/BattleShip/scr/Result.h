@@ -37,7 +37,7 @@ public:
 	/**
 	*@brief	í“¬Œ‹‰Ê‚Å‚Ì’ÊM‘Ò‹@ˆ—
 	*/
-	void ComStandby();
+	bool ComStandby();
 
 private:
 	/**

@@ -24,8 +24,7 @@ void StageEffect::Draw()
 
 }
 
-//	
-void StageEffect::ComStandby()
+bool StageEffect::ComStandby()
 {
 
 }

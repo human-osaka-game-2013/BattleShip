@@ -91,7 +91,7 @@ public:
 	/**
 	*@brief	ステートパターン内での通信時のサブルーチン処理
 	*/
-	virtual void ComStandby() = 0;
+	virtual bool ComStandby() = 0;
 
 	/**
 	*@brief	ステートのID取得

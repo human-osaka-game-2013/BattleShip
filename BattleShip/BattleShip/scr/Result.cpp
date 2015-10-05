@@ -26,7 +26,7 @@ void Result::Draw()
 }
 
 //	
-void Result::ComStandby()
+bool Result::ComStandby()
 {
 
 }

@@ -43,7 +43,7 @@ public:
 	/**
 	*@brief	駒配置での通信待機処理
 	*/
-	void ComStandby();
+	bool ComStandby();
 
 	
 	

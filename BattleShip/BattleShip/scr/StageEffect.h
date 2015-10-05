@@ -37,7 +37,7 @@ public:
 	/**
 	*@brief	戦闘エフェクトでの通信待機処理
 	*/
-	void ComStandby();
+	bool ComStandby();
 
 };
 
