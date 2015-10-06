@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "StageObject.h"
 
 void Player::Init( int _userID )
 {
@@ -31,12 +32,33 @@ void Player::Init( int _userID )
 	}
 }
 
-ShipObject* Player::GetShip( ShipObject::_SHIP_TYPE_NUM_ _shipType )
+ShipObject* Player::GetShip( const ShipObject::_SHIP_TYPE_NUM_ _shipType )
 {
 	if( _shipType < ShipObject::TYPE_MAX && _shipType > ShipObject::TYPE_NONE )
 		return m_pShip[_shipType];
 	return NULL;	
 }
+
+bool Player::DamageControl( const int _column, const int _line, const ShipObject::_SHIP_TYPE_NUM_ _shipType )
+{
+	if( _shipType >= ShipObject::TYPE_MAX || _shipType <= ShipObject::TYPE_NONE )
+		return false;
+
+	int iLocalColumn = _column -(m_pShip[_shipType]->GetArrayColumn() - 2);
+	int iLocalLine = _line -(m_pShip[_shipType]->GetArrayLine() - 2);
+
+	if( m_pShip[_shipType]->m_shipArray[iLocalColumn][iLocalLine]/10 != StageObject::_CONDITION_NOMAL_ )///<損傷していないマスじゃなければ
+	{
+		return false;
+	}
+	else	///<	損傷していないマス（_CONDITION_NOMAL_）だったので
+	{
+		m_pShip[_shipType]->m_shipArray[iLocalColumn][iLocalLine] += 10;	///<	損傷情報の桁を_CONDITION_DAMAGE_に引き上げる
+	}
+
+	return true;
+}
+
 
 bool Player::Free()
 {

@@ -94,7 +94,7 @@ private:
 	/**
 	*@brief	ステージデータの結合
 	*/
-	bool MargeStage( StageObject* _pStage );
+	bool MargeStage( StageObject* _pStage, Player* _pPlayer );
 };
 
 #endif

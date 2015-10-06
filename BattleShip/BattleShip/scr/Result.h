@@ -27,6 +27,7 @@ public:
 
 	/**
 	*@brief	戦闘結果でのサブルーチン処理
+
 	*/
 	int Control();
 	
@@ -43,8 +44,14 @@ public:
 private:
 	/**
 	*@brief	行動選択による戦闘の結果
+	*@details	戦闘結果は、各駒１つの行動選択の結果なので、判定としては下記の３種類になる。
+	*@param[in]	_playerIndex	プレイヤーの配列での指数
+	*@return 戦闘結果
+	*@retval 0	特に無し
+	*@retval 1	相手の攻撃が当たった
+	*@retval 2	相手に索敵された
 	*/
-	int ResultOfAction();
+	int ResultOfAction( int _playerIndex );
 };
 
 #endif

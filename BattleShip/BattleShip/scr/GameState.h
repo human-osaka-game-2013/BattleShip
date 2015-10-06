@@ -11,6 +11,8 @@
 #include "DrawManager.h"
 #include "Mouse.h"
 
+#define _COM_TEST_	///<通信を使わないテスト
+
 class GameState
 {
 public:
