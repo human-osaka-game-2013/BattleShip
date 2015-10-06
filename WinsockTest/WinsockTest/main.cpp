@@ -7,10 +7,7 @@ void main(int argc, char *argv[])
 	char ctemp;
 	printf_s("Client_or_Server? <c/s>\n");
 	scanf("%[cs]",&ctemp);
-/**	if (argc != 2) {
-		 DebugMsgBox("Usage : %s dest\n", argv[0]);
-		 while(1);
-	}*/
+
 	
 	int i=0; 
 
@@ -20,14 +17,14 @@ void main(int argc, char *argv[])
 		client.Init();
 		client.ConnectToServer();
 	
-		while(i != 100 ){
+		while(i != 1000 ){
 			i++;
-			if(i == 100)
+			if(i == 1000)
 				i=0;
 
 			if(i == 99){
 				client.Send(  client.GetSocket() ,client.GetBuf() );
-				client.Receive( client.GetBuf() );
+				client.Receive( client.GetBuf(), sizeof(char)*_CONECT_SIZE_  );
 			}
 		}
 		client.EndConnect();
@@ -37,15 +34,17 @@ void main(int argc, char *argv[])
 		Server server;
 		server.Init();
 		server.KeepListen();
-		while(i != 100 ){
+		while(i != 1000 ){
 			i++;
-			if(i == 100)
+			if(i == 1000)
 				i=0;
 			if(i == 99){
 
-		server.Receive( server.GetBuf() );
-		server.Send(  server.GetConnectedSocket() ,server.GetBuf() );
+				server.Receive( server.GetBuf(), sizeof(char)*_CONECT_SIZE_ );
+				//server.Send(  server.GetConnectedSocket() ,server.GetBuf() );
+			}
 		
+		}
 		server.EndConnect();
 	}
 	while(1);

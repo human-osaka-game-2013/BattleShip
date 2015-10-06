@@ -8,9 +8,9 @@
 #define _CONNECT_H_
 
 #include <winsock2.h>
-#include <cstdio>
-
 #include "DebugInterface.h"
+
+#define _CONECT_SIZE_ 2048
 
 /**
 *@brief	通信管理クラス
@@ -22,7 +22,7 @@ private:
 	SOCKET	m_sock;		///<	ソケットメンバ
 
 protected:
-	char	m_buf[2048];
+	char	m_buf[_CONECT_SIZE_];
 
 public:
 	/**

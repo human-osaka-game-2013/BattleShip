@@ -84,14 +84,20 @@ bool Connect::Receive( char* _buf, int bfSize )
 	while(nRtn && SOCKET_ERROR!=nRtn && 0<(bfSize-(_buf-pt))){
 		for(int i=0;i<50;i++){
 			nRtn = recv( *GetSocket(), _buf, bfSize-(_buf-pt), 0 );//ŽóM
-			if(0<=nRtn) break;
-			Sleep(100);
+			if(0<=nRtn){
+				break;
+			}
+			else
+			{
+				printf_s("%s\n",_buf) ;
+				Sleep(100);
+			}
 		}
 		_buf+=nRtn;
 	}
 	*_buf='\0';
 	
-	return (_buf-pt);
+	return (_buf-pt)? true: false;
 
 	//return true;
 }
