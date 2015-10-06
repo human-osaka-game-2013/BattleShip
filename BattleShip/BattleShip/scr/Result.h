@@ -10,6 +10,7 @@
 
 class Result : public GameState
 {
+private:
 	
 
 public:

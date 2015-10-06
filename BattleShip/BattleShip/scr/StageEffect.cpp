@@ -26,5 +26,5 @@ void StageEffect::Draw()
 
 bool StageEffect::ComStandby()
 {
-
+	return true;
 }

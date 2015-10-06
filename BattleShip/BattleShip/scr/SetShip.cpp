@@ -91,5 +91,5 @@ void SetShip::Draw()
 //	
 bool SetShip::ComStandby()
 {
-
+	return true;
 }

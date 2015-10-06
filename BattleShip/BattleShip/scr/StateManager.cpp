@@ -176,6 +176,9 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 			float tempW = _BLOCK_WIDTH_SIZE_;	
 			float tempH = _BLOCK_HEIGHT_SIZE_;
 			
+			/**
+			*@todo	現在は自身の駒のみを表示している。
+			*/
 			if( ip == m_playerID-1 )	///<今は自分のプレイヤーの駒しか表示しない
 			{
 				ShipObject* tempShip = m_pPlayer1->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
@@ -206,6 +209,14 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 			
 				if( tempArrayData != StageObject::_CONDITION_NONE_ )	///<駒のある場所は塗りつぶす
 				{
+					/**
+					*@todo	現在はテスト用に相手駒の配置場所表示している。
+					*/
+					if( ip != m_playerID-1 )	
+					{
+						tempA = 255;
+					}
+
 					switch( tempArrayData/100 )
 					{
 					case StageObject::_SELECT_TRUE_:	///<選択されているマス

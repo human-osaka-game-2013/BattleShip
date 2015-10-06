@@ -11,6 +11,7 @@ bool Selection::Init()
 	m_tabSelectFlag = false;
 	m_areaSelectFlag= false;
 	m_arrayCheckResult = 0;
+	m_margeStageDataFlag = false;
 
 	m_tempShip = m_pPlayer[m_playerID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)(m_ShipCount) );
 		
@@ -35,7 +36,6 @@ int Selection::Control()
 {
 	m_tempX = (float)m_pMouse->GetCursorPosX();
 	m_tempY = (float)m_pMouse->GetCursorPosY();
-	bool bMargeStageDataFlag = false;
 
 	if( !m_StateCompFlag )
 	{
@@ -55,8 +55,8 @@ int Selection::Control()
 			m_arrayCheckResult = SelectArrayCheck();
 		}
 		else{
-			if( !bMargeStageDataFlag ){
-				
+			if( !m_margeStageDataFlag ){
+				m_margeStageDataFlag = ComStandby();
 			}
 			else{
 				m_StateCompFlag = true;
@@ -65,7 +65,7 @@ int Selection::Control()
 		
 	}
 
-	return ((m_StateCompFlag) ? 0 : 1);
+	return ((m_StateCompFlag) ? 1 : 0);
 }
 
 
@@ -266,7 +266,7 @@ void Selection::Draw()
 	}
 }
 
-#define _COM_TEST_
+#define _COM_TEST_	///<通信を使わないテスト
 //	
 bool Selection::ComStandby()
 {
@@ -274,8 +274,9 @@ bool Selection::ComStandby()
 	//本来なら相手側のステージ情報が来るまで、「通信中」などの画像を表示して、待たせて置くが、
 	//今はテストの為、自分自身のステージ情報を相手と見立てて、マージする。
 	if( MargeStage( m_pStage ) )
+		return true;
 
-	return true;
+	return false;
 #else
 	return true;
 #endif
@@ -287,11 +288,29 @@ bool Selection::MargeStage( StageObject* _pStage )
 	{
 		for( int iLine = 0; iLine < _STAGE_LINE_MAX_; iLine++ )
 		{
+#ifdef _COM_TEST_
+			_pStage->m_stageArray[0][iColumn][iLine] =
+				m_pStage->m_stageArray[0][iColumn][iLine] =
+				( m_pStage->m_stageArray[0][iColumn][iLine]%100) +
+				( (_pStage->m_stageArray[1][iColumn][iLine]/100)*100 );
+			m_pStage->m_stageArray[1][iColumn][iLine] = 
+				m_pStage->m_stageArray[1][iColumn][iLine] =
+				( _pStage->m_stageArray[0][iColumn][iLine]%100) +
+				( (m_pStage->m_stageArray[1][iColumn][iLine]/100)*100 );
+#else
+
 			//	相手側（_pStage）から貰ってきた、お互いのステージに対して行った、選択情報（3桁目）と、
 			//	お互い自身の駒に対しての行動（移動）情報を更新してやる。
-			if()
-			m_pStage->m_stageArray[m_playerID-1][iColumn][iLine] =
-				_pStage->m_stageArray[m_playerID-1][iColumn][iLine];
+			_pStage->m_stageArray[0][iColumn][iLine] =
+				m_pStage->m_stageArray[0][iColumn][iLine] =
+				( m_pStage->m_stageArray[0][iColumn][iLine]%100) +
+				( (_pStage->m_stageArray[0][iColumn][iLine]/100)*100 );
+			m_pStage->m_stageArray[1][iColumn][iLine] = 
+				m_pStage->m_stageArray[1][iColumn][iLine] =
+				( _pStage->m_stageArray[1][iColumn][iLine]%100) +
+				( (m_pStage->m_stageArray[1][iColumn][iLine]/100)*100 );
+#endif
 		}
 	}
-}	
+	return true;
+}
