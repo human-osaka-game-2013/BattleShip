@@ -77,7 +77,8 @@ bool Connect::Receive( char* _buf, int bfSize )
 	//{
 	//	printf_s(_buf);
 	//}
-	
+	memset(_buf, 0, sizeof(_buf));
+
 	int nRtn=1;
 	char*pt=_buf;
 	//タイムアウトを約5秒にするためのループ
@@ -85,11 +86,13 @@ bool Connect::Receive( char* _buf, int bfSize )
 		for(int i=0;i<50;i++){
 			nRtn = recv( *GetSocket(), _buf, bfSize-(_buf-pt), 0 );//受信
 			if(0<=nRtn){
+				printf_s("recvError：%d\n", WSAGetLastError() );
 				break;
 			}
 			else
 			{
-				printf_s("%s\n",_buf) ;
+				printf_s("通信成功%s\n",_buf);
+				Send( &m_sock, m_buf);
 				Sleep(100);
 			}
 		}
@@ -109,12 +112,15 @@ bool Connect::Send( SOCKET* _sock, char *_buf )
 	int n = send(*_sock, _buf, (int)strlen(_buf), 0);
 	if( n == SOCKET_ERROR )
 	{
-		printf_s("send：%d\n", WSAGetLastError() );	///<	送信失敗
+		printf_s("sendError：%d\n", WSAGetLastError() );	///<	送信失敗
 		return false;
 	}
 	else
 	{
-		printf_s(_buf);
+		printf_s("通信成功%s",_buf);
+		char tempBuf[_CONECT_SIZE_];
+		memset(tempBuf, 0, sizeof(tempBuf));
+		Receive( tempBuf, sizeof(tempBuf) );
 	}
 	return true;
 }

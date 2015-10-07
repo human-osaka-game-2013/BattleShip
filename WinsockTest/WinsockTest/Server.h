@@ -18,8 +18,8 @@ private:
 	struct sockaddr_in m_client;///<	クライアント側アドレス
 	int m_len;	///<	送信メッセージの長さ
 	bool m_reuseFlag;	///<	SO_REUSEADDR有効用
-
-	char m_inbuf[2048];
+public:
+	char m_inbuf[_CONECT_SIZE_];
 
 public:
 	/**

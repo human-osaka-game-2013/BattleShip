@@ -17,6 +17,7 @@ private:
 public:
 	char* m_deststr;	///<	サーバー側のアドレス（文字列）格納ポインタ
 	unsigned int** m_addrptr;	///<	IPアドレス格納
+	char m_inbuf[_CONECT_SIZE_];
 
 public:
 	/**
