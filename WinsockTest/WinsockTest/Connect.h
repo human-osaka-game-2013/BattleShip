@@ -18,17 +18,20 @@
 class Connect 
 {
 private:
+	bool m_sockType;	///<	ソケットの種類
+	
 	WSADATA	m_wsaData;	///<	Winsockデータ
 	SOCKET	m_sock;		///<	ソケットメンバ
-
-protected:
-	char	m_buf[_CONECT_SIZE_];
-
+	SOCKET	m_sock0;	///<	相手側のソケット情報
+	struct sockaddr_in m_addr;	///<	接続先指定用構造体（自身）
+	struct sockaddr_in m_client;///<	接続先指定用構造体（クライアント側）
+	
 public:
 	/**
 	*@brief	初期化
+	*@param[in]	_bSockType	通信を行うタイプ
 	*/
-	bool Init();
+	bool Init( bool _bSockType );
 	
 	/**
 	*@brief	ソケット生成メソッド
@@ -38,8 +41,13 @@ public:
 	/**
 	*@brief	ソケット設定メソッド
 	*/
-	virtual bool SettingSocket() = 0;
+	bool SettingSocket();
 
+	/**
+	*@brief	ソケットの接続
+	*/
+	bool Connection();
+	
 	/**
 	*@brief	受信メソッド
 	*/

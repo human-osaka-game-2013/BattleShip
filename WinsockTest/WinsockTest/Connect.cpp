@@ -8,8 +8,9 @@
 
 
 //	初期化
-bool Connect::Init()
+bool Connect::Init( bool _bSockType )
 {
+	m_sockType = _bSockType;
 	
 	int result = 0;
 	result = WSAStartup( MAKEWORD(2,0), &m_wsaData );	///< Winsockの初期化
@@ -52,7 +53,7 @@ bool Connect::Init()
 bool Connect::MakeSocket()
 {
 	//	ソケットの生成
-	m_sock = socket( PF_INET, SOCK_STREAM, 0 );
+	m_sock = socket( AF_INET, SOCK_STREAM, 0 );
 	if( m_sock == INVALID_SOCKET ) 
 	{
 		DebugMsgBox("socket : %d\n", WSAGetLastError());
@@ -60,6 +61,26 @@ bool Connect::MakeSocket()
 	}
 	return true;
 }
+
+bool Client::SettingSocket()
+{
+	if( m_sockType ){
+		// 接続先指定用構造体の準備
+		m_server.sin_family = AF_INET;
+		m_server.sin_port = htons(12345);	///<	ポート番号
+		m_server.sin_addr.S_un.S_addr = inet_addr( m_deststr );
+	}
+	else
+	{
+		// ソケットの設定
+		addr.sin_family = AF_INET;
+		addr.sin_port = htons(12345);
+		addr.sin_addr.S_un.S_addr = INADDR_ANY;
+		
+	}
+	return true;
+}
+
 
 //	受信メソッド
 bool Connect::Receive( char* _buf, int bfSize )
