@@ -53,6 +53,7 @@ private:
 	StageObject*	m_pStageObject;		///<	ステージオブジェクト
 	int const		m_playerID;			///<	起動側のプレイヤーID
 	Background		m_background;		///<	背景オブジェクト
+	Connect*		const m_pConnect;	///<	通信デバイスクラスポインタ
 
 public:
 	/**
@@ -66,8 +67,10 @@ public:
 	*@param[in]	m_pMouse		マウス管理のポインタ
 	*/
 	GameScene(int _id, int _playerID, CRenderManager* const _pRenderManager,
-		CDrawManager*	const _pDrawManager, CKey* const _pKey, CMouse* const m_pMouse )
-		: CScene( _id, _pRenderManager,	_pDrawManager, _pKey, m_pMouse), m_playerID( _id )
+		CDrawManager*	const _pDrawManager, CKey* const _pKey, CMouse* const m_pMouse,
+		Connect*	const _pConnect)
+		: CScene( _id, _pRenderManager,	_pDrawManager, _pKey, m_pMouse), m_playerID( _id ),
+		m_pConnect(_pConnect)
 	{
 		
 	}

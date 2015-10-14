@@ -47,7 +47,8 @@ private:
 //	デバイス
 private:
 	CDrawManager*	m_pDrawManager;	///<	2D描画管理クラスポインタ(constポインタ)
-	CMouse*			m_pMouse;			///<	マウス管理クラスポインタ(constポインタ)
+	CMouse*			m_pMouse;		///<	マウス管理クラスポインタ(constポインタ)
+	Connect*		m_pConnect;		///<	通信デバイスクラスポインタ
 
 public:
 	/**
@@ -112,7 +113,9 @@ public:
 		m_pMouse = _pMouse;
 	}
 	
-
+	void SetConnect( Connect* const _pConnect ){
+		m_pConnect = _pConnect;
+	}
 };
 
 

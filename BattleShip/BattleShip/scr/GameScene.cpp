@@ -25,7 +25,15 @@ bool GameScene::Init()
 	//	順番に注意
 	m_stateManager->SetDraw( m_pDrawManager );	///<	描画管理クラスのアドレスセット
 	m_stateManager->SetMouse( m_pMouse );		///<	マウス管理クラスのアドレスセット
+	m_stateManager->SetConnect( m_pConnect );	///<	通信デバイスクラスのアドレスセット
 	m_stateManager->StateInit();
+
+	//	ゲーム部分が始まったので通信の初期化をする
+	//	現時点では_PLAYER_ID_が1の時が
+	if( _PLAYER_ID_ == 1)
+		m_pConnect->Init(false);
+	else
+		m_pConnect->Init(true);
 
 	return true;
 }

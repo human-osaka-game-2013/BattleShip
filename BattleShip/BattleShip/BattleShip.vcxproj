@@ -68,7 +68,9 @@
     <ClCompile Include="..\Library\scr\WinMain.cpp" />
     <ClCompile Include="scr\AircraftCarrier.cpp" />
     <ClCompile Include="scr\BattleShip.cpp" />
+    <ClCompile Include="scr\Connect.cpp" />
     <ClCompile Include="scr\Cruiser.cpp" />
+    <ClCompile Include="scr\DebugInterface.cpp" />
     <ClCompile Include="scr\Destroyer.cpp" />
     <ClCompile Include="scr\DrawManagherInterface.cpp" />
     <ClCompile Include="scr\GameScene.cpp" />
@@ -95,7 +97,9 @@
     <ClInclude Include="scr\AircraftCarrier.h" />
     <ClInclude Include="scr\BattleShip.h" />
     <ClInclude Include="scr\BoardOfFrame.h" />
+    <ClInclude Include="scr\Connect.h" />
     <ClInclude Include="scr\Cruiser.h" />
+    <ClInclude Include="scr\DebugInterface.h" />
     <ClInclude Include="scr\Destroyer.h" />
     <ClInclude Include="scr\GameScene.h" />
     <ClInclude Include="scr\GameState.h" />

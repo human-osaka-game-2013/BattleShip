@@ -40,6 +40,12 @@
     <Filter Include="ヘッダー ファイル\Game">
       <UniqueIdentifier>{bded7a2e-8734-4092-956d-e0dad70313fd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\Connect">
+      <UniqueIdentifier>{10da139c-2ca2-4f8f-8eca-43203036e7d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\DebugInterface">
+      <UniqueIdentifier>{b4140b87-5099-4a03-81ae-e23c556283c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Library\scr\WinMain.cpp">
@@ -102,6 +108,12 @@
     <ClCompile Include="scr\Result.cpp">
       <Filter>ソース ファイル\State</Filter>
     </ClCompile>
+    <ClCompile Include="scr\Connect.cpp">
+      <Filter>リソース ファイル\Connect</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\DebugInterface.cpp">
+      <Filter>リソース ファイル\DebugInterface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="scr\AircraftCarrier.h">
@@ -157,6 +169,12 @@
     </ClInclude>
     <ClInclude Include="scr\StageDefineList.h">
       <Filter>ヘッダー ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\Connect.h">
+      <Filter>リソース ファイル\Connect</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\DebugInterface.h">
+      <Filter>リソース ファイル\DebugInterface</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

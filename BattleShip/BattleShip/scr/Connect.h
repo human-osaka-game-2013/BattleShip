@@ -11,10 +11,11 @@
 
 #include"DebugInterface.h"
 
+
 /**
 *@brief	通信管理クラス
 */
-class Connect 
+class Connect :public ReadFile
 {
 private:
 	bool m_sockType;	///<	ソケットのフラグ（true：Client、false：Server）

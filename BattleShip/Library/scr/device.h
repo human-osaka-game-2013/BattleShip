@@ -6,6 +6,7 @@
 #define _DEVICE_H_
 
 #include "lib_head.h"
+#include "../../BattleShip/scr/Connect.h"
 
 /**
 *@brief	デバイス管理クラス
@@ -22,6 +23,7 @@ private:
 	LPDIRECTINPUTDEVICE8	m_pKeyDevice;	///<キーデバイス -> 外部キー入力
 	LPDIRECTINPUTDEVICE8	m_pMouseDevice;	///<マウスデバイス -> 外部マウス入力
 	HWND*					m_hWnd;			///<ウインドウハンドル
+	Connect					m_connectDevice;
 
 public:
 	/**
@@ -104,6 +106,11 @@ public:
 	*/
 	HWND*	GetWindowHandle(){ return m_hWnd; }
 
+	/**
+	*@brief	通信デバイス取得
+	*@return	m_pConnectDevice
+	*/
+	Connect* GetConnectDevice(){ return &m_connectDevice; }
 };
 
 

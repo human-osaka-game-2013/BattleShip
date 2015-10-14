@@ -127,7 +127,7 @@ bool Selection::SetTypeArray()
 		}
 	}
 
-	MessageBoxA(0,"この行動は選択出来ない。\n申し訳ないが、他の行動を選択してくれ",NULL,MB_OK);
+	MessageBoxA(0,"この艦でのこの行動は選択出来ません。",NULL,MB_OK);
 	return false;
 }
 

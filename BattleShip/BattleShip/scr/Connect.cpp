@@ -109,47 +109,10 @@ bool Connect::Connection()
 		if (m_partnersSock == INVALID_SOCKET)
 		{ 
 			DebugMsgBox("accept : %d\n", WSAGetLastError());
+			return false;
 		}
 	}
 	
-	//int n = 0;
-	//memset(_buf, 0, sizeof(_buf));
-	////	サーバからのデータ受信
-	//n = recv( *GetSocket(), _buf, sizeof(_buf), 0 );
-	//if( n == SOCKET_ERROR )
-	//{
-	//	printf_s("%d, %s\n", n, _buf);
-	//	return false;
-	//}
-	//else
-	//{
-	//	printf_s(_buf);
-	//}
-	//memset(_buf, 0, sizeof(_buf));
-    //
-	//int nRtn=1;
-	//char*pt=_buf;
-	////タイムアウトを約5秒にするためのループ
-	//while(nRtn && SOCKET_ERROR!=nRtn && 0<(bfSize-(_buf-pt))){
-	//	for(int i=0;i<50;i++){
-	//		nRtn = recv( *GetSocket(), _buf, bfSize-(_buf-pt), 0 );//受信
-	//		if(0<=nRtn){
-	//			printf_s("recvError：%d\n", WSAGetLastError() );
-	//			break;
-	//		}
-	//		else
-	//		{
-	//			printf_s("通信成功%s\n",_buf);
-	//			Send( &m_sock, m_buf);
-	//			Sleep(100);
-	//		}
-	//	}
-	//	_buf+=nRtn;
-	//}
-	//*_buf='\0';
-	//
-	//return (_buf-pt)? true: false;
-
 	return true;
 }
 

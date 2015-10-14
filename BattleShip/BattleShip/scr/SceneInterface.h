@@ -16,7 +16,7 @@ protected:
 	CDrawManager*	const m_pDrawManager;	///<	2D描画管理クラスポインタ(constポインタ)
 	CKey*			const m_pKey;			///<	キー管理クラスポインタ	(constポインタ)
 	CMouse*			const m_pMouse;			///<	マウス管理クラスポインタ(constポインタ)
-
+	
 protected:
 	int m_sceneID;	//	シーンID保存変数(コンストラクタの時にシーンIDが入る)
 	int m_count;	//	シーン内でのカウント
@@ -29,11 +29,12 @@ public:
 	*@param[in]	_pRenderManager	3D描画管理のポインタ
 	*@param[in]	_pDrawManager	2D描画管理のポインタ
 	*@param[in]	_pKey			キー管理のポインタ
-	*@param[in]	m_pMouse		マウス管理のポインタ
+	*@param[in]	_pMouse		マウス管理のポインタ
+	*@param[in]	_pConnect	通信デバイスクラスポインタ
 	*/
 	CScene( int _id, CRenderManager* const _pRenderManager,
 		CDrawManager*	const _pDrawManager,
-		CKey* const _pKey, CMouse* const m_pMouse );
+		CKey* const _pKey, CMouse* const _pMouse);
 	/**
 	*@briefデストラクタ
 	*/
