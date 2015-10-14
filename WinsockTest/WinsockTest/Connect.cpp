@@ -12,6 +12,9 @@ bool Connect::Init( bool _bSockType )
 {
 	m_sockType = _bSockType;
 	
+	m_ownSock = NULL;
+	m_partnersSock = NULL;
+	
 	int result = 0;
 	result = WSAStartup( MAKEWORD(2,0), &m_wsaData );	///< Winsockの初期化
 
@@ -53,7 +56,7 @@ bool Connect::Init( bool _bSockType )
 bool Connect::MakeSocket()
 {
 	//	ソケットの生成
-	m_sock = socket( AF_INET, SOCK_STREAM, 0 );
+	m_ownSock = socket( AF_INET, SOCK_STREAM, 0 );
 	if( m_sock == INVALID_SOCKET ) 
 	{
 		DebugMsgBox("socket : %d\n", WSAGetLastError());
@@ -62,20 +65,24 @@ bool Connect::MakeSocket()
 	return true;
 }
 
-bool Client::SettingSocket()
+bool Client::SettingSocket( int _ports, char* _domainStr )
 {
 	if( m_sockType ){
 		// 接続先指定用構造体の準備
-		m_server.sin_family = AF_INET;
-		m_server.sin_port = htons(12345);	///<	ポート番号
-		m_server.sin_addr.S_un.S_addr = inet_addr( m_deststr );
+		m_addr.sin_family = AF_INET;
+		m_addr.sin_port = htons(_ports);	///<	ポート番号
+		m_addr.sin_addr.S_un.S_addr = inet_addr( _domainStr );
 	}
 	else
 	{
 		// ソケットの設定
-		addr.sin_family = AF_INET;
-		addr.sin_port = htons(12345);
-		addr.sin_addr.S_un.S_addr = INADDR_ANY;
+		//	アドレスとポート番号を決めてソケットに情報の紐付けを行う
+		m_addr.sin_family = AF_INET;
+		m_addr.sin_port = htons(_ports);
+		m_addr.sin_addr.S_un.S_addr = INADDR_ANY;
+		//	bind関数でソケットをIPアドレスとポート番号と組み合わせをして、
+		//	インターフェースの協力関係を作る。
+		bind( m_ownSock, (struct sockaddr *)&addr, sizeof(addr));
 		
 	}
 	return true;
@@ -83,8 +90,31 @@ bool Client::SettingSocket()
 
 
 //	受信メソッド
-bool Connect::Receive( char* _buf, int bfSize )
+bool Connect::Connection()
 {
+	if( m_sockType ){
+		// サーバーに接続
+		if (connect(m_ownSock, (struct sockaddr *)&m_addr, sizeof(m_addr)))
+		{
+			puts("connect に失敗しました");
+			getch();
+			return -1;
+		}
+		
+	}
+	else{
+		// TCPクライアントからの接続要求を待てる状態にする
+		listen( ownSock, 5);
+		int len = sizeof( m_client );
+		//	要求があったらaccept関数で要求を受け取ったという合図をおくり
+		//	Client側のソケットデータをもらう
+		m_partnersSock = accept( m_onwSock, (struct sockaddr *)&m_client, &len);
+		if (m_partnersSock == INVALID_SOCKET)
+		{   printf("accept : %d\n", WSAGetLastError());
+		    
+		}
+	}
+	
 	//int n = 0;
 	//memset(_buf, 0, sizeof(_buf));
 	////	サーバからのデータ受信
@@ -98,50 +128,57 @@ bool Connect::Receive( char* _buf, int bfSize )
 	//{
 	//	printf_s(_buf);
 	//}
-	memset(_buf, 0, sizeof(_buf));
-
-	int nRtn=1;
-	char*pt=_buf;
-	//タイムアウトを約5秒にするためのループ
-	while(nRtn && SOCKET_ERROR!=nRtn && 0<(bfSize-(_buf-pt))){
-		for(int i=0;i<50;i++){
-			nRtn = recv( *GetSocket(), _buf, bfSize-(_buf-pt), 0 );//受信
-			if(0<=nRtn){
-				printf_s("recvError：%d\n", WSAGetLastError() );
-				break;
-			}
-			else
-			{
-				printf_s("通信成功%s\n",_buf);
-				Send( &m_sock, m_buf);
-				Sleep(100);
-			}
-		}
-		_buf+=nRtn;
-	}
-	*_buf='\0';
-	
-	return (_buf-pt)? true: false;
+	//memset(_buf, 0, sizeof(_buf));
+    //
+	//int nRtn=1;
+	//char*pt=_buf;
+	////タイムアウトを約5秒にするためのループ
+	//while(nRtn && SOCKET_ERROR!=nRtn && 0<(bfSize-(_buf-pt))){
+	//	for(int i=0;i<50;i++){
+	//		nRtn = recv( *GetSocket(), _buf, bfSize-(_buf-pt), 0 );//受信
+	//		if(0<=nRtn){
+	//			printf_s("recvError：%d\n", WSAGetLastError() );
+	//			break;
+	//		}
+	//		else
+	//		{
+	//			printf_s("通信成功%s\n",_buf);
+	//			Send( &m_sock, m_buf);
+	//			Sleep(100);
+	//		}
+	//	}
+	//	_buf+=nRtn;
+	//}
+	//*_buf='\0';
+	//
+	//return (_buf-pt)? true: false;
 
 	//return true;
 }
 
-//	送信メソッド
-bool Connect::Send( SOCKET* _sock, char *_buf )
+//	受信メソッド
+bool Connect::Receive( char *_buf, int _bufSize )
 {
-
-	int n = send(*_sock, _buf, (int)strlen(_buf), 0);
-	if( n == SOCKET_ERROR )
-	{
-		printf_s("sendError：%d\n", WSAGetLastError() );	///<	送信失敗
-		return false;
+	//	念のためバッファーの初期化
+	memset(_buf,0,_bufSize);
+	
+	recv(sockw, (char*)testBuf, bufSize, 0 );
+	if (n < 0)
+	{   puts("recv に失敗しました");
+	    getch();
+	    return false;
 	}
-	else
-	{
-		printf_s("通信成功%s",_buf);
-		char tempBuf[_CONECT_SIZE_];
-		memset(tempBuf, 0, sizeof(tempBuf));
-		Receive( tempBuf, sizeof(tempBuf) );
+	return true;
+}
+
+//	送信メソッド
+bool Connect::Send( char *_buf, int _bufSize )
+{
+	n= send(sockw, (const char*)testObj, bufSize, 0);
+	if (n < 0)
+	{   puts("send に失敗しました");
+	    getch();
+	    return false;
 	}
 	return true;
 }
@@ -151,5 +188,9 @@ bool Connect::Send( SOCKET* _sock, char *_buf )
 //	通信終了
 void Connect::EndConnect()
 {
+	if( m_partnersSock != NULL )
+		closesocket(m_partnersSock);
+	
+	closesocket(m_ownSock);
 	WSACleanup();
 }

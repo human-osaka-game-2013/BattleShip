@@ -18,13 +18,15 @@
 class Connect 
 {
 private:
-	bool m_sockType;	///<	ソケットの種類
+	bool m_sockType;	///<	ソケットのフラグ（true：Client、false：Server）
 	
 	WSADATA	m_wsaData;	///<	Winsockデータ
-	SOCKET	m_sock;		///<	ソケットメンバ
-	SOCKET	m_sock0;	///<	相手側のソケット情報
-	struct sockaddr_in m_addr;	///<	接続先指定用構造体（自身）
-	struct sockaddr_in m_client;///<	接続先指定用構造体（クライアント側）
+	SOCKET	m_ownSock;		///<	ソケットメンバ
+	SOCKET	m_partnersSock;	///<	相手側のソケット情報
+	struct 	sockaddr_in m_addr;	///<	接続先指定用構造体（自身）
+	struct 	sockaddr_in m_client;///<	接続先指定用構造体（クライアント側）
+	char* 	m_domainStr;///<	サーバー側のドメイン名（クライアント時）
+	int		m_ports;	///<	サーバー側のポート番号（クライアント時）
 	
 public:
 	/**
@@ -41,7 +43,7 @@ public:
 	/**
 	*@brief	ソケット設定メソッド
 	*/
-	bool SettingSocket();
+	bool SettingSocket( int _ports, char* _domainStr );
 
 	/**
 	*@brief	ソケットの接続
@@ -50,27 +52,29 @@ public:
 	
 	/**
 	*@brief	受信メソッド
+	*@warning	用意したバッファー（_buf）と総サイズ（_bufSize）は同じにしてください。
+	*@param[out] _buf	recv関数で相手側から送られたデータの格納用バッファー（何か値が入っている場合は0で初期化されるので注意）
+	*@param[in]	 _bufSize	recv関数で受け取るデータサイズ（相手側と同じでないとエラーの基になります。）
+	*@retval true	recvに成功
+	*@retval false	recvに失敗
 	*/
-	bool Receive( char* _buf, int bfSize );
+	bool Receive( char* _buf, int _bufSize );
 	
 	/**
 	*@brief	送信メソッド
+	*@warning	用意したバッファー（_buf）と総サイズ（_bufSize）は同じにしてください。
+	*@param[out] _buf	send関数で相手側へ送るデータ領域
+	*@param[in]	 _bufSize	send関数で送るデータサイズ（相手側と同じでないとエラーの基になります。）
+	*@retval true	sendに成功
+	*@retval false	sendに失敗
 	*/
-	bool Send( SOCKET* _sock, char *_buf );
+	bool Send( char *_buf, int _bufSize );
 
 	/**
 	*@brief	通信終了処理
 	*/
 	virtual void EndConnect();
 
-	/**
-	*@brief	文字列取得
-	*/
-	char* GetBuf(){ return m_buf; }
-
-public:
-	WSADATA* GetWsaData(){ return &m_wsaData; }	///<	Winsockデータの取得
-	SOCKET*	 GetSocket(){ return &m_sock; }		///<	ソケットの取得
 };
 
 
