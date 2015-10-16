@@ -1,13 +1,11 @@
 #ifndef _STATEMANAGHER_H_
 #define _STATEMANAGHER_H_
 
-
 #include "GameState.h"
 #include "Player.h"
 #include "StageObject.h"
-#include "DrawManager.h"
+#include "DrawStructList.h"
 #include "BoardOfFrame.h"
-
 
 
 class StateManager
@@ -35,8 +33,8 @@ private:
 	Player* const 	m_pPlayer2;		///<	プレイヤー2情報格納ポインタ
 	const int		m_playerID;		///<	起動側のプレイヤーID。GameScene側からもらってくる。
 	StageObject* const	m_pStageObject;	///<	ステージ情報格納ポインタ
-	
 	ShipObject::_SHIP_TYPE_NUM_	m_currentShip;	///<	現在選択対象の駒。GameStateと共有するため取り扱いに注意！
+	bool			m_connectFlag;	///<	通信を行うフラグ
 
 //	ステート共通の描画オブジェクトの情報
 private:
@@ -48,7 +46,6 @@ private:
 private:
 	CDrawManager*	m_pDrawManager;	///<	2D描画管理クラスポインタ(constポインタ)
 	CMouse*			m_pMouse;		///<	マウス管理クラスポインタ(constポインタ)
-	Connect*		m_pConnect;		///<	通信デバイスクラスポインタ
 
 public:
 	/**
@@ -113,9 +110,10 @@ public:
 		m_pMouse = _pMouse;
 	}
 	
-	void SetConnect( Connect* const _pConnect ){
-		m_pConnect = _pConnect;
-	}
+	/**
+	*@brief	通信を行うフラグを取得
+	*/
+	const bool GetConnectFlag(){ return m_connectFlag; }
 };
 
 

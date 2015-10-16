@@ -5,6 +5,7 @@
 
 #ifndef _GAMESCENE_H_
 #define _GAMESCENE_H_
+#include "Connect.h"
 #include <new>
 #include <vector>
 
@@ -12,6 +13,7 @@
 #include "StateManager.h"
 #include "StageObject.h"
 #include "Player.h"
+
 
 /**
 *@brief	戦闘シーンクラス
@@ -53,7 +55,7 @@ private:
 	StageObject*	m_pStageObject;		///<	ステージオブジェクト
 	int const		m_playerID;			///<	起動側のプレイヤーID
 	Background		m_background;		///<	背景オブジェクト
-	Connect*		const m_pConnect;	///<	通信デバイスクラスポインタ
+	Connect			m_Connect;			///<	通信デバイスクラス
 
 public:
 	/**
@@ -67,10 +69,8 @@ public:
 	*@param[in]	m_pMouse		マウス管理のポインタ
 	*/
 	GameScene(int _id, int _playerID, CRenderManager* const _pRenderManager,
-		CDrawManager*	const _pDrawManager, CKey* const _pKey, CMouse* const m_pMouse,
-		Connect*	const _pConnect)
-		: CScene( _id, _pRenderManager,	_pDrawManager, _pKey, m_pMouse), m_playerID( _id ),
-		m_pConnect(_pConnect)
+		CDrawManager*	const _pDrawManager, CKey* const _pKey, CMouse* const m_pMouse)
+		: CScene( _id, _pRenderManager,	_pDrawManager, _pKey, m_pMouse), m_playerID( _id )
 	{
 		
 	}

@@ -7,10 +7,10 @@
 #ifndef _DEBUGINTERFACE_H_
 #define _DEBUGINTERFACE_H_
 
-#include <windows.h>
+
 #include <stdarg.h>
 #include <cstdio>
 
-void DebugMsgBox( TCHAR* tszParam, ... );
+void DebugMsgBox( char* tszParam, ... );
 
 #endif

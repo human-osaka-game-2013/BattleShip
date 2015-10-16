@@ -101,6 +101,7 @@
     <ClInclude Include="scr\device.h" />
     <ClInclude Include="scr\DrawFunc.h" />
     <ClInclude Include="scr\DrawManager.h" />
+    <ClInclude Include="scr\DrawStructList.h" />
     <ClInclude Include="scr\gameObject.h" />
     <ClInclude Include="scr\graphic.h" />
     <ClInclude Include="scr\Input.h" />

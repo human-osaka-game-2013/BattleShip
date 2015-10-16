@@ -2,7 +2,6 @@
 *@file	GameScene.cpp
 *@author	亀田
 */
-
 #include "GameScene.h"
 
 /**
@@ -12,6 +11,10 @@
 */
 bool GameScene::Init()
 {
+	//	ゲーム部分が始まったので通信の初期化をする
+	//	現時点では_PLAYER_ID_が1の時が
+	m_Connect.Init();
+
 	for( int iCount=0; iCount<_PLAYER_NUM_; iCount++ ) {
 		m_Player.push_back( new Player( iCount ));	///<	プレイヤーの初期化
 	}
@@ -19,31 +22,29 @@ bool GameScene::Init()
 
 	m_pStageObject = new( StageObject );		///<	StageObjectオブジェクトを生成
 	m_pStageObject->Init();
-	m_stateManager = new StateManager(m_Player[0], m_Player[1], m_pStageObject, _PLAYER_ID_);	///<	StateManagerオブジェクトを初期化
+
+	int iPlayerID = m_Connect.m_sockType ? 2:1;	///<　サーバー側なら1クライアント側なら2
+	m_stateManager = new StateManager(m_Player[0], m_Player[1], m_pStageObject, iPlayerID);	///<	StateManagerオブジェクトを初期化
 		
 	//	ここは後にメンバのオブジェクトにも管理クラスをセットする必要があるので、
 	//	順番に注意
 	m_stateManager->SetDraw( m_pDrawManager );	///<	描画管理クラスのアドレスセット
 	m_stateManager->SetMouse( m_pMouse );		///<	マウス管理クラスのアドレスセット
-	m_stateManager->SetConnect( m_pConnect );	///<	通信デバイスクラスのアドレスセット
 	m_stateManager->StateInit();
 
-	//	ゲーム部分が始まったので通信の初期化をする
-	//	現時点では_PLAYER_ID_が1の時が
-	if( _PLAYER_ID_ == 1)
-		m_pConnect->Init(false);
-	else
-		m_pConnect->Init(true);
-
+	
+	
 	return true;
 }
 
 
 int GameScene::Control()
 {
-	
 	m_stateManager->StateCotrol();
-	
+	if( m_stateManager->GetConnectFlag() )
+	{
+
+	}
 	return 0;
 }
 

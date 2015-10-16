@@ -39,6 +39,7 @@ int SetShip::Control()
 
 	if( m_ShipCount >= ShipObject::TYPE_MAX ){
 		m_StateCompFlag = true;
+		m_connectFlag = true;
 		m_pStage->ResetSelect();
 	}
 	return m_ShipCount;

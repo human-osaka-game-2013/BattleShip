@@ -6,9 +6,10 @@
 #ifndef _RENDER_MANAGE_H_
 #define _RENDER_MANAGE_H_
 
+#include "device.h"
 #include "AllocateHierarchy.h"
 #include "gameObject.h"
-#include "device.h"
+
 #include "Window.h"
 
 //	メッシュデータ

@@ -2,6 +2,7 @@
 #include "Proc.h"
 #include "Window.h"
 
+#include <Windows.h>
 /*
 	ウインドウ生成
 */

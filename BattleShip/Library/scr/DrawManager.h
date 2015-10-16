@@ -7,6 +7,7 @@
 #define _DRAW_MANAGE_H_
 
 #include "lib_head.h"
+#include "DrawStructList.h"
 
 // テクスチャの番号とテクスチャ全体の縦横の大きさ
 struct TEXTUREINFO
@@ -16,17 +17,6 @@ struct TEXTUREINFO
 
 	int		width, height;
 };
-
-// 画像の頂点座標などの構造体
-struct CUSTOMVERTEX
-{
-	FLOAT	x, y, z, rhw;
-
-	DWORD	color;
-
-	FLOAT	tu, tv;
-};
-
 
 // 使用するテクスチャ
 // 使いたいテクスチャがあれば列挙子内に追加していく

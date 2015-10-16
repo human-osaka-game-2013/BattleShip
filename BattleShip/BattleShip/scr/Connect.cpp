@@ -6,11 +6,11 @@
 
 #include "Connect.h"
 
-
 //	初期化
-bool Connect::Init( bool _bSockType )
+bool Connect::Init()
 {
-	m_sockType = _bSockType;
+	//	通信の必要なデータを外部ファイルからセット
+	ReadTableData("table/ConnectData.txt", CONNECT_INFO_MAX, 1);
 	
 	m_ownSock = NULL;
 	m_partnersSock = NULL;
@@ -47,7 +47,34 @@ bool Connect::Init( bool _bSockType )
 	
 	MakeSocket();	///<	ソケット作成
 
+	if( !SettingSocket() )
+		return false;
+
 	return true;
+}
+
+//	外部ファイルの情報をセット
+void Connect::SetTable( char* _p, int _iColumn, int _iLine )
+{
+	switch( _iColumn )
+	{
+	case SOCK_TYPE:
+		if( strcmp(_p, "Server") ){
+			m_sockType = false;
+		}else if( strcmp(_p, "Client") ){
+			m_sockType = true;
+		}
+		break;
+	case DOMAIN_STR:
+		if( m_sockType )	///<	ドメイン名が必要なのはクライアント側だけなので
+			m_domainStr = _p;
+		
+		break;
+	case PORTS_NUM:
+		m_ports = atoi(_p);
+
+		break;
+	}
 }
 
 //	ソケット生成
@@ -63,20 +90,33 @@ bool Connect::MakeSocket()
 	return true;
 }
 
-bool Connect::SettingSocket( int _ports, char* _domainStr )
+bool Connect::SettingSocket()
 {
-	if( m_sockType ){
+	if( m_sockType )
+	{
 		// 接続先指定用構造体の準備
 		m_addr.sin_family = AF_INET;
-		m_addr.sin_port = htons(_ports);	///<	ポート番号
-		m_addr.sin_addr.S_un.S_addr = inet_addr( _domainStr );
+		m_addr.sin_port = htons(m_ports);	///<	ポート番号
+		m_addr.sin_addr.S_un.S_addr = inet_addr( m_domainStr.c_str() );
+		//	m_domainStrがIPアドレスが入っていなかった場合
+		if( m_addr.sin_addr.S_un.S_addr == 0xffffffff )
+		{
+			struct hostent* host;
+			//	ドメイン名が入っている可能性があるので、IPアドレスに変換する。
+			host = gethostbyname( m_domainStr.c_str() );
+			if( host == NULL )
+			{
+				return false;
+			}
+			m_addr.sin_addr.S_un.S_addr = *(unsigned int*)host->h_addr_list[0];
+		}
 	}
 	else
 	{
 		// ソケットの設定
 		//	アドレスとポート番号を決めてソケットに情報の紐付けを行う
 		m_addr.sin_family = AF_INET;
-		m_addr.sin_port = htons(_ports);
+		m_addr.sin_port = htons(m_ports);
 		m_addr.sin_addr.S_un.S_addr = INADDR_ANY;
 		//	bind関数でソケットをIPアドレスとポート番号と組み合わせをして、
 		//	インターフェースの協力関係を作る。

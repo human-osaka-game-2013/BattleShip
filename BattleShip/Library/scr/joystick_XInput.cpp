@@ -4,7 +4,7 @@
 *@brief	XInpitを用いて、複数個のジョイスティックの入力管理をする
 */
 
-#include <Windows.h>
+
 #include "joystick_XInput.h"
 /*
 	private

@@ -171,5 +171,8 @@
     <ClInclude Include="scr\Proc.h">
       <Filter>ヘッダーファイル\lib_h\WinMain</Filter>
     </ClInclude>
+    <ClInclude Include="scr\DrawStructList.h">
+      <Filter>ヘッダーファイル\lib_h\graphic</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

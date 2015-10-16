@@ -1,5 +1,5 @@
-#include "SceneManage.h"
 #include "GameScene.h"
+#include "SceneManage.h"
 
 //	ƒV[ƒ“ŠÇ—
 void CSceneManager::Manage ()
@@ -20,8 +20,7 @@ void CSceneManager::Manage ()
 		case SCENE_BATTLE:
 			CLASS_DELETE( m_sceneObj );
 			m_sceneObj = new GameScene( iCurrentScene, 0, 
-										m_pRenderManager, m_pDrawManager, m_pKey, m_pMouse,
-										m_pDevice->GetConnectDevice());
+										m_pRenderManager, m_pDrawManager, m_pKey, m_pMouse);
 			break;
 
 		//case RESULT:

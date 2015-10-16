@@ -84,9 +84,6 @@
     <ClCompile Include="scr\Destroyer.cpp">
       <Filter>ソース ファイル\Ship</Filter>
     </ClCompile>
-    <ClCompile Include="scr\Submarine.cpp">
-      <Filter>ソース ファイル\Ship</Filter>
-    </ClCompile>
     <ClCompile Include="scr\StageObject.cpp">
       <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
@@ -113,6 +110,9 @@
     </ClCompile>
     <ClCompile Include="scr\DebugInterface.cpp">
       <Filter>リソース ファイル\DebugInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\Submarine.cpp">
+      <Filter>ソース ファイル\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

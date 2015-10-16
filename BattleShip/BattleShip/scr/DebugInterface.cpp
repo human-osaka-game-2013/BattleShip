@@ -3,11 +3,12 @@
 *@author	亀田
 *@brief	デバッグ時のインターフェース関数
 */
+#include <windows.h>
 
 #include"DebugInterface.h"
 
 
-void DebugMsgBox( TCHAR* tszParam, ... )
+void DebugMsgBox( char* tszParam, ... )
 {
 	TCHAR tszStr[1024];
 	va_list list;

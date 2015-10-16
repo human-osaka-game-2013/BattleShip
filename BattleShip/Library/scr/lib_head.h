@@ -10,9 +10,10 @@
 
 #define DIRECTINPUT_VERSION 0x0800
 
+
+
 //プリプロ関連ヘッダーファイル
 #include <stdio.h>
-#include <windows.h>	//window基礎ファイル
 #include <d3dx9.h>	
 #include <dinput.h>
 #include <dinputd.h>
@@ -30,6 +31,7 @@
 #pragma comment	(lib, "dsound.lib")	//wav再生
 #pragma comment	(lib, "winmm.lib")
 #pragma comment(lib, "Xinput.lib")
+
 
 #define	CLASS_DELETE(p)	{ if(p) { delete (p); (p) = NULL;} }	///<	クラスポインタの削除
 #define SAFE_RELEASE(p) { if(p) { (p) -> Release(); (p) = NULL; } }

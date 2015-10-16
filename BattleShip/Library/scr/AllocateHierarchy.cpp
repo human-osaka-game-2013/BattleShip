@@ -1,6 +1,7 @@
 #include<tchar.h>
 
 #include"AllocateHierarchy.h"
+
 #include"lib_head.h"
 
 //フレームオブジェクト生成

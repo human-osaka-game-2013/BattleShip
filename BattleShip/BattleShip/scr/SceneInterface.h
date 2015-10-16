@@ -30,7 +30,6 @@ public:
 	*@param[in]	_pDrawManager	2D描画管理のポインタ
 	*@param[in]	_pKey			キー管理のポインタ
 	*@param[in]	_pMouse		マウス管理のポインタ
-	*@param[in]	_pConnect	通信デバイスクラスポインタ
 	*/
 	CScene( int _id, CRenderManager* const _pRenderManager,
 		CDrawManager*	const _pDrawManager,

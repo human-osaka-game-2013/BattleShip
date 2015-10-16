@@ -2,9 +2,8 @@
 *@file	StateManager.cpp
 *@author	亀田
 */
-#include <windows.h>	//window基礎ファイル
+
 #include "StateManager.h"
-#include "lib_head.h"
 
 //--------ステートパターンクラスのヘッダー-------
 #include "SetShip.h"
@@ -23,7 +22,7 @@ StateManager::StateManager( Player* const _pPlayer1, Player* const _pPlayer2,
 							StageObject* const _pStageObject, const int _playerID) 
 	: m_pPlayer1(_pPlayer1), m_pPlayer2(_pPlayer2), m_pStageObject( _pStageObject), m_playerID(_playerID)
 {
-
+	m_connectFlag = false;
 }
 
 //	ステートの初期化
@@ -68,6 +67,7 @@ void StateManager::StateCotrol()
 {
 	m_beforeState = m_currentState;	///<	ルーチン的にな処理で前フレーム時のステートを現在のステートに合わせる。
 
+
 	if( this->CheckState() )	///<	ステートのルーチン処理の結果シーンが変わる必要があれば
 	{
 		switch( m_currentState )	///<	変更するステートは順番がある程度決まっているので分岐
@@ -102,7 +102,8 @@ bool StateManager::CheckState()
 	int stageResult = 0;
 
 	stageResult = m_pGameState->Control();	///<　ステートごとの処理に移行
-	
+	m_connectFlag = m_pGameState->GetConnectFlag();
+
 	switch( m_currentState )	///<　シーン毎にステートの結果への対処が変わるので分岐
 	{
 	case STATE_SET_SHIP:

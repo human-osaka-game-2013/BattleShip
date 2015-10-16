@@ -11,6 +11,7 @@
 #include "DrawManager.h"
 #include "Mouse.h"
 
+
 #define _COM_TEST_	///<通信を使わないテスト
 
 class GameState
@@ -46,10 +47,11 @@ protected:
 	_STATE_NUM_ m_stateID;	///<	自身のステートのID	
 	Player* m_pPlayer[_PLAYER_NUM_];	///<	駒データ格納用
 	StageObject* m_pStage;	///<	ステージデータ格納用
-	int m_playerID;			///<	起動側のID
-	bool m_StateCompFlag;	///<	Control返り値兼、現在のステートでのタスクを完了フラグ。基本的にはStateManagerと共有のため取り扱いに注意！
-	int	&m_ShipCount;		///<	今見ている駒を見るカウンタ
-	
+	int		m_playerID;		///<	起動側のID
+	bool	m_StateCompFlag;	///<	Control返り値兼、現在のステートでのタスクを完了フラグ。基本的にはStateManagerと共有のため取り扱いに注意！
+	int		&m_ShipCount;	///<	今見ている駒を見るカウンタ
+	bool	m_connectFlag;	///<	通信を行うフラグ
+
 	/*
 	*@detals	あまりにもマウス座標や駒オブジェクトの取得を何度もしていたため、
 				この場合だとコストが掛かると思い、メンバ変数にしてこちらに
@@ -58,7 +60,6 @@ protected:
 	float m_tempX;	///<	マウスなどの座標の仮保存変数
 	float m_tempY;	///<	マウスなどの座標の仮保存変数
 	ShipObject* m_tempShip;	///<	駒の仮保存変数
-
 
 //	デバイス
 protected:
@@ -72,7 +73,7 @@ public:
 	*/
 	GameState( ShipObject::_SHIP_TYPE_NUM_& _type ) : m_ShipCount( (int &)_type )
 	{
-
+		m_connectFlag = false;
 	}
 
 	/**
@@ -99,6 +100,11 @@ public:
 	*@brief	ステートのID取得
 	*/
 	_STATE_NUM_ GetState(){ return m_stateID; }
+
+	/**
+	*@brief	通信を行うフラグを取得
+	*/
+	const bool GetConnectFlag(){ return m_connectFlag; }
 
 	/**
 	*@brief	プレイヤークラスポインタをセット

@@ -3,6 +3,11 @@
 *@author	亀田
 */
 
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+
+
 #include "read_file.h"
 
 

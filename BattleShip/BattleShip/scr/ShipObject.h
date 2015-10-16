@@ -10,7 +10,7 @@
 #include "read_file.h"
 #include "BoardOfFrame.h"
 #include "StageDefineList.h"
-#include "DrawManager.h"
+#include "DrawStructList.h"
 
 #define _SHIP_ARRAY_INDEX_	5	///<	‹î‚Ì”z—ñŽw”
 #define _SHIP_INIT_DIR_	CGameObject::CH_UP

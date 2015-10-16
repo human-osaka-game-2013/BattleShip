@@ -8,14 +8,13 @@
 #ifndef _SCENEMANAGE_H_
 #define _SCENEMANAGE_H_
 
+#include "device.h"
 #include "RenderManager.h"
 #include "DrawManager.h"
-#include "device.h"
 #include "../../BattleShip/scr/SceneInterface.h"
 #include "Key.h"
 #include "Mouse.h"
 #include "joystick_XInput.h"
-
 
 /**
 *@brief	シーン管理クラス

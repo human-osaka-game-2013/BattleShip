@@ -7,38 +7,61 @@
 #ifndef _CONNECT_H_
 #define _CONNECT_H_
 
+#ifndef _WINSOCKAPI_
+#define _WINSOCKAPI_
+#endif
+
+#include "DebugInterface.h"
+#include "read_file.h"
+
 #include <winsock2.h>
-
-#include"DebugInterface.h"
-
+#pragma comment(lib, "ws2_32.lib")
 
 /**
 *@brief	通信管理クラス
 */
-class Connect :public ReadFile
+class Connect : public ReadFile
 {
-private:
+public:
 	bool m_sockType;	///<	ソケットのフラグ（true：Client、false：Server）
-	
+
+private:	
 	WSADATA	m_wsaData;	///<	Winsockデータ
 	SOCKET	m_ownSock;		///<	ソケットメンバ
 	SOCKET	m_partnersSock;	///<	相手側のソケット情報
 	struct 	sockaddr_in m_addr;	///<	接続先指定用構造体（自身）
 	struct 	sockaddr_in m_client;///<	接続先指定用構造体（クライアント側）
-	char* 	m_domainStr;///<	サーバー側のドメイン名（クライアント時）
+	std::string 	m_domainStr;///<	サーバー側のドメイン名（orIPアドレス）（クライアント時）
 	int		m_ports;	///<	サーバー側のポート番号（クライアント時）
-	
+
+private:
+	/**
+	*@brief	通信に必要なデータの種類
+	*/
+	enum _CONNECT_INFO_TYPE_
+	{
+		SOCK_TYPE,
+		DOMAIN_STR,
+		PORTS_NUM,
+		CONNECT_INFO_MAX
+	};
+
 public:
 	/**
 	*@brief	初期化
-	*@param[in]	_bSockType	通信を行うタイプ
 	*/
-	bool Init( bool _bSockType );
+	bool Init();
 	
+	/**
+	*@brief	読み取ったデータをテーブルにセット
+	*@details	通信に必要なデータを外部ファイルから読み取り、それに合うメンバ変数にセットする。
+	*/
+	void SetTable( char* _p, int _iColumn, int _iLine );
+
 	/**
 	*@brief	ソケット設定メソッド
 	*/
-	bool SettingSocket( int _ports, char* _domainStr );
+	bool SettingSocket();
 
 	/**
 	*@brief	ソケットの接続
@@ -71,6 +94,7 @@ public:
 	void EndConnect();
 
 private:
+
 	/**
 	*@brief	ソケット生成メソッド
 	*/
