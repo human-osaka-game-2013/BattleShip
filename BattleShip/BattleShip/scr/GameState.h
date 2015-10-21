@@ -12,7 +12,7 @@
 #include "Mouse.h"
 
 
-#define _COM_TEST_	///<通信を使わないテスト
+#define _NOT_USE_COM_	///<通信を使わないテスト
 
 class GameState
 {
@@ -105,6 +105,11 @@ public:
 	*@brief	通信を行うフラグを取得
 	*/
 	const bool GetConnectFlag(){ return m_connectFlag; }
+
+	/**
+	*@breif	通信を行うフラグを更新
+	*/
+	void SetConnectFlag( const bool _flag ){ m_connectFlag = _flag; }
 
 	/**
 	*@brief	プレイヤークラスポインタをセット

@@ -150,3 +150,23 @@ void  ShipObject::Free()
 {
 
 }
+
+void ShipObject::SetConnectShipData( ConnectShip* _pCShip )
+{
+	memmove_s(_pCShip->m_shipArray, sizeof(int [_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_]),
+							m_shipArray, sizeof(int [_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_]));
+	memmove_s(_pCShip->m_actionArray, sizeof(int [_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_]),
+							m_actionArray, sizeof(int [_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_]));
+	memmove_s(_pCShip->m_searchArray, sizeof(int [_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_]),
+							m_searchArray, sizeof(int [_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_]));
+	memmove_s(_pCShip->m_moveArray, sizeof(int [_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_]),
+							m_moveArray, sizeof(int [_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_]));
+	_pCShip->m_userID = m_userID;
+	_pCShip->m_posColumn = m_posColumn;
+	_pCShip->m_posLine = m_posLine;
+}
+
+void ShipObject::SetShipData( ConnectShip* _pCShip )
+{
+	
+}

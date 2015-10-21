@@ -101,17 +101,18 @@ bool StateManager::CheckState()
 	bool checkResult = false;
 	int stageResult = 0;
 
+	m_pGameState->SetConnectFlag( m_connectFlag );	//	毎フレーム通信のフラグを更新
 	stageResult = m_pGameState->Control();	///<　ステートごとの処理に移行
-	m_connectFlag = m_pGameState->GetConnectFlag();
+	SetConnectFlag( m_pGameState->GetConnectFlag() );	//	ステート内でのフラグ変更を反映させる
 
 	switch( m_currentState )	///<　シーン毎にステートの結果への対処が変わるので分岐
 	{
 	case STATE_SET_SHIP:
-		if( m_currentShip >= ShipObject::TYPE_MAX )	///<　全ての駒がセットされた
+		if( m_currentShip >= ShipObject::TYPE_MAX && !m_connectFlag )	///<　全ての駒がセットされた
 			checkResult = true;
 		break;
 	case STATE_SELECTION:
-		if( stageResult )	///<　結果と選択中の駒が違う＝行動選択完了なので
+		if( stageResult && !m_connectFlag )	///<　結果と選択中の駒が違う＝行動選択完了なので
 			checkResult = true;	///<　選択結果に移る
 		break;
 	case STATE_RESULT:
@@ -182,7 +183,8 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 			*/
 			if( ip == m_playerID-1 )	///<今は自分のプレイヤーの駒しか表示しない
 			{
-				ShipObject* tempShip = m_pPlayer1->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
+				Player* tempPlayer = m_playerID%_PLAYER_NUM_ ? m_pPlayer1:m_pPlayer2;
+					ShipObject* tempShip = tempPlayer->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
 					
 				if( !tempShip->GetDeadFlag() )
 				{
@@ -190,12 +192,23 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 					m_pDrawManager->VertexTransform( iShip + _TEX_AIRCARRIER_, tempShip->m_vertex, 
 						tempShip->GetPositionX(), tempShip->GetPositionY(), 1.f, 1.f, tempShip->GetDirection()*90.f );
 					
-					//	配置したものからプレイヤー側の所持駒情報も描画
-					m_pDrawManager->VertexTransform( iShip + _TEX_AIRCARRIER_, tempShip->m_vertex, 
-						(_BOARD_OF_SHIPDATA_LINE_P1_*tempW)+(tempW/2), ((_BOARD_OF_SHIPDATA_COLUMN_+iShip)*tempH) + (tempH/2),
-						1.f, 1.f, CGameObject::CH_RIGHT*90.f );
+					if( ip == 0 ){	//	プレイヤー1の場合
+						//	配置したものからプレイヤー側の所持駒情報も描画
+						m_pDrawManager->VertexTransform( iShip + _TEX_AIRCARRIER_, tempShip->m_vertex, 
+							(_BOARD_OF_SHIPDATA_LINE_P1_*tempW)+(tempW/2), ((_BOARD_OF_SHIPDATA_COLUMN_+iShip)*tempH) + (tempH/2),
+							1.f, 1.f, CGameObject::CH_RIGHT*90.f );
+
+					}else{	//	プレイヤー2の場合
+
+						//	配置したものからプレイヤー側の所持駒情報も描画
+						m_pDrawManager->VertexTransform( iShip + _TEX_AIRCARRIER_, tempShip->m_vertex, 
+							(_BOARD_OF_SHIPDATA_LINE_P2_*tempW)+(tempW/2), ((_BOARD_OF_SHIPDATA_COLUMN_+iShip)*tempH) + (tempH/2),
+							1.f, 1.f, CGameObject::CH_RIGHT*90.f );
+					}
+					
 				}
 			}
+
 		}
 		//	行
 		for( int ic=0; ic<_STAGE_COLUMN_MAX_; ic++ )
@@ -320,3 +333,4 @@ void StateManager::Free()
 {
 	StateDelete();
 }
+

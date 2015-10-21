@@ -10,15 +10,15 @@ CMouse::CMouse(IDirectInputDevice8* const _pMouseDevice ): m_pMouseDevice(_pMous
 		m_preMouse[iCount] = false;
 	}
 
-	m_moveMouseVol.lMVolX = 0.0;
-	m_moveMouseVol.lMVolY = 0.0;
-	m_moveMouseVol.lMVolZ = 0.0;
+	m_moveMouseVol.lMVolX = 0;
+	m_moveMouseVol.lMVolY = 0;
+	m_moveMouseVol.lMVolZ = 0;
 
 	
-	m_poCurrentCursor.x = 0.0;
-	m_poCurrentCursor.y = 0.0;
-	m_poBeforeCursor.x	= 0.0;
-	m_poBeforeCursor.y	= 0.0;
+	m_poCurrentCursor.x = 0;
+	m_poCurrentCursor.y = 0;
+	m_poBeforeCursor.x	= 0;
+	m_poBeforeCursor.y	= 0;
 }
 
 //	マウス状態チェック

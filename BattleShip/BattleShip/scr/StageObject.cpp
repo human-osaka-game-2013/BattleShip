@@ -220,8 +220,16 @@ bool StageObject::SetShip( int _player, const int _column, const int _line, Ship
 	//	駒の基準点（中心点）を予め算出させておく
 	float tempW = _BLOCK_WIDTH_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
 	float tempH = _BLOCK_HEIGHT_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
-	float tempX = _line*tempW + tempW*1.5f ;		
-	float tempY = _column*tempH + tempH*1.5f;
+	float tempX;	
+	float tempY;
+	if(_player == 0){	//プレイヤーIDが1（=配列の指数だと0）だったら
+		tempX = _line*tempW + tempW*1.5f ;
+		tempY = _column*tempH + tempH*1.5f;
+	}else{
+		tempX = (_line+_STAGE_HEIGHT_MAX_)*tempW + tempW*1.5f ;
+		tempY = _column*tempH + tempH*1.5f;
+	}
+
 	_ship->SetPosition( tempX, tempY, 0.5f );
 
 	return true;
@@ -380,7 +388,6 @@ bool StageObject::RelocationShip( int _player, const int _column, const int _lin
 					m_stageArray[_player][iStageCol][iStageLine] += _ship->m_shipArray[iColumn][iLine];
 			}
 		}
-
 	}
 
 	_ship->SetArrayPos( _column, _line );	///<　配置する行と列の座標をセット
@@ -412,4 +419,34 @@ void StageObject::ResetSelect()
 			}		
 		}	
 	}
+}
+
+
+//	ステージデータの統合
+bool StageObject::MargeStage( ConnectStage* _pStage, const int _playerID, const int _enemyID, const int _customMargeType )
+{
+
+	if( _customMargeType != StateManager::STATE_SET_SHIP )
+	{
+		//	相手側（_pStage）から貰ってきた、お互いのステージに対して行った、選択情報（3桁目）と、
+		//	お互い自身の駒に対しての行動（移動）情報を更新してやる。
+		for( int iColumn = 0; iColumn < _STAGE_COLUMN_MAX_; iColumn++ ){
+			for( int iLine = 0; iLine < _STAGE_LINE_MAX_; iLine++ ){
+			//	相手側のステージ
+			m_stageArray[_enemyID-1][iColumn][iLine] = 				
+				( _pStage->m_stageArray[_enemyID-1][iColumn][iLine]%100) +
+				( (m_stageArray[_enemyID-1][iColumn][iLine]/100)*100 );
+			//	自分側のステージ
+			m_stageArray[_playerID-1][iColumn][iLine] = 				
+				( m_stageArray[_playerID-1][iColumn][iLine]%100) +
+				( (_pStage->m_stageArray[_playerID-1][iColumn][iLine]/100)*100 );
+			}
+		}
+	}
+	else
+	{
+		memmove_s( m_stageArray[_enemyID-1], sizeof(int[_STAGE_COLUMN_MAX_][_STAGE_LINE_MAX_]),_pStage->m_stageArray[_playerID-1] ,sizeof(int[_STAGE_COLUMN_MAX_][_STAGE_LINE_MAX_]));
+	}
+
+	return true;
 }

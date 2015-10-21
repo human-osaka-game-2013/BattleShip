@@ -25,23 +25,20 @@ int SetShip::Control()
 		//	駒が置ける置けない関係なく、右クリックで駒を回転させる
 		if( m_pMouse->MouseStCheck( MOUSE_R, PUSH ) ) {
 			m_tempShip->RotationShip( 0, true );
-#ifdef	_COM_TEST_
-			//	通信無しのテスト用処理
-			ShipObject* tempShip1 = m_pPlayer[1]->GetShip((ShipObject::_SHIP_TYPE_NUM_)m_ShipCount);
-			tempShip1->RotationShip( 0, true );
-#endif
+
 		}
 		iCheckResult = CheckBoard();
 
 		if( iCheckResult == 2 )
 			m_ShipCount++;
-	}
 
-	if( m_ShipCount >= ShipObject::TYPE_MAX ){
-		m_StateCompFlag = true;
-		m_connectFlag = true;
-		m_pStage->ResetSelect();
+		if( m_ShipCount >= ShipObject::TYPE_MAX ){
+			m_StateCompFlag = true;
+			m_connectFlag = true;
+			m_pStage->ResetSelect();
+		}
 	}
+		
 	return m_ShipCount;
 }
 
@@ -74,11 +71,6 @@ int SetShip::CheckBoard()
 					//	駒が置けるマスであり、左クリックを押した時
 					if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )) {
 						m_pStage->SetShip( m_playerID, iColumn, iLine, m_tempShip );
-#ifdef	_COM_TEST_
-						//	通信無しのテスト用処理
-						m_pStage->SetShip( 2, iColumn, iLine, m_tempShip );
-
-#endif
 
 						return 2;
 					}

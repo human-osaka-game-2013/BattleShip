@@ -11,8 +11,8 @@
 #include "BoardOfFrame.h"
 #include "StageDefineList.h"
 #include "DrawStructList.h"
+#include "ConnectStruct.h"
 
-#define _SHIP_ARRAY_INDEX_	5	///<	駒の配列指数
 #define _SHIP_INIT_DIR_	CGameObject::CH_UP
 
 /**
@@ -154,6 +154,18 @@ public:
 	*@brief	ステージ上での駒の中心位置の取得（列）
 	*/
 	inline int GetArrayLine(){ return m_posLine; }
+
+	/**
+	*@brief	通信用の構造体に駒データをセット
+	*/
+	void SetConnectShipData( ConnectShip* _pCShip );
+
+	/**
+	*@brief	駒のデータのセット
+	*@details	通信クラスから引っ張ってきた駒データを自身の保持してる
+				相手側データにセット
+	*/
+	void SetShipData( ConnectShip* _pCShip );
 };
 
 

@@ -269,60 +269,12 @@ void Selection::Draw()
 //	
 bool Selection::ComStandby()
 {
-#ifdef	_COM_TEST_
+#ifdef	_NOT_USE_COM_
 	//本来なら相手側のステージ情報が来るまで、「通信中」などの画像を表示して、待たせて置くが、
 	//今はテストの為、自分自身のステージ情報を相手と見立てて、マージする。
-	if( MargeStage( m_pStage, m_pPlayer[m_playerID-1] ) )
-		return true;
-
+	
 	return false;
 #else
 	return true;
 #endif
-}
-
-bool Selection::MargeStage( StageObject* _pStage, Player* _pPlayer )
-{
-	for( int iColumn = 0; iColumn < _STAGE_COLUMN_MAX_; iColumn++ )
-	{
-		for( int iLine = 0; iLine < _STAGE_LINE_MAX_; iLine++ )
-		{
-#ifdef _COM_TEST_
-			//	通信無しのテストの為、相手側の情報にはプレイヤー側の情報を全てコピーする。
-			_pStage->m_stageArray[0][iColumn][iLine] =
-				m_pStage->m_stageArray[0][iColumn][iLine] =
-				( m_pStage->m_stageArray[0][iColumn][iLine]%100) +
-				( (_pStage->m_stageArray[1][iColumn][iLine]/100)*100 );
-			m_pStage->m_stageArray[1][iColumn][iLine] = 
-				m_pStage->m_stageArray[1][iColumn][iLine] =
-				( _pStage->m_stageArray[0][iColumn][iLine]%100) +
-				( (m_pStage->m_stageArray[1][iColumn][iLine]/100)*100 );
-#else
-
-			//	相手側（_pStage）から貰ってきた、お互いのステージに対して行った、選択情報（3桁目）と、
-			//	お互い自身の駒に対しての行動（移動）情報を更新してやる。
-			_pStage->m_stageArray[0][iColumn][iLine] =
-				m_pStage->m_stageArray[0][iColumn][iLine] =
-				( m_pStage->m_stageArray[0][iColumn][iLine]%100) +
-				( (_pStage->m_stageArray[0][iColumn][iLine]/100)*100 );
-			m_pStage->m_stageArray[1][iColumn][iLine] = 
-				m_pStage->m_stageArray[1][iColumn][iLine] =
-				( _pStage->m_stageArray[1][iColumn][iLine]%100) +
-				( (m_pStage->m_stageArray[1][iColumn][iLine]/100)*100 );
-#endif
-		}
-	}
-
-#ifdef _COM_TEST_
-	//	通信無しのテストの為、相手側の情報にはプレイヤー側の必要な情報をコピーする。
-	for( int iShip = 0; iShip < ShipObject::TYPE_MAX; iShip++ )
-	{
-		ShipObject* temp1 = m_pPlayer[1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
-		ShipObject* temp0 = _pPlayer->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
-
-		temp1->SetArrayPos( temp0->GetArrayColumn(), temp0->GetArrayLine() );
-	}
-#endif
-
-	return true;
 }

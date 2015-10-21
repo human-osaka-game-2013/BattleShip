@@ -16,7 +16,7 @@ bool ReadFile::ReadTableData( char* _pFileName, const int _ColumnMax, const int 
 	
 	FILE*	fp;
 		
-	if ( ( fp = fopen( _pFileName, "r" ) ) != NULL )
+	if ( ( fopen_s( &fp, _pFileName, "r" ) ) == 0 )
 	{
 	
 		int iColumn = 0, iLine = 0;

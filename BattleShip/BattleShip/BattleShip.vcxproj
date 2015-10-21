@@ -98,6 +98,7 @@
     <ClInclude Include="scr\BattleShip.h" />
     <ClInclude Include="scr\BoardOfFrame.h" />
     <ClInclude Include="scr\Connect.h" />
+    <ClInclude Include="scr\ConnectStruct.h" />
     <ClInclude Include="scr\Cruiser.h" />
     <ClInclude Include="scr\DebugInterface.h" />
     <ClInclude Include="scr\Destroyer.h" />

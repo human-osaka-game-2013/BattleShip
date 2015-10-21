@@ -13,6 +13,7 @@
 
 #include "DebugInterface.h"
 #include "read_file.h"
+#include "ConnectStruct.h"
 
 #include <winsock2.h>
 #pragma comment(lib, "ws2_32.lib")
@@ -45,6 +46,12 @@ private:
 		PORTS_NUM,
 		CONNECT_INFO_MAX
 	};
+
+public:
+	~Connect()
+	{
+		EndConnect();
+	}
 
 public:
 	/**

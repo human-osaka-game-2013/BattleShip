@@ -79,9 +79,16 @@ public:
 	*/
 	void Free();
 
+	/**
+	*@brief	ステート状態の取得
+	*/
+	_STATE_NUM_ GetState(){ return m_currentState; }
+
 private:
 	/**
 	*@brief	ステートパターンの切り替え
+	*@details	各ステートのControlを呼んで、その結果などから、
+				パターン変更の必要があるか管理。
 	*@return true：ステートパターンの変更の必要あり。*n
 			false：変更の必要無し
 	*/
@@ -114,6 +121,12 @@ public:
 	*@brief	通信を行うフラグを取得
 	*/
 	const bool GetConnectFlag(){ return m_connectFlag; }
+
+	/**
+	*@breif	通信を行うフラグを更新
+	*/
+	void SetConnectFlag( const bool _flag ){ m_connectFlag = _flag; }
+
 };
 
 

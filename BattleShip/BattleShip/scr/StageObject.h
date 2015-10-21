@@ -9,8 +9,8 @@
 #include "StageDefineList.h"
 #include "ShipObject.h"
 #include "BoardOfFrame.h"
+#include "ConnectStruct.h"
 
-#define _PLAYER_NUM_ 2
 
 /**
 *@brief	ステージオブジェクトクラス
@@ -190,6 +190,11 @@ public:
 	*@brief	解放処理
 	*/
 	void  Free();
+
+	/**
+	*@brief	ステージデータの結合
+	*/
+	bool MargeStage( ConnectStage* _pStage, const int _playerID, const int _enemyID, const int _customMargeType );
 };
 
 #endif

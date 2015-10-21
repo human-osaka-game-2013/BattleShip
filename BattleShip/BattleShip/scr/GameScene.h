@@ -53,7 +53,7 @@ private:
 	StateManager*	m_stateManager;		///<	戦闘内でのステートを管理するオブジェクト
 	std::vector<Player*>	m_Player;	///<	プレイヤークラス
 	StageObject*	m_pStageObject;		///<	ステージオブジェクト
-	int const		m_playerID;			///<	起動側のプレイヤーID
+	int				m_playerID;			///<	起動側のプレイヤーID
 	Background		m_background;		///<	背景オブジェクト
 	Connect			m_Connect;			///<	通信デバイスクラス
 
@@ -62,15 +62,14 @@ public:
 	*@brief	コンストラクタ
 	*@details	使わない管理ポインタがある場合NULLポインタを入れる
 	*@param[in]	_id	自分自身のシーンID
-	*@param[in]	_playerID	起動側のプレイヤーID
 	*@param[in]	_pRenderManager	3D描画管理のポインタ
 	*@param[in]	_pDrawManager	2D描画管理のポインタ
 	*@param[in]	_pKey			キー管理のポインタ
 	*@param[in]	m_pMouse		マウス管理のポインタ
 	*/
-	GameScene(int _id, int _playerID, CRenderManager* const _pRenderManager,
+	GameScene(int _id, CRenderManager* const _pRenderManager,
 		CDrawManager*	const _pDrawManager, CKey* const _pKey, CMouse* const m_pMouse)
-		: CScene( _id, _pRenderManager,	_pDrawManager, _pKey, m_pMouse), m_playerID( _id )
+		: CScene( _id, _pRenderManager,	_pDrawManager, _pKey, m_pMouse)
 	{
 		
 	}
@@ -99,6 +98,15 @@ public:
 	*/
 	void Draw();
 	void Render(){};
+
+private:
+	/**
+	*@brief	通信処理
+	*@details	Connectクラスメンバを使用して、相手側のデータとのやり取りをここで行う
+	*@retval true	正常にデータのやり取りが行われた
+	*@retval false	データのやり取りが失敗した
+	*/
+	bool CommunicationProcessing();
 };
 
 #endif

@@ -56,12 +56,13 @@ bool Connect::Init()
 //	外部ファイルの情報をセット
 void Connect::SetTable( char* _p, int _iColumn, int _iLine )
 {
+	
 	switch( _iColumn )
 	{
 	case SOCK_TYPE:
-		if( strcmp(_p, "Server") ){
+		if( memcmp( _p, "Server", 6) == 0 ){
 			m_sockType = false;
-		}else if( strcmp(_p, "Client") ){
+		}else if( memcmp( _p, "Client",6) == 0 ){
 			m_sockType = true;
 		}
 		break;

@@ -176,5 +176,8 @@
     <ClInclude Include="scr\DebugInterface.h">
       <Filter>リソース ファイル\DebugInterface</Filter>
     </ClInclude>
+    <ClInclude Include="scr\ConnectStruct.h">
+      <Filter>リソース ファイル\Connect</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
