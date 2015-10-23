@@ -18,8 +18,7 @@ private:
 	bool m_areaSelectFlag;		///< 行動別の範囲を選択しているか
 	_SELECT_NUM_ m_selectType;	///< 選択した行動の種類
 	int m_arrayCheckResult;		///< 行動選択時の範囲チェックの結果
-	bool m_margeStageDataFlag;	///< 通信先のステージデータとの結合フラグ
-
+	
 	BoardOfFrame m_actionFrame;	///< 攻撃枠
 	BoardOfFrame m_searchFrame;	///< 索敵枠
 	BoardOfFrame m_moveFrame;	///< 移動枠

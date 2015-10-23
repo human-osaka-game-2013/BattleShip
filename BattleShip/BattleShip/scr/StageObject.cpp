@@ -445,7 +445,7 @@ bool StageObject::MargeStage( ConnectStage* _pStage, const int _playerID, const 
 	}
 	else
 	{
-		memmove_s( m_stageArray[_enemyID-1], sizeof(int[_STAGE_COLUMN_MAX_][_STAGE_LINE_MAX_]),_pStage->m_stageArray[_playerID-1] ,sizeof(int[_STAGE_COLUMN_MAX_][_STAGE_LINE_MAX_]));
+		memmove_s( m_stageArray[_enemyID-1], sizeof(int[_STAGE_COLUMN_MAX_][_STAGE_LINE_MAX_]),_pStage->m_stageArray[_enemyID-1] ,sizeof(int[_STAGE_COLUMN_MAX_][_STAGE_LINE_MAX_]));
 	}
 
 	return true;

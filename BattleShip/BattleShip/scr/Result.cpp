@@ -15,15 +15,15 @@ bool Result::Init()
 int Result::Control()
 {
 	//	先にプレイヤーの配列指数として、修正しておく
-	int tempID = (m_playerID%2) ? 1 : 0;
+	int tempPlID = (m_playerID%2) ? 0 : 1;
+	int tempEnID = (m_playerID%2) ? 1 : 0;
 
-
-	if( ResultOfAction(0) )
+	if( m_resultPlayer = (char)ResultOfAction(tempPlID) != 0 )
 	{
 
 	}
 
-	if( ResultOfAction(1) )
+	if( m_resultEnemy = (char)ResultOfAction(tempEnID) != 0 )
 	{
 
 	}
@@ -34,7 +34,25 @@ int Result::Control()
 //	
 void Result::Draw()
 {
-
+	switch( m_resultPlayer )
+	{
+	case RESULT_ATTACK:
+		MessageBoxA(0,"攻撃された！",NULL,MB_OK);
+		break;
+	case RESULT_SEARCH:
+		MessageBoxA(0,"敵に発見された！",NULL,MB_OK);
+		break;
+	}
+	switch( m_resultEnemy )
+	{
+	case RESULT_ATTACK:
+		MessageBoxA(0,"攻撃が当たった！",NULL,MB_OK);
+		break;
+	case RESULT_SEARCH:
+		MessageBoxA(0,"索敵成功！",NULL,MB_OK);
+		break;
+	}
+	
 	
 }
 
@@ -72,7 +90,7 @@ int Result::ResultOfAction( int _playerIndex )
 				if( iSelectNum < StageObject::_ACTION_NOMAL_ &&
 						iShipNum < ShipObject::TYPE_MAX )
 				{
-					iReturn = 1; ///<
+					iReturn = RESULT_SEARCH; ///<
 				}
 				//	指示されている行動が攻撃で、駒があれば
 				else if( iSelectNum >= StageObject::_ACTION_NOMAL_ &&
@@ -83,7 +101,7 @@ int Result::ResultOfAction( int _playerIndex )
 					{
 						//	駒に攻撃が当たったので、ステージ側のデータも損傷状態（２桁目を_CONDITION_DAMAGE_に）をつける
 						m_pStage->m_stageArray[_playerIndex][ic][il] += 10;
-						iReturn = 2;
+						iReturn = RESULT_ATTACK;
 					}
 				}
 			}
@@ -101,7 +119,7 @@ int Result::ResultOfAction( int _playerIndex )
 					if( iSelectNum < StageObject::_ACTION_NOMAL_ &&
 							iShipNum < ShipObject::TYPE_MAX )
 					{
-						iReturn = 1; ///<
+						iReturn = RESULT_SEARCH; ///<
 					}
 					//	指示されている行動が攻撃で、駒があれば
 					else if( iSelectNum >= StageObject::_ACTION_NOMAL_ &&
@@ -112,7 +130,7 @@ int Result::ResultOfAction( int _playerIndex )
 						{
 							//	駒に攻撃が当たったので、ステージ側のデータも損傷状態（２桁目を_CONDITION_DAMAGE_に）をつける
 							m_pStage->m_stageArray[_playerIndex][ic][il] += 10;
-							iReturn = 2;
+							iReturn = RESULT_ATTACK;
 						}
 					}
 					break;

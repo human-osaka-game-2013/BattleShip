@@ -136,6 +136,14 @@ bool GameScene::CommunicationProcessing()
 					{
 
 					}
+					else
+					{
+						return false;
+					}
+				}
+				else
+				{
+					return false;
 				}
 			}
 			
@@ -150,6 +158,10 @@ bool GameScene::CommunicationProcessing()
 				if( m_Connect.Receive( (char*)&bufStage, bufStageSize ) )
 				{
 					m_pStageObject->MargeStage( &bufStage, m_playerID, enemyID, (int)m_stateManager->GetState() );
+				}
+				else
+				{
+					return false;
 				}
 			}
 			else
@@ -167,6 +179,14 @@ bool GameScene::CommunicationProcessing()
 						tempShip = m_Player[enemyID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
 						tempShip->SetShipData( &bufShip[iShip] );
 					}
+					else
+					{
+						return false;
+					}
+				}
+				else
+				{
+					return false;
 				}
 			}
 

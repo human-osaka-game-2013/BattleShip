@@ -11,7 +11,6 @@ bool Selection::Init()
 	m_tabSelectFlag = false;
 	m_areaSelectFlag= false;
 	m_arrayCheckResult = 0;
-	m_margeStageDataFlag = false;
 	
 	m_tempShip = m_pPlayer[m_playerID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)(m_ShipCount) );
 		
@@ -55,10 +54,8 @@ int Selection::Control()
 			m_arrayCheckResult = SelectArrayCheck();
 		}
 		else{
-			if( !m_margeStageDataFlag ){
-				m_margeStageDataFlag = ComStandby();
-			}
-			else{
+			if( !m_connectFlag ){
+				m_connectFlag = true;
 				m_StateCompFlag = true;
 			}
 		}

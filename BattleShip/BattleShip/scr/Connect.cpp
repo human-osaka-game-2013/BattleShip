@@ -6,6 +6,7 @@
 
 #include "Connect.h"
 
+
 //	初期化
 bool Connect::Init()
 {
@@ -67,9 +68,9 @@ void Connect::SetTable( char* _p, int _iColumn, int _iLine )
 		}
 		break;
 	case DOMAIN_STR:
-		if( m_sockType )	///<	ドメイン名が必要なのはクライアント側だけなので
+		if( m_sockType ){	///<	ドメイン名が必要なのはクライアント側だけなので
 			m_domainStr = _p;
-		
+		}
 		break;
 	case PORTS_NUM:
 		m_ports = atoi(_p);
@@ -102,9 +103,10 @@ bool Connect::SettingSocket()
 		//	m_domainStrがIPアドレスが入っていなかった場合
 		if( m_addr.sin_addr.S_un.S_addr == 0xffffffff )
 		{
-			struct hostent* host;
+			
 			//	ドメイン名が入っている可能性があるので、IPアドレスに変換する。
-			host = gethostbyname( m_domainStr.c_str() );
+			
+			struct hostent* host = gethostbyname( (char*)m_domainStr.c_str() );
 			if( host == NULL )
 			{
 				return false;

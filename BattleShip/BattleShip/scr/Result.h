@@ -10,8 +10,17 @@
 
 class Result : public GameState
 {
+public:
+	enum _ACTION_RESULT_
+	{
+		RESULT_NONE,
+		RESULT_SEARCH,
+		RESULT_ATTACK,
+	};
+
 private:
-	
+	char m_resultPlayer;
+	char m_resultEnemy;
 
 public:
 	/**

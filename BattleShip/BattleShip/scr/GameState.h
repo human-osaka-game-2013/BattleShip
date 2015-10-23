@@ -12,7 +12,7 @@
 #include "Mouse.h"
 
 
-#define _NOT_USE_COM_	///<通信を使わないテスト
+#define __NOT_USE_COM_	///<通信を使わないテスト
 
 class GameState
 {
