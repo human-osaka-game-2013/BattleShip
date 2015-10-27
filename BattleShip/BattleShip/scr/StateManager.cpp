@@ -101,7 +101,7 @@ void StateManager::StateCotrol()
 bool StateManager::CheckState()
 {
 	
-	int beforeShip = m_currentShip;
+	int beforeShip = static_cast<int>(m_currentShip);
 	bool checkResult = false;
 	int stageResult = 0;
 
@@ -137,8 +137,17 @@ bool StateManager::CheckState()
 		/**
 		*@todo	エフェクト未実装の為ここは仮処理
 		*/
-		if( stageResult == 1 )	///<　結果が1(ステージの演出が完了)の場合
+		if( stageResult == 1 ){	///<　結果が1(ステージの演出が完了)の場合
+			// Selectionステートに移る前に現在のターンが終了したので次の駒を指定
+			if( m_currentShip < ShipObject::TYPE_SUBMARINE){
+
+				m_currentShip = static_cast< ShipObject::_SHIP_TYPE_NUM_ >( beforeShip+1 );
+			}else{
+				m_currentShip = ShipObject::TYPE_AIRCARRIER;
+			}
+
 			checkResult = true;
+		}
 		break;
 	}
 	return checkResult;
