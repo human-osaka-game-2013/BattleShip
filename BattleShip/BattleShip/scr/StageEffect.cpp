@@ -15,7 +15,7 @@ int StageEffect::Control()
 {
 
 
-	return false;
+	return ((m_StateCompFlag) ? 1 : 0);
 }
 
 //	

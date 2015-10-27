@@ -7,7 +7,6 @@
 
 bool Selection::Init()
 {
-	m_StateCompFlag = false;
 	m_tabSelectFlag = false;
 	m_areaSelectFlag= false;
 	m_arrayCheckResult = 0;
@@ -38,26 +37,24 @@ int Selection::Control()
 
 	if( !m_StateCompFlag )
 	{
-		if( !m_tabSelectFlag )
+		if( !m_tabSelectFlag )	///<	タブがまだ選ばれていない場合
 		{	
 			m_tabSelectFlag = TabCheck();
 		}
-		else if( !m_areaSelectFlag )
+		else if( !m_areaSelectFlag )	///<	対象エリアなどの選択が終わっていない場合
 		{
 			m_areaSelectFlag = SetTypeArray();
 			if( !m_areaSelectFlag )	///< 選択した範囲にデータが無い（orその行動は出来ない）場合、タブの選択も解除する。
 				m_tabSelectFlag = false;
 		}
-		else if( m_arrayCheckResult != 2 )
+		else if( m_arrayCheckResult != 2 )	///<	選択した範囲は有効で無い場合
 		{
 			m_pStage->ResetSelect();
 			m_arrayCheckResult = SelectArrayCheck();
 		}
-		else{
-			if( !m_connectFlag ){
-				m_connectFlag = true;
-				m_StateCompFlag = true;
-			}
+		else{	///<	行動選択も範囲選択完了した場合
+			m_connectFlag = true;	///<	通信フラグを立てて通信の準備に移る
+			m_StateCompFlag = true;	///<	行動選択自体は完了したので、フラグを立てる
 		}
 		
 	}

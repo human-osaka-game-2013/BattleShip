@@ -14,21 +14,28 @@ bool Result::Init()
 //	
 int Result::Control()
 {
-	//	先にプレイヤーの配列指数として、修正しておく
-	int tempPlID = (m_playerID%2) ? 0 : 1;
-	int tempEnID = (m_playerID%2) ? 1 : 0;
+	if( !m_StateCompFlag ){
+		//	先にプレイヤーの配列指数として、修正しておく
+		int tempPlID = (m_playerID%2) ? 0 : 1;
+		int tempEnID = (m_playerID%2) ? 1 : 0;
 
-	if( m_resultPlayer = (char)ResultOfAction(tempPlID) != 0 )
-	{
+		if( m_resultPlayer = ResultOfAction(tempPlID) != 0 )
+		{
 
+		}
+
+		if( m_resultEnemy = ResultOfAction(tempEnID) != 0 )
+		{
+
+		}
+		m_resultBattle = ResultProgressOfBattle( tempPlID, tempEnID );
+
+		m_StateCompFlag = true;
+		m_connectFlag = true;
 	}
 
-	if( m_resultEnemy = (char)ResultOfAction(tempEnID) != 0 )
-	{
 
-	}
-
-	return false;
+	return m_resultBattle;
 }
 
 //	
@@ -62,7 +69,7 @@ bool Result::ComStandby()
 	return true;
 }
 
-int Result::ResultOfAction( int _playerIndex )
+int Result::ResultOfAction( const int _playerIndex )
 {
 	int iReturn = 0;
 	/**
@@ -143,4 +150,58 @@ int Result::ResultOfAction( int _playerIndex )
 	
 	
 	return iReturn;
+}
+
+
+int Result::ResultProgressOfBattle( const int _playerIndex, const int _enemyIndex )
+{
+	int iResult = -1;
+	int iHitCount[_PLAYER_NUM_] ={0,0};
+	ShipObject* pTempShip[_PLAYER_NUM_];
+
+	for( int iShip = 0; iShip < ShipObject::TYPE_MAX; iShip++ )
+	{
+		//	プレイヤーの調べる駒のポインタをセット
+		pTempShip[_playerIndex] = m_pPlayer[_playerIndex]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
+		//	敵の調べる駒のポインタをセット
+		pTempShip[_enemyIndex] = m_pPlayer[_enemyIndex]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
+		
+		for( int iColumn = 0; iColumn < _SHIP_ARRAY_INDEX_; iColumn++ )
+		{
+			for( int iLine = 0; iLine < _SHIP_ARRAY_INDEX_; iLine++ )
+			{
+				int shipCondition = (pTempShip[_playerIndex]->m_shipArray[iColumn][iLine]/10)%10;
+				if( shipCondition == StageObject::_CONDITION_DAMAGE_ ){	//プレイヤー側の判定
+					iHitCount[_playerIndex]+=1;	//ヒット回数インクリメント
+				}
+				shipCondition = (pTempShip[_enemyIndex]->m_shipArray[iColumn][iLine]/10)%10;
+				if( shipCondition == StageObject::_CONDITION_DAMAGE_ ){	//敵側の判定
+					iHitCount[_enemyIndex]+=1;	//ヒット回数インクリメント
+				}
+			}
+		}
+	}
+
+	if( iHitCount[_playerIndex] == iHitCount[_enemyIndex] )
+	{
+		iResult = TYPE_DRAW;
+	}
+	else if( iHitCount[_playerIndex] == _ANNIHILATION_NUM_ )
+	{
+		iResult = TYPE_DEFEAT;
+	}
+	else if( iHitCount[_enemyIndex] == _ANNIHILATION_NUM_ )
+	{
+		iResult = TYPE_VICTORY;
+	}
+	else if( iHitCount[_playerIndex] > iHitCount[_enemyIndex] )
+	{
+		iResult = TYPE_SUPERIORITY;
+	}
+	else
+	{
+		iResult = TYPE_INFERIORITY;
+	}
+
+	return iResult;
 }

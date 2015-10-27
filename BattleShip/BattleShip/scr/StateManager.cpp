@@ -112,14 +112,26 @@ bool StateManager::CheckState()
 			checkResult = true;
 		break;
 	case STATE_SELECTION:
-		if( stageResult && !m_connectFlag )	///<　結果と選択中の駒が違う＝行動選択完了なので
+		if( stageResult == 1 && !m_connectFlag )	///<　結果が1且つ、通信が完了していた場合
 			checkResult = true;	///<　選択結果に移る
 		break;
 	case STATE_RESULT:
-		
+		if( !m_connectFlag ){	///<　結果と選択中の駒が違う＝行動選択完了なので
+			Result* result = (Result*)m_pGameState;
+			result->GetResultPlayerAndEnemy( m_resultPlayer, m_resultEnemy );
+			result->GetResultOfBattle( m_resultBattle );
+
+			checkResult = true;
+			
+		}
+
 		break;
 	case STATE_STAGE_EFFECT:
-		
+		/**
+		*@todo	エフェクト未実装の為ここは仮処理
+		*/
+		if( stageResult == 1 )	///<　結果が1の場合
+			checkResult = true;
 		break;
 	}
 	return checkResult;

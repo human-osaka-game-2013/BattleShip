@@ -7,7 +7,6 @@
 
 bool SetShip::Init()
 {
-	m_StateCompFlag = false;
 	return false;
 }
 

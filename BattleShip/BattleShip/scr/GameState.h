@@ -74,6 +74,7 @@ public:
 	GameState( ShipObject::_SHIP_TYPE_NUM_& _type ) : m_ShipCount( (int &)_type )
 	{
 		m_connectFlag = false;
+		m_StateCompFlag = false;
 	}
 
 	/**

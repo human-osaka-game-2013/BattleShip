@@ -8,9 +8,14 @@
 
 #include "GameState.h"
 
+#define _ANNIHILATION_NUM_ 16
+
 class Result : public GameState
 {
 public:
+	/**
+	*@brief	行動選択によるの戦闘結果
+	*/	
 	enum _ACTION_RESULT_
 	{
 		RESULT_NONE,
@@ -18,16 +23,33 @@ public:
 		RESULT_ATTACK,
 	};
 
+	/**
+	*@brief	戦況の種類
+	*/
+	enum _PROGRESS_OF_BATTLE_TYPE_
+	{
+		TYPE_DEFEAT,		///<	敗北
+		TYPE_INFERIORITY,	///<	劣勢
+		TYPE_DRAW,			///<	引き分け
+		TYPE_SUPERIORITY,	///<	優勢
+		TYPE_VICTORY		///<	勝利
+	};
+
 private:
-	char m_resultPlayer;
-	char m_resultEnemy;
+	int m_resultPlayer;	///<	プレイヤー側に起きている戦闘結果
+	int m_resultEnemy;	///<	敵側に起きている戦闘結果
+	int m_resultBattle;	///<	両者の戦況結果
 
 public:
 	/**
 	*@brief	コンストラクタ
 	*@param	_type	現在選択している艦の種類
 	*/
-	Result( ShipObject::_SHIP_TYPE_NUM_& _type ): GameState( _type ){}
+	Result( ShipObject::_SHIP_TYPE_NUM_& _type ): GameState( _type ){
+		m_resultPlayer	= 0;
+		m_resultEnemy	= 0;
+		m_resultBattle	= 0;
+	}
 
 	/**
 	*@brief	戦闘結果での初期化
@@ -50,6 +72,22 @@ public:
 	*/
 	bool ComStandby();
 
+	/**
+	*@brief	戦闘結果の取得
+	*@param[in] _resultPlayer
+	*@param[in] _resultEnemy
+	*/
+	void GetResultPlayerAndEnemy( int& _resultPlayer, int& _resultEnemy )
+	{
+		_resultPlayer = m_resultPlayer;
+		_resultEnemy = m_resultEnemy;
+	}
+
+	/**
+	*@brief	戦況の取得
+	*/
+	void GetResultOfBattle( int& _resultBattle ){ _resultBattle = m_resultBattle; }
+
 private:
 	/**
 	*@brief	行動選択による戦闘の結果
@@ -60,7 +98,16 @@ private:
 	*@retval 1	相手の攻撃が当たった
 	*@retval 2	相手に索敵された
 	*/
-	int ResultOfAction( int _playerIndex );
+	int ResultOfAction( const int _playerIndex );
+
+	/**
+	*@brief	戦闘結果による戦況判定
+	*@details	プレイヤー各々の駒の損害率から、_PROGRESS_OF_BATTLE_TYPE_に応じた値を返す
+	*@param[in]	_playerIndex プレイヤー側の指数
+	*@param[in]	_enemyIndex 敵側の指数
+	*@return	_PROGRESS_OF_BATTLE_TYPE_に合わせた値
+	*/
+	int ResultProgressOfBattle( const int _playerIndex, const int _enemyIndex );
 };
 
 #endif

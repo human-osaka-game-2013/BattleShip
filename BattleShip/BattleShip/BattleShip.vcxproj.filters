@@ -112,7 +112,7 @@
       <Filter>リソース ファイル\DebugInterface</Filter>
     </ClCompile>
     <ClCompile Include="scr\Submarine.cpp">
-      <Filter>ソース ファイル\State</Filter>
+      <Filter>ソース ファイル\Ship</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

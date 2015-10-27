@@ -30,7 +30,11 @@ public:
 	*@brief	コンストラクタ
 	*@param	_type	現在選択している艦の種類
 	*/
-	Selection( ShipObject::_SHIP_TYPE_NUM_& _type ): GameState( _type ){}
+	Selection( ShipObject::_SHIP_TYPE_NUM_& _type ): GameState( _type ){
+		m_tabSelectFlag = false;
+		m_areaSelectFlag= false;
+		m_arrayCheckResult = 0;
+	}
 
 	/**
 	*@brief	戦闘行動選択での初期化

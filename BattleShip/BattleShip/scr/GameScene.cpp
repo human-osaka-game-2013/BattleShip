@@ -104,8 +104,7 @@ bool GameScene::CommunicationProcessing()
 	{
 	case StateManager::STATE_SET_SHIP:
 	case StateManager::STATE_SELECTION:
-	case StateManager::STATE_RESULT:
-
+	
 		if( !m_Connect.m_sockType )	//	サーバー側なら先に受信を行う
 		{
 			if( m_Connect.Receive( (char*)&bufStage, bufStageSize ) )
@@ -193,8 +192,9 @@ bool GameScene::CommunicationProcessing()
 		}
 		break;
 	
+	case StateManager::STATE_RESULT:
 	case StateManager::STATE_STAGE_EFFECT:
-
+		
 
 		break;
 	}

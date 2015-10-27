@@ -29,12 +29,21 @@ private:
 	GameState*		m_pGameState;	///<	戦闘ステートパターンオブジェクトのポインタ
 	_STATE_NUM_		m_beforeState;	///<	以前のステートパターン
 	_STATE_NUM_		m_currentState;	///<	現在のステートパターン
+	StageObject* const	m_pStageObject;	///<	ステージ情報格納ポインタ
+	ShipObject::_SHIP_TYPE_NUM_	m_currentShip;	///<	現在選択対象の駒。GameStateと共有するため取り扱いに注意！
+	
+//	他のオブジェクトにメンバを渡す可能性のある変数
+private:
+	
 	Player* const 	m_pPlayer1;		///<	プレイヤー1情報格納ポインタ
 	Player* const 	m_pPlayer2;		///<	プレイヤー2情報格納ポインタ
 	const int		m_playerID;		///<	起動側のプレイヤーID。GameScene側からもらってくる。
-	StageObject* const	m_pStageObject;	///<	ステージ情報格納ポインタ
-	ShipObject::_SHIP_TYPE_NUM_	m_currentShip;	///<	現在選択対象の駒。GameStateと共有するため取り扱いに注意！
+
 	bool			m_connectFlag;	///<	通信を行うフラグ
+
+	int m_resultPlayer;	///<	プレイヤー側に起きている戦闘結果
+	int m_resultEnemy;	///<	敵側に起きている戦闘結果
+	int m_resultBattle;	///<	両者の戦況結果
 
 //	ステート共通の描画オブジェクトの情報
 private:
