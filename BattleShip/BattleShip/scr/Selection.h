@@ -34,6 +34,7 @@ public:
 		m_tabSelectFlag = false;
 		m_areaSelectFlag= false;
 		m_arrayCheckResult = 0;
+		m_selectType = _SELECT_NONE_;
 	}
 
 	/**
@@ -55,6 +56,14 @@ public:
 	*@brief	戦闘行動選択での通信待機処理
 	*/
 	bool ComStandby();
+
+	/**
+	*@brief	選択した行動の種類を取得
+	*@details	StateManagerでステージのエフェクトなどにステートが移行した際に、
+				選択した行動が分からなければステージ上の演出が出来ないため、
+				選択した種類の情報が必要と判断しました。
+	*/
+	int GetSelectionType(){ return static_cast< int >(m_selectType); }
 
 private:
 

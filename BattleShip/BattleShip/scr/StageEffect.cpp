@@ -13,7 +13,12 @@ bool StageEffect::Init()
 
 int StageEffect::Control()
 {
+	m_effectCount++;
 
+	if( _END_COUNT_OF_EFFECT_ >= m_effectCount )
+	{
+		m_StateCompFlag = true;
+	}
 
 	return ((m_StateCompFlag) ? 1 : 0);
 }

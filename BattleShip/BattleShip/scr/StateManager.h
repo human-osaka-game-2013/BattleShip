@@ -32,7 +32,7 @@ private:
 	StageObject* const	m_pStageObject;	///<	ステージ情報格納ポインタ
 	ShipObject::_SHIP_TYPE_NUM_	m_currentShip;	///<	現在選択対象の駒。GameStateと共有するため取り扱いに注意！
 	
-//	他のオブジェクトにメンバを渡す可能性のある変数
+//	他のオブジェクトと値のやり取りする可能性のある変数
 private:
 	
 	Player* const 	m_pPlayer1;		///<	プレイヤー1情報格納ポインタ
@@ -40,6 +40,8 @@ private:
 	const int		m_playerID;		///<	起動側のプレイヤーID。GameScene側からもらってくる。
 
 	bool			m_connectFlag;	///<	通信を行うフラグ
+
+	int m_selectType;	///< 選択した行動の種類
 
 	int m_resultPlayer;	///<	プレイヤー側に起きている戦闘結果
 	int m_resultEnemy;	///<	敵側に起きている戦闘結果

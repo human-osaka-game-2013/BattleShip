@@ -8,16 +8,22 @@
 
 #include "GameState.h"
 
+#define _END_COUNT_OF_EFFECT_	60*10
+
 class StageEffect : public GameState
 {
-
+private:
+	int m_effectCount;	///<	エフェクトを再生する際のカウンタ
+	//BoardOfFrame m_
 
 public:
 	/**
 	*@brief	コンストラクタ
 	*@param	_type	現在選択している艦の種類
 	*/
-	StageEffect( ShipObject::_SHIP_TYPE_NUM_& _type ): GameState( _type ){}
+	StageEffect( ShipObject::_SHIP_TYPE_NUM_& _type ): GameState( _type ){
+		m_effectCount = 0;
+	}
 
 	/**
 	*@brief	戦闘エフェクトでの初期化

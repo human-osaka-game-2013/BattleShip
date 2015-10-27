@@ -23,6 +23,10 @@ StateManager::StateManager( Player* const _pPlayer1, Player* const _pPlayer2,
 	: m_pPlayer1(_pPlayer1), m_pPlayer2(_pPlayer2), m_pStageObject( _pStageObject), m_playerID(_playerID)
 {
 	m_connectFlag = false;
+	m_resultPlayer	= 0;
+	m_resultEnemy	= 0;
+	m_resultBattle	= 0;
+	m_selectType	= static_cast<int>(GameState::_SELECT_NONE_);
 }
 
 //	ステートの初期化
@@ -112,17 +116,20 @@ bool StateManager::CheckState()
 			checkResult = true;
 		break;
 	case STATE_SELECTION:
-		if( stageResult == 1 && !m_connectFlag )	///<　結果が1且つ、通信が完了していた場合
+		if( stageResult == 1 && !m_connectFlag ){	///<　結果が1且つ、通信が完了していた場合
+			Selection* pSelection = static_cast<Selection*>(m_pGameState);
+			m_selectType = pSelection->GetSelectionType();
+		
 			checkResult = true;	///<　選択結果に移る
+		}
 		break;
 	case STATE_RESULT:
 		if( !m_connectFlag ){	///<　結果と選択中の駒が違う＝行動選択完了なので
-			Result* result = (Result*)m_pGameState;
-			result->GetResultPlayerAndEnemy( m_resultPlayer, m_resultEnemy );
-			result->GetResultOfBattle( m_resultBattle );
+			Result* pResult = static_cast<Result*>(m_pGameState);
+			pResult->GetResultPlayerAndEnemy( m_resultPlayer, m_resultEnemy );
+			pResult->GetResultOfBattle( m_resultBattle );
 
 			checkResult = true;
-			
 		}
 
 		break;
@@ -130,7 +137,7 @@ bool StateManager::CheckState()
 		/**
 		*@todo	エフェクト未実装の為ここは仮処理
 		*/
-		if( stageResult == 1 )	///<　結果が1の場合
+		if( stageResult == 1 )	///<　結果が1(ステージの演出が完了)の場合
 			checkResult = true;
 		break;
 	}

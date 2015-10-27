@@ -47,7 +47,7 @@ bool Player::DamageControl( const int _column, const int _line, const ShipObject
 	int iLocalColumn = _column -(m_pShip[_shipType]->GetArrayColumn() - 2);
 	int iLocalLine = _line -(m_pShip[_shipType]->GetArrayLine() - 2);
 
-	if( m_pShip[_shipType]->m_shipArray[iLocalColumn][iLocalLine]/10 != StageObject::_CONDITION_NOMAL_ )///<損傷していないマスじゃなければ
+	if( (m_pShip[_shipType]->m_shipArray[iLocalColumn][iLocalLine]/10)%10 != StageObject::_CONDITION_NOMAL_ )///<損傷していないマスじゃなければ
 	{
 		return false;
 	}
