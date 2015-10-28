@@ -129,19 +129,18 @@ bool Selection::SetTypeArray()
 
 int Selection::SelectArrayCheck( )
 {
-	int tempID = m_playerID;	///<どちらのプレイヤーのステージ配列を示すかの判定用にコピー
+	int tempID;	///<どちらのプレイヤーのステージ配列を示すかの判定用にコピー
 	int (*tempArray)[_SHIP_ARRAY_INDEX_];
 	int iCheckResult = 0;
 	int iColumn;	
 	int iLine;
 
-	//	攻撃と索敵なら相手側ID、移動なら自分側のIDを使うつもり
+	//	攻撃と索敵なら相手側ID、移動なら自分側のIDをtempIDに入れる
 	switch( m_selectType )
 	{
 	case _SELECT_ACTION_:
 	case _SELECT_SEARCH_:
-		if( --tempID <= 0 )	///<チェックするステージ配列の指数の判定
-			tempID+=2;
+		tempID = m_playerID/_PLAYER_NUM_? 1:2;	//相手側のIDを入れる
 		//	行
 		for( iColumn=0; iColumn<_STAGE_COLUMN_MAX_; iColumn++ ){	
 			//	列
@@ -183,6 +182,7 @@ int Selection::SelectArrayCheck( )
 		break;
 
 	case _SELECT_MOVE_:
+		tempID = m_playerID;	//自分自身のIDを入れる
 		tempArray = m_tempShip->m_moveArray;
 		m_pStage->SetStageToRange( tempID, m_tempShip, tempArray, m_ShipCount );
 		
@@ -196,10 +196,17 @@ int Selection::SelectArrayCheck( )
 		{
 			float tempW = _BLOCK_WIDTH_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
 			float tempH = _BLOCK_HEIGHT_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
-			m_tempX = iLine*tempW + tempW*1.5f ;		
-			m_tempY = iColumn*tempH + tempH*1.5f;
+			if(tempID == 1)	//プレイヤーIDが1（=配列の指数だと0）だったら
+			{
+				m_tempX = iLine*tempW + tempW*1.5f ;		
+				m_tempY = iColumn*tempH + tempH*1.5f;
+			}
+			else
+			{
+				m_tempX = (iLine+_STAGE_HEIGHT_MAX_)*tempW + tempW*1.5f ;
+				m_tempY = iColumn*tempH + tempH*1.5f;
+			}
 			m_tempShip->SetPosition( m_tempX, m_tempY, 0.5f );
-			
 			if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )) 
 			{
 				m_pStage->RelocationShip( tempID, iColumn, iLine, m_tempShip, m_ShipCount );

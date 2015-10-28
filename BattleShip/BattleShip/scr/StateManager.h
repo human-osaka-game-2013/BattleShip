@@ -73,7 +73,7 @@ public:
 	/**
 	*@brief	ステートの基本ルーチン処理
 	*/
-	void StateCotrol();
+	int StateCotrol();
 
 	/**
 	*@brief	ステートの基本描画
@@ -97,13 +97,15 @@ public:
 
 private:
 	/**
-	*@brief	ステートパターンの切り替え
+	*@brief	各ステートのチェック
 	*@details	各ステートのControlを呼んで、その結果などから、
 				パターン変更の必要があるか管理。
-	*@return true：ステートパターンの変更の必要あり。*n
-			false：変更の必要無し
+	*@return	ステート	
+	*@retval 1	ステートパターンの変更の必要あり。*n
+	*@retval 0	変更の必要無し
+	*@retval -1	ゲーム終了の場合
 	*/
-	bool CheckState();
+	int CheckState();
 
 	/**
 	*@brief	ステートパターンの切り替え

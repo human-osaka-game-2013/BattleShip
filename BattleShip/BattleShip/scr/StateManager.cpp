@@ -67,12 +67,12 @@ void StateManager::StateInit()
 }
 
 //	ステートの基本ルーチン処理
-void StateManager::StateCotrol()
+int StateManager::StateCotrol()
 {
 	m_beforeState = m_currentState;	///<	ルーチン的にな処理で前フレーム時のステートを現在のステートに合わせる。
+	int stateResult = this->CheckState();	///<	ステートの変更チェックの処理
 
-
-	if( this->CheckState() )	///<	ステートのルーチン処理の結果シーンが変わる必要があれば
+	if( stateResult == 1 )	///<	ステートのルーチン処理の結果シーンが変わる必要があれば
 	{
 		switch( m_currentState )	///<	変更するステートは順番がある程度決まっているので分岐
 		{
@@ -94,15 +94,19 @@ void StateManager::StateCotrol()
 			break;
 		}
 	}
+	else if( stateResult == -1 )
+	{
+		MessageBoxA(0,"戦闘が終了しました","戦闘結果",MB_OK);
+	}
 
-
+	return stateResult;
 }
 
-bool StateManager::CheckState()
+int StateManager::CheckState()
 {
 	
 	int beforeShip = static_cast<int>(m_currentShip);
-	bool checkResult = false;
+	int checkResult = 0;
 	int stageResult = 0;
 
 	m_pGameState->SetConnectFlag( m_connectFlag );	//	毎フレーム通信のフラグを更新
@@ -113,23 +117,27 @@ bool StateManager::CheckState()
 	{
 	case STATE_SET_SHIP:
 		if( m_currentShip >= ShipObject::TYPE_MAX && !m_connectFlag )	///<　全ての駒がセットされた
-			checkResult = true;
+			checkResult = 1;
 		break;
 	case STATE_SELECTION:
 		if( stageResult == 1 && !m_connectFlag ){	///<　結果が1且つ、通信が完了していた場合
-			Selection* pSelection = static_cast<Selection*>(m_pGameState);
+			Selection* pSelection = dynamic_cast<Selection*>(m_pGameState);	///<Selectionの関数にアクセスする必要があるので、ダウンキャストする。
 			m_selectType = pSelection->GetSelectionType();
 		
-			checkResult = true;	///<　選択結果に移る
+			checkResult = 1;	///<　選択結果に移る
 		}
 		break;
 	case STATE_RESULT:
-		if( !m_connectFlag ){	///<　結果と選択中の駒が違う＝行動選択完了なので
-			Result* pResult = static_cast<Result*>(m_pGameState);
+		if( stageResult != Result::TYPE_VICTORY || stageResult != Result::TYPE_DEFEAT ){	///<　結果と選択中の駒が違う＝行動選択完了なので
+			Result* pResult = dynamic_cast<Result*>(m_pGameState);	///<Resultの関数にアクセスする必要があるので、ダウンキャストする。
 			pResult->GetResultPlayerAndEnemy( m_resultPlayer, m_resultEnemy );
 			pResult->GetResultOfBattle( m_resultBattle );
 
-			checkResult = true;
+			checkResult = 1;
+		}
+		else	//勝利or敗北or戦闘終了
+		{
+			checkResult = -1;
 		}
 
 		break;
@@ -146,11 +154,91 @@ bool StateManager::CheckState()
 				m_currentShip = ShipObject::TYPE_AIRCARRIER;
 			}
 
-			checkResult = true;
+			checkResult = 1;
 		}
 		break;
 	}
 	return checkResult;
+}
+
+//	ステートパターンの切り替え
+bool StateManager::ChangeState( _STATE_NUM_ _stateType )
+{
+	if( _stateType > STATE_STAGE_EFFECT&& _stateType < STATE_SET_SHIP )
+	{
+		MessageBoxA(0,"ステートパターンの変更に失敗しました！\n引数を確認して下さい！(＞＜;)",NULL,MB_OK);
+		return false;
+	}
+	
+	//	すでにステートが決まっていた場合（変更する際）は前のインスタンス生成したものを消す必要がある。
+	if( m_beforeState != STATE_NONE )
+	{
+		SetShip* pSetShip;
+		Selection* pSelection;
+		Result* pResult;
+		StageEffect* pStageEffect;
+
+		switch( m_beforeState )
+		{
+		case STATE_SET_SHIP:
+			pSetShip = dynamic_cast<SetShip*>(m_pGameState);
+			CLASS_DELETE(pSetShip); 
+			
+			break;
+		case STATE_SELECTION:
+			pSelection = dynamic_cast<Selection*>(m_pGameState);
+			CLASS_DELETE(pSelection); 
+			
+			break;
+		case STATE_RESULT:
+			pResult = dynamic_cast<Result*>(m_pGameState);
+			CLASS_DELETE(pResult); 
+			
+			break;
+		case STATE_STAGE_EFFECT:
+			pStageEffect = dynamic_cast<StageEffect*>(m_pGameState);
+			CLASS_DELETE(pStageEffect); 
+			
+			break;
+		}
+	}
+	//	各ステート別にステート生成
+	switch( _stateType )
+	{
+	case STATE_SET_SHIP:
+		m_pGameState = new SetShip( m_currentShip );
+
+		break;
+	case STATE_SELECTION:
+		m_pGameState = new Selection( m_currentShip );
+
+		break;
+	case STATE_RESULT:
+		m_pGameState = new Result( m_currentShip );
+
+		break;
+	case STATE_STAGE_EFFECT:
+		m_pGameState = new StageEffect( m_currentShip );
+
+		break;
+	}
+
+
+	m_currentState = _stateType;	///<	現在のステート変数を更新
+	
+	if( m_currentShip >= ShipObject::TYPE_MAX )	///<	ステート変更のついでに選択駒が範囲を超えているかチェック
+		m_currentShip = ShipObject::TYPE_AIRCARRIER;	///<	空母に変更
+
+	//	ステートが変わったので、一連の初期化を行う
+	m_pGameState->SetPlayerPtr( m_pPlayer1, 0 );
+	m_pGameState->SetPlayerPtr( m_pPlayer2, 1 );
+	m_pGameState->SetStagePtr( m_pStageObject );
+	m_pGameState->SetDraw( m_pDrawManager );
+	m_pGameState->SetMouse( m_pMouse );
+	m_pGameState->SetPlayerID( m_playerID );
+	m_pGameState->Init();	///<最後にステート側の初期化も行う（引数はこのクラスが持っている現在の選択駒）
+
+	return true;
 }
 
 //	ステートの基本描画
@@ -259,26 +347,41 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 						tempA = 255;
 					}
 
-					switch( tempArrayData/100 )
+					//	損傷状態桁チェック
+					switch( (tempArrayData/10)%10 )
 					{
-					case StageObject::_SELECT_TRUE_:	///<選択されているマス
-						tempA = 100;
+					case StageObject::_CONDITION_NONE_:
+						
+						//	範囲指定桁チェック
+						switch( tempArrayData/100 )
+						{
+						case StageObject::_SELECT_TRUE_:	///<選択されているマス
+							tempA = 100;
+							break;
+						case StageObject::_SELECT_FALSE_:	///<駒が置けないor選択範囲が何かに接触しているマス
+							tempA = 100, tempR = 255, tempG = 0, tempB = 0;
+							break;
+						case StageObject::_SEARCH_NOMAL_:
+							tempA = 100, tempR = 0, tempG = 255, tempB = 0;
+							break;
+						case StageObject::_SEARCH_ALL_:
+							tempA = 255, tempR = 0, tempG = 255, tempB = 0;
+							break;
+						case StageObject::_ACTION_NOMAL_:
+							tempA = 100, tempR = 0, tempG = 0, tempB = 255;
+							break;
+						case StageObject::_ACTION_ALL_:
+							tempA = 255, tempR = 0, tempG = 0, tempB = 255;
+							break;
+						}
+
 						break;
-					case StageObject::_SELECT_FALSE_:	///<駒が置けないor選択範囲が何かに接触しているマス
-						tempA = 100, tempR = 255, tempG = 0, tempB = 0;
+					case StageObject::_CONDITION_NOMAL_:
 						break;
-					case StageObject::_SEARCH_NOMAL_:
-						tempA = 100, tempR = 0, tempG = 255, tempB = 0;
+					case StageObject::_CONDITION_DAMAGE_:
+						tempR = 255, tempG = 100, tempB = 100;
 						break;
-					case StageObject::_SEARCH_ALL_:
-						tempA = 255, tempR = 0, tempG = 255, tempB = 0;
-						break;
-					case StageObject::_ACTION_NOMAL_:
-						tempA = 100, tempR = 0, tempG = 0, tempB = 255;
-						break;
-					case StageObject::_ACTION_ALL_:
-						tempA = 255, tempR = 0, tempG = 0, tempB = 255;
-						break;
+
 					}
 					
 				_drawManager->VertexDraw( _TEX_BLOCK_, tempX, tempY, 
@@ -303,58 +406,36 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 }
 
 
-//	ステートパターンの切り替え
-bool StateManager::ChangeState( _STATE_NUM_ _stateType )
-{
-	if( _stateType > STATE_STAGE_EFFECT&& _stateType < STATE_SET_SHIP )
-	{
-		MessageBoxA(0,"ステートパターンの変更に失敗しました！\n引数を確認して下さい！(＞＜;)",NULL,MB_OK);
-		return false;
-	}
-
-	if( m_beforeState != STATE_NONE )
-		CLASS_DELETE( m_pGameState );
-
-	switch( _stateType )
-	{
-	case STATE_SET_SHIP:
-		m_pGameState = new SetShip( m_currentShip );
-
-		break;
-	case STATE_SELECTION:
-		m_pGameState = new Selection( m_currentShip );
-
-		break;
-	case STATE_RESULT:
-		m_pGameState = new Result( m_currentShip );
-
-		break;
-	case STATE_STAGE_EFFECT:
-		m_pGameState = new StageEffect( m_currentShip );
-
-		break;
-	}
-	m_currentState = _stateType;	///<	現在のステート変数を更新
-	
-	if( m_currentShip >= ShipObject::TYPE_MAX )	///<	ステート変更のついでに選択駒が範囲を超えているかチェック
-		m_currentShip = ShipObject::TYPE_AIRCARRIER;	///<	空母に変更
-
-	//	ステートが変わったので、一連の初期化を行う
-	m_pGameState->SetPlayerPtr( m_pPlayer1, 0 );
-	m_pGameState->SetPlayerPtr( m_pPlayer2, 1 );
-	m_pGameState->SetStagePtr( m_pStageObject );
-	m_pGameState->SetDraw( m_pDrawManager );
-	m_pGameState->SetMouse( m_pMouse );
-	m_pGameState->SetPlayerID( m_playerID );
-	m_pGameState->Init();	///<最後にステート側の初期化も行う（引数はこのクラスが持っている現在の選択駒）
-
-	return true;
-}
-
 //	ステートオブジェクトの消去
 void StateManager::StateDelete()
 {
-	delete m_pGameState;
+	SetShip* pSetShip;
+	Selection* pSelection;
+	Result* pResult;
+	StageEffect* pStageEffect;
+
+	switch( m_currentState )
+	{
+		case STATE_SET_SHIP:
+			pSetShip = dynamic_cast<SetShip*>(m_pGameState);
+			CLASS_DELETE(pSetShip); 
+			
+			break;
+		case STATE_SELECTION:
+			pSelection = dynamic_cast<Selection*>(m_pGameState);
+			CLASS_DELETE(pSelection); 
+			
+			break;
+		case STATE_RESULT:
+			pResult = dynamic_cast<Result*>(m_pGameState);
+			CLASS_DELETE(pResult); 
+			
+			break;
+		case STATE_STAGE_EFFECT:
+			pStageEffect = dynamic_cast<StageEffect*>(m_pGameState);
+			CLASS_DELETE(pStageEffect); 
+			
+	}
 }
 
 void StateManager::Free()

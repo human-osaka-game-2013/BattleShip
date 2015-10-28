@@ -17,6 +17,7 @@ int StageEffect::Control()
 
 	if( _END_COUNT_OF_EFFECT_ >= m_effectCount )
 	{
+		m_pStage->ResetSelect();
 		m_StateCompFlag = true;
 	}
 

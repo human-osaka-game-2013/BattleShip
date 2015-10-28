@@ -82,14 +82,18 @@ public:
 public:
 	
 	/**
-	*@brief	初期化
-	*@param[in]	_playerID	起動側のプレイヤーID
+	*@brief	ゲームメインの初期化関数
+	*@return	初期化の結果
+	*@retval true	成功
+	*@retval false	初期化に何らかの失敗があった場合
 	*/
 	bool Init();
 
 	/**
-	*@brief	ルーチン処理
-	*@return 0：シーンに変化無し　
+	*@brief	ゲームメインの基本処理の関数
+	*@return	シーン変更をする判断の値
+	*@retval 0	シーン変更無し
+	*@retval 1	シーン変更有り
 	*/
 	int	 Control();
 

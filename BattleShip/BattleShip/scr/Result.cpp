@@ -18,13 +18,14 @@ int Result::Control()
 		//	先にプレイヤーの配列指数として、修正しておく
 		int tempPlID = (m_playerID%2) ? 0 : 1;
 		int tempEnID = (m_playerID%2) ? 1 : 0;
-
-		if( m_resultPlayer = ResultOfAction(tempPlID) != 0 )
+		m_resultPlayer = ResultOfAction(tempPlID);
+		m_resultEnemy = ResultOfAction(tempEnID);
+		if( m_resultPlayer != 0 )
 		{
 
 		}
 
-		if( m_resultEnemy = ResultOfAction(tempEnID) != 0 )
+		if( m_resultEnemy != 0 )
 		{
 
 		}
@@ -41,22 +42,24 @@ int Result::Control()
 //	
 void Result::Draw()
 {
+	//	戦闘結果の仮表示
 	switch( m_resultPlayer )
 	{
-	case RESULT_ATTACK:
-		MessageBoxA(0,"攻撃された！",NULL,MB_OK);
-		break;
 	case RESULT_SEARCH:
-		MessageBoxA(0,"敵に発見された！",NULL,MB_OK);
+		MessageBoxA(0,"敵に発見された！","戦闘結果",MB_OK);
+		break;
+	case RESULT_ATTACK:
+		MessageBoxA(0,"攻撃された！","戦闘結果",MB_OK);
 		break;
 	}
 	switch( m_resultEnemy )
 	{
-	case RESULT_ATTACK:
-		MessageBoxA(0,"攻撃が当たった！",NULL,MB_OK);
-		break;
+	
 	case RESULT_SEARCH:
-		MessageBoxA(0,"索敵成功！",NULL,MB_OK);
+		MessageBoxA(0,"索敵成功！","戦闘結果",MB_OK);
+		break;
+	case RESULT_ATTACK:
+		MessageBoxA(0,"攻撃が当たった！","戦闘結果",MB_OK);
 		break;
 	}
 	

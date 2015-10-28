@@ -29,11 +29,8 @@ public:
 	enum SCENE_NUM
 	{
 		SCENE_NONE = -1,
-		//SCENE_LOGO,
 		SCENE_TITLE,
-		//SCENE_SELECT,
 		SCENE_BATTLE,
-		//SCENE_RESULT,
 		SCENE_MAX
 	};
 

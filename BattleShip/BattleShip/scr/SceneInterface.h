@@ -39,9 +39,22 @@ public:
 	*/
 	virtual bool Free() = 0;
 public:
-	virtual bool Init() = 0;		///< 初期化の仮想関数
-	virtual int	 Control()	= 0;	///< 処理の仮想関数。@n
-									///	GetSceneID()でシーンIDを返して、マネージャーの方でシーン変更に使わせる
+	/**
+	*@brief	初期化の純粋仮想関数
+	*@return	初期化の結果
+	*@retval true	成功
+	*@retval false	初期化に何らかの失敗があった場合
+	*/
+	virtual bool Init() = 0;
+
+	/**
+	*@brief	シーンの基本処理の純粋仮想関数
+	*@return	シーン変更をする判断の値
+	*@retval 0	シーン変更無し
+	*@retval 1	シーン変更有り
+	*/
+	virtual int	 Control()	= 0;	
+
 	virtual void Draw()	= 0;		///< 2D描画の仮想関数
 	virtual void Render() = 0;		///< 3D描画の仮想関数
 

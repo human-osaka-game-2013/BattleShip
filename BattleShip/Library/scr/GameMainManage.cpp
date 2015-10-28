@@ -19,6 +19,7 @@ void CSceneManager::SceneRoutingManage ()
 	}
 
 	int iCntResult = m_sceneObj -> Control ();
+	//	各シーンのControl関数からの返り値が1だった場合にシーンの切り替えを行う
 	switch( iCntResult )
 	{
 	case 0:
