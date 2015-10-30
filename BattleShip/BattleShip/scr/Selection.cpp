@@ -152,11 +152,13 @@ int Selection::SelectArrayCheck( )
 					switch( m_selectType )
 					{
 					case _SELECT_ACTION_:
-						iCheckResult = m_pStage->CheckStageBlock( tempID, iColumn, iLine, m_tempShip, ShipObject::ARRAY_TYPE_ACTION, m_ShipCount );
+						iCheckResult = m_pStage->CheckStageBlock( tempID, iColumn, iLine, m_tempShip, 
+																	ShipObject::ARRAY_TYPE_ACTION, m_ShipCount );
 						tempArray = m_tempShip->m_actionArray;
 						break;
 					case _SELECT_SEARCH_:
-						iCheckResult = m_pStage->CheckStageBlock( tempID, iColumn, iLine, m_tempShip, ShipObject::ARRAY_TYPE_SEARCH, m_ShipCount );
+						iCheckResult = m_pStage->CheckStageBlock( tempID, iColumn, iLine, m_tempShip, 
+																	ShipObject::ARRAY_TYPE_SEARCH, m_ShipCount );
 						tempArray = m_tempShip->m_searchArray;
 						break;
 					}
@@ -182,11 +184,16 @@ int Selection::SelectArrayCheck( )
 		break;
 
 	case _SELECT_MOVE_:
-		tempID = m_playerID;	//自分自身のIDを入れる
+		tempID = m_playerID;		//自分自身のIDを入れる
+		int tempColumn, tempLine;	//	移動前の座標
+		m_tempShip->GetArrayPos( tempColumn, tempLine );
 		tempArray = m_tempShip->m_moveArray;
 		m_pStage->SetStageToRange( tempID, m_tempShip, tempArray, m_ShipCount );
 		
 		iCheckResult =  m_pStage->CheckRangeOnStage( iColumn, iLine, tempID, m_tempX, m_tempY, m_tempShip, ShipObject::ARRAY_TYPE_SHIP );
+
+		float tempW = _BLOCK_WIDTH_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
+		float tempH = _BLOCK_HEIGHT_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
 
 		if( iCheckResult == -1 )	///<駒を置けるマスじゃなかった。
 		{	
@@ -194,14 +201,12 @@ int Selection::SelectArrayCheck( )
 		}
 		else if( iCheckResult == 1  )	///<置けるマス。
 		{
-			float tempW = _BLOCK_WIDTH_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
-			float tempH = _BLOCK_HEIGHT_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
 			if(tempID == 1)	//プレイヤーIDが1（=配列の指数だと0）だったら
 			{
 				m_tempX = iLine*tempW + tempW*1.5f ;		
 				m_tempY = iColumn*tempH + tempH*1.5f;
 			}
-			else
+			else if(tempID == 2)
 			{
 				m_tempX = (iLine+_STAGE_HEIGHT_MAX_)*tempW + tempW*1.5f ;
 				m_tempY = iColumn*tempH + tempH*1.5f;
@@ -218,10 +223,16 @@ int Selection::SelectArrayCheck( )
 		{
 			m_tempShip->GetArrayPos( iColumn, iLine );
 
-			float tempW = _BLOCK_WIDTH_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
-			float tempH = _BLOCK_HEIGHT_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
-			m_tempX = iLine*tempW + tempW*1.5f ;		
-			m_tempY = iColumn*tempH + tempH*1.5f;
+			if(tempID == 1)	//プレイヤーIDが1（=配列の指数だと0）だったら
+			{
+				m_tempX = iLine*tempW + tempW*1.5f ;		
+				m_tempY = iColumn*tempH + tempH*1.5f;
+			}
+			else if(tempID == 2)
+			{
+				m_tempX = (iLine+_STAGE_HEIGHT_MAX_)*tempW + tempW*1.5f ;
+				m_tempY = iColumn*tempH + tempH*1.5f;
+			}
 			m_tempShip->SetPosition( m_tempX, m_tempY, 0.5f );
 		}
 		

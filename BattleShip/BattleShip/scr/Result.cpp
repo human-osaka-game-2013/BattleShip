@@ -36,12 +36,6 @@ int Result::Control()
 	}
 
 
-	return m_resultBattle;
-}
-
-//	
-void Result::Draw()
-{
 	//	戦闘結果の仮表示
 	switch( m_resultPlayer )
 	{
@@ -54,7 +48,6 @@ void Result::Draw()
 	}
 	switch( m_resultEnemy )
 	{
-	
 	case RESULT_SEARCH:
 		MessageBoxA(0,"索敵成功！","戦闘結果",MB_OK);
 		break;
@@ -62,6 +55,14 @@ void Result::Draw()
 		MessageBoxA(0,"攻撃が当たった！","戦闘結果",MB_OK);
 		break;
 	}
+
+	return m_resultBattle;
+}
+
+//	
+void Result::Draw()
+{
+	
 	
 	
 }
@@ -74,7 +75,7 @@ bool Result::ComStandby()
 
 int Result::ResultOfAction( const int _playerIndex )
 {
-	int iReturn = 0;
+	int iReturn = RESULT_NONE;
 	/**
 	*@details	Selectionクラスで相手側のステージデータと自身のステージは同期済みなので、
 				ローカルのデータ内で自分と相手のデータ情報を判定してしまう。
@@ -86,73 +87,79 @@ int Result::ResultOfAction( const int _playerIndex )
 		{
 			//	ステージの各桁情報は何度もアクセスする可能性が高い為、コピーして少しでもアクセスのロスを減らす
 			const int iSelectNum = m_pStage->m_stageArray[_playerIndex][ic][il]/100;
+			const int iConditionNum = (m_pStage->m_stageArray[_playerIndex][ic][il]/10)%10;
 			const int iShipNum = m_pStage->m_stageArray[_playerIndex][ic][il]%10;
 			
-			//	索敵or攻撃の指示がされていないマスだったら
-			if( iSelectNum < StageObject::_SEARCH_NOMAL_ )
+			//	索敵or攻撃の指示がされていて、且つ駒があるマスだったら
+			if( iConditionNum != StageObject::_CONDITION_NONE_ && iSelectNum > StageObject::_SELECT_FALSE_ )
 			{
-				continue;
-			}
-			//	全ての艦種に効果のある指示だった場合（_SEARCH_ALL_or_ACTION_ALL_）
-			else if( iSelectNum%2 == 0 )
-			{
-				//	指示されている行動が索敵で、駒があれば
-				if( iSelectNum < StageObject::_ACTION_NOMAL_ &&
-						iShipNum < ShipObject::TYPE_MAX )
-				{
-					iReturn = RESULT_SEARCH; ///<
-				}
-				//	指示されている行動が攻撃で、駒があれば
-				else if( iSelectNum >= StageObject::_ACTION_NOMAL_ &&
-						iShipNum < ShipObject::TYPE_MAX)
-				{
-					//	そのマスに攻撃指示が出ていた場合、プレイヤーが持っている駒にヒットの判断させる。
-					if( m_pPlayer[_playerIndex]->DamageControl( ic, il, (ShipObject::_SHIP_TYPE_NUM_)iShipNum))
-					{
-						//	駒に攻撃が当たったので、ステージ側のデータも損傷状態（２桁目を_CONDITION_DAMAGE_に）をつける
-						m_pStage->m_stageArray[_playerIndex][ic][il] += 10;
-						iReturn = RESULT_ATTACK;
-					}
-				}
-			}
-			//	一部の艦種に効果がある指示だった場合（_SEARCH_NOMAL_or_ACTION_NOMAL_）
-			else
-			{
-				switch( iShipNum )
-				{
-				//	潜水艦以外だったら
-				case ShipObject::TYPE_AIRCARRIER:
-				case ShipObject::TYPE_BATTLESHIP:
-				case ShipObject::TYPE_CRUISER:
-				case ShipObject::TYPE_DESTROYER:
-					//	指示されている行動が索敵で、駒があれば
-					if( iSelectNum < StageObject::_ACTION_NOMAL_ &&
-							iShipNum < ShipObject::TYPE_MAX )
-					{
-						iReturn = RESULT_SEARCH; ///<
-					}
-					//	指示されている行動が攻撃で、駒があれば
-					else if( iSelectNum >= StageObject::_ACTION_NOMAL_ &&
-							iShipNum < ShipObject::TYPE_MAX)
-					{
-						//	そのマスに攻撃指示が出ていた場合、プレイヤーが持っている駒にヒットの判断させる。
-						if( m_pPlayer[_playerIndex]->DamageControl( ic, il, (ShipObject::_SHIP_TYPE_NUM_)iShipNum))
-						{
-							//	駒に攻撃が当たったので、ステージ側のデータも損傷状態（２桁目を_CONDITION_DAMAGE_に）をつける
-							m_pStage->m_stageArray[_playerIndex][ic][il] += 10;
-							iReturn = RESULT_ATTACK;
-						}
-					}
-					break;
-				default:
-					break;
-				}
+				JudgmentOfActionProcess( iReturn, _playerIndex, ic, il, iSelectNum, iShipNum );
 			}
 		}
 	}
 	
 	
 	return iReturn;
+}
+
+//
+void Result::JudgmentOfActionProcess( int& _iReturn, const int _plIndex, int& _column, int& _line,
+										const int _selectNum, const int _shipNum )
+{
+	
+	//	全ての艦種に効果のある指示だった場合（_SEARCH_ALL_or_ACTION_ALL_）
+	if( _selectNum%2 == 0 )
+	{
+		//	指示されている行動が索敵で、駒があれば
+		if( _selectNum < StageObject::_ACTION_NOMAL_ &&
+			_shipNum < ShipObject::TYPE_MAX )
+		{
+			_iReturn = RESULT_SEARCH;
+		}
+		//	指示されている行動が攻撃で、駒があれば
+		else if( _selectNum >= StageObject::_ACTION_NOMAL_ &&
+				_shipNum < ShipObject::TYPE_MAX)
+		{
+			//	そのマスに攻撃指示が出ていた場合、プレイヤーが持っている駒にヒットの判断させる。
+			if( m_pPlayer[_plIndex]->DamageControl( _column, _line, (ShipObject::_SHIP_TYPE_NUM_)_shipNum))
+			{
+				//	駒に攻撃が当たったので、ステージ側のデータも損傷状態（２桁目を_CONDITION_DAMAGE_に）をつける
+				m_pStage->m_stageArray[_plIndex][_column][_line] += 10;
+				_iReturn = RESULT_ATTACK;
+			}
+		}
+	}
+	//	一部の艦種に効果がある指示だった場合（_SEARCH_NOMAL_or_ACTION_NOMAL_）
+	else
+	{
+		switch( _shipNum )
+		{
+		//	潜水艦以外だったら
+		case ShipObject::TYPE_AIRCARRIER:
+		case ShipObject::TYPE_BATTLESHIP:
+		case ShipObject::TYPE_CRUISER:
+		case ShipObject::TYPE_DESTROYER:
+			//	指示されている行動が索敵で、駒があれば
+			if( _selectNum < StageObject::_ACTION_NOMAL_ &&
+					_shipNum < ShipObject::TYPE_MAX )
+			{
+				_iReturn = RESULT_SEARCH; ///<
+			}
+			//	指示されている行動が攻撃で、駒があれば
+			else if( _selectNum >= StageObject::_ACTION_NOMAL_ &&
+					_shipNum < ShipObject::TYPE_MAX)
+			{
+				//	そのマスに攻撃指示が出ていた場合、プレイヤーが持っている駒にヒットの判断させる。
+				if( m_pPlayer[_plIndex]->DamageControl( _column, _line, (ShipObject::_SHIP_TYPE_NUM_)_shipNum))
+				{
+					//	駒に攻撃が当たったので、ステージ側のデータも損傷状態（２桁目を_CONDITION_DAMAGE_に）をつける
+					m_pStage->m_stageArray[_plIndex][_column][_line] += 10;
+					_iReturn = RESULT_ATTACK;
+				}
+			}
+			break;
+		}
+	}
 }
 
 

@@ -11,7 +11,6 @@
 #include "BoardOfFrame.h"
 #include "ConnectStruct.h"
 
-
 /**
 *@brief	ステージオブジェクトクラス
 *@details	ゲーム中のステージを管理するクラス
@@ -195,6 +194,34 @@ public:
 	*@brief	ステージデータの結合
 	*/
 	bool MargeStage( ConnectStage* _pStage, const int _playerID, const int _enemyID, const int _customMargeType );
+
+public:
+	
+	/**
+	*@brief	選択情報計算関数
+	*/
+	inline static int SelectOfData( int _num ){
+		return _num/100;
+	}
+	/**
+	*@brief	選択情報計算関数
+	*/
+	inline static int ConditionOfData( int _num ){
+		return (_num/10)%10;
+	}
+	/**
+	*@brief	選択情報計算関数
+	*/
+	inline static int ShipTypeOfData( int _num ){
+		return _num%10;
+	}
+	/**
+	*@brief	選択情報計算関数
+	*/
+	inline static int ShipOfData( int _num ){
+		return _num%100;
+	}
+
 };
 
 #endif

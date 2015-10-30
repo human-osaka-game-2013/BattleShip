@@ -15,12 +15,12 @@ public:
 	/**
 	*@brief コンストラクタ
 	*/
-	Submarine::Submarine():ShipObject()
+	Submarine::Submarine( int _userID ):ShipObject( _userID )
 	{
 
 	}
 
-	void Init( int _userID );
+	void Init();
 
 };
 

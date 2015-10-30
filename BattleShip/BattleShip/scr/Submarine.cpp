@@ -5,8 +5,8 @@
 
 #include "Submarine.h"
 
-void Submarine::Init( int _userID )
+void Submarine::Init()
 {
 	//	ファイル読み込みテスト
-	ReadTableData( "table/Destroyer.csv", ShipObject::TABLE_MAX, _SHIP_ARRAY_INDEX_);
+	ReadTableData( "table/Submarine.csv", ShipObject::TABLE_MAX, _SHIP_ARRAY_INDEX_);
 }

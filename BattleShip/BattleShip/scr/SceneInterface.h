@@ -1,3 +1,8 @@
+/**
+*@file	SceneInterface.h
+*@author	‹T“c
+*/
+
 #ifndef _SCENE_H_
 #define _SCENE_H_
 #include "RenderManager.h"

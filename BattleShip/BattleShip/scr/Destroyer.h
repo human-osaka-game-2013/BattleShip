@@ -15,12 +15,12 @@ public:
 	/**
 	*@brief コンストラクタ
 	*/
-	Destroyer::Destroyer():ShipObject()
+	Destroyer::Destroyer( int _userID ):ShipObject( _userID )
 	{
 
 	}
 
-	void Init( int _userID );
+	void Init();
 
 };
 

@@ -16,7 +16,7 @@ public:
 	/**
 	*@brief コンストラクタ
 	*/
-	AircraftCarrier::AircraftCarrier():ShipObject()
+	AircraftCarrier::AircraftCarrier( int _userID ):ShipObject( _userID )
 	{
 
 	}
@@ -25,7 +25,7 @@ public:
 	*@brief	初期化
 	*@pragma[in]	_userID	
 	*/
-	void Init( int _userID );
+	void Init();
 
 
 };

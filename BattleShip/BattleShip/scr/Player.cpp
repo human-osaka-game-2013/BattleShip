@@ -10,22 +10,22 @@ void Player::Init( int _userID )
 		switch( iCount )
 		{
 		case ShipObject::TYPE_AIRCARRIER:
-			m_pShip.push_back( new AircraftCarrier() );
+			m_pShip.push_back( new AircraftCarrier( _userID ) );
 			break;
 		case ShipObject::TYPE_BATTLESHIP:
-			m_pShip.push_back( new BattleShip() );
+			m_pShip.push_back( new BattleShip( _userID ) );
 			break;
 		case ShipObject::TYPE_CRUISER:
-			m_pShip.push_back( new Cruiser() );
+			m_pShip.push_back( new Cruiser( _userID ) );
 			break;
 		case ShipObject::TYPE_DESTROYER:
-			m_pShip.push_back( new Destroyer() );
+			m_pShip.push_back( new Destroyer( _userID ) );
 			break;
 		case ShipObject::TYPE_SUBMARINE:
-			m_pShip.push_back( new Submarine() );
+			m_pShip.push_back( new Submarine( _userID ) );
 			break;
 		}
-		m_pShip[iCount]->Init( _userID );	///<	初期化
+		m_pShip[iCount]->Init();	///<	初期化
 		m_pShip[iCount]->InitVertex( (ShipObject::_SHIP_TYPE_NUM_)iCount );
 
 		iCount++;
@@ -47,7 +47,7 @@ bool Player::DamageControl( const int _column, const int _line, const ShipObject
 	int iLocalColumn = _column -(m_pShip[_shipType]->GetArrayColumn() - 2);
 	int iLocalLine = _line -(m_pShip[_shipType]->GetArrayLine() - 2);
 
-	if( (m_pShip[_shipType]->m_shipArray[iLocalColumn][iLocalLine]/10)%10 != StageObject::_CONDITION_NOMAL_ )///<損傷していないマスじゃなければ
+	if( StageObject::ConditionOfData(m_pShip[_shipType]->m_shipArray[iLocalColumn][iLocalLine]) == StageObject::_CONDITION_DAMAGE_ )///<損傷していないマスじゃなければ
 	{
 		return false;
 	}

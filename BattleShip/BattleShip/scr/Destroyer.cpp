@@ -5,7 +5,7 @@
 
 #include "Destroyer.h"
 
-void Destroyer::Init( int _userID )
+void Destroyer::Init()
 {
 	//	ファイル読み込みテスト
 	ReadTableData( "table/Destroyer.csv", ShipObject::TABLE_MAX, _SHIP_ARRAY_INDEX_);

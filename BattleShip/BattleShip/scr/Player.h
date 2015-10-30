@@ -21,7 +21,7 @@ public:
 	*/
 	Player( int _userID ): m_userID( _userID )
 	{
-		Init( m_userID );
+		Init( _userID );
 	}
 	/**
 	*@brief	‰ğ•úˆ—

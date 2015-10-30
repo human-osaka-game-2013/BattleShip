@@ -5,7 +5,7 @@
 
 #include "BattleShip.h"
 
-void BattleShip::Init( int _userID )
+void BattleShip::Init()
 {
 	//	ファイル読み込みテスト
 	ReadTableData( "table/BattleShip.csv", ShipObject::TABLE_MAX, _SHIP_ARRAY_INDEX_);

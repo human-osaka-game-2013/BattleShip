@@ -87,6 +87,7 @@
     <ClCompile Include="scr\StageObject.cpp" />
     <ClCompile Include="scr\StateManager.cpp" />
     <ClCompile Include="scr\Submarine.cpp" />
+    <ClCompile Include="scr\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Library\Library.vcxproj">
@@ -95,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="scr\AircraftCarrier.h" />
+    <ClInclude Include="scr\Background.h" />
     <ClInclude Include="scr\BattleShip.h" />
     <ClInclude Include="scr\BoardOfFrame.h" />
     <ClInclude Include="scr\Connect.h" />
@@ -115,6 +117,7 @@
     <ClInclude Include="scr\StageObject.h" />
     <ClInclude Include="scr\StateManager.h" />
     <ClInclude Include="scr\Submarine.h" />
+    <ClInclude Include="scr\TitleScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -15,12 +15,12 @@ public:
 	/**
 	*@brief コンストラクタ
 	*/
-	BattleShip::BattleShip():ShipObject()
+	BattleShip::BattleShip( int _userID ):ShipObject( _userID )
 	{
 
 	}
 
-	void Init( int _userID );
+	void Init();
 
 };
 

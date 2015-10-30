@@ -90,7 +90,7 @@ public:
 
 private:
 	/**
-	*@brief	行動選択による戦闘の結果
+	*@brief	行動選択による結果
 	*@details	戦闘結果は、各駒１つの行動選択の結果なので、判定としては下記の３種類になる。
 	*@param[in]	_playerIndex	プレイヤーの配列での指数
 	*@return 戦闘結果
@@ -99,6 +99,19 @@ private:
 	*@retval 2	相手に索敵された
 	*/
 	int ResultOfAction( const int _playerIndex );
+
+	/**
+	*@brief	戦闘処理の判定
+	*@details	戦闘処理の判定をした際のステージや駒に情報の更新をしてやる
+	*@param[out] _iReturn
+	*@param[in]	_plIndex
+	*@param[in]	_column
+	*@param[in]	_line
+	*@param[in]	_selectNum
+	*@param[in]	_shipNum
+	*/
+	void JudgmentOfActionProcess( int& _iReturn, const int _plIndex, int& _column, int& _line,
+									const int _selectNum, const int _shipNum );
 
 	/**
 	*@brief	戦闘結果による戦況判定

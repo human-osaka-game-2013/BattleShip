@@ -77,14 +77,14 @@ public:
 	*@brief	コンストラクタ
 	*@details	駒配列の初期化とCGameObjectのコンストラクタを呼び出し
 	*/
-	ShipObject::ShipObject() : CGameObject(){
+	ShipObject::ShipObject( int _userID ) : CGameObject(){
 		for( int iColumn = 0; iColumn < _SHIP_ARRAY_INDEX_; iColumn++ ){
 			for( int iLine = 0; iLine < _SHIP_ARRAY_INDEX_; iLine++ )	{
 				m_shipArray[iColumn][iLine]=0;
 				m_actionArray[iColumn][iLine]=0;
 				m_searchArray[iColumn][iLine]=0;
 				m_moveArray[iColumn][iLine]=0;
-
+				m_userID = _userID;
 			}
 		}
 		SetDirection( _SHIP_INIT_DIR_ );
@@ -93,7 +93,7 @@ public:
 	/**
 	*@brief	初期化
 	*/
-	virtual void Init( int _userID ) = 0;
+	virtual void Init() = 0;
 
 	void Control(){};
 

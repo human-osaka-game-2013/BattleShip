@@ -35,8 +35,6 @@ bool GameScene::Init()
 	m_stateManager->SetDraw( m_pDrawManager );	///<	描画管理クラスのアドレスセット
 	m_stateManager->SetMouse( m_pMouse );		///<	マウス管理クラスのアドレスセット
 	m_stateManager->StateInit();
-
-	
 	
 	return true;
 }
@@ -44,7 +42,11 @@ bool GameScene::Init()
 
 int GameScene::Control()
 {
-	m_stateManager->StateCotrol();
+	if(m_stateManager->StateCotrol() == -1)
+	{
+		return 1;
+	}
+	
 	if( m_stateManager->GetConnectFlag() )
 	{
 #ifdef _NOT_USE_COM_
@@ -54,7 +56,7 @@ int GameScene::Control()
 		}
 
 #else
-		if(CommunicationProcessing())//通信が完了した場合
+		if( CommunicationProcessing() )	//通信が完了した場合
 		{
 			m_stateManager->SetConnectFlag( false );
 		}		

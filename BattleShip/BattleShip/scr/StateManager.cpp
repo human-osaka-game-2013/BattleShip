@@ -324,6 +324,7 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 					
 				}
 			}
+			//else if(  )
 
 		}
 		//	行
@@ -337,23 +338,16 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 				int tempA = 0, tempR = 200, tempG = 200, tempB = 200;
 				int tempArrayData = m_pStageObject->m_stageArray[ip][ic][il];
 			
-				if( tempArrayData != StageObject::_CONDITION_NONE_ )	///<駒のある場所は塗りつぶす
+				if( StageObject::ConditionOfData(tempArrayData) != StageObject::_CONDITION_NONE_ )	///<駒のある場所は塗りつぶす
 				{
-					/**
-					*@todo	現在はテスト用に相手駒の配置場所表示している。
-					*/
-					if( ip != m_playerID-1 )	
-					{
-						tempA = 255;
-					}
-
+					
 					//	損傷状態桁チェック
-					switch( (tempArrayData/10)%10 )
+					switch( StageObject::ConditionOfData(tempArrayData) )
 					{
 					case StageObject::_CONDITION_NONE_:
-						
+					case StageObject::_CONDITION_NOMAL_:	
 						//	範囲指定桁チェック
-						switch( tempArrayData/100 )
+						switch( StageObject::SelectOfData(tempArrayData) )
 						{
 						case StageObject::_SELECT_TRUE_:	///<選択されているマス
 							tempA = 100;
@@ -376,10 +370,9 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 						}
 
 						break;
-					case StageObject::_CONDITION_NOMAL_:
-						break;
+					
 					case StageObject::_CONDITION_DAMAGE_:
-						tempR = 255, tempG = 100, tempB = 100;
+						tempA = 255, tempR = 255, tempG = 100, tempB = 100;
 						break;
 
 					}

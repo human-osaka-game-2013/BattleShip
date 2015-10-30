@@ -1,4 +1,7 @@
-
+/**
+*@file	BoardOfFrame.h
+*@author	‹T“c
+*/
 
 #ifndef _BOARDOFFRAME_H_
 #define _BOARDOFFRAME_H_

@@ -80,11 +80,16 @@ int StageObject::CheckStageBlock( int _player, const int _column, const int _lin
 			if( bStageOutside ){
 				if( _array[iColumn][iLine] != _CONDITION_NONE_ )
 					return 1;	///<	ステージ外にブロックの実体があった場合
-			} else if( m_stageArray[_player][iStageCol][iStageLine] != _CONDITION_NONE_ )	{
-				if( (m_stageArray[_player][iStageCol][iStageLine])%10 == _shipNum )
+			}
+			//ステージの中だった場合
+			else if( ConditionOfData(m_stageArray[_player][iStageCol][iStageLine]) != _CONDITION_NONE_ ){
+				//	駒が指定先に存在した
+				if( ShipTypeOfData(m_stageArray[_player][iStageCol][iStageLine]) == _shipNum ){
 					continue;	///<	自分と同じ艦種（現時点では自分自身）の場合
-				if( _array[iColumn][iLine] != _CONDITION_NONE_ )	
+				}
+				else if( _array[iColumn][iLine] != _CONDITION_NONE_ ){
 					return 2;	///<	指定したブロックの範囲にすでにステージ上で(自駒以外の)何かが存在していた場合
+				}
 			}
 		}
 	}
@@ -115,7 +120,7 @@ int StageObject::CheckRangeOnStage(  int& _column, int& _line,
 			{
 				if(m_stageBlock[_player][iStageCol][iStageLine].HitBlockCheck( _x, _y ))
 				{
-					int iHitResult = m_stageArray[_player][iStageCol][iStageLine] /100;
+					int iHitResult = SelectOfData(m_stageArray[_player][iStageCol][iStageLine]);
 					switch(iHitResult)
 					{
 					case 0:
@@ -156,18 +161,21 @@ bool StageObject::SetStageToRange( int _player, ShipObject* _ship, const int(*_a
 
 			//	指定したブロック範囲がステージからはみ出た場合
 			if( bStageOutside ){
-				if( _array[iColumn][iLine] != _CONDITION_NONE_ ){
-					continue;	///<	ステージ外に指定範囲の実体があると、範囲のセットのしようが無いので飛ばす
-				}
+				continue;	///<	ステージ外に指定範囲の実体があると、範囲のセットのしようが無いので飛ばす
+	
+			}
+			//	指定されてない
+			if(_array[iColumn][iLine] == _CONDITION_NONE_)
+			{
+				continue;
 			}
 			//	指定範囲と今チェックしているブロックに自分の駒以外の情報があった場合（中心座標は今は調べる必要はない）
-			else if( (m_stageArray[_player][iStageCol][iStageLine]%10) != _shipCount) 
+			else if( ShipTypeOfData(m_stageArray[_player][iStageCol][iStageLine]) != _shipCount && 
+				(m_stageArray[_player][iStageCol][iStageLine]/10) != _CONDITION_NONE_ ) 
 			{
-				if( _array[iColumn][iLine] != _CONDITION_NONE_ ){
-					SetRange( _player+1, iStageCol, iStageLine, _SELECT_FALSE_ );
-				}
+				SetRange( _player+1, iStageCol, iStageLine, _SELECT_FALSE_ );	
 			}
-			else if( _array[iColumn][iLine] != _CONDITION_NONE_ )
+			else
 			{
 				//----ここで移動後の予定位置（での駒とステージ）のチェックも行う----
 				//	移動先は移動出来ない場所だった場合	(_playerに1足しているのは（配列の指数から）元々のプレイヤーIDに直す為)
@@ -206,7 +214,7 @@ bool StageObject::SetShip( int _player, const int _column, const int _line, Ship
 				bStageOutside = true;
 			}
 			//	ステージ内で、駒がなければ
-			if( !bStageOutside &&  m_stageArray[_player][iStageCol][iStageLine]%100 == _CONDITION_NONE_ ){
+			if( !bStageOutside ){
 				if( _ship->m_shipArray[iColumn][iLine] != _CONDITION_NONE_ )
 					m_stageArray[_player][iStageCol][iStageLine] = _ship->m_shipArray[iColumn][iLine];
 			}
@@ -243,9 +251,9 @@ bool StageObject::SetRange( int _player, const int _column, const int _line, con
 	_player--;	///<	配列指数用に直す
 
 	//	ステージ内で、今調べてる配列情報の中身が0じゃ無かったら（駒や攻撃などの範囲情報があれば）
-	if( (m_stageArray[_player][_column][_line] / 100) != _CONDITION_NONE_ ){
+	if( SelectOfData(m_stageArray[_player][_column][_line]) != _CONDITION_NONE_ ){
 		//        3桁目は選択情報なので、選択情報だけ消せる様にしている
-		m_stageArray[_player][_column][_line] -= 100*(m_stageArray[_player][_column][_line]/100);
+		m_stageArray[_player][_column][_line] -= 100*SelectOfData(m_stageArray[_player][_column][_line]);
 		m_stageArray[_player][_column][_line] += 100*_setType;
 	}
 	else{
@@ -280,9 +288,9 @@ bool StageObject::SetRange( int _player, const int _column, const int _line,
 				{
 				case GameState::_SELECT_ACTION_:
 					//	ステージ内で、今調べてる配列情報の中身が0じゃ無かったら（駒や攻撃などの範囲情報があれば）
-					if( (m_stageArray[_player][_column][_line] / 100) != _CONDITION_NONE_ ){
+					if( SelectOfData(m_stageArray[_player][_column][_line]) != _CONDITION_NONE_ ){
 						//        3桁目は選択情報なので、選択情報だけ消せる様にしている
-						m_stageArray[_player][iStageCol][iStageLine] -= 100*(m_stageArray[_player][iStageCol][iStageLine]/100);
+						m_stageArray[_player][iStageCol][iStageLine] -= 100*SelectOfData(m_stageArray[_player][iStageCol][iStageLine]);
 						m_stageArray[_player][iStageCol][iStageLine] += 100*(_array[iColumn][iLine]+(_ACTION_NOMAL_-1));
 					}
 					else{
@@ -292,9 +300,9 @@ bool StageObject::SetRange( int _player, const int _column, const int _line,
 					break;
 				case GameState::_SELECT_SEARCH_:
 					//	ステージ内で、今調べてる配列情報の中身が0じゃ無かったら（駒や攻撃などの範囲情報があれば）
-					if( (m_stageArray[_player][iStageCol][iStageLine] / 100) != _CONDITION_NONE_ ){
+					if( SelectOfData(m_stageArray[_player][iStageCol][iStageLine]) != _CONDITION_NONE_ ){
 						//        3桁目は選択情報なので、選択情報だけ消せる様にしている
-						m_stageArray[_player][iStageCol][iStageLine] -= 100*(m_stageArray[_player][iStageCol][iStageLine]/100);
+						m_stageArray[_player][iStageCol][iStageLine] -= 100*SelectOfData(m_stageArray[_player][iStageCol][iStageLine]);
 						m_stageArray[_player][iStageCol][iStageLine] += 100*(_array[iColumn][iLine]+(_SEARCH_NOMAL_-1));
 					}
 					else{
@@ -363,10 +371,12 @@ bool StageObject::RelocationShip( int _player, const int _column, const int _lin
 				iStageLine >= _STAGE_LINE_MAX_ || iStageLine < 0 ) {
 				bStageOutside = true;
 			}
-			//	ステージ内で、駒がなければ
-			if( !bStageOutside &&  m_stageArray[_player][iStageCol][iStageLine]%100 == _shipNum )
+			/*	ステージ内であり、
+				指定した駒のデータがある場合（駒自体は実在していること）
+			*/
+			if( !bStageOutside && ShipTypeOfData(m_stageArray[_player][iStageCol][iStageLine]) == _shipNum )
 			{
-				m_stageArray[_player][iStageCol][iStageLine] -= m_stageArray[_player][iStageCol][iStageLine]%100;
+				m_stageArray[_player][iStageCol][iStageLine] -= ShipOfData(m_stageArray[_player][iStageCol][iStageLine]);
 			}
 		}
 
@@ -383,9 +393,8 @@ bool StageObject::RelocationShip( int _player, const int _column, const int _lin
 				bStageOutside = true;
 			}
 			//	ステージ内で、駒がなければ
-			if( !bStageOutside &&  m_stageArray[_player][iStageCol][iStageLine]%100 == 0 ){
-				if( _ship->m_shipArray[iColumn][iLine] != _CONDITION_NONE_ )
-					m_stageArray[_player][iStageCol][iStageLine] += _ship->m_shipArray[iColumn][iLine];
+			if( !bStageOutside ){
+				m_stageArray[_player][iStageCol][iStageLine] += _ship->m_shipArray[iColumn][iLine];
 			}
 		}
 	}
@@ -396,25 +405,35 @@ bool StageObject::RelocationShip( int _player, const int _column, const int _lin
 	//	駒の基準点（中心点）を予め算出させておく
 	float tempW = _BLOCK_WIDTH_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
 	float tempH = _BLOCK_HEIGHT_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
-	float tempX = _line*tempW + tempW*1.5f ;		
-	float tempY = _column*tempH + tempH*1.5f;
+	float tempX;	
+	float tempY;
+	if(_player == 0)	//プレイヤーIDが1（=配列の指数だと0）だったら
+	{
+		tempX = _line*tempW + tempW*1.5f ;		
+		tempY = _column*tempH + tempH*1.5f;
+	}
+	else if(_player == 1)
+	{
+		tempX = (_line+_STAGE_HEIGHT_MAX_)*tempW + tempW*1.5f ;
+		tempY = _column*tempH + tempH*1.5f;
+	}
 	_ship->SetPosition( tempX, tempY, 0.5f );
-
+	
 	return true;
 }
 
 void StageObject::ResetSelect()
 {
-	//        プレイヤー数
+	//	プレイヤー数
 	for( int iPlayer=0; iPlayer<_PLAYER_NUM_; iPlayer++ )
 	{	
-		//        行
+		//	行
 		for( int iColumn=0; iColumn<_STAGE_COLUMN_MAX_; iColumn++ )
 		{	 
-			//        列
+			//	列
 			for( int iLine=0; iLine<_STAGE_LINE_MAX_; iLine++ )
 			{	
-				//        3桁目は選択情報なので、選択情報だけ消せる様にしている
+				//	3桁目は選択情報なので、選択情報だけ消せる様にしている
 				m_stageArray[iPlayer][iColumn][iLine] -= 100*(m_stageArray[iPlayer][iColumn][iLine]/100);
 			}		
 		}	
@@ -434,12 +453,12 @@ bool StageObject::MargeStage( ConnectStage* _pStage, const int _playerID, const 
 			for( int iLine = 0; iLine < _STAGE_LINE_MAX_; iLine++ ){
 			//	相手側のステージ
 			m_stageArray[_enemyID-1][iColumn][iLine] = 				
-				( _pStage->m_stageArray[_enemyID-1][iColumn][iLine]%100) +
-				( (m_stageArray[_enemyID-1][iColumn][iLine]/100)*100 );
+				( ShipOfData(_pStage->m_stageArray[_enemyID-1][iColumn][iLine])) +
+				( SelectOfData(m_stageArray[_enemyID-1][iColumn][iLine])*100 );
 			//	自分側のステージ
 			m_stageArray[_playerID-1][iColumn][iLine] = 				
-				( m_stageArray[_playerID-1][iColumn][iLine]%100) +
-				( (_pStage->m_stageArray[_playerID-1][iColumn][iLine]/100)*100 );
+				( ShipOfData(m_stageArray[_playerID-1][iColumn][iLine])) +
+				( SelectOfData(_pStage->m_stageArray[_playerID-1][iColumn][iLine])*100 );
 			}
 		}
 	}

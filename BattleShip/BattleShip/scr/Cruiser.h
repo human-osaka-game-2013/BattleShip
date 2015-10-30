@@ -15,12 +15,12 @@ public:
 	/**
 	*@brief コンストラクタ
 	*/
-	Cruiser::Cruiser():ShipObject()
+	Cruiser::Cruiser( int _userID ):ShipObject( _userID )
 	{
 
 	}
 
-	void Init( int _userID );
+	void Init();
 
 };
 
