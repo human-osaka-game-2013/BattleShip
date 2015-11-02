@@ -1,19 +1,12 @@
-/**
-*@file	BoardOfFrame.h
-*@author	亀田
-*/
-
-#ifndef _BOARDOFFRAME_H_
-#define _BOARDOFFRAME_H_
+#ifndef _BUTTON_H_
+#define _BUTTON_H_
 
 #include "gameObject.h"
 
 /**
-*@brief	盤面のフレームオブジェクトクラス（描画用）
-*@details	ステージのUI要素などを別のクラスとして持たせる。@n
-			ステージやプレイヤー情報は必要に応じてメンバからもらう。
+*@brief	簡易なボタンオブジェクト用クラス
 */
-class BoardOfFrame : public CGameObject
+class Button: public CGameObject
 {
 private:
 	float fWidth ,fHeight;
@@ -21,9 +14,9 @@ private:
 	
 public:
 	/**
-	*@brief	コンストラクタ
+	*@brief コンストラクタ
 	*/
-	BoardOfFrame() : CGameObject()
+	Button() : CGameObject()
 	{
 
 	}
@@ -36,6 +29,7 @@ public:
 		SetPosition(_fx, _fy, 0.5f);
 		fHeight = _fHeight;
 		fWidth = _fWidth;
+		SetColor( 255, 255, 255, 255 );
 	}
 	void Control(){};
 	void Draw(){};
@@ -48,7 +42,15 @@ public:
 	inline int GetGreen()	{ return iG; }
 	inline int GetBlue()	{ return iB; }
 
-	void SetColor( int _iA, int _iR, int _iG, int _iB )
+	void GetColor( int& _iA, int& _iR, int& _iG, int& _iB )
+	{
+		_iA = iA;
+		_iR	= iR;
+		_iG	= iG;
+		_iB	= iB;
+	}
+
+	void SetColor( const int& _iA, const int& _iR, const int& _iG, const int& _iB )
 	{
 		iA = _iA;
 		iR = _iR;
@@ -75,5 +77,6 @@ public:
 		return false;
 	}
 };
+
 
 #endif

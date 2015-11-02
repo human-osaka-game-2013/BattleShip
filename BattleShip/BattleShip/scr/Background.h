@@ -7,9 +7,10 @@
 #define _BACKGROUND_H_
 
 #include "gameObject.h"
+#include "Window.h"
 
 /**
-*@brief	盤面のフレームオブジェクトクラス
+*@brief	背景オブジェクトクラス
 */
 class Background : public CGameObject
 {
@@ -17,6 +18,14 @@ private:
 	float fWidth ,fHeight;
 
 public:
+	/**
+	*@brief	コンストラクタ
+	*/
+	Background() : CGameObject()
+	{
+
+	}
+
 	/**
 	*@brief	初期化
 	*/

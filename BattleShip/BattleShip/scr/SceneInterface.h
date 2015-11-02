@@ -70,6 +70,10 @@ public:
 	*/
 	int GetSceneID()	{ return m_sceneID; }	
 
+	/**
+	*@brief	シーンIDを更新
+	*/
+	void SetSceneID( int _scene ){ m_sceneID = _scene; }
 };
 
 #endif

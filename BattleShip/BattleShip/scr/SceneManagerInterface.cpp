@@ -1,4 +1,5 @@
 #include "GameScene.h"
+#include "TitleScene.h"
 #include "SceneManage.h"
 
 //	ÉVÅ[Éìä«óù
@@ -19,14 +20,14 @@ void CSceneManager::Manage ()
 		{
 		case SCENE_BATTLE:
 			CLASS_DELETE( m_sceneObj );
-			m_sceneObj = new GameScene( iCurrentScene, m_pRenderManager, m_pDrawManager, m_pKey, m_pMouse);
+			m_sceneObj = new GameScene( iCurrentScene, m_pRenderManager, m_pDrawManager, m_pKey, m_pMouse );
 			break;
 
-		//case RESULT:
-		//	CLASS_DELETE( m_sceneObj );
-		//	m_sceneObj = new CResult( iCurrentScene );
-		//	
-		//	break;
+		case SCENE_TITLE:
+			CLASS_DELETE( m_sceneObj );
+			m_sceneObj = new TitleScene( iCurrentScene, m_pRenderManager, m_pDrawManager, m_pKey, m_pMouse );
+			
+			break;
 		}
 		
 		UpdateChangeFlag ( true );

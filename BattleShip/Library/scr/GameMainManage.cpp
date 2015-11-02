@@ -34,6 +34,7 @@ void CSceneManager::SceneRoutingManage ()
 		{
 			iCurrentScene = SCENE_NONE+1;
 		}
+		m_sceneObj->SetSceneID( iCurrentScene );//	変更するシーンIDを入れる	
 		UpdateChangeFlag(true);	//	変更フラグを立てる
 		break;
 	}

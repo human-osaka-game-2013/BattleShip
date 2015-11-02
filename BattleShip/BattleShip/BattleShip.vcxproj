@@ -99,6 +99,7 @@
     <ClInclude Include="scr\Background.h" />
     <ClInclude Include="scr\BattleShip.h" />
     <ClInclude Include="scr\BoardOfFrame.h" />
+    <ClInclude Include="scr\Button.h" />
     <ClInclude Include="scr\Connect.h" />
     <ClInclude Include="scr\ConnectStruct.h" />
     <ClInclude Include="scr\Cruiser.h" />
@@ -109,6 +110,7 @@
     <ClInclude Include="scr\Player.h" />
     <ClInclude Include="scr\Result.h" />
     <ClInclude Include="scr\SceneInterface.h" />
+    <ClInclude Include="scr\ScreenMask.h" />
     <ClInclude Include="scr\Selection.h" />
     <ClInclude Include="scr\SetShip.h" />
     <ClInclude Include="scr\ShipObject.h" />

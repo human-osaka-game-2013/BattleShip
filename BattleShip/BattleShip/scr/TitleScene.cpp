@@ -4,3 +4,84 @@
 */
 
 #include "TitleScene.h"
+
+bool TitleScene::Init()
+{
+	m_background.Init();
+	m_screenMask.Init();
+	m_button.Init( _BUTTON_POS_X_, _BUTTON_POS_Y_,
+					_BUTTON_WIDTH_, _BUTTON_HEIGHT_ );
+	return true;
+}
+
+
+int TitleScene::Control()
+{
+	float tempX = (float)m_pMouse->GetCursorPosX();	///<	マウス座標の更新
+	float tempY = (float)m_pMouse->GetCursorPosY();	///<	マウス座標の更新
+	int	result = 0;
+	static bool stopFadeFlag = false; 
+
+	//	ゲームスタートボタン上にカーソルがあったら
+	if( m_button.HitBlockCheck( tempX, tempY ) && !m_changeSceneFlag )
+	{
+		//	右クリック
+		if(m_pMouse->MouseStCheck( MOUSE_L, PUSH ))
+		{
+			m_changeSceneFlag = true;
+		}
+	}
+	//	シーンが代わる時
+	if( m_changeSceneFlag )
+	{
+		m_changeSceneTime -= 1.f;
+		if( stopFadeFlag == false)
+		{
+			stopFadeFlag = m_screenMask.FadeOut( 3 );
+		}
+
+		//	シーン変更
+		if( m_changeSceneTime <= 0.f || stopFadeFlag )
+		{
+			result = 1;
+		}
+	}
+	return result;
+}
+
+
+void TitleScene::Draw()
+{
+	float tempX, tempY;
+	int tempA, tempR, tempG, tempB;
+
+	//	背景描画
+	m_background.GetPosition( &tempX, &tempY);
+	m_pDrawManager->VertexDraw( _TEX_TITLE_BACK_, tempX, tempY, 
+		m_background.GetWidth(),  m_background.GetHeight(),
+		0.f, 0.f, 1.f, 1.f);
+	
+	//	ゲームスタートボタン描画
+	m_button.GetPosition( &tempX, &tempY);
+	m_button.GetColor( tempA, tempR, tempG, tempB );
+	m_pDrawManager->VertexDraw( _TEX_STARTBUTTON_, tempX, tempY, 
+		m_button.GetWidth(),  m_button.GetHeight(),
+		0.f, 0.f, 1.f, 1.f, tempA, tempR, tempG, tempB);
+
+	//	フェード用のマスク描画
+	m_screenMask.GetPosition( &tempX, &tempY);
+	m_screenMask.GetColor( tempA, tempR, tempG, tempB );
+	m_pDrawManager->VertexDraw( _TEX_TITLEMASK_, tempX, tempY, 
+		m_screenMask.GetWidth(),  m_screenMask.GetHeight(),
+		0.f, 0.f, 1.f, 1.f,	tempA, tempR, tempG, tempB);
+	
+	
+}
+
+
+bool TitleScene::Free()
+{
+
+
+	return true;
+}

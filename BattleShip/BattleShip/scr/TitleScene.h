@@ -8,10 +8,25 @@
 
 #include "SceneInterface.h"
 #include "Background.h"
+#include "ScreenMask.h"
+#include "Button.h"
+
+#define _BUTTON_POS_X_  400.0f
+#define _BUTTON_POS_Y_	420.0f
+#define _BUTTON_WIDTH_	226.0f
+#define _BUTTON_HEIGHT_	50.0f
+#define _CHANGE_TIME_	3.0f*60.f
 
 
 class TitleScene : public CScene
 {
+private:
+	Background	m_background;	///<背景オブジェクト
+	ScreenMask	m_screenMask;	///<画面遷移時のフェード用
+	Button		m_button;		///<ボタンオブジェクト（現時点ではゲームをスタートする時に使用）
+	bool		m_changeSceneFlag;
+	float		m_changeSceneTime;
+
 public:
 	/**
 	*@brief	コンストラクタ
@@ -26,9 +41,38 @@ public:
 		CDrawManager*	const _pDrawManager, CKey* const _pKey, CMouse* const m_pMouse)
 		: CScene( _id, _pRenderManager,	_pDrawManager, _pKey, m_pMouse)
 	{
-		
+		m_changeSceneFlag = false;
+		m_changeSceneTime = _CHANGE_TIME_;
+
+		Init();
 	}
 
+	/**	
+	*@brief 解放処理
+	*/
+	bool Free();
+
+	/**
+	*@brief	ゲームメインの初期化関数
+	*@return	初期化の結果
+	*@retval true	成功
+	*@retval false	初期化に何らかの失敗があった場合
+	*/
+	bool Init();
+
+	/**
+	*@brief	ゲームメインの基本処理の関数
+	*@return	シーン変更をする判断の値
+	*@retval 0	シーン変更無し
+	*@retval 1	シーン変更有り
+	*/
+	int	 Control();
+
+	/**
+	*@brief	2D描画
+	*/
+	void Draw();
+	void Render(){};
 
 };
 

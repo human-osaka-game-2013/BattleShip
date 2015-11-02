@@ -13,5 +13,9 @@ bool CDrawManager::AllLoadTexture ()
 	LoadTexture ( "../BattleShip/texture/Block.png", _TEX_BLOCK_,	0, 255, 255 );
 	LoadTexture ( "../BattleShip/texture/BlockFrame.png", _TEX_BLOCKFRAME_,	0, 255, 255 );
 	LoadTexture ( "../BattleShip/texture/tab_1.png", _TEX_TABFRAME_,	0, 255, 255 );
+	LoadTexture ( "../BattleShip/texture/Title.jpg", _TEX_TITLE_BACK_,	0, 255, 255 );
+	LoadTexture ( "../BattleShip/texture/start.bmp", _TEX_STARTBUTTON_,	0, 255, 255 );
+	LoadTexture ( "../BattleShip/texture/TitleMask.bmp", _TEX_TITLEMASK_,	0, 255, 255 );
+	
 	return true;
 }

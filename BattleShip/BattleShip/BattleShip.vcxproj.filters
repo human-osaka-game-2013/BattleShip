@@ -49,6 +49,12 @@
     <Filter Include="ヘッダー ファイル\Title">
       <UniqueIdentifier>{05aba9dc-45d7-4012-a62b-58ef0bd30a9e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Game\Object">
+      <UniqueIdentifier>{b4e7df3a-7e17-4cab-b0b3-c9e0cb904fab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Game\Object">
+      <UniqueIdentifier>{5a1b1f0b-2613-4251-bcd0-a0a5a12e67bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Library\scr\WinMain.cpp">
@@ -72,9 +78,6 @@
     <ClCompile Include="scr\Player.cpp">
       <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
-    <ClCompile Include="scr\ShipObject.cpp">
-      <Filter>ソース ファイル\Ship</Filter>
-    </ClCompile>
     <ClCompile Include="scr\AircraftCarrier.cpp">
       <Filter>ソース ファイル\Ship</Filter>
     </ClCompile>
@@ -86,9 +89,6 @@
     </ClCompile>
     <ClCompile Include="scr\Destroyer.cpp">
       <Filter>ソース ファイル\Ship</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\StageObject.cpp">
-      <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
     <ClCompile Include="scr\StateManager.cpp">
       <Filter>ソース ファイル\State</Filter>
@@ -120,6 +120,12 @@
     <ClCompile Include="scr\TitleScene.cpp">
       <Filter>ソース ファイル\Title</Filter>
     </ClCompile>
+    <ClCompile Include="scr\StageObject.cpp">
+      <Filter>ソース ファイル\Game\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\ShipObject.cpp">
+      <Filter>ソース ファイル\Game\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="scr\AircraftCarrier.h">
@@ -132,9 +138,6 @@
       <Filter>ヘッダー ファイル\Ship</Filter>
     </ClInclude>
     <ClInclude Include="scr\Cruiser.h">
-      <Filter>ヘッダー ファイル\Ship</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\ShipObject.h">
       <Filter>ヘッダー ファイル\Ship</Filter>
     </ClInclude>
     <ClInclude Include="scr\Submarine.h">
@@ -161,13 +164,7 @@
     <ClInclude Include="scr\StateManager.h">
       <Filter>ヘッダー ファイル\State</Filter>
     </ClInclude>
-    <ClInclude Include="scr\BoardOfFrame.h">
-      <Filter>ヘッダー ファイル\Game</Filter>
-    </ClInclude>
     <ClInclude Include="scr\GameScene.h">
-      <Filter>ヘッダー ファイル\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\StageObject.h">
       <Filter>ヘッダー ファイル\Game</Filter>
     </ClInclude>
     <ClInclude Include="scr\Player.h">
@@ -189,7 +186,22 @@
       <Filter>ヘッダー ファイル\Title</Filter>
     </ClInclude>
     <ClInclude Include="scr\Background.h">
-      <Filter>ヘッダー ファイル\Game</Filter>
+      <Filter>ヘッダー ファイル\Game\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\BoardOfFrame.h">
+      <Filter>ヘッダー ファイル\Game\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\StageObject.h">
+      <Filter>ヘッダー ファイル\Game\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\Button.h">
+      <Filter>ヘッダー ファイル\Game\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\ScreenMask.h">
+      <Filter>ヘッダー ファイル\Game\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\ShipObject.h">
+      <Filter>ヘッダー ファイル\Game\Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
