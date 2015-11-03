@@ -23,6 +23,8 @@ bool GameScene::Init()
 		m_Player.push_back( new Player( iCount ));	///<	プレイヤーの初期化
 	}
 	m_background.Init();	///<	背景オブジェクトの初期化
+	m_screenMask.Init();	///<	フェード用オブジェクト初期化
+	m_screenMask.SetColor( 255, 255, 255, 255);//フェードインさせたいのでアルファ値は255で
 
 	m_pStageObject = new( StageObject );		///<	StageObjectオブジェクトを生成
 	m_pStageObject->Init();
@@ -42,11 +44,19 @@ bool GameScene::Init()
 
 int GameScene::Control()
 {
+	static bool fadeInFlag = true;	//ゲーム開始時はフェードインさせる
+
+	
 	if(m_stateManager->StateCotrol() == -1)
 	{
 		return 1;
 	}
 	
+	if( fadeInFlag )
+	{
+		if( m_screenMask.FadeIn(_FADE_IN_TIME_) )
+			fadeInFlag = false;
+	}
 	if( m_stateManager->GetConnectFlag() )
 	{
 #ifdef _NOT_USE_COM_
@@ -69,11 +79,20 @@ int GameScene::Control()
 void GameScene::Draw()
 {
 	float tempX, tempY;
+	int tempA, tempR, tempG, tempB;
+
 	m_background.GetPosition( &tempX, &tempY);
 	m_pDrawManager->VertexDraw( _TEX_BACKGROUND_, tempX, tempY, 
 		m_background.GetWidth(),  m_background.GetHeight(),
 		0.f, 0.f, 1.f, 1.f);
 	m_stateManager->StateDraw( m_pDrawManager );
+
+	//	フェード用のマスク描画
+	m_screenMask.GetPosition( &tempX, &tempY);
+	m_screenMask.GetColor( tempA, tempR, tempG, tempB );
+	m_pDrawManager->VertexDraw( _TEX_TITLEMASK_, tempX, tempY, 
+		m_screenMask.GetWidth(),  m_screenMask.GetHeight(),
+		0.f, 0.f, 1.f, 1.f,	tempA, tempR, tempG, tempB);
 }
 
 //	解放処理

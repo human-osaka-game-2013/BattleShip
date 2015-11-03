@@ -14,7 +14,7 @@
 #include "StateManager.h"
 #include "StageObject.h"
 #include "Player.h"
-
+#include "ScreenMask.h"
 
 /**
 *@brief	戦闘シーンクラス
@@ -31,7 +31,8 @@ private:
 	int				m_playerID;			///<	起動側のプレイヤーID
 	Background		m_background;		///<	背景オブジェクト
 	Connect			m_Connect;			///<	通信デバイスクラス
-
+	ScreenMask		m_screenMask;		///<	画面遷移時のフェード用
+	
 public:
 	/**
 	*@brief	コンストラクタ

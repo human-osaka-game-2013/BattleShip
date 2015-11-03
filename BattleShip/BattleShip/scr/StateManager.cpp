@@ -338,39 +338,40 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 				int tempA = 0, tempR = 200, tempG = 200, tempB = 200;
 				int tempArrayData = m_pStageObject->m_stageArray[ip][ic][il];
 			
-				if( StageObject::ConditionOfData(tempArrayData) != StageObject::_CONDITION_NONE_ )	///<駒のある場所は塗りつぶす
+				//	選択マスor損傷マスは見えるようにする
+				if( StageObject::SelectOfData(tempArrayData) != StageObject::_SEARCH_NOMAL_ ||
+					StageObject::ConditionOfData(tempArrayData) == StageObject::_CONDITION_DAMAGE_)
 				{
-					
+						
+					//	範囲指定桁チェック
+					switch( StageObject::SelectOfData(tempArrayData) )
+					{
+					case StageObject::_SELECT_TRUE_:	///<選択されているマス
+						tempA = 100;
+						break;
+					case StageObject::_SELECT_FALSE_:	///<駒が置けないor選択範囲が何かに接触しているマス
+						tempA = 100, tempR = 255, tempG = 0, tempB = 0;
+						break;
+					case StageObject::_SEARCH_NOMAL_:
+						tempA = 100, tempR = 0, tempG = 255, tempB = 0;
+						break;
+					case StageObject::_SEARCH_ALL_:
+						tempA = 255, tempR = 0, tempG = 255, tempB = 0;
+						break;
+					case StageObject::_ACTION_NOMAL_:
+						tempA = 100, tempR = 0, tempG = 0, tempB = 255;
+						break;
+					case StageObject::_ACTION_ALL_:
+						tempA = 255, tempR = 0, tempG = 0, tempB = 255;
+						break;
+					}
+
 					//	損傷状態桁チェック
 					switch( StageObject::ConditionOfData(tempArrayData) )
 					{
 					case StageObject::_CONDITION_NONE_:
-					case StageObject::_CONDITION_NOMAL_:	
-						//	範囲指定桁チェック
-						switch( StageObject::SelectOfData(tempArrayData) )
-						{
-						case StageObject::_SELECT_TRUE_:	///<選択されているマス
-							tempA = 100;
-							break;
-						case StageObject::_SELECT_FALSE_:	///<駒が置けないor選択範囲が何かに接触しているマス
-							tempA = 100, tempR = 255, tempG = 0, tempB = 0;
-							break;
-						case StageObject::_SEARCH_NOMAL_:
-							tempA = 100, tempR = 0, tempG = 255, tempB = 0;
-							break;
-						case StageObject::_SEARCH_ALL_:
-							tempA = 255, tempR = 0, tempG = 255, tempB = 0;
-							break;
-						case StageObject::_ACTION_NOMAL_:
-							tempA = 100, tempR = 0, tempG = 0, tempB = 255;
-							break;
-						case StageObject::_ACTION_ALL_:
-							tempA = 255, tempR = 0, tempG = 0, tempB = 255;
-							break;
-						}
-
+					case StageObject::_CONDITION_NOMAL_:
 						break;
-					
 					case StageObject::_CONDITION_DAMAGE_:
 						tempA = 255, tempR = 255, tempG = 100, tempB = 100;
 						break;

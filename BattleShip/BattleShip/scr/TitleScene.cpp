@@ -37,7 +37,7 @@ int TitleScene::Control()
 		m_changeSceneTime -= 1.f;
 		if( stopFadeFlag == false)
 		{
-			stopFadeFlag = m_screenMask.FadeOut( 3 );
+			stopFadeFlag = m_screenMask.FadeOut(_FADE_OUT_TIME_);
 		}
 
 		//	ƒV[ƒ“•ÏX

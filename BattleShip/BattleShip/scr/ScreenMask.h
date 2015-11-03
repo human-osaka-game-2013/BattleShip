@@ -9,6 +9,9 @@
 #include "gameObject.h"
 #include "Window.h"
 
+#define _FADE_OUT_TIME_	3
+#define _FADE_IN_TIME_	2
+
 /**
 *@brief	画面遷移時のフェード用クラス
 */
@@ -37,6 +40,7 @@ public:
 		fWidth = WIDTH;
 		SetColor( 0, 255, 255, 255 );
 	}
+
 	void Control(){};
 	void Draw(){};
 	void Free(){};
@@ -64,21 +68,56 @@ public:
 		iB = _iB;
 	}
 
-	bool FadeOut( const int _subAlpha )
+	/**
+	*@brief	フェードアウト関数
+	*@details	255を超えてしまってはいけない為、255を超えない様に増加させています。
+				（255にある程度近づけば強制的に255で固定にします。）
+	*@param[in] _alpha	増加させたいアルファ値
+	*@return	フェードアウトの結果
+	*@retval false	まだフェードアウトしきっていない（アルファ値が255未満）
+	*@retval true	フェードアウトしきった（アルファ値を255に達した）
+	*/
+	bool FadeOut( const int _alpha )
 	{
 		bool result = false;
 
-		if( iA + _subAlpha <= 255 )
+		if( iA + _alpha < 255 )
 		{
-			iA += _subAlpha;
+			iA += _alpha;
 		}
 		else
 		{
+			iA = 255;
 			result = true;
 		}
 		return result;
 	}
 	
+	/**
+	*@brief	フェードイン関数
+	*@details	0を超えてしまってはいけない為、0を下回らない様に減少させています。
+				（0にある程度近づけば強制的に0で固定にします。）
+	*@param[in] _alpha	減少させたいアルファ値
+	*@return	フェードインの結果
+	*@retval false	まだフェードインしきっていない（アルファ値が0以上）
+	*@retval true	フェードアウトしきった（アルファ値が0に達した）
+	*/
+	bool FadeIn( const int _alpha )
+	{
+		bool result = false;
+
+		if( iA - _alpha > 0 )
+		{
+			iA -= _alpha;
+		}
+		else
+		{
+			iA = 0;
+			result = true;
+		}
+		return result;
+	}
+
 };
 
 
