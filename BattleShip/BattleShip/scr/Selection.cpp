@@ -34,11 +34,18 @@ int Selection::Control()
 {
 	m_tempX = (float)m_pMouse->GetCursorPosX();
 	m_tempY = (float)m_pMouse->GetCursorPosY();
+	
 
 	if( !m_StateCompFlag )
 	{
 		if( !m_tabSelectFlag )	///<	タブがまだ選ばれていない場合
-		{	
+		{
+			if( m_pPlayer[m_playerID-1]->CheckDestroy( static_cast<ShipObject::_SHIP_TYPE_NUM_>( m_ShipCount) ) )
+			{
+				MessageBoxA(0,"この艦はすでに轟沈しています。\n対戦相手の選択までお待ち下さい。",NULL,MB_OK);
+				m_connectFlag = true;	///<	通信フラグを立てて通信の準備に移る
+				m_StateCompFlag = true;	///<	行動選択自体は完了したので、フラグを立てる
+			}
 			m_tabSelectFlag = TabCheck();
 		}
 		else if( !m_areaSelectFlag )	///<	対象エリアなどの選択が終わっていない場合

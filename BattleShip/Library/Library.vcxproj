@@ -76,6 +76,7 @@
   <ItemGroup>
     <ClCompile Include="scr\AllocateHierarchy.cpp" />
     <ClCompile Include="scr\Device.cpp" />
+    <ClCompile Include="scr\DirectXFont.cpp" />
     <ClCompile Include="scr\DrawManager.cpp" />
     <ClCompile Include="scr\DrawProcess.cpp" />
     <ClCompile Include="scr\FuncDraw.cpp" />
@@ -99,7 +100,7 @@
     <ClInclude Include="scr\AllInput.h" />
     <ClInclude Include="scr\AllocateHierarchy.h" />
     <ClInclude Include="scr\device.h" />
-    <ClInclude Include="scr\DrawFunc.h" />
+    <ClInclude Include="scr\DirectXFont.h" />
     <ClInclude Include="scr\DrawManager.h" />
     <ClInclude Include="scr\DrawStructList.h" />
     <ClInclude Include="scr\gameObject.h" />

@@ -8,6 +8,7 @@
 
 #include "lib_head.h"
 #include "DrawStructList.h"
+#include "DirectXFont.h"
 
 // テクスチャの番号とテクスチャ全体の縦横の大きさ
 struct TEXTUREINFO
@@ -22,7 +23,6 @@ struct TEXTUREINFO
 // 使いたいテクスチャがあれば列挙子内に追加していく
 enum TEXTURES
 {
-
 	_TEX_BACKGROUND_,
 	_TEX_AIRCARRIER_,
 	_TEX_BATTLESHIP_,
@@ -36,6 +36,8 @@ enum TEXTURES
 	_TEX_TITLE_BACK_,
 	_TEX_STARTBUTTON_,
 	_TEX_TITLEMASK_,
+	_TEX_GAMEMASK_,
+	_TEX_GAMELOG_,
 	_TEXTURE_MAX_
 };
 
@@ -50,6 +52,8 @@ private:
 	TEXTUREINFO m_TextureInfo [_TEXTURE_MAX_];	///<テクスチャ情報格納配列
 	IDirect3DDevice9* const m_pD3Device;		///<D3Dデバイスポインタ
 
+public:
+	DirectXFont m_dxFont;	///<DirectFont
 
 public:
 	/**

@@ -41,6 +41,11 @@ void StateManager::StateInit()
 	m_PlayerFrame[0].Init( _POS_PLAYER1FRAME_, _SIZE_PLAYERFRAME_ );
 	m_PlayerFrame[1].Init( _POS_PLAYER2FRAME_, _SIZE_PLAYERFRAME_ );
 
+	//	ゲームログの初期化
+	int plIndex = m_playerID%2;	
+	m_gameLog.SetPosition( static_cast<long>( m_PlayerFrame[plIndex].GetPositionX() ), static_cast<long>( m_PlayerFrame[plIndex].GetPositionY()) );
+	m_gameLog.AddStream( "戦闘開始！" );
+
 	for( int iPlayer=0; iPlayer<_PLAYER_NUM_; iPlayer++ )	///<表示位置などを予め初期化しておき、描画時や当たり判定時などにも利用する。
 	{
 		float tempX, tempY;	
@@ -128,16 +133,19 @@ int StateManager::CheckState()
 		}
 		break;
 	case STATE_RESULT:
-		if( stageResult != Result::TYPE_VICTORY || stageResult != Result::TYPE_DEFEAT ){	///<　結果と選択中の駒が違う＝行動選択完了なので
+		//勝利or敗北or戦闘終了
+		if( stageResult == Result::TYPE_VICTORY || stageResult == Result::TYPE_DEFEAT )
+		{
+			checkResult = -1;
+		}
+		else	
+		{
 			Result* pResult = dynamic_cast<Result*>(m_pGameState);	///<Resultの関数にアクセスする必要があるので、ダウンキャストする。
 			pResult->GetResultPlayerAndEnemy( m_resultPlayer, m_resultEnemy );
 			pResult->GetResultOfBattle( m_resultBattle );
 
 			checkResult = 1;
-		}
-		else	//勝利or敗北or戦闘終了
-		{
-			checkResult = -1;
+			
 		}
 
 		break;
@@ -268,21 +276,38 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 		(_STAGE_WIDTH_MAX_+1)/_BLOCK_WIDTH_MAX_, 1.f,
 		180, 220, 220, 220);	///<	盤面の真ん中の描画
 
-	//	プレイヤー1枠表示
-	m_PlayerFrame[0].GetPosition( &tempX, &tempY );
-	_drawManager->VertexDraw( _TEX_STAGEMAP_, tempX, tempY, 
-		m_PlayerFrame[0].GetWidth(),  m_PlayerFrame[0].GetHeight(),
-		0.f, _STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_, 
-		11/_BLOCK_WIDTH_MAX_, 1.f,
-		180, 255, 100, 100);	///<	プレイヤー1の枠描画
-	//	プレイヤー2枠表示
-	m_PlayerFrame[1].GetPosition( &tempX, &tempY );
-	_drawManager->VertexDraw( _TEX_STAGEMAP_, tempX, tempY, 
-		m_PlayerFrame[1].GetWidth(),  m_PlayerFrame[1].GetHeight(),
-		12/_BLOCK_WIDTH_MAX_, _STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_, 
-		1.f, 1.f,
-		180, 100, 100, 255);	///<	プレイヤー2の枠描画
-
+	if( m_playerID == 1 )
+	{
+		//	プレイヤー1枠表示
+		m_PlayerFrame[0].GetPosition( &tempX, &tempY );
+		_drawManager->VertexDraw( _TEX_STAGEMAP_, tempX, tempY, 
+			m_PlayerFrame[0].GetWidth(),  m_PlayerFrame[0].GetHeight(),
+			0.f, _STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_, 
+			11/_BLOCK_WIDTH_MAX_, 1.f,
+			180, 255, 100, 100);	///<	プレイヤー1の枠描画
+		//	ゲームログ表示
+		m_PlayerFrame[1].GetPosition( &tempX, &tempY );
+		_drawManager->VertexDraw( _TEX_GAMELOG_, tempX, tempY, 
+			m_PlayerFrame[1].GetWidth(),  m_PlayerFrame[1].GetHeight(),
+			0.f, 0.f, 1.f, 1.f,
+			200, 255, 255, 255 );	///<	プレイヤー2の枠描画
+	}
+	else
+	{
+		//	プレイヤー2枠表示
+		m_PlayerFrame[1].GetPosition( &tempX, &tempY );
+		_drawManager->VertexDraw( _TEX_STAGEMAP_, tempX, tempY, 
+			m_PlayerFrame[1].GetWidth(),  m_PlayerFrame[1].GetHeight(),
+			12/_BLOCK_WIDTH_MAX_, _STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_, 
+			1.f, 1.f,
+			180, 100, 100, 255);	///<	プレイヤー2の枠描画
+		//	ゲームログ表示
+		m_PlayerFrame[0].GetPosition( &tempX, &tempY );
+		_drawManager->VertexDraw( _TEX_GAMELOG_, tempX, tempY, 
+			m_PlayerFrame[0].GetWidth(),  m_PlayerFrame[0].GetHeight(),
+			0.f, 0.f, 1.f, 1.f,
+			200, 255, 255, 255 );	///<	プレイヤー1の枠描画
+	}
 	//	ステージマス目表示
 	//	プレイヤー数
 	for( int ip=0; ip<_PLAYER_NUM_; ip++ )
@@ -397,8 +422,38 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 	}
 	//	ステート別の描画
 	m_pGameState->Draw();
+
+	DrawLog();
 }
 
+void StateManager::DrawLog()
+{
+	DirectXFont* const pDxFont =  &m_pDrawManager->m_dxFont;
+	int logValue = 0;
+	if( !m_gameLog.m_logStream.empty() )
+	{
+		logValue = m_gameLog.m_logStream.size();
+		long tempX = 0, tempY = 0;
+		unsigned int tempW = 0, tempH = 0;
+		std::string* pStr;
+		LPCSTR lpTempStr;
+		const D3DXCOLOR color = D3DCOLOR_ARGB(255,255,255,255);
+		std::list<LogStream*>::const_iterator itEnd = m_gameLog.m_logStream.end();
+		for( std::list<LogStream*>::iterator it = m_gameLog.m_logStream.begin();
+			it != itEnd; ++it)
+		{
+			(*it)->GetPosition( tempX, tempY );
+			(*it)->GetSize( tempW, tempH );
+			pStr = (*it)->GetStringPtr();
+			lpTempStr = const_cast<char *>(pStr->c_str());
+			if(pDxFont->DrawA( tempX, tempY, tempW, tempH, lpTempStr, &color))
+			{
+
+			}
+		}
+	}
+	
+}
 
 //	ステートオブジェクトの消去
 void StateManager::StateDelete()
@@ -429,6 +484,7 @@ void StateManager::StateDelete()
 			pStageEffect = dynamic_cast<StageEffect*>(m_pGameState);
 			CLASS_DELETE(pStageEffect); 
 			
+			break;
 	}
 }
 

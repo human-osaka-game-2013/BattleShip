@@ -50,6 +50,9 @@ public:
 		_iB	= iB;
 	}
 
+	void SetWidth( const float& _width  ){ fWidth = _width; }
+	void SetHeight( const float& _height ){ fHeight = _height; }
+
 	void SetColor( const int& _iA, const int& _iR, const int& _iG, const int& _iB )
 	{
 		iA = _iA;

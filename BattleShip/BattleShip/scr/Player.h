@@ -56,6 +56,15 @@ public:
 	*/
 	bool DamageControl( const int _column, const int _line, const ShipObject::_SHIP_TYPE_NUM_ _shipType );
 
+	/**
+	*@brief	Œ’¾”»’è
+	*@param[in]	_shipType	‚Ç‚Ì‹î‚Ì‘¹ŠQˆ—‚ğ‚·‚é‚©‚É•K—v
+	*@return	Œ’¾”»’è‚ÌŒ‹‰Ê
+	*@retval	true	‚·‚Å‚ÉŒ’¾‚µ‚½
+	*@retval	false	‚Ü‚¾Œ’¾‚µ‚Ä‚¢‚È‚¢
+	*/
+	bool CheckDestroy( const ShipObject::_SHIP_TYPE_NUM_ _shipType );
+
 };
 
 #endif 

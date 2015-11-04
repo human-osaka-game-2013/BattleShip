@@ -25,11 +25,25 @@ int TitleScene::Control()
 	//	ゲームスタートボタン上にカーソルがあったら
 	if( m_button.HitBlockCheck( tempX, tempY ) && !m_changeSceneFlag )
 	{
+		m_button.SetPosition( _BUTTON_POS_X_-1.f, _BUTTON_POS_Y_-1.f, 0.5f );
+		m_button.SetColor( 255, 200, 200, 200 );
+		m_button.SetWidth( _BUTTON_WIDTH_+2.f );
+		m_button.SetHeight( _BUTTON_HEIGHT_+2.f );
 		//	右クリック
 		if(m_pMouse->MouseStCheck( MOUSE_L, PUSH ))
 		{
+			m_button.SetPosition( _BUTTON_POS_X_, _BUTTON_POS_Y_, 0.5f );
+			m_button.SetColor( 255, 200, 200, 200 );
+			m_button.SetWidth( _BUTTON_WIDTH_ );
+			m_button.SetHeight( _BUTTON_HEIGHT_ );
 			m_changeSceneFlag = true;
 		}
+	}
+	else{
+		m_button.SetPosition( _BUTTON_POS_X_, _BUTTON_POS_Y_, 0.5f );
+		m_button.SetColor( 255, 255, 255, 255 );
+		m_button.SetWidth( _BUTTON_WIDTH_ );
+		m_button.SetHeight( _BUTTON_HEIGHT_ );
 	}
 	//	シーンが代わる時
 	if( m_changeSceneFlag )

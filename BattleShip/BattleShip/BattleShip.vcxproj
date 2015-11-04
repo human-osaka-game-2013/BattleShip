@@ -73,6 +73,7 @@
     <ClCompile Include="scr\DebugInterface.cpp" />
     <ClCompile Include="scr\Destroyer.cpp" />
     <ClCompile Include="scr\DrawManagherInterface.cpp" />
+    <ClCompile Include="scr\GameLog.cpp" />
     <ClCompile Include="scr\GameScene.cpp" />
     <ClCompile Include="scr\GameState.cpp" />
     <ClCompile Include="scr\Player.cpp" />
@@ -105,8 +106,10 @@
     <ClInclude Include="scr\Cruiser.h" />
     <ClInclude Include="scr\DebugInterface.h" />
     <ClInclude Include="scr\Destroyer.h" />
+    <ClInclude Include="scr\GameLog.h" />
     <ClInclude Include="scr\GameScene.h" />
     <ClInclude Include="scr\GameState.h" />
+    <ClInclude Include="scr\LogStream.h" />
     <ClInclude Include="scr\Player.h" />
     <ClInclude Include="scr\Result.h" />
     <ClInclude Include="scr\SceneInterface.h" />

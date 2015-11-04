@@ -6,7 +6,7 @@
 #include "StageObject.h"
 #include "DrawStructList.h"
 #include "BoardOfFrame.h"
-
+#include "GameLog.h"
 
 class StateManager
 {
@@ -51,7 +51,7 @@ private:
 private:
 	BoardOfFrame	m_StageFrame;	///<	ステージ部分のフレームオブジェクト
 	BoardOfFrame	m_PlayerFrame[_PLAYER_NUM_];	///<	プレイヤー情報のフレームオブジェクト	
-//	BoardOfFrame	m_ShipFrame[_PLAYER_NUM_][ShipObject::TYPE_MAX];
+	GameLog			m_gameLog;		///<	ゲームログオブジェクト
 
 //	デバイス
 private:
@@ -114,6 +114,11 @@ private:
 			false：変更失敗
 	*/
 	bool ChangeState( _STATE_NUM_ _stateType );
+
+	/**
+	*@brief	ゲームログの描画
+	*/
+	void DrawLog();
 
 public:
 	/**

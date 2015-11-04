@@ -115,6 +115,9 @@
     <ClCompile Include="scr\FuncRender.cpp">
       <Filter>ソースファイル\lib_src\graphic</Filter>
     </ClCompile>
+    <ClCompile Include="scr\DirectXFont.cpp">
+      <Filter>ソースファイル\lib_src\graphic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="scr\device.h">
@@ -130,9 +133,6 @@
       <Filter>ヘッダーファイル\lib_h\GameMain</Filter>
     </ClInclude>
     <ClInclude Include="scr\AllocateHierarchy.h">
-      <Filter>ヘッダーファイル\lib_h\graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\DrawFunc.h">
       <Filter>ヘッダーファイル\lib_h\graphic</Filter>
     </ClInclude>
     <ClInclude Include="scr\graphic.h">
@@ -172,6 +172,9 @@
       <Filter>ヘッダーファイル\lib_h\WinMain</Filter>
     </ClInclude>
     <ClInclude Include="scr\DrawStructList.h">
+      <Filter>ヘッダーファイル\lib_h\graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\DirectXFont.h">
       <Filter>ヘッダーファイル\lib_h\graphic</Filter>
     </ClInclude>
   </ItemGroup>

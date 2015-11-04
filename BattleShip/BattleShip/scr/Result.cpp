@@ -14,6 +14,7 @@ bool Result::Init()
 //	
 int Result::Control()
 {
+	
 	if( !m_StateCompFlag ){
 		//	先にプレイヤーの配列指数として、修正しておく
 		int tempPlID = (m_playerID%2) ? 0 : 1;
@@ -180,11 +181,11 @@ int Result::ResultProgressOfBattle( const int _playerIndex, const int _enemyInde
 		{
 			for( int iLine = 0; iLine < _SHIP_ARRAY_INDEX_; iLine++ )
 			{
-				int shipCondition = (pTempShip[_playerIndex]->m_shipArray[iColumn][iLine]/10)%10;
+				int shipCondition = StageObject::ConditionOfData(pTempShip[_playerIndex]->m_shipArray[iColumn][iLine]);
 				if( shipCondition == StageObject::_CONDITION_DAMAGE_ ){	//プレイヤー側の判定
 					iHitCount[_playerIndex]+=1;	//ヒット回数インクリメント
 				}
-				shipCondition = (pTempShip[_enemyIndex]->m_shipArray[iColumn][iLine]/10)%10;
+				shipCondition = StageObject::ConditionOfData(pTempShip[_enemyIndex]->m_shipArray[iColumn][iLine]);
 				if( shipCondition == StageObject::_CONDITION_DAMAGE_ ){	//敵側の判定
 					iHitCount[_enemyIndex]+=1;	//ヒット回数インクリメント
 				}
@@ -196,11 +197,11 @@ int Result::ResultProgressOfBattle( const int _playerIndex, const int _enemyInde
 	{
 		iResult = TYPE_DRAW;
 	}
-	else if( iHitCount[_playerIndex] == _ANNIHILATION_NUM_ )
+	else if( iHitCount[_playerIndex] >= _ANNIHILATION_NUM_ )
 	{
 		iResult = TYPE_DEFEAT;
 	}
-	else if( iHitCount[_enemyIndex] == _ANNIHILATION_NUM_ )
+	else if( iHitCount[_enemyIndex] >= _ANNIHILATION_NUM_ )
 	{
 		iResult = TYPE_VICTORY;
 	}
