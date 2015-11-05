@@ -20,6 +20,8 @@ public:
 	{
 
 	}
+
+	~AircraftCarrier(){}
 	
 	/**
 	*@brief	‰Šú‰»

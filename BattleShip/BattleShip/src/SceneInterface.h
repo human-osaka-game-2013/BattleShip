@@ -42,6 +42,11 @@ public:
 	/**
 	*@briefデストラクタ
 	*/
+	~CScene()
+	{
+		
+	}
+
 	virtual bool Free() = 0;
 public:
 	/**

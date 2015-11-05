@@ -96,9 +96,6 @@
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="scr\lib_head.h" />
-    <ClInclude Include="scr\read_file.h" />
-    <ClInclude Include="scr\SceneManage.h" />
     <ClInclude Include="src\2D_Object.h" />
     <ClInclude Include="src\AllInput.h" />
     <ClInclude Include="src\AllocateHierarchy.h" />
@@ -111,9 +108,12 @@
     <ClInclude Include="src\Input.h" />
     <ClInclude Include="src\joystick_XInput.h" />
     <ClInclude Include="src\Key.h" />
+    <ClInclude Include="src\lib_head.h" />
     <ClInclude Include="src\Mouse.h" />
     <ClInclude Include="src\Proc.h" />
+    <ClInclude Include="src\read_file.h" />
     <ClInclude Include="src\RenderManager.h" />
+    <ClInclude Include="src\SceneManage.h" />
     <ClInclude Include="src\Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

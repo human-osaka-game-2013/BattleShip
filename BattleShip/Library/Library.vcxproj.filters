@@ -120,15 +120,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="scr\read_file.h">
-      <Filter>ヘッダーファイル\lib_h\readFile</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\SceneManage.h">
-      <Filter>ヘッダーファイル\lib_h\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\lib_head.h">
-      <Filter>ヘッダーファイル\lib_h</Filter>
-    </ClInclude>
     <ClInclude Include="src\Proc.h">
       <Filter>ヘッダーファイル\lib_h\WinMain</Filter>
     </ClInclude>
@@ -176,6 +167,15 @@
     </ClInclude>
     <ClInclude Include="src\Window.h">
       <Filter>ヘッダーファイル\lib_h\device</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib_head.h">
+      <Filter>ヘッダーファイル\lib_h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\read_file.h">
+      <Filter>ヘッダーファイル\lib_h\readFile</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SceneManage.h">
+      <Filter>ヘッダーファイル\lib_h\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

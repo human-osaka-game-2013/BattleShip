@@ -11,6 +11,8 @@
 #include "Result.h"
 #include "StageEffect.h"
 //-------------------------------------------
+#include "DebugNew.h"
+
 
 #define _FIRST_SETATE_ StateManager::STATE_SET_SHIP	///<	最初のステートパターン
 #define _POS_PLAYER1FRAME_	0.f, HEIGHT*(_STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_)						///<プレイヤー1情報の枠の表示座標
@@ -181,34 +183,7 @@ bool StateManager::ChangeState( _STATE_NUM_ _stateType )
 	//	すでにステートが決まっていた場合（変更する際）は前のインスタンス生成したものを消す必要がある。
 	if( m_beforeState != STATE_NONE )
 	{
-		SetShip* pSetShip;
-		Selection* pSelection;
-		Result* pResult;
-		StageEffect* pStageEffect;
-
-		switch( m_beforeState )
-		{
-		case STATE_SET_SHIP:
-			pSetShip = dynamic_cast<SetShip*>(m_pGameState);
-			CLASS_DELETE(pSetShip); 
-			
-			break;
-		case STATE_SELECTION:
-			pSelection = dynamic_cast<Selection*>(m_pGameState);
-			CLASS_DELETE(pSelection); 
-			
-			break;
-		case STATE_RESULT:
-			pResult = dynamic_cast<Result*>(m_pGameState);
-			CLASS_DELETE(pResult); 
-			
-			break;
-		case STATE_STAGE_EFFECT:
-			pStageEffect = dynamic_cast<StageEffect*>(m_pGameState);
-			CLASS_DELETE(pStageEffect); 
-			
-			break;
-		}
+		CLASS_DELETE(m_pGameState); 
 	}
 	//	各ステート別にステート生成
 	switch( _stateType )
@@ -252,176 +227,176 @@ bool StateManager::ChangeState( _STATE_NUM_ _stateType )
 //	ステートの基本描画
 void StateManager::StateDraw( CDrawManager* _drawManager)
 {
-//	float tempX, tempY;
-//	
-//	//	盤面枠表示（左）
-//	m_StageFrame.GetPosition( &tempX, &tempY );
-//	_drawManager->VertexDraw( _TEX_STAGEMAP_, tempX, tempY, 
-//		m_StageFrame.GetWidth()*(_STAGE_WIDTH_MAX_/_BLOCK_WIDTH_MAX_),  m_StageFrame.GetHeight(),
-//		0.f, 0.f, 
-//		_STAGE_WIDTH_MAX_/_BLOCK_WIDTH_MAX_, _STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_,
-//		180, 220, 220, 220);	///<	盤面の左側の描画
-//
-//	//	盤面枠表示（右）
-//	_drawManager->VertexDraw( _TEX_STAGEMAP_, tempX+_BLOCK_WIDTH_SIZE_*12, tempY, 
-//		m_StageFrame.GetWidth()*(_STAGE_WIDTH_MAX_/_BLOCK_WIDTH_MAX_),  m_StageFrame.GetHeight(),
-//		(_STAGE_WIDTH_MAX_+1)/_BLOCK_WIDTH_MAX_, 0.f, 
-//		1.f, _STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_,
-//		180, 220, 220, 220);	///<	盤面の右側の描画
-//
-//	//	盤面枠表示（中）
-//	_drawManager->VertexDraw( _TEX_STAGEMAP_, tempX+_BLOCK_WIDTH_SIZE_*_STAGE_WIDTH_MAX_, tempY, 
-//		_BLOCK_WIDTH_SIZE_, HEIGHT,
-//		_STAGE_WIDTH_MAX_/_BLOCK_WIDTH_MAX_, 0.f,
-//		(_STAGE_WIDTH_MAX_+1)/_BLOCK_WIDTH_MAX_, 1.f,
-//		180, 220, 220, 220);	///<	盤面の真ん中の描画
-//
-//	if( m_playerID == 1 )
-//	{
-//		//	プレイヤー1枠表示
-//		m_PlayerFrame[0].GetPosition( &tempX, &tempY );
-//		_drawManager->VertexDraw( _TEX_STAGEMAP_, tempX, tempY, 
-//			m_PlayerFrame[0].GetWidth(),  m_PlayerFrame[0].GetHeight(),
-//			0.f, _STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_, 
-//			11/_BLOCK_WIDTH_MAX_, 1.f,
-//			180, 255, 100, 100);	///<	プレイヤー1の枠描画
-//		//	ゲームログ表示
-//		m_PlayerFrame[1].GetPosition( &tempX, &tempY );
-//		_drawManager->VertexDraw( _TEX_GAMELOG_, tempX, tempY, 
-//			m_PlayerFrame[1].GetWidth(),  m_PlayerFrame[1].GetHeight(),
-//			0.f, 0.f, 1.f, 1.f,
-//			200, 255, 255, 255 );	///<	プレイヤー2の枠描画
-//	}
-//	else
-//	{
-//		//	プレイヤー2枠表示
-//		m_PlayerFrame[1].GetPosition( &tempX, &tempY );
-//		_drawManager->VertexDraw( _TEX_STAGEMAP_, tempX, tempY, 
-//			m_PlayerFrame[1].GetWidth(),  m_PlayerFrame[1].GetHeight(),
-//			12/_BLOCK_WIDTH_MAX_, _STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_, 
-//			1.f, 1.f,
-//			180, 100, 100, 255);	///<	プレイヤー2の枠描画
-//		//	ゲームログ表示
-//		m_PlayerFrame[0].GetPosition( &tempX, &tempY );
-//		_drawManager->VertexDraw( _TEX_GAMELOG_, tempX, tempY, 
-//			m_PlayerFrame[0].GetWidth(),  m_PlayerFrame[0].GetHeight(),
-//			0.f, 0.f, 1.f, 1.f,
-//			200, 255, 255, 255 );	///<	プレイヤー1の枠描画
-//	}
-//	//	ステージマス目表示
-//	//	プレイヤー数
-//	for( int ip=0; ip<_PLAYER_NUM_; ip++ )
-//	{
-//		//	プレイヤー別の駒情報の表示
-//		for( int iShip=0; iShip<ShipObject::TYPE_MAX; iShip++ )
-//		{
-//			//	ステージ上の駒の表示
-//			float tempW = _BLOCK_WIDTH_SIZE_;	
-//			float tempH = _BLOCK_HEIGHT_SIZE_;
-//			
-//			/**
-//			*@todo	現在は自身の駒のみを表示している。
-//			*/
-//			if( ip == m_playerID-1 )	///<今は自分のプレイヤーの駒しか表示しない
-//			{
-//				Player* tempPlayer = m_playerID%_PLAYER_NUM_ ? m_pPlayer1:m_pPlayer2;
-//					ShipObject* tempShip = tempPlayer->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
-//					
-//				if( !tempShip->GetDeadFlag() )
-//				{
-//					//	盤面上に置かれている自分の駒を描画
-//					m_pDrawManager->VertexTransform( iShip + _TEX_AIRCARRIER_, tempShip->m_vertex, 
-//						tempShip->GetPositionX(), tempShip->GetPositionY(), 1.f, 1.f, tempShip->GetDirection()*90.f );
-//					
-//					if( ip == 0 ){	//	プレイヤー1の場合
-//						//	配置したものからプレイヤー側の所持駒情報も描画
-//						m_pDrawManager->VertexTransform( iShip + _TEX_AIRCARRIER_, tempShip->m_vertex, 
-//							(_BOARD_OF_SHIPDATA_LINE_P1_*tempW)+(tempW/2), ((_BOARD_OF_SHIPDATA_COLUMN_+iShip)*tempH) + (tempH/2),
-//							1.f, 1.f, CGameObject::CH_RIGHT*90.f );
-//
-//					}else{	//	プレイヤー2の場合
-//
-//						//	配置したものからプレイヤー側の所持駒情報も描画
-//						m_pDrawManager->VertexTransform( iShip + _TEX_AIRCARRIER_, tempShip->m_vertex, 
-//							(_BOARD_OF_SHIPDATA_LINE_P2_*tempW)+(tempW/2), ((_BOARD_OF_SHIPDATA_COLUMN_+iShip)*tempH) + (tempH/2),
-//							1.f, 1.f, CGameObject::CH_RIGHT*90.f );
-//					}
-//					
-//				}
-//			}
-//			//else if(  )
-//
-//		}
-//		//	行
-//		for( int ic=0; ic<_STAGE_COLUMN_MAX_; ic++ )
-//		{	
-//			//	列
-//			for( int il=0; il<_STAGE_LINE_MAX_; il++ )
-//			{
-//				m_pStageObject->m_stageBlock[ip][ic][il].GetPosition( &tempX, &tempY );
-//				
-//				int tempA = 0, tempR = 200, tempG = 200, tempB = 200;
-//				int tempArrayData = m_pStageObject->m_stageArray[ip][ic][il];
-//			
-//				//	選択マスor損傷マスは見えるようにする
-//				if( StageObject::SelectOfData(tempArrayData) != StageObject::_SEARCH_NOMAL_ ||
-//					StageObject::ConditionOfData(tempArrayData) == StageObject::_CONDITION_DAMAGE_)
-//				{
-//						
-//					//	範囲指定桁チェック
-//					switch( StageObject::SelectOfData(tempArrayData) )
-//					{
-//					case StageObject::_SELECT_TRUE_:	///<選択されているマス
-//						tempA = 100;
-//						break;
-//					case StageObject::_SELECT_FALSE_:	///<駒が置けないor選択範囲が何かに接触しているマス
-//						tempA = 100, tempR = 255, tempG = 0, tempB = 0;
-//						break;
-//					case StageObject::_SEARCH_NOMAL_:
-//						tempA = 100, tempR = 0, tempG = 255, tempB = 0;
-//						break;
-//					case StageObject::_SEARCH_ALL_:
-//						tempA = 255, tempR = 0, tempG = 255, tempB = 0;
-//						break;
-//					case StageObject::_ACTION_NOMAL_:
-//						tempA = 100, tempR = 0, tempG = 0, tempB = 255;
-//						break;
-//					case StageObject::_ACTION_ALL_:
-//						tempA = 255, tempR = 0, tempG = 0, tempB = 255;
-//						break;
-//					}
-//
-//					//	損傷状態桁チェック
-//					switch( StageObject::ConditionOfData(tempArrayData) )
-//					{
-//					case StageObject::_CONDITION_NONE_:
-//					case StageObject::_CONDITION_NOMAL_:
-//						break;
-//					case StageObject::_CONDITION_DAMAGE_:
-//						tempA = 255, tempR = 255, tempG = 100, tempB = 100;
-//						break;
-//
-//					}
-//					
-//				_drawManager->VertexDraw( _TEX_BLOCK_, tempX, tempY, 
-//					m_pStageObject->m_stageBlock[ip][ic][il].GetWidth(), 
-//					m_pStageObject->m_stageBlock[ip][ic][il].GetHeight(),
-//					0.f, 0.f, 
-//					1.f, 1.f,
-//					tempA, tempR, tempG, tempB);	///<	マスの描画
-//				}
-//				_drawManager->VertexDraw( _TEX_BLOCKFRAME_, tempX, tempY, 
-//					m_pStageObject->m_stageBlock[ip][ic][il].GetWidth(), 
-//					m_pStageObject->m_stageBlock[ip][ic][il].GetHeight(),
-//					0.f, 0.f, 
-//					1.f, 1.f,
-//					100, 200, 200, 200);	///<	マスの描画
-//			}
-//		}
-//		
-//	}
-//	//	ステート別の描画
-//	m_pGameState->Draw();
+	float tempX, tempY;
+	
+	//	盤面枠表示（左）
+	m_StageFrame.GetPosition( &tempX, &tempY );
+	_drawManager->VertexDraw( _TEX_STAGEMAP_, tempX, tempY, 
+		m_StageFrame.GetWidth()*(_STAGE_WIDTH_MAX_/_BLOCK_WIDTH_MAX_),  m_StageFrame.GetHeight(),
+		0.f, 0.f, 
+		_STAGE_WIDTH_MAX_/_BLOCK_WIDTH_MAX_, _STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_,
+		180, 220, 220, 220);	///<	盤面の左側の描画
+
+	//	盤面枠表示（右）
+	_drawManager->VertexDraw( _TEX_STAGEMAP_, tempX+_BLOCK_WIDTH_SIZE_*12, tempY, 
+		m_StageFrame.GetWidth()*(_STAGE_WIDTH_MAX_/_BLOCK_WIDTH_MAX_),  m_StageFrame.GetHeight(),
+		(_STAGE_WIDTH_MAX_+1)/_BLOCK_WIDTH_MAX_, 0.f, 
+		1.f, _STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_,
+		180, 220, 220, 220);	///<	盤面の右側の描画
+
+	//	盤面枠表示（中）
+	_drawManager->VertexDraw( _TEX_STAGEMAP_, tempX+_BLOCK_WIDTH_SIZE_*_STAGE_WIDTH_MAX_, tempY, 
+		_BLOCK_WIDTH_SIZE_, HEIGHT,
+		_STAGE_WIDTH_MAX_/_BLOCK_WIDTH_MAX_, 0.f,
+		(_STAGE_WIDTH_MAX_+1)/_BLOCK_WIDTH_MAX_, 1.f,
+		180, 220, 220, 220);	///<	盤面の真ん中の描画
+
+	if( m_playerID == 1 )
+	{
+		//	プレイヤー1枠表示
+		m_PlayerFrame[0].GetPosition( &tempX, &tempY );
+		_drawManager->VertexDraw( _TEX_STAGEMAP_, tempX, tempY, 
+			m_PlayerFrame[0].GetWidth(),  m_PlayerFrame[0].GetHeight(),
+			0.f, _STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_, 
+			11/_BLOCK_WIDTH_MAX_, 1.f,
+			180, 255, 100, 100);	///<	プレイヤー1の枠描画
+		//	ゲームログ表示
+		m_PlayerFrame[1].GetPosition( &tempX, &tempY );
+		_drawManager->VertexDraw( _TEX_GAMELOG_, tempX, tempY, 
+			m_PlayerFrame[1].GetWidth(),  m_PlayerFrame[1].GetHeight(),
+			0.f, 0.f, 1.f, 1.f,
+			200, 255, 255, 255 );	///<	プレイヤー2の枠描画
+	}
+	else
+	{
+		//	プレイヤー2枠表示
+		m_PlayerFrame[1].GetPosition( &tempX, &tempY );
+		_drawManager->VertexDraw( _TEX_STAGEMAP_, tempX, tempY, 
+			m_PlayerFrame[1].GetWidth(),  m_PlayerFrame[1].GetHeight(),
+			12/_BLOCK_WIDTH_MAX_, _STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_, 
+			1.f, 1.f,
+			180, 100, 100, 255);	///<	プレイヤー2の枠描画
+		//	ゲームログ表示
+		m_PlayerFrame[0].GetPosition( &tempX, &tempY );
+		_drawManager->VertexDraw( _TEX_GAMELOG_, tempX, tempY, 
+			m_PlayerFrame[0].GetWidth(),  m_PlayerFrame[0].GetHeight(),
+			0.f, 0.f, 1.f, 1.f,
+			200, 255, 255, 255 );	///<	プレイヤー1の枠描画
+	}
+	//	ステージマス目表示
+	//	プレイヤー数
+	for( int ip=0; ip<_PLAYER_NUM_; ip++ )
+	{
+		//	プレイヤー別の駒情報の表示
+		for( int iShip=0; iShip<ShipObject::TYPE_MAX; iShip++ )
+		{
+			//	ステージ上の駒の表示
+			float tempW = _BLOCK_WIDTH_SIZE_;	
+			float tempH = _BLOCK_HEIGHT_SIZE_;
+			
+			/**
+			*@todo	現在は自身の駒のみを表示している。
+			*/
+			if( ip == m_playerID-1 )	///<今は自分のプレイヤーの駒しか表示しない
+			{
+				Player* tempPlayer = m_playerID%_PLAYER_NUM_ ? m_pPlayer1:m_pPlayer2;
+					ShipObject* tempShip = tempPlayer->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
+					
+				if( !tempShip->GetDeadFlag() )
+				{
+					//	盤面上に置かれている自分の駒を描画
+					m_pDrawManager->VertexTransform( iShip + _TEX_AIRCARRIER_, tempShip->m_vertex, 
+						tempShip->GetPositionX(), tempShip->GetPositionY(), 1.f, 1.f, tempShip->GetDirection()*90.f );
+					
+					if( ip == 0 ){	//	プレイヤー1の場合
+						//	配置したものからプレイヤー側の所持駒情報も描画
+						m_pDrawManager->VertexTransform( iShip + _TEX_AIRCARRIER_, tempShip->m_vertex, 
+							(_BOARD_OF_SHIPDATA_LINE_P1_*tempW)+(tempW/2), ((_BOARD_OF_SHIPDATA_COLUMN_+iShip)*tempH) + (tempH/2),
+							1.f, 1.f, CGameObject::CH_RIGHT*90.f );
+
+					}else{	//	プレイヤー2の場合
+
+						//	配置したものからプレイヤー側の所持駒情報も描画
+						m_pDrawManager->VertexTransform( iShip + _TEX_AIRCARRIER_, tempShip->m_vertex, 
+							(_BOARD_OF_SHIPDATA_LINE_P2_*tempW)+(tempW/2), ((_BOARD_OF_SHIPDATA_COLUMN_+iShip)*tempH) + (tempH/2),
+							1.f, 1.f, CGameObject::CH_RIGHT*90.f );
+					}
+					
+				}
+			}
+			//else if(  )
+
+		}
+		//	行
+		for( int ic=0; ic<_STAGE_COLUMN_MAX_; ic++ )
+		{	
+			//	列
+			for( int il=0; il<_STAGE_LINE_MAX_; il++ )
+			{
+				m_pStageObject->m_stageBlock[ip][ic][il].GetPosition( &tempX, &tempY );
+				
+				int tempA = 0, tempR = 200, tempG = 200, tempB = 200;
+				int tempArrayData = m_pStageObject->m_stageArray[ip][ic][il];
+			
+				//	選択マスor損傷マスは見えるようにする
+				if( StageObject::SelectOfData(tempArrayData) != StageObject::_SEARCH_NOMAL_ ||
+					StageObject::ConditionOfData(tempArrayData) == StageObject::_CONDITION_DAMAGE_)
+				{
+						
+					//	範囲指定桁チェック
+					switch( StageObject::SelectOfData(tempArrayData) )
+					{
+					case StageObject::_SELECT_TRUE_:	///<選択されているマス
+						tempA = 100;
+						break;
+					case StageObject::_SELECT_FALSE_:	///<駒が置けないor選択範囲が何かに接触しているマス
+						tempA = 100, tempR = 255, tempG = 0, tempB = 0;
+						break;
+					case StageObject::_SEARCH_NOMAL_:
+						tempA = 100, tempR = 0, tempG = 255, tempB = 0;
+						break;
+					case StageObject::_SEARCH_ALL_:
+						tempA = 255, tempR = 0, tempG = 255, tempB = 0;
+						break;
+					case StageObject::_ACTION_NOMAL_:
+						tempA = 100, tempR = 0, tempG = 0, tempB = 255;
+						break;
+					case StageObject::_ACTION_ALL_:
+						tempA = 255, tempR = 0, tempG = 0, tempB = 255;
+						break;
+					}
+
+					//	損傷状態桁チェック
+					switch( StageObject::ConditionOfData(tempArrayData) )
+					{
+					case StageObject::_CONDITION_NONE_:
+					case StageObject::_CONDITION_NOMAL_:
+						break;
+					case StageObject::_CONDITION_DAMAGE_:
+						tempA = 255, tempR = 255, tempG = 100, tempB = 100;
+						break;
+
+					}
+					
+				_drawManager->VertexDraw( _TEX_BLOCK_, tempX, tempY, 
+					m_pStageObject->m_stageBlock[ip][ic][il].GetWidth(), 
+					m_pStageObject->m_stageBlock[ip][ic][il].GetHeight(),
+					0.f, 0.f, 
+					1.f, 1.f,
+					tempA, tempR, tempG, tempB);	///<	マスの描画
+				}
+				_drawManager->VertexDraw( _TEX_BLOCKFRAME_, tempX, tempY, 
+					m_pStageObject->m_stageBlock[ip][ic][il].GetWidth(), 
+					m_pStageObject->m_stageBlock[ip][ic][il].GetHeight(),
+					0.f, 0.f, 
+					1.f, 1.f,
+					100, 200, 200, 200);	///<	マスの描画
+			}
+		}
+		
+	}
+	//	ステート別の描画
+	m_pGameState->Draw();
 
 	DrawLog();
 }
@@ -458,34 +433,7 @@ void StateManager::DrawLog()
 //	ステートオブジェクトの消去
 void StateManager::StateDelete()
 {
-	SetShip* pSetShip;
-	Selection* pSelection;
-	Result* pResult;
-	StageEffect* pStageEffect;
-
-	switch( m_currentState )
-	{
-		case STATE_SET_SHIP:
-			pSetShip = dynamic_cast<SetShip*>(m_pGameState);
-			CLASS_DELETE(pSetShip); 
-			
-			break;
-		case STATE_SELECTION:
-			pSelection = dynamic_cast<Selection*>(m_pGameState);
-			CLASS_DELETE(pSelection); 
-			
-			break;
-		case STATE_RESULT:
-			pResult = dynamic_cast<Result*>(m_pGameState);
-			CLASS_DELETE(pResult); 
-			
-			break;
-		case STATE_STAGE_EFFECT:
-			pStageEffect = dynamic_cast<StageEffect*>(m_pGameState);
-			CLASS_DELETE(pStageEffect); 
-			
-			break;
-	}
+	CLASS_DELETE(m_pGameState);
 }
 
 void StateManager::Free()

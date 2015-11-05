@@ -46,9 +46,8 @@ public:
 	*/
 	bool Init(
 		const LPDIRECT3DDEVICE9 _dev,
-		const UINT _font_heigh = 50,
-		const UINT _font_width = 50,
-		const UINT _font_thickness = 16
+		const UINT _font_heigh = 8,
+		const UINT _font_width = 0
 	);
 
 	/**

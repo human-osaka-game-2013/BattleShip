@@ -20,6 +20,8 @@ public:
 
 	}
 
+	~BattleShip(){};
+
 	void Init();
 
 };

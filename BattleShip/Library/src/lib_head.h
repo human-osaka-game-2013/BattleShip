@@ -42,12 +42,6 @@
 #define D3DFVF ( D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1 )
 #define D3DFVF_CUSTOMVERTEX ( D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1 )
 
-#include <crtdbg.h>
-#ifdef _DEBUG
-#ifndef DBG_NEW
-#define DBG_NEW new ( _NORMAL_BLOCK, __FILE__, __LINE__ )
-#define new DBG_NEW
-#endif
-#endif
+#include "DebugNew.h"
 
 #endif

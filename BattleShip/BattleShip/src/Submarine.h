@@ -20,6 +20,8 @@ public:
 
 	}
 
+	~Submarine(){};
+
 	void Init();
 
 };

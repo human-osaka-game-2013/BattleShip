@@ -51,6 +51,8 @@ public:
 		m_resultBattle	= 0;
 	}
 
+	~Result(){};
+
 	/**
 	*@brief	í“¬Œ‹‰Ê‚Å‚Ì‰Šú‰»
 	*/

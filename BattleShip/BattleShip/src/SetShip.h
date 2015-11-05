@@ -23,6 +23,8 @@ public:
 	*/
 	SetShip( ShipObject::_SHIP_TYPE_NUM_& _type ): GameState( _type ){}
 
+	~SetShip(){};
+
 	/**
 	*@brief	‹î”z’u‚Å‚Ì‰Šú‰»
 	*/

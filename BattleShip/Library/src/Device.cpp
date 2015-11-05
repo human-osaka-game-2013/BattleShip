@@ -1,6 +1,8 @@
 #include "device.h"
 #include "joystick_XInput.h"
 
+#include "DebugNew.h"
+
 //	コンストラクタ
 CDevice::CDevice( HWND* _hWnd ) : m_hWnd(_hWnd)
 {

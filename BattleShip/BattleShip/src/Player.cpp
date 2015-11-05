@@ -1,6 +1,8 @@
 #include "Player.h"
 #include "StageObject.h"
 
+#include "DebugNew.h"
+
 void Player::Init( int _userID )
 {
 	int iCount = 0;
@@ -110,7 +112,9 @@ bool Player::CheckDestroy( const ShipObject::_SHIP_TYPE_NUM_ _shipType )
 bool Player::Free()
 {
 	for( unsigned int iCount = 0; iCount < m_pShip.size(); iCount++ ){
+
 		delete m_pShip[iCount];
 	}
+	m_pShip.clear();
 	return true;
 }

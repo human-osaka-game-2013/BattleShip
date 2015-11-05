@@ -96,6 +96,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Library\src\DebugNew.h" />
     <ClInclude Include="src\AircraftCarrier.h" />
     <ClInclude Include="src\Background.h" />
     <ClInclude Include="src\BattleShip.h" />

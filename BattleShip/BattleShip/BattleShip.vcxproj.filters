@@ -212,5 +212,8 @@
     <ClInclude Include="src\GameLog.h">
       <Filter>ヘッダー ファイル\Game\Object</Filter>
     </ClInclude>
+    <ClInclude Include="..\Library\src\DebugNew.h">
+      <Filter>リソース ファイル\DebugInterface</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

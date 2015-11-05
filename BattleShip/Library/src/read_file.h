@@ -6,6 +6,7 @@
 #ifndef _READ_FILE_H_
 #define _READ_FILE_H_
 #include <iostream>
+
 /**
 *@brief	ファイルを読み込み
 *@details	textやCSV形式のファイルを読み込み、数値をテーブルにセットするためのクラス。@n

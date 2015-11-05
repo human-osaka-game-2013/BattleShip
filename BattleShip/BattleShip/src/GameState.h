@@ -6,10 +6,10 @@
 #ifndef	_GAMESTATE_H_
 #define _GAMESTATE_H_
 
-#include "Player.h"
-#include "StageObject.h"
 #include "DrawManager.h"
 #include "Mouse.h"
+#include "Player.h"
+#include "StageObject.h"
 
 
 #define __NOT_USE_COM_	///<通信を使わないテスト
@@ -75,6 +75,10 @@ public:
 	{
 		m_connectFlag = false;
 		m_StateCompFlag = false;
+	}
+
+	virtual ~GameState(){
+
 	}
 
 	/**

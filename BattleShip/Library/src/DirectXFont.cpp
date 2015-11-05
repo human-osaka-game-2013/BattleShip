@@ -12,8 +12,7 @@
 bool DirectXFont::Init(
 	const LPDIRECT3DDEVICE9 _dev,
 	const UINT _font_heigh,
-	const UINT _font_width,
-	const UINT _font_thickness
+	const UINT _font_width
 ) 
 {
 	//デバイスが無いなら作成不可能
@@ -25,14 +24,13 @@ bool DirectXFont::Init(
 	//作成タイプの更新
 	m_font_heigh = _font_heigh;
 	m_font_width = _font_width;
-	m_font_thickness  = _font_thickness;
-
+	
 	//作成開始
 	if( D3DXCreateFont(
 		_dev,
 		m_font_heigh,
 		m_font_width,
-		m_font_thickness,
+		FW_REGULAR,
 		1,
 		FALSE,
 		DEFAULT_CHARSET,

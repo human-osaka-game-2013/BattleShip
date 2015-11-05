@@ -3,6 +3,7 @@
 
 #include<d3dx9.h>
 #include<string>
+#include "DebugNew.h"
 
 //アニメーション階層メッシュ読み込みクラス
 class CAllocateHierarchy : public ID3DXAllocateHierarchy{

@@ -4,12 +4,16 @@
 */
 #include "GameScene.h"
 
+#include "DebugNew.h"
+
 /**
 *@brief	ゲームシーン初期化
 *@details	現在メンバクラスの初期化関数の引数の問題もあり、ここで管理クラスなどをセットしてやる必要がある。@n
 */
 bool GameScene::Init()
 {
+	
+
 #ifdef _NOT_USE_COM_
 	
 #else
@@ -22,6 +26,7 @@ bool GameScene::Init()
 	for( int iCount=0; iCount<_PLAYER_NUM_; iCount++ ) {
 		m_Player.push_back( new Player( iCount ));	///<	プレイヤーの初期化
 	}
+
 	m_background.Init();	///<	背景オブジェクトの初期化
 	m_screenMask.Init();	///<	フェード用オブジェクト初期化
 	m_screenMask.SetColor( 255, 255, 255, 255);//フェードインさせたいのでアルファ値は255で
@@ -81,10 +86,10 @@ void GameScene::Draw()
 	float tempX, tempY;
 	int tempA, tempR, tempG, tempB;
 
-//	m_background.GetPosition( &tempX, &tempY);
-//	m_pDrawManager->VertexDraw( _TEX_BACKGROUND_, tempX, tempY, 
-//		m_background.GetWidth(),  m_background.GetHeight(),
-//		0.f, 0.f, 1.f, 1.f);
+	m_background.GetPosition( &tempX, &tempY);
+	m_pDrawManager->VertexDraw( _TEX_BACKGROUND_, tempX, tempY, 
+		m_background.GetWidth(),  m_background.GetHeight(),
+		0.f, 0.f, 1.f, 1.f);
 	m_stateManager->StateDraw( m_pDrawManager );
 
 	//	フェード用のマスク描画
@@ -102,6 +107,8 @@ bool GameScene::Free()
 		m_Player[iCount]->Free();
 		delete m_Player[iCount];
 	}
+	m_Player.clear();
+
 	m_pStageObject->Free();
 	delete m_pStageObject;
 	m_stateManager->Free();

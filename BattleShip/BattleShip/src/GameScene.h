@@ -6,7 +6,6 @@
 #ifndef _GAMESCENE_H_
 #define _GAMESCENE_H_
 #include "Connect.h"
-#include <new>
 #include <vector>
 
 #include "SceneInterface.h"
@@ -50,6 +49,10 @@ public:
 		
 	}
 	
+	~GameScene(){
+		Free();
+	};
+
 	/**	
 	*@brief ‰ğ•úˆ—
 	*/

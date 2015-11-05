@@ -20,6 +20,8 @@ public:
 
 	}
 
+	~Cruiser(){};
+
 	void Init();
 
 };

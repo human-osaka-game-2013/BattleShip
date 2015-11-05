@@ -14,8 +14,7 @@ class StageEffect : public GameState
 {
 private:
 	int m_effectCount;	///<	エフェクトを再生する際のカウンタ
-	//BoardOfFrame m_
-
+	
 public:
 	/**
 	*@brief	コンストラクタ
@@ -24,6 +23,8 @@ public:
 	StageEffect( ShipObject::_SHIP_TYPE_NUM_& _type ): GameState( _type ){
 		m_effectCount = 0;
 	}
+
+	~StageEffect(){};
 
 	/**
 	*@brief	戦闘エフェクトでの初期化

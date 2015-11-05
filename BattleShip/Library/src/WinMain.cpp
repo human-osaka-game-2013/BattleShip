@@ -10,6 +10,8 @@
 #include "device.h"
 #include "AllInput.h"
 
+#include "DebugNew.h"
+
 //----------------------------------------------------------------------
 //
 //	メインルーチン
@@ -22,8 +24,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	// メモリリーク検出
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	//_CrtSetBreakAlloc(87);
-
+	_CrtSetBreakAlloc(152);
+	
 	MSG msg;
 	
 	CreateWindowProcess ( hInstance, &hWnd );
@@ -68,6 +70,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 				SyncOld = SyncNow;
 
+				
 			}
 		}
 	}

@@ -37,6 +37,8 @@ public:
 		m_selectType = _SELECT_NONE_;
 	}
 
+	~Selection(){};
+
 	/**
 	*@brief	í“¬s“®‘I‘ğ‚Å‚Ì‰Šú‰»
 	*/

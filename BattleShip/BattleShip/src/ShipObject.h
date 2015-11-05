@@ -7,11 +7,12 @@
 #define _SHIPOBJECT_H_
 
 #include "gameObject.h"
-#include "read_file.h"
+
 #include "BoardOfFrame.h"
 #include "StageDefineList.h"
 #include "DrawStructList.h"
 #include "ConnectStruct.h"
+#include "read_file.h"
 
 #define _SHIP_INIT_DIR_	CGameObject::CH_UP
 
@@ -89,6 +90,8 @@ public:
 		}
 		SetDirection( _SHIP_INIT_DIR_ );
 	}
+
+	virtual ~ShipObject(){};
 
 	/**
 	*@brief	èâä˙âª
