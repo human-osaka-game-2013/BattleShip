@@ -28,7 +28,7 @@ bool DirectXFont::Init(
 	m_font_thickness  = _font_thickness;
 
 	//çÏê¨äJén
-	D3DXCreateFont(
+	if( D3DXCreateFont(
 		_dev,
 		m_font_heigh,
 		m_font_width,
@@ -41,7 +41,10 @@ bool DirectXFont::Init(
 		DEFAULT_PITCH | FF_DONTCARE,
 		NULL,
 		&m_font
-	);
+	) != D3D_OK)
+	{
+		return false;
+	}
 
 	//ê¨å˜
 	return true;
@@ -119,7 +122,7 @@ bool DirectXFont::DrawA(
 		_font,
 		-1,
 		&rec,
-		DT_LEFT,
+		DT_LEFT | DT_NOCLIP,
 		( *_font_color )
 		);
 	

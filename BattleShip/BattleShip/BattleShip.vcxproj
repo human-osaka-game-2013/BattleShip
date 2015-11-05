@@ -43,7 +43,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>F:\Programming\学校用\svn\就活用提出\海戦ゲーム\BattleShip\Library\scr;F:\学校用\ノート\ゲームプログラミング\svn\就活用提出\海戦ゲーム\BattleShip\Library\scr</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>F:\Programming\学校用\svn\就活用提出\海戦ゲーム\BattleShip\Library\src;F:\学校用\ノート\ゲームプログラミング\svn\就活用提出\海戦ゲーム\BattleShip\Library\src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
