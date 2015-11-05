@@ -58,101 +58,68 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="scr\AllocateHierarchy.cpp">
-      <Filter>ソースファイル\lib_src\graphic</Filter>
+    <ClCompile Include="src\ViewManage.cpp">
+      <Filter>ソースファイル\lib_src\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="scr\DrawProcess.cpp">
-      <Filter>ソースファイル\lib_src\graphic</Filter>
+    <ClCompile Include="src\SceneManage.cpp">
+      <Filter>ソースファイル\lib_src\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="scr\FuncDraw.cpp">
-      <Filter>ソースファイル\lib_src\graphic</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\RenderProcess.cpp">
-      <Filter>ソースファイル\lib_src\graphic</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\Device.cpp">
-      <Filter>ソースファイル\lib_src\directX</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\Window.cpp">
-      <Filter>ソースファイル\lib_src\directX</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\GameMain.cpp">
-      <Filter>ソースファイル\lib_src\GameMain</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\GameMainManage.cpp">
-      <Filter>ソースファイル\lib_src\GameMain</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\gameObject.cpp">
-      <Filter>ソースファイル\lib_src\GameMain</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\joystick_XInput.cpp">
-      <Filter>ソースファイル\lib_src\input</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\KeyProcess.cpp">
-      <Filter>ソースファイル\lib_src\input</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\MouseProcess.cpp">
-      <Filter>ソースファイル\lib_src\input</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\read_file.cpp">
+    <ClCompile Include="src\read_file.cpp">
       <Filter>ソースファイル\lib_src\readFile</Filter>
     </ClCompile>
-    <ClCompile Include="scr\SceneManage.cpp">
-      <Filter>ソースファイル\lib_src\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\Proc.cpp">
+    <ClCompile Include="src\Proc.cpp">
       <Filter>ソースファイル\lib_src\Proc</Filter>
     </ClCompile>
-    <ClCompile Include="scr\RenderManager.cpp">
+    <ClCompile Include="src\joystick_XInput.cpp">
+      <Filter>ソースファイル\lib_src\input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\KeyProcess.cpp">
+      <Filter>ソースファイル\lib_src\input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MouseProcess.cpp">
+      <Filter>ソースファイル\lib_src\input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DrawProcess.cpp">
       <Filter>ソースファイル\lib_src\graphic</Filter>
     </ClCompile>
-    <ClCompile Include="scr\DrawManager.cpp">
+    <ClCompile Include="src\FuncDraw.cpp">
       <Filter>ソースファイル\lib_src\graphic</Filter>
     </ClCompile>
-    <ClCompile Include="scr\ViewManage.cpp">
-      <Filter>ソースファイル\lib_src\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\FuncRender.cpp">
+    <ClCompile Include="src\FuncRender.cpp">
       <Filter>ソースファイル\lib_src\graphic</Filter>
     </ClCompile>
-    <ClCompile Include="scr\DirectXFont.cpp">
+    <ClCompile Include="src\RenderManager.cpp">
       <Filter>ソースファイル\lib_src\graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RenderProcess.cpp">
+      <Filter>ソースファイル\lib_src\graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AllocateHierarchy.cpp">
+      <Filter>ソースファイル\lib_src\graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DirectXFont.cpp">
+      <Filter>ソースファイル\lib_src\graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DrawManager.cpp">
+      <Filter>ソースファイル\lib_src\graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameMain.cpp">
+      <Filter>ソースファイル\lib_src\GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameMainManage.cpp">
+      <Filter>ソースファイル\lib_src\GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameObject.cpp">
+      <Filter>ソースファイル\lib_src\GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Window.cpp">
+      <Filter>ソースファイル\lib_src\directX</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Device.cpp">
+      <Filter>ソースファイル\lib_src\directX</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="scr\device.h">
-      <Filter>ヘッダーファイル\lib_h\device</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\Window.h">
-      <Filter>ヘッダーファイル\lib_h\device</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\2D_Object.h">
-      <Filter>ヘッダーファイル\lib_h\GameMain</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\gameObject.h">
-      <Filter>ヘッダーファイル\lib_h\GameMain</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\AllocateHierarchy.h">
-      <Filter>ヘッダーファイル\lib_h\graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\graphic.h">
-      <Filter>ヘッダーファイル\lib_h\graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\AllInput.h">
-      <Filter>ヘッダーファイル\lib_h\input</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\Input.h">
-      <Filter>ヘッダーファイル\lib_h\input</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\joystick_XInput.h">
-      <Filter>ヘッダーファイル\lib_h\input</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\Key.h">
-      <Filter>ヘッダーファイル\lib_h\input</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\Mouse.h">
-      <Filter>ヘッダーファイル\lib_h\input</Filter>
-    </ClInclude>
     <ClInclude Include="scr\read_file.h">
       <Filter>ヘッダーファイル\lib_h\readFile</Filter>
     </ClInclude>
@@ -162,20 +129,53 @@
     <ClInclude Include="scr\lib_head.h">
       <Filter>ヘッダーファイル\lib_h</Filter>
     </ClInclude>
-    <ClInclude Include="scr\RenderManager.h">
-      <Filter>ヘッダーファイル\lib_h\graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\DrawManager.h">
-      <Filter>ヘッダーファイル\lib_h\graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\Proc.h">
+    <ClInclude Include="src\Proc.h">
       <Filter>ヘッダーファイル\lib_h\WinMain</Filter>
     </ClInclude>
-    <ClInclude Include="scr\DrawStructList.h">
+    <ClInclude Include="src\joystick_XInput.h">
+      <Filter>ヘッダーファイル\lib_h\input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Key.h">
+      <Filter>ヘッダーファイル\lib_h\input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mouse.h">
+      <Filter>ヘッダーファイル\lib_h\input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AllInput.h">
+      <Filter>ヘッダーファイル\lib_h\input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input.h">
+      <Filter>ヘッダーファイル\lib_h\input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DrawStructList.h">
       <Filter>ヘッダーファイル\lib_h\graphic</Filter>
     </ClInclude>
-    <ClInclude Include="scr\DirectXFont.h">
+    <ClInclude Include="src\graphic.h">
       <Filter>ヘッダーファイル\lib_h\graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RenderManager.h">
+      <Filter>ヘッダーファイル\lib_h\graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AllocateHierarchy.h">
+      <Filter>ヘッダーファイル\lib_h\graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DirectXFont.h">
+      <Filter>ヘッダーファイル\lib_h\graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DrawManager.h">
+      <Filter>ヘッダーファイル\lib_h\graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameObject.h">
+      <Filter>ヘッダーファイル\lib_h\GameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="src\2D_Object.h">
+      <Filter>ヘッダーファイル\lib_h\GameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="src\device.h">
+      <Filter>ヘッダーファイル\lib_h\device</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Window.h">
+      <Filter>ヘッダーファイル\lib_h\device</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

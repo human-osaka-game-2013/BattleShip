@@ -65,30 +65,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Library\scr\WinMain.cpp" />
-    <ClCompile Include="scr\AircraftCarrier.cpp" />
-    <ClCompile Include="scr\BattleShip.cpp" />
-    <ClCompile Include="scr\Connect.cpp" />
-    <ClCompile Include="scr\Cruiser.cpp" />
-    <ClCompile Include="scr\DebugInterface.cpp" />
-    <ClCompile Include="scr\Destroyer.cpp" />
-    <ClCompile Include="scr\DrawManagherInterface.cpp" />
-    <ClCompile Include="scr\GameLog.cpp" />
-    <ClCompile Include="scr\GameScene.cpp" />
-    <ClCompile Include="scr\GameState.cpp" />
-    <ClCompile Include="scr\Player.cpp" />
-    <ClCompile Include="scr\RenderManagherInterface.cpp" />
-    <ClCompile Include="scr\Result.cpp" />
-    <ClCompile Include="scr\SceneInterface.cpp" />
-    <ClCompile Include="scr\SceneManagerInterface.cpp" />
-    <ClCompile Include="scr\Selection.cpp" />
-    <ClCompile Include="scr\SetShip.cpp" />
-    <ClCompile Include="scr\ShipObject.cpp" />
-    <ClCompile Include="scr\StageEffect.cpp" />
-    <ClCompile Include="scr\StageObject.cpp" />
-    <ClCompile Include="scr\StateManager.cpp" />
-    <ClCompile Include="scr\Submarine.cpp" />
-    <ClCompile Include="scr\TitleScene.cpp" />
+    <ClCompile Include="..\Library\src\WinMain.cpp" />
+    <ClCompile Include="src\AircraftCarrier.cpp" />
+    <ClCompile Include="src\BattleShip.cpp" />
+    <ClCompile Include="src\Connect.cpp" />
+    <ClCompile Include="src\Cruiser.cpp" />
+    <ClCompile Include="src\DebugInterface.cpp" />
+    <ClCompile Include="src\Destroyer.cpp" />
+    <ClCompile Include="src\DrawManagherInterface.cpp" />
+    <ClCompile Include="src\GameLog.cpp" />
+    <ClCompile Include="src\GameScene.cpp" />
+    <ClCompile Include="src\GameState.cpp" />
+    <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\RenderManagherInterface.cpp" />
+    <ClCompile Include="src\Result.cpp" />
+    <ClCompile Include="src\SceneInterface.cpp" />
+    <ClCompile Include="src\SceneManagerInterface.cpp" />
+    <ClCompile Include="src\Selection.cpp" />
+    <ClCompile Include="src\SetShip.cpp" />
+    <ClCompile Include="src\ShipObject.cpp" />
+    <ClCompile Include="src\StageEffect.cpp" />
+    <ClCompile Include="src\StageObject.cpp" />
+    <ClCompile Include="src\StateManager.cpp" />
+    <ClCompile Include="src\Submarine.cpp" />
+    <ClCompile Include="src\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Library\Library.vcxproj">
@@ -96,33 +96,33 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="scr\AircraftCarrier.h" />
-    <ClInclude Include="scr\Background.h" />
-    <ClInclude Include="scr\BattleShip.h" />
-    <ClInclude Include="scr\BoardOfFrame.h" />
-    <ClInclude Include="scr\Button.h" />
-    <ClInclude Include="scr\Connect.h" />
-    <ClInclude Include="scr\ConnectStruct.h" />
-    <ClInclude Include="scr\Cruiser.h" />
-    <ClInclude Include="scr\DebugInterface.h" />
-    <ClInclude Include="scr\Destroyer.h" />
-    <ClInclude Include="scr\GameLog.h" />
-    <ClInclude Include="scr\GameScene.h" />
-    <ClInclude Include="scr\GameState.h" />
-    <ClInclude Include="scr\LogStream.h" />
-    <ClInclude Include="scr\Player.h" />
-    <ClInclude Include="scr\Result.h" />
-    <ClInclude Include="scr\SceneInterface.h" />
-    <ClInclude Include="scr\ScreenMask.h" />
-    <ClInclude Include="scr\Selection.h" />
-    <ClInclude Include="scr\SetShip.h" />
-    <ClInclude Include="scr\ShipObject.h" />
-    <ClInclude Include="scr\StageDefineList.h" />
-    <ClInclude Include="scr\StageEffect.h" />
-    <ClInclude Include="scr\StageObject.h" />
-    <ClInclude Include="scr\StateManager.h" />
-    <ClInclude Include="scr\Submarine.h" />
-    <ClInclude Include="scr\TitleScene.h" />
+    <ClInclude Include="src\AircraftCarrier.h" />
+    <ClInclude Include="src\Background.h" />
+    <ClInclude Include="src\BattleShip.h" />
+    <ClInclude Include="src\BoardOfFrame.h" />
+    <ClInclude Include="src\Button.h" />
+    <ClInclude Include="src\Connect.h" />
+    <ClInclude Include="src\ConnectStruct.h" />
+    <ClInclude Include="src\Cruiser.h" />
+    <ClInclude Include="src\DebugInterface.h" />
+    <ClInclude Include="src\Destroyer.h" />
+    <ClInclude Include="src\GameLog.h" />
+    <ClInclude Include="src\GameScene.h" />
+    <ClInclude Include="src\GameState.h" />
+    <ClInclude Include="src\LogStream.h" />
+    <ClInclude Include="src\Player.h" />
+    <ClInclude Include="src\Result.h" />
+    <ClInclude Include="src\SceneInterface.h" />
+    <ClInclude Include="src\ScreenMask.h" />
+    <ClInclude Include="src\Selection.h" />
+    <ClInclude Include="src\SetShip.h" />
+    <ClInclude Include="src\ShipObject.h" />
+    <ClInclude Include="src\StageDefineList.h" />
+    <ClInclude Include="src\StageEffect.h" />
+    <ClInclude Include="src\StageObject.h" />
+    <ClInclude Include="src\StateManager.h" />
+    <ClInclude Include="src\Submarine.h" />
+    <ClInclude Include="src\TitleScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

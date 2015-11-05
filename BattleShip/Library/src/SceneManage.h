@@ -11,7 +11,7 @@
 #include "device.h"
 #include "RenderManager.h"
 #include "DrawManager.h"
-#include "../../BattleShip/scr/SceneInterface.h"
+#include "../../BattleShip/src/SceneInterface.h"
 #include "Key.h"
 #include "Mouse.h"
 #include "joystick_XInput.h"

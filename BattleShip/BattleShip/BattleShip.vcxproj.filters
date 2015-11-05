@@ -57,159 +57,159 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Library\scr\WinMain.cpp">
-      <Filter>ソース ファイル\Lib_Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\DrawManagherInterface.cpp">
-      <Filter>ソース ファイル\Lib_Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\RenderManagherInterface.cpp">
-      <Filter>ソース ファイル\Lib_Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\SceneManagerInterface.cpp">
-      <Filter>ソース ファイル\Lib_Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\GameScene.cpp">
-      <Filter>ソース ファイル\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\SceneInterface.cpp">
-      <Filter>ソース ファイル\Lib_Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\Player.cpp">
-      <Filter>ソース ファイル\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\AircraftCarrier.cpp">
-      <Filter>ソース ファイル\Ship</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\BattleShip.cpp">
-      <Filter>ソース ファイル\Ship</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\Cruiser.cpp">
-      <Filter>ソース ファイル\Ship</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\Destroyer.cpp">
-      <Filter>ソース ファイル\Ship</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\StateManager.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\SetShip.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\Selection.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\StageEffect.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\GameState.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\Result.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\Connect.cpp">
-      <Filter>リソース ファイル\Connect</Filter>
-    </ClCompile>
-    <ClCompile Include="scr\DebugInterface.cpp">
+    <ClCompile Include="src\DebugInterface.cpp">
       <Filter>リソース ファイル\DebugInterface</Filter>
     </ClCompile>
-    <ClCompile Include="scr\Submarine.cpp">
-      <Filter>ソース ファイル\Ship</Filter>
+    <ClCompile Include="src\Connect.cpp">
+      <Filter>リソース ファイル\Connect</Filter>
     </ClCompile>
-    <ClCompile Include="scr\TitleScene.cpp">
+    <ClCompile Include="src\TitleScene.cpp">
       <Filter>ソース ファイル\Title</Filter>
     </ClCompile>
-    <ClCompile Include="scr\StageObject.cpp">
+    <ClCompile Include="src\SetShip.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="src\StageEffect.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="src\StateManager.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameState.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Result.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Selection.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Submarine.cpp">
+      <Filter>ソース ファイル\Ship</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AircraftCarrier.cpp">
+      <Filter>ソース ファイル\Ship</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BattleShip.cpp">
+      <Filter>ソース ファイル\Ship</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cruiser.cpp">
+      <Filter>ソース ファイル\Ship</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Destroyer.cpp">
+      <Filter>ソース ファイル\Ship</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\WinMain.cpp">
+      <Filter>ソース ファイル\Lib_Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SceneInterface.cpp">
+      <Filter>ソース ファイル\Lib_Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SceneManagerInterface.cpp">
+      <Filter>ソース ファイル\Lib_Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DrawManagherInterface.cpp">
+      <Filter>ソース ファイル\Lib_Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RenderManagherInterface.cpp">
+      <Filter>ソース ファイル\Lib_Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameScene.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Player.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameLog.cpp">
       <Filter>ソース ファイル\Game\Object</Filter>
     </ClCompile>
-    <ClCompile Include="scr\ShipObject.cpp">
+    <ClCompile Include="src\ShipObject.cpp">
       <Filter>ソース ファイル\Game\Object</Filter>
     </ClCompile>
-    <ClCompile Include="scr\GameLog.cpp">
+    <ClCompile Include="src\StageObject.cpp">
       <Filter>ソース ファイル\Game\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="scr\AircraftCarrier.h">
-      <Filter>ヘッダー ファイル\Ship</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\Destroyer.h">
-      <Filter>ヘッダー ファイル\Ship</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\BattleShip.h">
-      <Filter>ヘッダー ファイル\Ship</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\Cruiser.h">
-      <Filter>ヘッダー ファイル\Ship</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\Submarine.h">
-      <Filter>ヘッダー ファイル\Ship</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\SetShip.h">
-      <Filter>ヘッダー ファイル\State</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\StageEffect.h">
-      <Filter>ヘッダー ファイル\State</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\Selection.h">
-      <Filter>ヘッダー ファイル\State</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\Result.h">
-      <Filter>ヘッダー ファイル\State</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\GameState.h">
-      <Filter>ヘッダー ファイル\State</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\SceneInterface.h">
-      <Filter>ヘッダー ファイル\Lib_Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\StateManager.h">
-      <Filter>ヘッダー ファイル\State</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\GameScene.h">
-      <Filter>ヘッダー ファイル\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\Player.h">
-      <Filter>ヘッダー ファイル\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\StageDefineList.h">
-      <Filter>ヘッダー ファイル\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\Connect.h">
-      <Filter>リソース ファイル\Connect</Filter>
-    </ClInclude>
-    <ClInclude Include="scr\DebugInterface.h">
+    <ClInclude Include="src\DebugInterface.h">
       <Filter>リソース ファイル\DebugInterface</Filter>
     </ClInclude>
-    <ClInclude Include="scr\ConnectStruct.h">
+    <ClInclude Include="src\Connect.h">
       <Filter>リソース ファイル\Connect</Filter>
     </ClInclude>
-    <ClInclude Include="scr\TitleScene.h">
+    <ClInclude Include="src\ConnectStruct.h">
+      <Filter>リソース ファイル\Connect</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TitleScene.h">
       <Filter>ヘッダー ファイル\Title</Filter>
     </ClInclude>
-    <ClInclude Include="scr\Background.h">
+    <ClInclude Include="src\Selection.h">
+      <Filter>ヘッダー ファイル\State</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SetShip.h">
+      <Filter>ヘッダー ファイル\State</Filter>
+    </ClInclude>
+    <ClInclude Include="src\StageEffect.h">
+      <Filter>ヘッダー ファイル\State</Filter>
+    </ClInclude>
+    <ClInclude Include="src\StateManager.h">
+      <Filter>ヘッダー ファイル\State</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameState.h">
+      <Filter>ヘッダー ファイル\State</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Result.h">
+      <Filter>ヘッダー ファイル\State</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Submarine.h">
+      <Filter>ヘッダー ファイル\Ship</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AircraftCarrier.h">
+      <Filter>ヘッダー ファイル\Ship</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BattleShip.h">
+      <Filter>ヘッダー ファイル\Ship</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cruiser.h">
+      <Filter>ヘッダー ファイル\Ship</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Destroyer.h">
+      <Filter>ヘッダー ファイル\Ship</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SceneInterface.h">
+      <Filter>ヘッダー ファイル\Lib_Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Player.h">
+      <Filter>ヘッダー ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\StageDefineList.h">
+      <Filter>ヘッダー ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameScene.h">
+      <Filter>ヘッダー ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LogStream.h">
       <Filter>ヘッダー ファイル\Game\Object</Filter>
     </ClInclude>
-    <ClInclude Include="scr\BoardOfFrame.h">
+    <ClInclude Include="src\ScreenMask.h">
       <Filter>ヘッダー ファイル\Game\Object</Filter>
     </ClInclude>
-    <ClInclude Include="scr\StageObject.h">
+    <ClInclude Include="src\ShipObject.h">
       <Filter>ヘッダー ファイル\Game\Object</Filter>
     </ClInclude>
-    <ClInclude Include="scr\Button.h">
+    <ClInclude Include="src\StageObject.h">
       <Filter>ヘッダー ファイル\Game\Object</Filter>
     </ClInclude>
-    <ClInclude Include="scr\ScreenMask.h">
+    <ClInclude Include="src\Background.h">
       <Filter>ヘッダー ファイル\Game\Object</Filter>
     </ClInclude>
-    <ClInclude Include="scr\ShipObject.h">
+    <ClInclude Include="src\BoardOfFrame.h">
       <Filter>ヘッダー ファイル\Game\Object</Filter>
     </ClInclude>
-    <ClInclude Include="scr\GameLog.h">
+    <ClInclude Include="src\Button.h">
       <Filter>ヘッダー ファイル\Game\Object</Filter>
     </ClInclude>
-    <ClInclude Include="scr\LogStream.h">
+    <ClInclude Include="src\GameLog.h">
       <Filter>ヘッダー ファイル\Game\Object</Filter>
     </ClInclude>
   </ItemGroup>
