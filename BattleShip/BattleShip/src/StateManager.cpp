@@ -29,6 +29,7 @@ StateManager::StateManager( Player* const _pPlayer1, Player* const _pPlayer2,
 	m_resultEnemy	= 0;
 	m_resultBattle	= 0;
 	m_selectType	= static_cast<int>(GameState::_SELECT_NONE_);
+
 }
 
 //	ステートの初期化
@@ -37,7 +38,7 @@ void StateManager::StateInit()
 	m_beforeState	= STATE_NONE;		///<	初期化なので以前のステートはそもそも無い為、STATE_NONEに。
 	m_currentState	= _FIRST_SETATE_;///<	ステートの初期化なので最初に読み込むであろうパターンの定数を入れる
 	m_currentShip	= ShipObject::TYPE_AIRCARRIER;	///<	初期選択駒は空母なので数値を空母にセット。
-	ChangeState(m_currentState);	///<	まだステートポイントには何も入っていないので初期化も兼ねて
+	
 	m_StageFrame.Init( 0.f, -2.f, WIDTH, HEIGHT*(_STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_));
 	///<画面上部から１１マス分目まで盤面フレームがあるので11/16となる。
 	m_PlayerFrame[0].Init( _POS_PLAYER1FRAME_, _SIZE_PLAYERFRAME_ );
@@ -45,8 +46,13 @@ void StateManager::StateInit()
 
 	//	ゲームログの初期化
 	int plIndex = m_playerID%2;	
-	m_gameLog.SetPosition( static_cast<long>( m_PlayerFrame[plIndex].GetPositionX() ), static_cast<long>( m_PlayerFrame[plIndex].GetPositionY()) );
-	m_gameLog.AddStream( "戦闘開始！" );
+	m_gameLog.Init( static_cast<long>( m_PlayerFrame[plIndex].GetPositionX()+_LOG_POS_TWEAK_), static_cast<long>( m_PlayerFrame[plIndex].GetPositionY()+_LOG_POS_TWEAK_) );
+	
+	m_tempStr1 = m_gameLog.m_fixedPhrase.m_phrase[FixedPhrase::START_BATTLE];
+	m_gameLog.AddStream( m_tempStr1.c_str() );
+	
+	//	ステート変更（＆初期化）
+	ChangeState(m_currentState);	///<	まだステートポイントには何も入っていないので初期化も兼ねて
 
 	for( int iPlayer=0; iPlayer<_PLAYER_NUM_; iPlayer++ )	///<表示位置などを予め初期化しておき、描画時や当たり判定時などにも利用する。
 	{
@@ -105,14 +111,14 @@ int StateManager::StateCotrol()
 	{
 		MessageBoxA(0,"戦闘が終了しました","戦闘結果",MB_OK);
 	}
-
+	
 	return stateResult;
 }
 
 int StateManager::CheckState()
 {
 	
-	int beforeShip = static_cast<int>(m_currentShip);
+	static int beforeShip = -1;
 	int checkResult = 0;
 	int stageResult = 0;
 
@@ -123,6 +129,34 @@ int StateManager::CheckState()
 	switch( m_currentState )	///<　シーン毎にステートの結果への対処が変わるので分岐
 	{
 	case STATE_SET_SHIP:
+		//	駒配置を促すログを出す
+		if( beforeShip != m_currentShip && m_currentShip != ShipObject::TYPE_MAX )
+		{
+			m_tempStr2 = m_gameLog.m_fixedPhrase.m_phrase[FixedPhrase::SET_PHRASE_STR];
+			
+			switch( m_currentShip )
+			{
+			case ShipObject::TYPE_AIRCARRIER:
+				m_tempStr1 = m_gameLog.m_fixedPhrase.m_phrase[FixedPhrase::AC_STR];
+				break;
+			case ShipObject::TYPE_BATTLESHIP:
+				m_tempStr1 = m_gameLog.m_fixedPhrase.m_phrase[FixedPhrase::BS_STR];
+				break;
+			case ShipObject::TYPE_CRUISER:
+				m_tempStr1 = m_gameLog.m_fixedPhrase.m_phrase[FixedPhrase::CR_STR];
+				break;
+			case ShipObject::TYPE_DESTROYER:
+				m_tempStr1 = m_gameLog.m_fixedPhrase.m_phrase[FixedPhrase::DS_STR];
+				break;
+			case ShipObject::TYPE_SUBMARINE:
+				m_tempStr1 = m_gameLog.m_fixedPhrase.m_phrase[FixedPhrase::SB_STR];
+				break;
+			}
+
+			std::string tempStr = m_tempStr1+m_tempStr2;
+			m_gameLog.AddStream( tempStr.c_str() );
+		}
+
 		if( m_currentShip >= ShipObject::TYPE_MAX && !m_connectFlag )	///<　全ての駒がセットされた
 			checkResult = 1;
 		break;
@@ -168,12 +202,17 @@ int StateManager::CheckState()
 		}
 		break;
 	}
+
+	///< ステート別Controlが終わったので前フレームでの選択駒を更新
+	beforeShip = static_cast<int>(m_currentShip);
 	return checkResult;
 }
 
 //	ステートパターンの切り替え
 bool StateManager::ChangeState( _STATE_NUM_ _stateType )
 {
+
+
 	if( _stateType > STATE_STAGE_EFFECT&& _stateType < STATE_SET_SHIP )
 	{
 		MessageBoxA(0,"ステートパターンの変更に失敗しました！\n引数を確認して下さい！(＞＜;)",NULL,MB_OK);
@@ -189,14 +228,21 @@ bool StateManager::ChangeState( _STATE_NUM_ _stateType )
 	switch( _stateType )
 	{
 	case STATE_SET_SHIP:
+		m_tempStr1 = m_gameLog.m_fixedPhrase.m_phrase[FixedPhrase::STATE_SET_SHIP_STR];
+		m_gameLog.AddStream(m_tempStr1.c_str());
+		// 現状は最初に配置するのは空母で、CheckState関数内では空母のログ
 		m_pGameState = new SetShip( m_currentShip );
 
 		break;
 	case STATE_SELECTION:
+		m_tempStr1 = m_gameLog.m_fixedPhrase.m_phrase[FixedPhrase::STATE_SELECTION_STR];
+		m_gameLog.AddStream(m_tempStr1.c_str());
 		m_pGameState = new Selection( m_currentShip );
 
 		break;
 	case STATE_RESULT:
+		m_tempStr1 = m_gameLog.m_fixedPhrase.m_phrase[FixedPhrase::STATE_RESULT_STR];
+		m_gameLog.AddStream(m_tempStr1.c_str());
 		m_pGameState = new Result( m_currentShip );
 
 		break;
@@ -300,7 +346,7 @@ void StateManager::StateDraw( CDrawManager* _drawManager)
 			if( ip == m_playerID-1 )	///<今は自分のプレイヤーの駒しか表示しない
 			{
 				Player* tempPlayer = m_playerID%_PLAYER_NUM_ ? m_pPlayer1:m_pPlayer2;
-					ShipObject* tempShip = tempPlayer->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
+				ShipObject* tempShip = tempPlayer->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
 					
 				if( !tempShip->GetDeadFlag() )
 				{
@@ -412,7 +458,6 @@ void StateManager::DrawLog()
 		unsigned int tempW = 0, tempH = 0;
 		std::string* pStr;
 		LPCSTR lpTempStr;
-		const D3DXCOLOR color = D3DCOLOR_ARGB(255,255,255,255);
 		std::list<LogStream*>::const_iterator itEnd = m_gameLog.m_logStream.end();
 		for( std::list<LogStream*>::iterator it = m_gameLog.m_logStream.begin();
 			it != itEnd; ++it)
@@ -421,7 +466,7 @@ void StateManager::DrawLog()
 			(*it)->GetSize( tempW, tempH );
 			pStr = (*it)->GetStringPtr();
 			lpTempStr = const_cast<char *>(pStr->c_str());
-			if(pDxFont->DrawA( tempX, tempY, tempW, tempH, lpTempStr, &color))
+			if(pDxFont->DrawA( tempX, tempY, tempW, tempH, lpTempStr, (*it)->GetColor() ))
 			{
 
 			}

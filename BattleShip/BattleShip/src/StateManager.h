@@ -31,7 +31,8 @@ private:
 	_STATE_NUM_		m_currentState;	///<	現在のステートパターン
 	StageObject* const	m_pStageObject;	///<	ステージ情報格納ポインタ
 	ShipObject::_SHIP_TYPE_NUM_	m_currentShip;	///<	現在選択対象の駒。GameStateと共有するため取り扱いに注意！
-	
+	std::string		m_tempStr1;
+	std::string		m_tempStr2;
 //	他のオブジェクトと値のやり取りする可能性のある変数
 private:
 	

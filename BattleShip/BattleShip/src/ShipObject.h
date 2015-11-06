@@ -28,11 +28,11 @@ public:
 	enum _SHIP_TYPE_NUM_
 	{
 		TYPE_NONE=-1,
-		TYPE_AIRCARRIER,
-		TYPE_BATTLESHIP,
-		TYPE_CRUISER,
-		TYPE_DESTROYER,
-		TYPE_SUBMARINE,
+		TYPE_AIRCARRIER,	///<‹ó•ê
+		TYPE_BATTLESHIP,	///<íŠÍ
+		TYPE_CRUISER,		///<„—mŠÍ
+		TYPE_DESTROYER,		///<‹ì’€ŠÍ
+		TYPE_SUBMARINE,		///<ö…ŠÍ
 		TYPE_MAX,
 	};
 

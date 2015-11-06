@@ -2,8 +2,7 @@
 #define _LOGSTREAM_H_
 
 #include <string>
-#define _LOG_FONT_WIDTH_	160
-#define _LOG_FONT_HEIGHT_	160
+#include "DirectXFont.h"
 
 /**
 *@brief	ゲーム中でのログの文字列情報クラス
@@ -18,17 +17,19 @@ private:
 	long			m_y;		///<	文字列の基準点Y
 	unsigned int	m_width;	///<	一文字分の横幅
 	unsigned int	m_height;	///<	一文字分の縦幅
-
+	D3DXCOLOR		m_color;	///<	文字のカラー値
+	
 public:
 	/**
 	*@brief	コンストラクタ
 	*/
 	LogStream( const char* _str, const long _x, const long _y,
-		const unsigned int& _width, const unsigned int& _height )
+		const unsigned int& _width, const unsigned int& _height, const D3DXCOLOR& _color = 0xFFFFFF )
 	{
 		SetString( _str );
 		SetPosition( _x, _y );
 		SetSize( _width, _height );
+		SetColor( _color );
 	}
 
 	/**
@@ -63,6 +64,14 @@ public:
 	}
 
 	/**
+	*@brief	文字列のカラー値セット
+	*/
+	void SetColor( const D3DXCOLOR& _color )
+	{
+		m_color = _color;
+	}
+
+	/**
 	*@brief	文字列ポインタ取得
 	*/
 	std::string* GetStringPtr(){ return &m_logStr; }
@@ -91,6 +100,10 @@ public:
 
 	unsigned int GetHeight(){ return m_height; }
 
+	/**
+	*@brief	文字列のカラー値取得
+	*/
+	D3DXCOLOR* GetColor(){ return &m_color; }
 };
 
 #endif

@@ -5,13 +5,15 @@
 #include < tchar.h >
 #include <tchar.h>
 
+#define _LOG_FONT_WIDTH_	16
+#define _LOG_FONT_HEIGHT_	16
+
 class DirectXFont
 {
 	LPD3DXFONT m_font;		///< @brief 描画先フォント
 	UINT m_font_heigh;		///< @brief フォントの高さ
 	UINT m_font_width;		///< @brief フォントの幅
-	UINT m_font_thickness;	///< @brief フォントの太さ
-
+	
 private:
 
 	/** @brief フォントハンドルの解放*/
@@ -24,9 +26,8 @@ public:
 	DirectXFont()
 	{
 		m_font = NULL;		
-		m_font_heigh = 0;		
+		m_font_heigh = _LOG_FONT_HEIGHT_;		
 		m_font_width = 0;		
-		m_font_thickness = 0;
 	};
 
 	/** @brief メンバ解放*/
@@ -46,7 +47,7 @@ public:
 	*/
 	bool Init(
 		const LPDIRECT3DDEVICE9 _dev,
-		const UINT _font_heigh = 8,
+		const UINT _font_heigh = _LOG_FONT_HEIGHT_,
 		const UINT _font_width = 0
 	);
 

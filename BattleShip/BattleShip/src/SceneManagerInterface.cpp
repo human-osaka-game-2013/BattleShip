@@ -16,6 +16,8 @@ void CSceneManager::Manage ()
 	
 	if ( iBeforeScene != iCurrentScene )
 	{
+		if( iBeforeScene != SCENE_NONE )
+			m_sceneObj->Free();
 		switch ( iCurrentScene )
 		{
 		case SCENE_BATTLE:
