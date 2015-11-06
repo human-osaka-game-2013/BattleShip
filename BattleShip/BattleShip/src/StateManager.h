@@ -67,6 +67,13 @@ public:
 		StageObject* const	_pStageObject, const int _playerID );
 
 	/**
+	*@brief	デストラクタ
+	*/
+	~StateManager() {
+		CLASS_DELETE(m_pGameState);
+	}
+
+	/**
 	*@brief	ステートの初期化
 	*/
 	void StateInit();
@@ -80,16 +87,6 @@ public:
 	*@brief	ステートの基本描画
 	*/
 	void StateDraw( CDrawManager* _drawManager);
-
-	/**
-	*@brief	ステートオブジェクトの消去
-	*/
-	void StateDelete();
-
-	/**
-	*@brief	解放処理
-	*/
-	void Free();
 
 	/**
 	*@brief	ステート状態の取得

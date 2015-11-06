@@ -108,13 +108,3 @@ bool Player::CheckDestroy( const ShipObject::_SHIP_TYPE_NUM_ _shipType )
 
 	return false;
 }
-
-bool Player::Free()
-{
-	for( unsigned int iCount = 0; iCount < m_pShip.size(); iCount++ ){
-
-		delete m_pShip[iCount];
-	}
-	m_pShip.clear();
-	return true;
-}

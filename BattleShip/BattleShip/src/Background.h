@@ -27,6 +27,13 @@ public:
 	}
 
 	/**
+	*@breif	デストラクタ
+	*/
+	~Background(){
+	
+	}
+
+	/**
 	*@brief	初期化
 	*/
 	void Init()
@@ -37,7 +44,6 @@ public:
 	}
 	void Control(){};
 	void Draw(){};
-	void Free(){};
 	float GetWidth(){ return fWidth; }
 	float GetHeight(){ return fHeight; }
 };

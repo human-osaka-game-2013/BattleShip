@@ -23,10 +23,17 @@ public:
 	{
 		Init( _userID );
 	}
+
 	/**
-	*@brief	解放処理
+	*@brief	デストラクタ
 	*/
-	bool Free();
+	~Player(){
+		for( unsigned int iCount = 0; iCount < m_pShip.size(); iCount++ ){
+
+		delete m_pShip[iCount];
+		}
+		m_pShip.clear();
+	}
 
 	/**
 	*@brief	初期化

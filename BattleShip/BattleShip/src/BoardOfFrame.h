@@ -29,6 +29,14 @@ public:
 	}
 
 	/**
+	*@breif	デストラクタ
+	*/
+	~BoardOfFrame()
+	{
+
+	}
+
+	/**
 	*@brief	初期化
 	*/
 	void Init( float _fx, float _fy, float _fWidth, float _fHeight )
@@ -39,7 +47,7 @@ public:
 	}
 	void Control(){};
 	void Draw(){};
-	void Free(){};
+	
 	inline float GetWidth(){ return fWidth; }
 	inline float GetHeight(){ return fHeight; }
 

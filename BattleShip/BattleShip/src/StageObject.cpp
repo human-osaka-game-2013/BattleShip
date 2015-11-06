@@ -33,12 +33,6 @@ bool StageObject::Init()
 }
 
 
-void  StageObject::Free()
-{
-
-}
-
-
 int StageObject::CheckStageBlock( int _player, const int _column, const int _line, ShipObject* _ship, 
 								ShipObject::_SHIP_ARRAY_TYPE_ _arrayType, const int _shipNum )
 {

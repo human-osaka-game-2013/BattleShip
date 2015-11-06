@@ -123,11 +123,6 @@ public:
 	*/
 	void InitVertex( _SHIP_TYPE_NUM_ _shipType );
 
-	/**
-	*@brief	‰ğ•úˆ—
-	*/
-	void  Free();
-
 public:
 	/**
 	*@brief	‹î‚Ì‚¿åIDæ“¾

@@ -31,6 +31,14 @@ public:
 	}
 
 	/**
+	*@breif	デストラクタ
+	*/
+	~ScreenMask()
+	{
+
+	}
+
+	/**
 	*@brief	初期化
 	*/
 	void Init()
@@ -43,7 +51,7 @@ public:
 
 	void Control(){};
 	void Draw(){};
-	void Free(){};
+	
 	inline float GetWidth(){ return fWidth; }
 	inline float GetHeight(){ return fHeight; }
 

@@ -59,6 +59,13 @@ public:
 			
 	}
 
+	/**
+	*@brief	デストラクタ
+	*/
+	~StageObject() {
+
+	}
+
 	bool Init();
 
 	void Control(){};
@@ -184,11 +191,6 @@ public:
 	*@brief	ステージブロックの選択状態を解除
 	*/
 	void ResetSelect();
-
-	/**
-	*@brief	解放処理
-	*/
-	void  Free();
 
 	/**
 	*@brief	ステージデータの結合

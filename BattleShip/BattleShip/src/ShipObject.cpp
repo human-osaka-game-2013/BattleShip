@@ -146,10 +146,6 @@ void ShipObject::InitVertex( _SHIP_TYPE_NUM_ _shipType )
 	m_vertex[3].tv = 0.f;
 }
 
-void  ShipObject::Free()
-{
-
-}
 
 void ShipObject::SetConnectShipData( ConnectShip* _pCShip )
 {

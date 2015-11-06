@@ -47,10 +47,12 @@ public:
 		Init();
 	}
 
-	/**	
-	*@brief 解放処理
+	/**
+	*@breif	デストラクタ
 	*/
-	bool Free();
+	~TitleScene(){
+
+	}
 
 	/**
 	*@brief	ゲームメインの初期化関数

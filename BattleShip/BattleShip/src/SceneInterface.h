@@ -42,12 +42,11 @@ public:
 	/**
 	*@briefデストラクタ
 	*/
-	~CScene()
+	virtual ~CScene()
 	{
 		
 	}
 
-	virtual bool Free() = 0;
 public:
 	/**
 	*@brief	初期化の純粋仮想関数

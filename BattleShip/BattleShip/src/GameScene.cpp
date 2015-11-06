@@ -12,7 +12,7 @@
 */
 bool GameScene::Init()
 {
-	
+	m_gameEndFlag = false;
 
 #ifdef _NOT_USE_COM_
 	
@@ -100,22 +100,6 @@ void GameScene::Draw()
 		0.f, 0.f, 1.f, 1.f,	tempA, tempR, tempG, tempB);
 }
 
-//	‰ğ•úˆ—
-bool GameScene::Free()
-{
-	for( int iCount = 0; iCount < m_Player.size(); iCount++ ){
-		m_Player[iCount]->Free();
-		delete m_Player[iCount];
-	}
-	m_Player.clear();
-
-	m_pStageObject->Free();
-	delete m_pStageObject;
-	m_stateManager->Free();
-	delete m_stateManager;
-
-	return true;
-}
 
 //	’ÊMˆ—
 bool GameScene::CommunicationProcessing()

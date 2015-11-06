@@ -14,24 +14,26 @@ void CSceneManager::Manage ()
 	if ( GetChangeSceneFlag() == true )
 		iCurrentScene = m_sceneObj->GetSceneID();	//	現在のシーンを切り替える
 	
+	//	シーンが変わっていたら
 	if ( iBeforeScene != iCurrentScene )
 	{
+		//	本当にシーンの切り替わりであるか（m_sceneObjにまだデータが入っていなかった場合を考慮）
 		if( iBeforeScene != SCENE_NONE )
-			m_sceneObj->Free();
+		{
+			CLASS_DELETE( m_sceneObj );
+		}
 		switch ( iCurrentScene )
 		{
 		case SCENE_BATTLE:
-			CLASS_DELETE( m_sceneObj );
 			m_sceneObj = new GameScene( iCurrentScene, m_pRenderManager, m_pDrawManager, m_pKey, m_pMouse );
 			break;
 
 		case SCENE_TITLE:
-			CLASS_DELETE( m_sceneObj );
 			m_sceneObj = new TitleScene( iCurrentScene, m_pRenderManager, m_pDrawManager, m_pKey, m_pMouse );
 			
 			break;
 		}
-		
+		//	シーンを変えたので初期化をさせる必要がある。
 		UpdateChangeFlag ( true );
 	}
 	iBeforeScene = iCurrentScene;
@@ -40,7 +42,7 @@ void CSceneManager::Manage ()
 //	シーンオブジェクトの解放
 bool CSceneManager::DeleteSceneObj()
 {
-	m_sceneObj->Free();
+
 	if( m_pRenderManager != NULL )
 		CLASS_DELETE( m_pRenderManager );
 	CLASS_DELETE( m_pDrawManager );

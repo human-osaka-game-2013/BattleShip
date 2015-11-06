@@ -109,7 +109,8 @@ int StateManager::StateCotrol()
 	}
 	else if( stateResult == -1 )
 	{
-		MessageBoxA(0,"戦闘が終了しました","戦闘結果",MB_OK);
+		m_tempStr1 = m_gameLog.GetPhrase( FixedPhrase::RESULT_END );
+		m_gameLog.AddStream( m_tempStr1.c_str() );
 	}
 	
 	return stateResult;
@@ -174,6 +175,7 @@ int StateManager::CheckState()
 		{
 			checkResult = -1;
 		}
+		//勝敗はまだついていない
 		else	
 		{
 			Result* pResult = dynamic_cast<Result*>(m_pGameState);	///<Resultの関数にアクセスする必要があるので、ダウンキャストする。
@@ -474,15 +476,3 @@ void StateManager::DrawLog()
 	}
 	
 }
-
-//	ステートオブジェクトの消去
-void StateManager::StateDelete()
-{
-	CLASS_DELETE(m_pGameState);
-}
-
-void StateManager::Free()
-{
-	StateDelete();
-}
-

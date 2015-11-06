@@ -91,11 +91,3 @@ void TitleScene::Draw()
 	
 	
 }
-
-
-bool TitleScene::Free()
-{
-
-
-	return true;
-}

@@ -31,7 +31,9 @@ private:
 	Background		m_background;		///<	背景オブジェクト
 	Connect			m_Connect;			///<	通信デバイスクラス
 	ScreenMask		m_screenMask;		///<	画面遷移時のフェード用
-	
+	bool			m_gameEndFlag;	
+
+
 public:
 	/**
 	*@brief	コンストラクタ
@@ -49,14 +51,18 @@ public:
 		
 	}
 	
-	~GameScene(){
-		Free();
-	};
-
-	/**	
-	*@brief 解放処理
+	/**
+	*@brief	デストラクタ
 	*/
-	bool Free();
+	~GameScene(){
+		for( int iCount = 0; iCount < m_Player.size(); iCount++ ){
+			delete m_Player[iCount];
+		}
+		m_Player.clear();
+		
+		delete m_pStageObject;
+		delete m_stateManager;
+	};
 
 public:
 	

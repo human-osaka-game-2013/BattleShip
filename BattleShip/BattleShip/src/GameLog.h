@@ -33,12 +33,23 @@ public:
 	{
 		SetPosition( 0, 0 );
 	}
+
 	/**
 	*@breif	デストラクタ
 	*/
 	~GameLog()
 	{
-		Free();
+		//	要素が空で無かったら
+		if( !m_logStream.empty() ){
+			//	要素の解放および削除
+			std::list<LogStream*>::const_iterator itEnd = m_logStream.end();
+			for( std::list<LogStream*>::iterator it = m_logStream.begin();
+				it != itEnd; ++it)
+			{
+				delete *it;	///< 中身を解放
+			}
+			m_logStream.clear();	///< listの全削除
+		}
 	}
 
 	/**
@@ -74,35 +85,26 @@ public:
 	void RealignmentStream();
 
 
-	void GetPosition( long& _x, long& _y )
-	{
-		_x = m_posX;
-		_y = m_posY;
-	}
-
 	void SetPosition( const long& _x, const long& _y )
 	{
 		m_posX = _x;
 		m_posY = _y;
 	}
 
-	/**
-	*@brief	全要素解放
-	*/
-	void Free()
+	void GetPosition( long& _x, long& _y )
 	{
-		//	要素が空で無かったら
-		if( !m_logStream.empty() ){
-			//	要素の解放および削除
-			std::list<LogStream*>::const_iterator itEnd = m_logStream.end();
-			for( std::list<LogStream*>::iterator it = m_logStream.begin();
-				it != itEnd; ++it)
-			{
-				delete *it;	///< 中身を解放
-			}
-			m_logStream.clear();	///< listの全削除
-		}
+		_x = m_posX;
+		_y = m_posY;
 	}
+
+	/**
+	*@brief
+	*/
+	std::string GetPhrase( FixedPhrase::_PHRASE_STR_TYPE_ _phraseType )
+	{
+		return m_fixedPhrase.m_phrase[ _phraseType ];
+	}
+	
 };
 
 
