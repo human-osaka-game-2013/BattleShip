@@ -135,27 +135,8 @@ int StateManager::CheckState()
 		{
 			m_tempStr2 = m_gameLog.m_fixedPhrase.m_phrase[FixedPhrase::SET_PHRASE_STR];
 			
-			switch( m_currentShip )
-			{
-			case ShipObject::TYPE_AIRCARRIER:
-				m_tempStr1 = m_gameLog.m_fixedPhrase.m_phrase[FixedPhrase::AC_STR];
-				break;
-			case ShipObject::TYPE_BATTLESHIP:
-				m_tempStr1 = m_gameLog.m_fixedPhrase.m_phrase[FixedPhrase::BS_STR];
-				break;
-			case ShipObject::TYPE_CRUISER:
-				m_tempStr1 = m_gameLog.m_fixedPhrase.m_phrase[FixedPhrase::CR_STR];
-				break;
-			case ShipObject::TYPE_DESTROYER:
-				m_tempStr1 = m_gameLog.m_fixedPhrase.m_phrase[FixedPhrase::DS_STR];
-				break;
-			case ShipObject::TYPE_SUBMARINE:
-				m_tempStr1 = m_gameLog.m_fixedPhrase.m_phrase[FixedPhrase::SB_STR];
-				break;
-			}
-
-			std::string tempStr = m_tempStr1+m_tempStr2;
-			m_gameLog.AddStream( tempStr.c_str() );
+			m_tempStr1 = m_gameLog.GetMultiplePhrase( 2, static_cast<int>(m_currentShip), static_cast<int>(FixedPhrase::SET_PHRASE_STR) );
+			m_gameLog.AddStream( m_tempStr1.c_str() );
 		}
 
 		if( m_currentShip >= ShipObject::TYPE_MAX && !m_connectFlag )	///<　全ての駒がセットされた
@@ -233,23 +214,23 @@ bool StateManager::ChangeState( _STATE_NUM_ _stateType )
 		m_tempStr1 = m_gameLog.m_fixedPhrase.m_phrase[FixedPhrase::STATE_SET_SHIP_STR];
 		m_gameLog.AddStream(m_tempStr1.c_str());
 		// 現状は最初に配置するのは空母で、CheckState関数内では空母のログ
-		m_pGameState = new SetShip( m_currentShip );
+		m_pGameState = new SetShip( m_currentShip, &m_gameLog );
 
 		break;
 	case STATE_SELECTION:
 		m_tempStr1 = m_gameLog.m_fixedPhrase.m_phrase[FixedPhrase::STATE_SELECTION_STR];
 		m_gameLog.AddStream(m_tempStr1.c_str());
-		m_pGameState = new Selection( m_currentShip );
+		m_pGameState = new Selection( m_currentShip, &m_gameLog );
 
 		break;
 	case STATE_RESULT:
 		m_tempStr1 = m_gameLog.m_fixedPhrase.m_phrase[FixedPhrase::STATE_RESULT_STR];
 		m_gameLog.AddStream(m_tempStr1.c_str());
-		m_pGameState = new Result( m_currentShip );
+		m_pGameState = new Result( m_currentShip, &m_gameLog );
 
 		break;
 	case STATE_STAGE_EFFECT:
-		m_pGameState = new StageEffect( m_currentShip );
+		m_pGameState = new StageEffect( m_currentShip, &m_gameLog );
 
 		break;
 	}

@@ -56,7 +56,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>F:\Programming\学校用\svn\就活用提出\海戦ゲーム\BattleShip\Library\scr;F:\学校用\ノート\ゲームプログラミング\svn\就活用提出\海戦ゲーム\BattleShip\Library\scr</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Library\src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

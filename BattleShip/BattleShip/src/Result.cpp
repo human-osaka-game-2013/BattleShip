@@ -32,29 +32,51 @@ int Result::Control()
 		}
 		m_resultBattle = ResultProgressOfBattle( tempPlID, tempEnID );
 
+		//	戦闘結果の仮表示
+		//	自プレイヤー側に起きたイベント（敵の行動選択による結果）
+		switch( m_resultPlayer )
+		{
+		case RESULT_SEARCH:
+			m_tempStr1 = m_pGameLog->GetPhrase(FixedPhrase::RESULT_DISCOVERED_STR);
+			break;
+		case RESULT_ATTACK:
+			m_tempStr1 = m_pGameLog->GetPhrase(FixedPhrase::RESULT_HIT_STR);
+			break;
+		}
+		//	敵側に起きたイベント（自プレイヤーの行動選択による結果
+		switch( m_resultEnemy )
+		{
+		case RESULT_SEARCH:
+			m_tempStr2 = m_pGameLog->GetPhrase(FixedPhrase::RESULT_SIGHT_STR);
+			break;
+		case RESULT_ATTACK:
+			m_tempStr2 = m_pGameLog->GetPhrase(FixedPhrase::RESULT_IMPACT_STR);
+			break;
+		}
+		//	何かイベントがあった場合、ログに追加する
+		if( m_resultPlayer > 0 )
+			m_pGameLog->AddStream( m_tempStr1.c_str(), _LOG_COLOR_WARNING_ );
+		if( m_resultEnemy > 0 )
+			m_pGameLog->AddStream( m_tempStr2.c_str(), _LOG_COLOR_SUCCESS_ );
+		
+		switch( m_resultBattle )
+		{
+		case TYPE_INFERIORITY:
+			m_tempStr1 = m_pGameLog->GetPhrase(FixedPhrase::RESULT_INFERIORITY_STR);
+			m_pGameLog->AddStream( m_tempStr1.c_str(), _LOG_COLOR_WARNING_ );
+			break;
+		case TYPE_DRAW:
+			m_tempStr1 = m_pGameLog->GetPhrase(FixedPhrase::RESULT_DRAW_STR);
+			m_pGameLog->AddStream( m_tempStr1.c_str(), _LOG_COLOR_NOMAL_ );
+			break;
+		case TYPE_SUPERIORITY:
+			m_tempStr1 = m_pGameLog->GetPhrase(FixedPhrase::RESULT_SUPERIORITY_STR);
+			m_pGameLog->AddStream( m_tempStr1.c_str(), _LOG_COLOR_SUCCESS_ );
+			break;
+		}
+		
 		m_StateCompFlag = true;
 		m_connectFlag = true;
-	}
-
-
-	//	戦闘結果の仮表示
-	switch( m_resultPlayer )
-	{
-	case RESULT_SEARCH:
-		MessageBoxA(0,"敵に発見された！","戦闘結果",MB_OK);
-		break;
-	case RESULT_ATTACK:
-		MessageBoxA(0,"攻撃された！","戦闘結果",MB_OK);
-		break;
-	}
-	switch( m_resultEnemy )
-	{
-	case RESULT_SEARCH:
-		MessageBoxA(0,"索敵成功！","戦闘結果",MB_OK);
-		break;
-	case RESULT_ATTACK:
-		MessageBoxA(0,"攻撃が当たった！","戦闘結果",MB_OK);
-		break;
 	}
 
 	return m_resultBattle;
@@ -205,7 +227,7 @@ int Result::ResultProgressOfBattle( const int _playerIndex, const int _enemyInde
 	{
 		iResult = TYPE_VICTORY;
 	}
-	else if( iHitCount[_playerIndex] > iHitCount[_enemyIndex] )
+	else if( iHitCount[_playerIndex] < iHitCount[_enemyIndex] )
 	{
 		iResult = TYPE_SUPERIORITY;
 	}

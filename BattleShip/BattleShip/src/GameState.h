@@ -10,7 +10,7 @@
 #include "Mouse.h"
 #include "Player.h"
 #include "StageObject.h"
-
+#include "GameLog.h"
 
 #define __NOT_USE_COM_	///<通信を使わないテスト
 
@@ -44,13 +44,16 @@ public:
 
 //	メンバ変数など
 protected:
-	_STATE_NUM_ m_stateID;	///<	自身のステートのID	
-	Player* m_pPlayer[_PLAYER_NUM_];	///<	駒データ格納用
-	StageObject* m_pStage;	///<	ステージデータ格納用
-	int		m_playerID;		///<	起動側のID
-	bool	m_StateCompFlag;	///<	Control返り値兼、現在のステートでのタスクを完了フラグ。基本的にはStateManagerと共有のため取り扱いに注意！
-	int		&m_ShipCount;	///<	今見ている駒を見るカウンタ
-	bool	m_connectFlag;	///<	通信を行うフラグ
+	_STATE_NUM_ m_stateID;		///< 自身のステートのID	
+	Player* m_pPlayer[_PLAYER_NUM_];	///< 駒データ格納用
+	StageObject* m_pStage;		///< ステージデータ格納用
+	int		m_playerID;			///< 起動側のID
+	bool	m_StateCompFlag;	///< Control返り値兼、現在のステートでのタスクを完了フラグ。基本的にはStateManagerと共有のため取り扱いに注意！
+	int		&m_ShipCount;		///< 今見ている駒を見るカウンタ
+	bool	m_connectFlag;		///< 通信を行うフラグ
+	GameLog* const	m_pGameLog;	///< ゲームログオブジェクトのポインタ
+	std::string	m_tempStr1;
+	std::string	m_tempStr2;
 
 	/*
 	*@detals	あまりにもマウス座標や駒オブジェクトの取得を何度もしていたため、
@@ -61,17 +64,20 @@ protected:
 	float m_tempY;	///<	マウスなどの座標の仮保存変数
 	ShipObject* m_tempShip;	///<	駒の仮保存変数
 
+
+
 //	デバイス
 protected:
 	CDrawManager*	m_pDrawManager;	///<	2D描画管理クラスポインタ(constポインタ)
 	CMouse*			m_pMouse;		///<	マウス管理クラスポインタ(constポインタ)
-
+	
 public:
 	/**
 	*@brief	コンストラクタ
 	*@param	_type	現在選択している艦の種類
 	*/
-	GameState( ShipObject::_SHIP_TYPE_NUM_& _type ) : m_ShipCount( (int &)_type )
+	GameState( ShipObject::_SHIP_TYPE_NUM_& _type, GameLog* _pGameLog ) : 
+	  m_ShipCount( (int &)_type ), m_pGameLog( _pGameLog )
 	{
 		m_connectFlag = false;
 		m_StateCompFlag = false;

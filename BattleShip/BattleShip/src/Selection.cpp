@@ -42,7 +42,8 @@ int Selection::Control()
 		{
 			if( m_pPlayer[m_playerID-1]->CheckDestroy( static_cast<ShipObject::_SHIP_TYPE_NUM_>( m_ShipCount) ) )
 			{
-				MessageBoxA(0,"この艦はすでに轟沈しています。\n対戦相手の選択までお待ち下さい。",NULL,MB_OK);
+				m_tempStr1 = m_pGameLog->GetPhrase( FixedPhrase::SELECTION_KO_STR );
+				m_pGameLog->AddStream( m_tempStr1.c_str(), D3DXCOLOR( _LOG_COLOR_WARNING_ ) );
 				m_connectFlag = true;	///<	通信フラグを立てて通信の準備に移る
 				m_StateCompFlag = true;	///<	行動選択自体は完了したので、フラグを立てる
 			}
@@ -78,24 +79,36 @@ bool Selection::TabCheck()
 	//	選択タブごとのマウスとの接触判定
 	if( m_actionFrame.HitBlockCheck( m_tempX, m_tempY ) )
 	{
+		//	攻撃のタブ
 		m_actionFrame.SetColor( 255, 150, 150, 150 );
 		if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )){
+			m_tempStr1 = m_pGameLog->GetMultiplePhrase( 3, m_ShipCount,
+				static_cast<int>( FixedPhrase::SELECTION_TYPE_ACTION ), static_cast<int>( FixedPhrase::SELECTION_PHRASE_STR ));
+			m_pGameLog->AddStream( m_tempStr1.c_str() );	///
 			m_selectType = _SELECT_ACTION_;
 			tempFlag = true;
 		}
 	}
 	if( m_searchFrame.HitBlockCheck( m_tempX, m_tempY ) )
 	{
+		//	索敵のタブ
 		m_searchFrame.SetColor( 255, 150, 150, 150 );
 		if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )){
+			m_tempStr1 = m_pGameLog->GetMultiplePhrase( 3, m_ShipCount,
+				static_cast<int>( FixedPhrase::SELECTION_TYPE_SEARCH ), static_cast<int>( FixedPhrase::SELECTION_PHRASE_STR ));
+			m_pGameLog->AddStream( m_tempStr1.c_str() );
 			m_selectType = _SELECT_SEARCH_;
 			tempFlag = true;
 		}
 	}
 	if( m_moveFrame.HitBlockCheck( m_tempX, m_tempY ) )
 	{
+		//	移動のタブ
 		m_moveFrame.SetColor( 255, 150, 150, 150 );
 		if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )){
+			m_tempStr1 = m_pGameLog->GetMultiplePhrase( 3, m_ShipCount,
+				static_cast<int>( FixedPhrase::SELECTION_TYPE_MOVE ), static_cast<int>( FixedPhrase::SELECTION_PHRASE_STR ));
+			m_pGameLog->AddStream( m_tempStr1.c_str() );
 			m_selectType = _SELECT_MOVE_;
 			tempFlag = true;
 		}
@@ -127,8 +140,8 @@ bool Selection::SetTypeArray()
 			return true;
 		}
 	}
-
-	MessageBoxA(0,"この艦でのこの行動は選択出来ません。",NULL,MB_OK);
+	m_tempStr1 = m_pGameLog->GetPhrase( FixedPhrase::SELECTION_DISABLED );
+	m_pGameLog->AddStream( m_tempStr1.c_str(), _LOG_COLOR_WARNING_ );
 	return false;
 }
 

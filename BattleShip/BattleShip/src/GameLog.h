@@ -5,9 +5,12 @@
 #include "LogStream.h"
 #include "FixedPhrase.h"
 
-#define _LOG_HEIGHT_MAX_	_BLOCK_HEIGHT_SIZE_*5	///<ログボックスの縦幅
+#define _LOG_HEIGHT_MAX_	_BLOCK_HEIGHT_SIZE_*5 -_LOG_POS_TWEAK_	///<ログボックスの縦幅
 #define _LOG_POS_TWEAK_		8.0f	///<ログテキストを表示する際の座標微調整の定数
-#define _LOG_COLOR_		0xFFFFFFFF	///<ログテキストを表示する際のデフォルトカラー値	
+#define _LOG_COLOR_DEFAULT_		0xFFFFFFFF	///<ログテキストを表示する際のデフォルトカラー値	
+#define _LOG_COLOR_WARNING_		0xFFFF0000	///<ゲーム内での警告系ログを表示する際のカラー
+#define _LOG_COLOR_SUCCESS_		0xFF00FF00	///<ゲーム内でのプレイヤーに優位的なログを表示する際のカラー
+#define _LOG_COLOR_NOMAL_		0xFF0000FF	
 
 /**
 *@brief	ゲーム中に表示させるログクラス
@@ -67,7 +70,7 @@ public:
 	*@param[in] _width	デフォルトでは定数宣言したフォントサイズを使う	
 	*@param[in] _height	デフォルトでは定数宣言したフォントサイズを使う
 	*/
-	void AddStream( const char* _str, const D3DXCOLOR& _color = _LOG_COLOR_ , const unsigned int _width = _LOG_FONT_WIDTH_, const unsigned int _height = _LOG_FONT_HEIGHT_ );
+	void AddStream( const char* _str, const D3DXCOLOR& _color = _LOG_COLOR_DEFAULT_ , const unsigned int _width = _LOG_FONT_WIDTH_, const unsigned int _height = _LOG_FONT_HEIGHT_ );
 
 	/**
 	*@brief	登録している文字列の縦幅をチェック
@@ -84,6 +87,11 @@ public:
 	*/
 	void RealignmentStream();
 
+	/**
+	*@brief	定型文字列を複数繋ぎあわせて送る関数
+	*@param[in]	つなげる定型分の量
+	*/
+	const std::string GetMultiplePhrase( int _phraseVal,... );
 
 	void SetPosition( const long& _x, const long& _y )
 	{
@@ -104,7 +112,6 @@ public:
 	{
 		return m_fixedPhrase.m_phrase[ _phraseType ];
 	}
-	
 };
 
 

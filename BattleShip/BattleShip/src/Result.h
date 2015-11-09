@@ -45,7 +45,7 @@ public:
 	*@brief	コンストラクタ
 	*@param	_type	現在選択している艦の種類
 	*/
-	Result( ShipObject::_SHIP_TYPE_NUM_& _type ): GameState( _type ){
+	Result( ShipObject::_SHIP_TYPE_NUM_& _type, GameLog* _pGameLog ): GameState( _type, _pGameLog ){
 		m_resultPlayer	= 0;
 		m_resultEnemy	= 0;
 		m_resultBattle	= 0;

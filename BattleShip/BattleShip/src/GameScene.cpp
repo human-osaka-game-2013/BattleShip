@@ -51,17 +51,7 @@ int GameScene::Control()
 {
 	static bool fadeInFlag = true;	//ゲーム開始時はフェードインさせる
 
-	
-	if(m_stateManager->StateCotrol() == -1)
-	{
-		return 1;
-	}
-	
-	if( fadeInFlag )
-	{
-		if( m_screenMask.FadeIn(_FADE_IN_TIME_) )
-			fadeInFlag = false;
-	}
+
 	if( m_stateManager->GetConnectFlag() )
 	{
 #ifdef _NOT_USE_COM_
@@ -78,6 +68,19 @@ int GameScene::Control()
 
 #endif
 	}
+
+	
+	
+	if( fadeInFlag )
+	{
+		if( m_screenMask.FadeIn(_FADE_IN_TIME_) )
+			fadeInFlag = false;
+	}
+	else if(m_stateManager->StateCotrol() == -1)
+	{
+		return 1;
+	}
+
 	return 0;
 }
 

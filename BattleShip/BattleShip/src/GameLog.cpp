@@ -78,3 +78,23 @@ void GameLog::RealignmentStream()
 		(*it)->GetPosition( tempX, tempY );
 	}
 }
+
+const std::string GameLog::GetMultiplePhrase( int _phraseVal,... )
+{
+	int count, value;
+    va_list args;
+	std::string returnStr;
+
+    va_start(args, _phraseVal);
+
+	 for (count = 0 ; count < _phraseVal ; count++) 
+	 {
+		value = va_arg(args, int);
+		std::string tempStr = m_fixedPhrase.m_phrase[value];
+		returnStr = returnStr + tempStr;
+		
+    }
+    va_end(args);
+
+	return returnStr;
+}

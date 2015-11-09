@@ -7,6 +7,7 @@
 
 bool SetShip::Init()
 {
+	m_tempShip = m_pPlayer[m_playerID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)m_ShipCount );
 	return false;
 }
 

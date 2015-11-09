@@ -21,7 +21,7 @@ public:
 	*@brief	コンストラクタ
 	*@param	_type	現在選択している艦の種類
 	*/
-	SetShip( ShipObject::_SHIP_TYPE_NUM_& _type ): GameState( _type ){}
+	SetShip( ShipObject::_SHIP_TYPE_NUM_& _type, GameLog* _pGameLog ): GameState( _type, _pGameLog ){}
 
 	~SetShip(){};
 

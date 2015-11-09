@@ -18,11 +18,11 @@ public:
 		/*
 			艦種
 		*/
-		AC_STR,	///<空母
-		BS_STR,	///<戦艦
-		CR_STR,	///<巡洋艦
-		DS_STR,	///<駆逐艦
-		SB_STR,	///<潜水艦
+		AC_STR=0,	///<空母
+		BS_STR=1,	///<戦艦
+		CR_STR=2,	///<巡洋艦
+		DS_STR=3,	///<駆逐艦
+		SB_STR=4,	///<潜水艦
 
 		/*
 			駒配置
@@ -35,9 +35,13 @@ public:
 			行動選択
 		*/	
 		STATE_SELECTION_STR,	///<行動選択の見出し
+		SELECTION_TYPE_MOVE,	///<移動
+		SELECTION_TYPE_ACTION,	///<攻撃
+		SELECTION_TYPE_SEARCH,	///<索敵
 		SELECTION_PHRASE_STR,	///<選択を促すフレーズ
 		SELECTION_KO_STR,		///<行動不能
 		SELECTION_DISABLED,		///<選択不可
+
 
 		/*
 			戦闘結果
@@ -82,12 +86,16 @@ public:
 		m_phrase[SET_PHRASE_STR]		="を配置して下さい。";
 
 		m_phrase[STATE_SELECTION_STR]	="　　　＜行動の選択＞";
-		m_phrase[SELECTION_PHRASE_STR]	="の行動を選択して下さい。";
-		m_phrase[SELECTION_KO_STR]		="戦闘不能";
+		m_phrase[SELECTION_TYPE_MOVE]	="の移動範囲を自陣地から";
+		m_phrase[SELECTION_TYPE_ACTION]	="の攻撃を敵陣地から";
+		m_phrase[SELECTION_TYPE_SEARCH]	="の索敵を敵陣地から";
+
+		m_phrase[SELECTION_PHRASE_STR]	="選択して下さい。";
+		m_phrase[SELECTION_KO_STR]		="この艦は戦闘不能中です。対戦相手の選択までお待ち下さい。";
 		m_phrase[SELECTION_DISABLED]	="その行動は現在の艦では出来ません。";
 		
 		m_phrase[STATE_RESULT_STR]		="　　　＜戦闘結果＞";
-		m_phrase[RESULT_IMPACT_STR]		="敵に着弾！";
+		m_phrase[RESULT_IMPACT_STR]		="敵艦船に着弾！";
 		m_phrase[RESULT_HIT_STR]		="敵に攻撃された！";
 		m_phrase[RESULT_SIGHT_STR]		="索敵範囲内に敵を発見！";
 		m_phrase[RESULT_DISCOVERED_STR]	="敵に発見された！";
