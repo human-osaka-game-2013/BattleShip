@@ -8,5 +8,6 @@ CScene::CScene( int _id, CRenderManager* const _pRenderManager,
 	m_pDrawManager(_pDrawManager), m_pKey(_pKey), m_pMouse(_pMouse)
 	
 {
-	//m_pRenderManager->CameraInit();
+	m_sceneTime = 0;	
+	m_sceneEndFlag = false;
 }

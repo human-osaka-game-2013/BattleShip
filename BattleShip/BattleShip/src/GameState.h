@@ -64,7 +64,7 @@ protected:
 	float m_tempY;	///<	マウスなどの座標の仮保存変数
 	ShipObject* m_tempShip;	///<	駒の仮保存変数
 
-
+	int m_elapsedTimeFormStateInstance;	///<	ステートが生成されていからの経過時間
 
 //	デバイス
 protected:
@@ -81,6 +81,7 @@ public:
 	{
 		m_connectFlag = false;
 		m_StateCompFlag = false;
+		m_elapsedTimeFormStateInstance = 0;
 	}
 
 	virtual ~GameState(){
@@ -116,6 +117,11 @@ public:
 	*@brief	通信を行うフラグを取得
 	*/
 	const bool GetConnectFlag(){ return m_connectFlag; }
+
+	/**
+	@brief	ステート生成されてからの経過時間の取得
+	*/
+	int GetElapsedTimeFromStateInstance(){ return m_elapsedTimeFormStateInstance; }
 
 	/**
 	*@breif	通信を行うフラグを更新
@@ -158,6 +164,12 @@ public:
 	*@brief	プレイヤーIDセット
 	*/
 	void SetPlayerID( int _playerID ){ m_playerID = _playerID; }
+
+	/**
+	@brief	ステート生成されてからの経過時間の更新
+	*/
+	void SetElapsedTimeFromStateInstance( int _elapsed ){ m_elapsedTimeFormStateInstance = _elapsed; }
+
 };
 
 #endif

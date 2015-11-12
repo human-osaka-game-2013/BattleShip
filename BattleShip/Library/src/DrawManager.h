@@ -16,7 +16,11 @@ struct TEXTUREINFO
 	// テクスチャの格納ポインタ
 	LPDIRECT3DTEXTURE9	pTexture;
 
-	int		width, height;
+	int	width, height;	///< テクスチャの幅高さ
+
+	int wDiv, hDiv;	///< テクスチャの分割数（アニメーションの場合）
+
+	float divTuSize, divTvSize; ///< アニメーションの際のUVの分割サイズ 
 };
 
 // 使用するテクスチャ
@@ -38,6 +42,9 @@ enum TEXTURES
 	_TEX_TITLEMASK_,
 	_TEX_GAMEMASK_,
 	_TEX_GAMELOG_,
+	_TEX_FIRE_EFFECT_,
+	_TEX_EXPLOSION_EFFECT_,
+	_TEX_SEARCH_EFFECT_,
 	_TEXTURE_MAX_
 };
 
@@ -73,9 +80,20 @@ public:
 	*/
 	void BeginDraw ( bool _b3dView = false );
 
-	// テクスチャの読み込み
-	// 第1引数：("画像の名前.拡張子"), 第2引数：テクスチャの番号, 透過色RGB 
-	bool LoadTexture ( LPCSTR _lpFileName, int _textuerNumber, int _iColorRed, int _iColorGreen, int _iColorBlue );
+	/**
+	*@brief	テクスチャ読み込み
+	*@details	アニメーションする場合はテクスチャの分割数を追加。
+	*@warning	アニメーションの場合、画像サイズに合わせて画像を敷き詰める事。
+				抜けマスがある場合でも、各マスにサイズを合わせて下さい。
+	*@parap[in] _lpFileName ("画像の名前.拡張子")
+	*@param[in]	_textuerNumber 登録するテクスチャの番号
+	*@param[in]	_iColorRed		透過色Red
+	*@param[in]	_iColorGreen	透過色Green
+	*@param[in]	_iColorBlue		透過色Blue
+	*@param[in]	_wDiv	アニメーションする場合のテクスチャの分割数幅（デフォルトで1）
+	*@param[in]	_hDiv	アニメーションする場合のテクスチャの分割数高さ（デフォルトで1）
+	*/ 
+	bool LoadTexture ( LPCSTR _lpFileName, int _textuerNumber, int _iColorRed, int _iColorGreen, int _iColorBlue, int _wDiv = 1, int _hDiv = 1 );
 
 	// テクスチャの解放
 	// 第1引数：テクスチャの番号
@@ -181,6 +199,23 @@ public:
 	*/
 	void CenterDraw ( int _textuerNumber, float _fXpos, float _fYpos, float _fAngle, float _fWidth, float _fHeight,
 							float _fTu1, float _fTv1, float _fTu2, float _fTv2, int _iA, int _iR, int _iG, int _iB );
+
+	/**
+	*@brief	中心基準の矩形描画
+	*@details	矩形の中心基準でカラー値を変更する場合の描画
+	*@parap[in] _textuerNumber テクスチャの番号
+	*@param[in]	_fXpos		矩形の中心座標X
+	*@param[in]	_fYpos		矩形の中心座標Y
+	*@param[in]	_fAngle		矩形の回転角度
+	*@param[in]	_fWidth		矩形の横幅
+	*@param[in]	_fHeight	矩形の縦幅
+	*@param[in]	_flipHorizontal	左右反転させる場合のフラグ
+	*@param[in]	_flipVertical	上下反転させる場合のフラグ
+	*@param[in]	_wDiv		分割した場合の何列目に並んだテクスチャか	
+	*@param[in]	_hDiv		分割した場合の何列目に並んだテクスチャか		
+	*/
+	void AnimationDraw( int _textuerNumber, float _fXpos, float _fYpos, float _fWidth, float _fHeight,
+						bool _flipHorizontal=false, bool _flipVertical=false, int _wDiv = 0, int _hDiv=0 );
 
 	/**
 	*@brief	矩形の座標変換

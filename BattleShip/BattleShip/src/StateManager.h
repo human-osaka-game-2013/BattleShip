@@ -33,6 +33,7 @@ private:
 	ShipObject::_SHIP_TYPE_NUM_	m_currentShip;	///<	現在選択対象の駒。GameStateと共有するため取り扱いに注意！
 	std::string		m_tempStr1;
 	std::string		m_tempStr2;
+	int				m_beforeShip;	///<前フレームで選択（対象）されている駒を保持しておく。最初に入ってきた場合は初期値として-1を入れている。
 //	他のオブジェクトと値のやり取りする可能性のある変数
 private:
 	
@@ -47,12 +48,14 @@ private:
 	int m_resultPlayer;	///<	プレイヤー側に起きている戦闘結果
 	int m_resultEnemy;	///<	敵側に起きている戦闘結果
 	int m_resultBattle;	///<	両者の戦況結果
+	int m_stateTime;	///<	各ステート内で秒数をカウントさせたい時に、シーン側で計測した秒数を渡す為のメンバ
 
 //	ステート共通の描画オブジェクトの情報
 private:
 	BoardOfFrame	m_StageFrame;	///<	ステージ部分のフレームオブジェクト
 	BoardOfFrame	m_PlayerFrame[_PLAYER_NUM_];	///<	プレイヤー情報のフレームオブジェクト	
 	GameLog			m_gameLog;		///<	ゲームログオブジェクト
+	GameLog			m_gameElapsed;	///<	経過時間出力ログ
 
 //	デバイス
 private:
@@ -86,12 +89,51 @@ public:
 	/**
 	*@brief	ステートの基本描画
 	*/
-	void StateDraw( CDrawManager* _drawManager);
+	void StateDraw();
 
 	/**
 	*@brief	ステート状態の取得
 	*/
 	_STATE_NUM_ GetState(){ return m_currentState; }
+
+	/**
+	*@brief	各ステート内の経過時間の取得
+	*@details	CSceneクラス内のm_sceneTimeを元に取得
+	*/
+	int GetStateInTime(){ return m_stateTime; }
+
+	/**
+	*@brief	各ステート内の経過時間の更新
+	*@details	CSceneクラス内のm_sceneTimeを元に更新
+	*/
+	void UpdateStatInTime( int _elapsed )
+	{
+		if( m_stateTime != _elapsed )
+		{
+			//	経過時間が現在の時間と違っていれば、ステート側をインクリメント
+			m_pGameState->SetElapsedTimeFromStateInstance( 
+				m_pGameState->GetElapsedTimeFromStateInstance()+1);
+
+#ifndef _DEBUG
+			std::ostringstream s; 
+			m_tempStr1 = "経過時間：";
+			s << (m_pGameState->GetElapsedTimeFromStateInstance()/10) <<"."<< (m_pGameState->GetElapsedTimeFromStateInstance()%10) ;
+			m_tempStr2 = s.str();
+			m_tempStr1 = m_tempStr1+m_tempStr2;
+			//	経過時間ログが空じゃ無かったら
+			if( !m_gameElapsed.m_logStream.empty() )
+			{
+				//	中身（秒数表示ログ）を消す
+				LogStream* temp = m_gameElapsed.m_logStream.back();
+				delete temp;
+				m_gameElapsed.m_logStream.pop_back();
+			}
+			//	経過後の現在時点での新しい経過時間をログに追加する。
+			m_gameElapsed.AddStream(m_tempStr1.c_str());
+#endif
+		}
+		m_stateTime=_elapsed;
+	}
 
 private:
 	/**
@@ -112,6 +154,21 @@ private:
 			false：変更失敗
 	*/
 	bool ChangeState( _STATE_NUM_ _stateType );
+
+	/**
+	*@brief	盤面の枠の表示
+	*/
+	void DrawStageFrame();
+
+	/**
+	*@brief	盤面上の駒（船）の表示
+	*/
+	void DrawShipObject( const int _playerIndex );
+
+	/**
+	*@brief	盤面のマス目（ブロック）の表示
+	*/
+	void DrawStageBlock( const int _playerIndex );
 
 	/**
 	*@brief	ゲームログの描画

@@ -32,7 +32,7 @@ public:
 		_SEARCH_ALL_,	///<õ“G‚ð‚·‚é”ÍˆÍi‘S‚Ä‚ÌŠÍj
 		_ACTION_NOMAL_,	///<UŒ‚‚·‚é”ÍˆÍ
 		_ACTION_ALL_	///<UŒ‚‚·‚é”ÍˆÍi‘S‚Ä‚ÌŠÍj
-	
+		
 	};
 	
 	/*
@@ -206,19 +206,19 @@ public:
 		return _num/100;
 	}
 	/**
-	*@brief	‘I‘ðî•ñŒvŽZŠÖ”
+	*@brief	‘¹î•ñŒvŽZŠÖ”
 	*/
 	inline static int ConditionOfData( int _num ){
 		return (_num/10)%10;
 	}
 	/**
-	*@brief	‘I‘ðî•ñŒvŽZŠÖ”
+	*@brief	ŠÍŽíî•ñŒvŽZŠÖ”
 	*/
 	inline static int ShipTypeOfData( int _num ){
 		return _num%10;
 	}
 	/**
-	*@brief	‘I‘ðî•ñŒvŽZŠÖ”
+	*@brief	‹îî•ñŒvŽZŠÖ”
 	*/
 	inline static int ShipOfData( int _num ){
 		return _num%100;

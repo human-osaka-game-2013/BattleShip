@@ -76,7 +76,6 @@ int Result::Control()
 		}
 		
 		m_StateCompFlag = true;
-		m_connectFlag = true;
 	}
 
 	return m_resultBattle;

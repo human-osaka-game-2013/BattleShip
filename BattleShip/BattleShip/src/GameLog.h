@@ -5,7 +5,7 @@
 #include "LogStream.h"
 #include "FixedPhrase.h"
 
-#define _LOG_HEIGHT_MAX_	_BLOCK_HEIGHT_SIZE_*5 -_LOG_POS_TWEAK_	///<ログボックスの縦幅
+#define _LOG_HEIGHT_MAX_	_BLOCK_HEIGHT_SIZE_*5 -_LOG_POS_TWEAK_-_LOG_FONT_HEIGHT_///<ログボックスの縦幅
 #define _LOG_POS_TWEAK_		8.0f	///<ログテキストを表示する際の座標微調整の定数
 #define _LOG_COLOR_DEFAULT_		0xFFFFFFFF	///<ログテキストを表示する際のデフォルトカラー値	
 #define _LOG_COLOR_WARNING_		0xFFFF0000	///<ゲーム内での警告系ログを表示する際のカラー

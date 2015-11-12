@@ -2,7 +2,12 @@
 #define _LOGSTREAM_H_
 
 #include <string>
+#include <sstream>
 #include "DirectXFont.h"
+#include "StageDefineList.h"
+
+#define _LOG_FONT_WIDTH_	_STAGE_COLUMN_MAX_*_BLOCK_WIDTH_SIZE_
+#define _LOG_FONT_HEIGHT_	16
 
 /**
 *@brief	ゲーム中でのログの文字列情報クラス
@@ -24,7 +29,7 @@ public:
 	*@brief	コンストラクタ
 	*/
 	LogStream( const char* _str, const long _x, const long _y,
-		const unsigned int& _width, const unsigned int& _height, const D3DXCOLOR& _color = 0xFFFFFF )
+		const unsigned int& _width = _LOG_FONT_WIDTH_, const unsigned int& _height = _LOG_FONT_HEIGHT_, const D3DXCOLOR& _color = 0xFFFFFF )
 	{
 		SetString( _str );
 		SetPosition( _x, _y );

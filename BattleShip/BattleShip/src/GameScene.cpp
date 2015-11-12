@@ -12,8 +12,6 @@
 */
 bool GameScene::Init()
 {
-	m_gameEndFlag = false;
-
 #ifdef _NOT_USE_COM_
 	
 #else
@@ -43,14 +41,17 @@ bool GameScene::Init()
 	m_stateManager->SetMouse( m_pMouse );		///<	マウス管理クラスのアドレスセット
 	m_stateManager->StateInit();
 	
+	m_fadeInFlag = true;	
+	m_fadeOutFlag = false;
+
 	return true;
 }
 
 
 int GameScene::Control()
 {
-	static bool fadeInFlag = true;	//ゲーム開始時はフェードインさせる
 
+	m_stateManager->UpdateStatInTime( GetTimeInScene() );	///<経過時間の更新状態をステート側に伝える
 
 	if( m_stateManager->GetConnectFlag() )
 	{
@@ -69,16 +70,31 @@ int GameScene::Control()
 #endif
 	}
 
-	
-	
-	if( fadeInFlag )
+	if( m_fadeInFlag )
 	{
 		if( m_screenMask.FadeIn(_FADE_IN_TIME_) )
-			fadeInFlag = false;
+			m_fadeInFlag = false;
 	}
-	else if(m_stateManager->StateCotrol() == -1)
+	else if( !GetSceneEndFlag() )
 	{
-		return 1;
+		//	フェードインし終わって、かつ戦闘が終了していないので
+		//	各ステート管理の処理へ移る
+		if( m_stateManager->StateCotrol() == -1)
+		{
+			//各ステートの結果により戦闘が終了されたので、
+			//フェードアウトさせてからこのシーンを終了させる。
+			SetSceneEndFlag( true );
+			m_fadeOutFlag = true;
+		}
+	}
+	//	フェードアウトさせていき、完了すればシーンを終了させる
+	if( m_fadeOutFlag )
+	{
+		if( m_screenMask.FadeOut(_FADE_OUT_TIME_) )
+		{
+			m_fadeInFlag = false;
+			return 1;	//シーンを終了させる
+		}
 	}
 
 	return 0;
@@ -93,7 +109,7 @@ void GameScene::Draw()
 	m_pDrawManager->VertexDraw( _TEX_BACKGROUND_, tempX, tempY, 
 		m_background.GetWidth(),  m_background.GetHeight(),
 		0.f, 0.f, 1.f, 1.f);
-	m_stateManager->StateDraw( m_pDrawManager );
+	m_stateManager->StateDraw();
 
 	//	フェード用のマスク描画
 	m_screenMask.GetPosition( &tempX, &tempY);
@@ -204,12 +220,6 @@ bool GameScene::CommunicationProcessing()
 			}
 
 		}
-		break;
-	
-	case StateManager::STATE_RESULT:
-	case StateManager::STATE_STAGE_EFFECT:
-		
-
 		break;
 	}
 	return true;

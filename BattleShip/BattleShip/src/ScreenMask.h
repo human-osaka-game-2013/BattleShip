@@ -9,7 +9,7 @@
 #include "gameObject.h"
 #include "Window.h"
 
-#define _FADE_OUT_TIME_	3
+#define _FADE_OUT_TIME_	2
 #define _FADE_IN_TIME_	2
 
 /**
@@ -85,7 +85,7 @@ public:
 	*@retval false	まだフェードアウトしきっていない（アルファ値が255未満）
 	*@retval true	フェードアウトしきった（アルファ値を255に達した）
 	*/
-	bool FadeOut( const int _alpha )
+	bool FadeOut( const int _alpha = _FADE_OUT_TIME_ )
 	{
 		bool result = false;
 
@@ -110,7 +110,7 @@ public:
 	*@retval false	まだフェードインしきっていない（アルファ値が0以上）
 	*@retval true	フェードアウトしきった（アルファ値が0に達した）
 	*/
-	bool FadeIn( const int _alpha )
+	bool FadeIn( const int _alpha = _FADE_IN_TIME_ )
 	{
 		bool result = false;
 

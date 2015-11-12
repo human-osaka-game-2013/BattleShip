@@ -5,8 +5,8 @@
 #include < tchar.h >
 #include <tchar.h>
 
-#define _LOG_FONT_WIDTH_	16
-#define _LOG_FONT_HEIGHT_	16
+#define _FONT_WIDTH_	16
+#define	_FONT_HEIGHT_	16
 
 class DirectXFont
 {
@@ -26,7 +26,7 @@ public:
 	DirectXFont()
 	{
 		m_font = NULL;		
-		m_font_heigh = _LOG_FONT_HEIGHT_;		
+		m_font_heigh = _FONT_HEIGHT_;		
 		m_font_width = 0;		
 	};
 
@@ -47,7 +47,7 @@ public:
 	*/
 	bool Init(
 		const LPDIRECT3DDEVICE9 _dev,
-		const UINT _font_heigh = _LOG_FONT_HEIGHT_,
+		const UINT _font_heigh = _FONT_HEIGHT_,
 		const UINT _font_width = 0
 	);
 

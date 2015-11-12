@@ -31,8 +31,9 @@ private:
 	Background		m_background;		///<	背景オブジェクト
 	Connect			m_Connect;			///<	通信デバイスクラス
 	ScreenMask		m_screenMask;		///<	画面遷移時のフェード用
-	bool			m_gameEndFlag;	
-
+	
+	bool	m_fadeInFlag;		///<ゲーム開始時はフェードインさせる。
+	bool	m_fadeOutFlag;		///<ゲーム終了時にフェードアウトさせる。
 
 public:
 	/**
@@ -48,14 +49,14 @@ public:
 		CDrawManager*	const _pDrawManager, CKey* const _pKey, CMouse* const m_pMouse)
 		: CScene( _id, _pRenderManager,	_pDrawManager, _pKey, m_pMouse)
 	{
-		
+		m_playerID = 0;
 	}
 	
 	/**
 	*@brief	デストラクタ
 	*/
 	~GameScene(){
-		for( int iCount = 0; iCount < m_Player.size(); iCount++ ){
+		for( unsigned int iCount = 0; iCount < m_Player.size(); iCount++ ){
 			delete m_Player[iCount];
 		}
 		m_Player.clear();

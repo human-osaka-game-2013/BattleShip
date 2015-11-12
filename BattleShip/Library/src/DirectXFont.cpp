@@ -112,7 +112,7 @@ bool DirectXFont::DrawA(
 	if( m_font == NULL ){ return false; }
 
 	//•\Ž¦êŠ(”ÍˆÍ)
-	RECT rec ={ _draw_pos_x, _draw_pos_y, _w, _h };
+	RECT rec ={ _draw_pos_x, _draw_pos_y, _draw_pos_x+_w, _draw_pos_y+_h };
 	
 	//•¶Žš•\Ž¦
 	m_font->DrawTextA(

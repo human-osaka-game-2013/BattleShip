@@ -404,8 +404,8 @@ void CRenderManager::MousePosTransform( long _cursorMovePosX, long _cursorMovePo
 	D3DXMatrixLookAtLH(&matView, &vecEyePt, &vecLookatPt, &vecUpVec);
 	D3DXMatrixPerspectiveFovLH(&matProj, D3DX_PI/4, 1.6f, 0.9f, 100.0f);
 
-	CalcScreenToWorld ( &vecCursorPos, (float)_cursorMovePosX, (float)_cursorMovePosY, 
-						1.f, WIDTH, HEIGHT, &matView, &matProj );
+	CalcScreenToWorld ( &vecCursorPos, _cursorMovePosX, _cursorMovePosY, 
+						1.f, static_cast<int>(WIDTH), static_cast<int>(HEIGHT), &matView, &matProj );
 
 	char msg[256];
 	ZeroMemory(msg, sizeof(msg));

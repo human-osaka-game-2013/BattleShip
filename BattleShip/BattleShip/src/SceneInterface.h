@@ -21,10 +21,14 @@ protected:
 	CDrawManager*	const m_pDrawManager;	///<	2D描画管理クラスポインタ(constポインタ)
 	CKey*			const m_pKey;			///<	キー管理クラスポインタ	(constポインタ)
 	CMouse*			const m_pMouse;			///<	マウス管理クラスポインタ(constポインタ)
-	
+
 protected:
 	int m_sceneID;	//	シーンID保存変数(コンストラクタの時にシーンIDが入る)
 	int m_count;	//	シーン内でのカウント
+
+private:
+	bool			m_sceneEndFlag;		///<	シーンの終了or遷移をさせるフラグ（フェードイン＆アウトの開始に使う）
+	int				m_sceneTime;		///<	シーン内での秒数カウント(0.1秒分までカウントしています
 
 public:
 	/**
@@ -68,6 +72,31 @@ public:
 	virtual void Render() = 0;		///< 3D描画の仮想関数
 
 public:
+	
+	/**
+	*@brief	各シーン内での経過時間のカウント
+	*@details	60FPSで回っていて、この関数は1フレームのループで1度のみ呼ばれている前提である
+	*/
+	void CountTimeInScene(){
+		static DWORD SyncOld = 0;
+		static DWORD SyncNow = 0;
+
+		SyncNow = timeGetTime();
+
+		if (SyncNow - SyncOld >= 1000 / 10)
+		{
+			m_sceneTime++;
+
+			SyncOld = SyncNow;
+		}
+	}
+	
+	/**
+	*@brief	各シーン内の経過時間の取得
+	*@details	CountTimeInSceneが60FPS間に1度のみ呼ばれている時のみ有効
+	*/
+	int GetTimeInScene(){ return m_sceneTime; }
+
 	/**
 	*@brief	シーンIDを取得
 	*@return	m_sceneID	自分のシーンIDを取得
@@ -75,9 +104,19 @@ public:
 	int GetSceneID()	{ return m_sceneID; }	
 
 	/**
+	*@brief	シーン終了フラグの取得
+	*/
+	bool GetSceneEndFlag(){ return m_sceneEndFlag; }
+
+	/**
 	*@brief	シーンIDを更新
 	*/
 	void SetSceneID( int _scene ){ m_sceneID = _scene; }
+
+	/**
+	*@brief	シーン終了フラグの更新
+	*/
+	void SetSceneEndFlag( bool _flag ){ m_sceneEndFlag = _flag; }
 };
 
 #endif

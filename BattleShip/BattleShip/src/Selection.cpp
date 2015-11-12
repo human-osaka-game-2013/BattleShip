@@ -10,6 +10,7 @@ bool Selection::Init()
 	m_tabSelectFlag = false;
 	m_areaSelectFlag= false;
 	m_arrayCheckResult = 0;
+	m_selectType = _SELECT_NONE_;
 	
 	m_tempShip = m_pPlayer[m_playerID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)(m_ShipCount) );
 		

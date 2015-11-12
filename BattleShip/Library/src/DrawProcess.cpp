@@ -48,7 +48,8 @@ void CDrawManager::BeginDraw( bool _b3dView )
 
 // テクスチャの読み込み
 // 第1引数：("画像の名前.拡張子"), 第2引数：テクスチャの番号, 透過色RGB 
-bool CDrawManager::LoadTexture ( LPCSTR _lpFileName, int _textuerNumber, int _iColorRed, int _iColorGreen, int _iColorBlue )
+bool CDrawManager::LoadTexture ( LPCSTR _lpFileName, int _textuerNumber, 
+	int _iColorRed, int _iColorGreen, int _iColorBlue, int _wDiv, int _hDiv)
 {
 	// テクスチャを既に読み込んでいる場合はここで解放する
 	if ( FAILED (D3DXCreateTextureFromFileExA (
@@ -62,7 +63,7 @@ bool CDrawManager::LoadTexture ( LPCSTR _lpFileName, int _textuerNumber, int _iC
 					D3DPOOL_MANAGED,
 					D3DX_FILTER_NONE,
 					D3DX_FILTER_NONE,
-					D3DCOLOR_ARGB ( 0, _iColorRed, _iColorGreen, _iColorBlue ),
+					D3DCOLOR_ARGB ( 255, _iColorRed, _iColorGreen, _iColorBlue ),
 					NULL, NULL,
 					&m_TextureInfo [_textuerNumber].pTexture))) {
 						MessageBoxA(0,"テクスチャが読み込めませんでした(＞＜;)",NULL,MB_OK);
@@ -75,8 +76,11 @@ bool CDrawManager::LoadTexture ( LPCSTR _lpFileName, int _textuerNumber, int _iC
 	m_TextureInfo [_textuerNumber].pTexture -> GetLevelDesc ( 0, &desc );
 	m_TextureInfo [_textuerNumber].width = desc.Width;
 	m_TextureInfo [_textuerNumber].height = desc.Height;
+	m_TextureInfo [_textuerNumber].wDiv = _wDiv;
+	m_TextureInfo [_textuerNumber].hDiv = _hDiv;
+	m_TextureInfo [_textuerNumber].divTuSize = (static_cast<float>(desc.Width) / static_cast<float>(_wDiv)) / static_cast<float>(desc.Width);
+	m_TextureInfo [_textuerNumber].divTvSize = (static_cast<float>(desc.Height) / static_cast<float>(_hDiv)) / static_cast<float>(desc.Height);
 
-	
 
 	return true;
 }

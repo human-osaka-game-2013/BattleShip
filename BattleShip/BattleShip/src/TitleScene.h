@@ -27,6 +27,8 @@ private:
 	bool		m_changeSceneFlag;
 	float		m_changeSceneTime;
 
+	bool		m_stopFadeFlag;	///<フェード停止（終了）フラグ
+
 public:
 	/**
 	*@brief	コンストラクタ

@@ -69,8 +69,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 				pSceneManage -> GameMain ();
 
 				SyncOld = SyncNow;
-
-				
 			}
 		}
 	}

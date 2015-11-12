@@ -9,10 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="ソース ファイル\Lib_Interface">
       <UniqueIdentifier>{9b351aac-749c-416e-ba54-55781f2760a8}</UniqueIdentifier>
     </Filter>
@@ -40,12 +36,6 @@
     <Filter Include="ヘッダー ファイル\Game">
       <UniqueIdentifier>{bded7a2e-8734-4092-956d-e0dad70313fd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="リソース ファイル\Connect">
-      <UniqueIdentifier>{10da139c-2ca2-4f8f-8eca-43203036e7d7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="リソース ファイル\DebugInterface">
-      <UniqueIdentifier>{b4140b87-5099-4a03-81ae-e23c556283c1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\Title">
       <UniqueIdentifier>{05aba9dc-45d7-4012-a62b-58ef0bd30a9e}</UniqueIdentifier>
     </Filter>
@@ -55,13 +45,23 @@
     <Filter Include="ソース ファイル\Game\Object">
       <UniqueIdentifier>{5a1b1f0b-2613-4251-bcd0-a0a5a12e67bb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="追加機能系">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="追加機能系\Connect">
+      <UniqueIdentifier>{10da139c-2ca2-4f8f-8eca-43203036e7d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="追加機能系\DebugInterface">
+      <UniqueIdentifier>{b4140b87-5099-4a03-81ae-e23c556283c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DebugInterface.cpp">
-      <Filter>リソース ファイル\DebugInterface</Filter>
+      <Filter>追加機能系\DebugInterface</Filter>
     </ClCompile>
     <ClCompile Include="src\Connect.cpp">
-      <Filter>リソース ファイル\Connect</Filter>
+      <Filter>追加機能系\Connect</Filter>
     </ClCompile>
     <ClCompile Include="src\TitleScene.cpp">
       <Filter>ソース ファイル\Title</Filter>
@@ -132,13 +132,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\DebugInterface.h">
-      <Filter>リソース ファイル\DebugInterface</Filter>
+      <Filter>追加機能系\DebugInterface</Filter>
     </ClInclude>
     <ClInclude Include="src\Connect.h">
-      <Filter>リソース ファイル\Connect</Filter>
+      <Filter>追加機能系\Connect</Filter>
     </ClInclude>
     <ClInclude Include="src\ConnectStruct.h">
-      <Filter>リソース ファイル\Connect</Filter>
+      <Filter>追加機能系\Connect</Filter>
     </ClInclude>
     <ClInclude Include="src\TitleScene.h">
       <Filter>ヘッダー ファイル\Title</Filter>
@@ -213,7 +213,7 @@
       <Filter>ヘッダー ファイル\Game\Object</Filter>
     </ClInclude>
     <ClInclude Include="..\Library\src\DebugNew.h">
-      <Filter>リソース ファイル\DebugInterface</Filter>
+      <Filter>追加機能系\DebugInterface</Filter>
     </ClInclude>
     <ClInclude Include="src\FixedPhrase.h">
       <Filter>ヘッダー ファイル\Game\Object</Filter>
