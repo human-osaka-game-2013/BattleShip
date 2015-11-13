@@ -253,15 +253,17 @@ bool StateManager::ChangeState( _STATE_NUM_ _stateType )
 		m_pGameState = new Selection( m_currentShip, &m_gameLog );
 
 		break;
+
+	case STATE_STAGE_EFFECT:
+		m_pGameState = new StageEffect( m_currentShip, &m_gameLog );
+		static_cast<StageEffect*>(m_pGameState)->SetSelectionType( m_selectType );	///<エフェクトにはどの行動を選択したかの判断がいるので情報を渡してやる。
+		break;
+
 	case STATE_RESULT:
 		m_tempStr1 = m_gameLog.m_fixedPhrase.m_phrase[FixedPhrase::STATE_RESULT_STR];
 		m_gameLog.AddStream(m_tempStr1.c_str());
 		m_pGameState = new Result( m_currentShip, &m_gameLog );
 
-		break;
-	case STATE_STAGE_EFFECT:
-		m_pGameState = new StageEffect( m_currentShip, &m_gameLog );
-		static_cast<StageEffect*>(m_pGameState)->SetSelectionType( m_selectType );	///<エフェクトにはどの行動を選択したかの判断がいるので情報を渡してやる。
 		break;
 	}
 
@@ -435,16 +437,12 @@ void StateManager::DrawStageBlock( const int _playerIndex )
 					tempA = 100, tempR = 255, tempG = 0, tempB = 0;
 					break;
 				case StageObject::_SEARCH_NOMAL_:
+				case StageObject::_SEARCH_ALL_:
 					tempA = 100, tempR = 0, tempG = 255, tempB = 0;
 					break;
-				case StageObject::_SEARCH_ALL_:
-					tempA = 255, tempR = 0, tempG = 255, tempB = 0;
-					break;
 				case StageObject::_ACTION_NOMAL_:
-					tempA = 100, tempR = 0, tempG = 0, tempB = 255;
-					break;
 				case StageObject::_ACTION_ALL_:
-					tempA = 255, tempR = 0, tempG = 0, tempB = 255;
+					tempA = 100, tempR = 0, tempG = 0, tempB = 255;
 					break;
 				}
 	
@@ -455,7 +453,7 @@ void StateManager::DrawStageBlock( const int _playerIndex )
 				case StageObject::_CONDITION_NOMAL_:
 					break;
 				case StageObject::_CONDITION_DAMAGE_:
-					tempA = 255, tempR = 255, tempG = 100, tempB = 100;
+					tempA = 200, tempR = 100, tempG = 50, tempB = 50;
 					break;
 	
 				}

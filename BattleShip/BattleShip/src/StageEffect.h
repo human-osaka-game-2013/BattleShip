@@ -9,10 +9,14 @@
 #include "GameState.h"
 
 #define _END_COUNT_OF_EFFECT_	60*10
+#define _MOVE_SPEED_RECON_	50.f
 
 class StageEffect : public GameState
 {
 public:
+	/**
+	*@brief	ステージ上の演出の時間
+	*/
 	enum _STAGE_EFFECT_TIME_
 	{
 		TIME_END_ACTION_EFFECT =20,
@@ -25,10 +29,16 @@ public:
 private:
 	_SELECT_NUM_ m_selectType;	///< 選択した行動の種類
 	_SELECT_NUM_ m_enemyType;	///< 相手の選択した行動
-	int m_actionShipPosColumn;	///< 行動する自駒の行座標
-	int m_actionShipPosLine;	///< 行動する自駒の列座標
 	std::vector<BoardOfFrame> m_playerSelect;///< 自分が敵に対して指定したマスのコピー用
 	std::vector<BoardOfFrame> m_enemySelect; ///< 敵が自分に対して指定したマスのコピー用
+	int m_actionShipPosColumn;	///< 行動する自駒の行座標
+	int m_actionShipPosLine;	///< 行動する自駒の列座標
+	float m_plTargetPointX;	///< 自身選択した座標X
+	float m_plTargetPointY;	///< 自身選択した座標Y
+	D3DXVECTOR2	m_plTargetVector;	///< 自駒の座標からターゲットへのベクトル（航空機の移動などに使う）
+	float m_enTargetPointX;	///< 敵が選択した座標X
+	float m_enTargetPointY;	///< 敵が選択した座標Y
+	D3DXVECTOR2	m_enTargetVector;
 	BoardOfFrame m_myShipBlock;
 
 public:
@@ -37,7 +47,14 @@ public:
 	*@param	_type	現在選択している艦の種類
 	*/
 	StageEffect( ShipObject::_SHIP_TYPE_NUM_& _type, GameLog* _pGameLog ): GameState( _type, _pGameLog ){
-		
+		m_selectType= _SELECT_NONE_;
+		m_enemyType	= _SELECT_NONE_;
+		m_plTargetPointX = 0.f;
+		m_plTargetPointY = 0.f;
+		m_enTargetPointX = 0.f;
+		m_enTargetPointY = 0.f;
+		m_actionShipPosColumn	= -1;
+		m_actionShipPosLine		= -1;	
 	}
 
 	~StageEffect()
@@ -77,27 +94,28 @@ public:
 	}
 
 private:
+	
 	/**
-	@brief	発射エフェクト処理
+	*@brief	攻撃開始エフェクト処理
 	*/
-	bool FireEffect();
+	void AttackStartControl();
 
 	/**
 	*@brief	索敵開始エフェクト処理
 	*/
-	bool SearchStratEffect();
+	void SearchStartControl();
 
 	/**
 	*@brief	着弾エフェクト処理
 	*@param[in]	_playerIndex	どちらのプレイヤーが索敵をするのかを判断するため
 	*/
-	bool HitEffect( const int _playerID );
+	void HitEffectControl();
 
 	/**
 	*@brief	索敵結果エフェクト処理
 	*@param[in]	_playerID	どちらのプレイヤーが索敵をするのかを判断するため
 	*/
-	bool SearchResultEffect( const int _playerID );
+	void SearchResultControl();
 
 private:
 
@@ -112,10 +130,34 @@ private:
 	void CheckOfMyShipPos();
 
 private:
+
+	/**
+	@brief	発射エフェクト処理
+	*/
+	void FireEffect( BoardOfFrame& _block );
+
 	/**
 	*@brief	ソナーエフェクト
 	*/
-	void SonarEffect();
+	void SonarEffect( BoardOfFrame& _block );
+
+	/**
+	*@brief	索敵機エフェクト
+	*@param[in] _block	出現位置を決めるブロック
+	*@param[in]	_appearanceInvisibility	出現位置を見えなくさせるフラグ
+	*/
+	void ReconEffect( BoardOfFrame& _block, bool _appearanceInvisibility = false );
+
+	/**
+	*@brief	爆発エフェクト
+	*/
+	void ExplosionEffect( BoardOfFrame& _block );
+
+private:
+	/**
+	*@brief	2次元ベクトルの正規化
+	*/
+	int Vec2Normalize( D3DXVECTOR2& _vec2 );
 
 };
 

@@ -45,6 +45,7 @@ enum TEXTURES
 	_TEX_FIRE_EFFECT_,
 	_TEX_EXPLOSION_EFFECT_,
 	_TEX_SEARCH_EFFECT_,
+	_TEX_RECON_,
 	_TEXTURE_MAX_
 };
 
@@ -201,21 +202,22 @@ public:
 							float _fTu1, float _fTv1, float _fTu2, float _fTv2, int _iA, int _iR, int _iG, int _iB );
 
 	/**
-	*@brief	中心基準の矩形描画
-	*@details	矩形の中心基準でカラー値を変更する場合の描画
+	*@brief	左上基準のアニメーション矩形描画
+	*@details	仮にアニメーションしない場合でもデフォルト引数のままなら通常描画も出来る
 	*@parap[in] _textuerNumber テクスチャの番号
 	*@param[in]	_fXpos		矩形の中心座標X
 	*@param[in]	_fYpos		矩形の中心座標Y
-	*@param[in]	_fAngle		矩形の回転角度
 	*@param[in]	_fWidth		矩形の横幅
 	*@param[in]	_fHeight	矩形の縦幅
 	*@param[in]	_flipHorizontal	左右反転させる場合のフラグ
 	*@param[in]	_flipVertical	上下反転させる場合のフラグ
-	*@param[in]	_wDiv		分割した場合の何列目に並んだテクスチャか	
-	*@param[in]	_hDiv		分割した場合の何列目に並んだテクスチャか		
+	*@param[in]	_wDiv	分割した場合の何列目に並んだテクスチャか	
+	*@param[in]	_hDiv	分割した場合の何列目に並んだテクスチャか
+	*@param[in] _color	色調も変えたい場合は値を入れる。
 	*/
 	void AnimationDraw( int _textuerNumber, float _fXpos, float _fYpos, float _fWidth, float _fHeight,
-						bool _flipHorizontal=false, bool _flipVertical=false, int _wDiv = 0, int _hDiv=0 );
+						bool _flipHorizontal=false, bool _flipVertical=false, 
+						int _wDiv = 0, int _hDiv=0, unsigned long _color = 0xffffffff );
 
 	/**
 	*@brief	矩形の座標変換

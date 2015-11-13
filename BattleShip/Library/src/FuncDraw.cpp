@@ -129,7 +129,7 @@ void CDrawManager::CenterDraw ( int _textuerNumber, float _fXpos, float _fYpos, 
 }
 
 void CDrawManager::AnimationDraw( int _textuerNumber, float _fXpos, float _fYpos, float _fWidth, float _fHeight,
-									bool _flipHorizontal, bool _flipVertical, int _wDiv, int _hDiv )
+									bool _flipHorizontal, bool _flipVertical, int _wDiv, int _hDiv, unsigned long _color )
 {
 	CUSTOMVERTEX customVertex[4];
 
@@ -143,7 +143,7 @@ void CDrawManager::AnimationDraw( int _textuerNumber, float _fXpos, float _fYpos
 	{
 		customVertex[i].z = 0.5f;
 		customVertex[i].rhw = 1.0f;
-		customVertex[i].color = 0xffffffff;
+		customVertex[i].color = _color;
 	}
 
 	customVertex[0].x	= _fXpos;

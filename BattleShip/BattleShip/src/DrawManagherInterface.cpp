@@ -21,5 +21,6 @@ bool CDrawManager::AllLoadTexture ()
 	LoadTexture ( "../BattleShip/texture/FireBB.bmp", _TEX_FIRE_EFFECT_,	0, 0, 255 , 10);
 	LoadTexture ( "../BattleShip/texture/ExplosionBB.bmp", _TEX_EXPLOSION_EFFECT_,	0, 0, 255, 8 );
 	LoadTexture ( "../BattleShip/texture/SearchBB.bmp", _TEX_SEARCH_EFFECT_,	0, 0, 255 );
+	LoadTexture ( "../BattleShip/texture/ReconBB.bmp", _TEX_RECON_,	0, 0, 255 );
 	return true;
 }

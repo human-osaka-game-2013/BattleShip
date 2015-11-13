@@ -152,9 +152,6 @@
     <ClInclude Include="src\StageEffect.h">
       <Filter>ヘッダー ファイル\State</Filter>
     </ClInclude>
-    <ClInclude Include="src\StateManager.h">
-      <Filter>ヘッダー ファイル\State</Filter>
-    </ClInclude>
     <ClInclude Include="src\GameState.h">
       <Filter>ヘッダー ファイル\State</Filter>
     </ClInclude>
@@ -217,6 +214,9 @@
     </ClInclude>
     <ClInclude Include="src\FixedPhrase.h">
       <Filter>ヘッダー ファイル\Game\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\StateManager.h">
+      <Filter>ヘッダー ファイル\State</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
