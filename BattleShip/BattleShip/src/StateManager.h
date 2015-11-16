@@ -43,7 +43,7 @@ private:
 
 	bool			m_connectFlag;	///<	通信を行うフラグ
 
-	int m_selectType;	///< 選択した行動の種類
+	int m_plyaerSelectType;	///< 選択した行動の種類
 
 	int m_resultPlayer;	///<	プレイヤー側に起きている戦闘結果
 	int m_resultEnemy;	///<	敵側に起きている戦闘結果

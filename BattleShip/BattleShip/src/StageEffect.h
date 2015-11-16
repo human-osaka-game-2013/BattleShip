@@ -8,8 +8,8 @@
 
 #include "GameState.h"
 
-#define _END_COUNT_OF_EFFECT_	60*10
 #define _MOVE_SPEED_RECON_	50.f
+
 
 class StageEffect : public GameState
 {
@@ -27,8 +27,8 @@ public:
 	};
 
 private:
-	_SELECT_NUM_ m_selectType;	///< 選択した行動の種類
-	_SELECT_NUM_ m_enemyType;	///< 相手の選択した行動
+	_SELECT_NUM_ m_plyaerSelectType;	///< 選択した行動の種類
+	_SELECT_NUM_ m_enemySelectType;	///< 相手の選択した行動
 	std::vector<BoardOfFrame> m_playerSelect;///< 自分が敵に対して指定したマスのコピー用
 	std::vector<BoardOfFrame> m_enemySelect; ///< 敵が自分に対して指定したマスのコピー用
 	int m_actionShipPosColumn;	///< 行動する自駒の行座標
@@ -47,8 +47,8 @@ public:
 	*@param	_type	現在選択している艦の種類
 	*/
 	StageEffect( ShipObject::_SHIP_TYPE_NUM_& _type, GameLog* _pGameLog ): GameState( _type, _pGameLog ){
-		m_selectType= _SELECT_NONE_;
-		m_enemyType	= _SELECT_NONE_;
+		m_plyaerSelectType= _SELECT_NONE_;
+		m_enemySelectType	= _SELECT_NONE_;
 		m_plTargetPointX = 0.f;
 		m_plTargetPointY = 0.f;
 		m_enTargetPointX = 0.f;
@@ -90,7 +90,7 @@ public:
 	*/
 	void SetSelectionType( int _selectType )
 	{ 
-		m_selectType = static_cast<_SELECT_NUM_>(_selectType); 
+		m_plyaerSelectType = static_cast<_SELECT_NUM_>(_selectType); 
 	}
 
 private:
@@ -143,6 +143,8 @@ private:
 
 	/**
 	*@brief	索敵機エフェクト
+	*@details _appearanceInvisibility	現状は対戦相手が戦闘機などを飛ばす時に徐々にアルファ値をいじる。
+										描画座標などもこのFlagがtrueの時は敵のデータ（m_enTargetVectorなど）基準となる。
 	*@param[in] _block	出現位置を決めるブロック
 	*@param[in]	_appearanceInvisibility	出現位置を見えなくさせるフラグ
 	*/

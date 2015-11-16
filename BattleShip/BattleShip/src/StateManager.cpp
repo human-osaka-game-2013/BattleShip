@@ -31,7 +31,7 @@ StateManager::StateManager( Player* const _pPlayer1, Player* const _pPlayer2,
 	m_resultPlayer	= static_cast<int>(Result::RESULT_NONE);
 	m_resultEnemy	= static_cast<int>(Result::RESULT_NONE);
 	m_resultBattle	= static_cast<int>(Result::TYPE_DRAW);
-	m_selectType	= static_cast<int>(GameState::_SELECT_NONE_);
+	m_plyaerSelectType	= static_cast<int>(GameState::_SELECT_NONE_);
 
 }
 
@@ -171,14 +171,33 @@ int StateManager::CheckState()
 		if( m_currentShip >= ShipObject::TYPE_MAX && !m_connectFlag )	///<　全ての駒がセットされた
 			checkResult = 1;
 		break;
+
 	case STATE_SELECTION:
 		if( stageResult == 1 && !m_connectFlag ){	///<　結果が1且つ、通信が完了していた場合
 			Selection* pSelection = dynamic_cast<Selection*>(m_pGameState);	///<Selectionの関数にアクセスする必要があるので、ダウンキャストする。
-			m_selectType = pSelection->GetSelectionType();
+			m_plyaerSelectType = pSelection->GetSelectionType();
 		
 			checkResult = 1;	///<　選択結果に移る
 		}
 		break;
+
+	case STATE_STAGE_EFFECT:
+		/**
+		*@todo	エフェクト未実装の為ここは仮処理
+		*/
+		if( stageResult == 1 ){	///<　結果が1(ステージの演出が完了)の場合
+			// Selectionステートに移る前に現在のターンが終了したので次の駒を指定
+			if( m_currentShip < ShipObject::TYPE_SUBMARINE){
+
+				m_currentShip = static_cast< ShipObject::_SHIP_TYPE_NUM_ >( m_beforeShip+1 );
+			}else{
+				m_currentShip = ShipObject::TYPE_AIRCARRIER;
+			}
+			m_pStageObject->ResetSelect();
+			checkResult = 1;
+		}
+		break;
+
 	case STATE_RESULT:
 		//勝利or敗北or戦闘終了
 		if( stageResult == Result::TYPE_VICTORY || stageResult == Result::TYPE_DEFEAT )
@@ -198,22 +217,7 @@ int StateManager::CheckState()
 		}
 
 		break;
-	case STATE_STAGE_EFFECT:
-		/**
-		*@todo	エフェクト未実装の為ここは仮処理
-		*/
-		if( stageResult == 1 ){	///<　結果が1(ステージの演出が完了)の場合
-			// Selectionステートに移る前に現在のターンが終了したので次の駒を指定
-			if( m_currentShip < ShipObject::TYPE_SUBMARINE){
-
-				m_currentShip = static_cast< ShipObject::_SHIP_TYPE_NUM_ >( m_beforeShip+1 );
-			}else{
-				m_currentShip = ShipObject::TYPE_AIRCARRIER;
-			}
-
-			checkResult = 1;
-		}
-		break;
+	
 	}
 
 	///< ステート別Controlが終わったので前フレームでの選択駒を更新
@@ -256,7 +260,7 @@ bool StateManager::ChangeState( _STATE_NUM_ _stateType )
 
 	case STATE_STAGE_EFFECT:
 		m_pGameState = new StageEffect( m_currentShip, &m_gameLog );
-		static_cast<StageEffect*>(m_pGameState)->SetSelectionType( m_selectType );	///<エフェクトにはどの行動を選択したかの判断がいるので情報を渡してやる。
+		static_cast<StageEffect*>(m_pGameState)->SetSelectionType( m_plyaerSelectType );	///<エフェクトにはどの行動を選択したかの判断がいるので情報を渡してやる。
 		break;
 
 	case STATE_RESULT:

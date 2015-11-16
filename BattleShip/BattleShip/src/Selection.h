@@ -16,7 +16,7 @@ class Selection : public GameState
 private:
 	bool m_tabSelectFlag;		///< タブを選択しているか
 	bool m_areaSelectFlag;		///< 行動別の範囲を選択しているか
-	_SELECT_NUM_ m_selectType;	///< 選択した行動の種類
+	_SELECT_NUM_ m_plyaerSelectType;	///< 選択した行動の種類
 	int m_arrayCheckResult;		///< 行動選択時の範囲チェックの結果
 	
 	BoardOfFrame m_actionFrame;	///< 攻撃枠
@@ -34,7 +34,7 @@ public:
 		m_tabSelectFlag = false;
 		m_areaSelectFlag= false;
 		m_arrayCheckResult = 0;
-		m_selectType = _SELECT_NONE_;
+		m_plyaerSelectType = _SELECT_NONE_;
 	}
 
 	~Selection(){};
@@ -65,7 +65,7 @@ public:
 				選択した行動が分からなければステージ上の演出が出来ないため、
 				選択した種類の情報が必要と判断しました。
 	*/
-	int GetSelectionType(){ return static_cast< int >(m_selectType); }
+	int GetSelectionType(){ return static_cast< int >(m_plyaerSelectType); }
 
 private:
 

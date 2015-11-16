@@ -10,7 +10,7 @@ bool Selection::Init()
 	m_tabSelectFlag = false;
 	m_areaSelectFlag= false;
 	m_arrayCheckResult = 0;
-	m_selectType = _SELECT_NONE_;
+	m_plyaerSelectType = _SELECT_NONE_;
 	
 	m_tempShip = m_pPlayer[m_playerID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)(m_ShipCount) );
 		
@@ -86,7 +86,7 @@ bool Selection::TabCheck()
 			m_tempStr1 = m_pGameLog->GetMultiplePhrase( 3, m_ShipCount,
 				static_cast<int>( FixedPhrase::SELECTION_TYPE_ACTION ), static_cast<int>( FixedPhrase::SELECTION_PHRASE_STR ));
 			m_pGameLog->AddStream( m_tempStr1.c_str() );	///
-			m_selectType = _SELECT_ACTION_;
+			m_plyaerSelectType = _SELECT_ACTION_;
 			tempFlag = true;
 		}
 	}
@@ -98,7 +98,7 @@ bool Selection::TabCheck()
 			m_tempStr1 = m_pGameLog->GetMultiplePhrase( 3, m_ShipCount,
 				static_cast<int>( FixedPhrase::SELECTION_TYPE_SEARCH ), static_cast<int>( FixedPhrase::SELECTION_PHRASE_STR ));
 			m_pGameLog->AddStream( m_tempStr1.c_str() );
-			m_selectType = _SELECT_SEARCH_;
+			m_plyaerSelectType = _SELECT_SEARCH_;
 			tempFlag = true;
 		}
 	}
@@ -110,7 +110,7 @@ bool Selection::TabCheck()
 			m_tempStr1 = m_pGameLog->GetMultiplePhrase( 3, m_ShipCount,
 				static_cast<int>( FixedPhrase::SELECTION_TYPE_MOVE ), static_cast<int>( FixedPhrase::SELECTION_PHRASE_STR ));
 			m_pGameLog->AddStream( m_tempStr1.c_str() );
-			m_selectType = _SELECT_MOVE_;
+			m_plyaerSelectType = _SELECT_MOVE_;
 			tempFlag = true;
 		}
 	}
@@ -121,7 +121,7 @@ bool Selection::TabCheck()
 
 bool Selection::SetTypeArray()
 {
-	switch( m_selectType )
+	switch( m_plyaerSelectType )
 	{
 	case _SELECT_ACTION_:
 		m_tempArray = m_tempShip->m_actionArray;
@@ -157,7 +157,7 @@ int Selection::SelectArrayCheck( )
 	int iLine;
 
 	//	攻撃と索敵なら相手側ID、移動なら自分側のIDをtempIDに入れる
-	switch( m_selectType )
+	switch( m_plyaerSelectType )
 	{
 	case _SELECT_ACTION_:
 	case _SELECT_SEARCH_:
@@ -170,7 +170,7 @@ int Selection::SelectArrayCheck( )
 				if( m_pStage->m_stageBlock[tempID-1][iColumn][iLine].HitBlockCheck( m_tempX, m_tempY ))
 				{
 					//	ステージブロックのチェック
-					switch( m_selectType )
+					switch( m_plyaerSelectType )
 					{
 					case _SELECT_ACTION_:
 						iCheckResult = m_pStage->CheckStageBlock( tempID, iColumn, iLine, m_tempShip, 
@@ -194,7 +194,7 @@ int Selection::SelectArrayCheck( )
 						//	駒が置けるマスであり、左クリックを押した時
 						if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )) 
 						{
-							m_pStage->SetRange( tempID, iColumn, iLine, tempArray, m_selectType );
+							m_pStage->SetRange( tempID, iColumn, iLine, tempArray, m_plyaerSelectType );
 							
 							return 2;
 						}

@@ -6,6 +6,7 @@
 #include "StageEffect.h"
 #include <cmath>
 
+#define _EFFECT_POS_TWEAK_	2.0f
 
 bool StageEffect::Init()
 {
@@ -31,32 +32,32 @@ void StageEffect::CheckSelectOfStage()
 				case StageObject::_SEARCH_ALL_:
 				case StageObject::_ACTION_NOMAL_:
 				case StageObject::_ACTION_ALL_:
-					if( iPlayer == m_playerID/2 )	///<プレイヤー側のマス（敵による行動選択）
+					if( iPlayer == m_playerID/_PLAYER_NUM_ )	///<プレイヤー側のマス（敵による行動選択）
 					{
 						m_enemySelect.push_back(m_pStage->m_stageBlock[iPlayer][iColumn][iLine] );
-					}
-					else	///<敵側のマス（プレイヤーによる行動マス）
-					{
-						m_playerSelect.push_back( m_pStage->m_stageBlock[iPlayer][iColumn][iLine] );
+						//	敵の選択した行動をプレイヤー側の選択されたマスから判断する
 						switch(selectType)
 						{
 							case StageObject::_SEARCH_NOMAL_:
 							case StageObject::_SEARCH_ALL_:
-								
-								m_enemyType = _SELECT_SEARCH_;
+								m_enemySelectType = _SELECT_SEARCH_;
 								break;
 							case StageObject::_ACTION_NOMAL_:
 							case StageObject::_ACTION_ALL_:
-								m_enemyType = _SELECT_ACTION_;
+								m_enemySelectType = _SELECT_ACTION_;
 									break;
 						}
-						
+					}
+					else	///<敵側のマス（プレイヤーによる行動マス）
+					{
+						m_playerSelect.push_back( m_pStage->m_stageBlock[iPlayer][iColumn][iLine] );						
 					}
 					break;
 				}
 			}
 		}
 	}
+	D3DXVECTOR2 tempVec;	//正規化を行う際の仮保存ベクトル
 	//	ちゃんとプレイヤーは攻撃or索敵をしているなら
 	if( !m_playerSelect.empty() )
 	{
@@ -64,7 +65,10 @@ void StageEffect::CheckSelectOfStage()
 		m_plTargetPointX = m_playerSelect[m_playerSelect.size()/2].GetPositionX();
 		m_plTargetPointY = m_playerSelect[m_playerSelect.size()/2].GetPositionY();
 		m_plTargetVector = D3DXVECTOR2( m_plTargetPointX-m_myShipBlock.GetPositionX(), m_plTargetPointY-m_myShipBlock.GetPositionY() );
-		Vec2Normalize( m_plTargetVector );	///<一度ベクトルの正規化を行う
+		
+		tempVec = m_plTargetVector;	///<一度ベクトルの正規化を行う
+		D3DXVec2Normalize( &m_plTargetVector, &tempVec );
+
 		//	移動速度を掛けてやる。
 		//	描画時にこの処理を毎回するのは面倒。
 		m_plTargetVector.x *= _MOVE_SPEED_RECON_;
@@ -75,17 +79,23 @@ void StageEffect::CheckSelectOfStage()
 	{
 		//	エフェクトに必要な座標やベクトルをセットしてあげる。
 		//	敵の場合はX軸のみを適応させて、正確な位置から飛んできた様に見えない様にさせる。
-		//	ただし、エフェクト演出時にプレイヤー側に出てくるまで透過などをするつもり
-		m_enTargetPointX = m_enemySelect[m_enemySelect.size()/2].GetPositionX();
-		m_enTargetPointY = m_enemySelect[m_enemySelect.size()/2].GetPositionY();
-		
-		//	敵側のポジションは画面端基準
-		if( m_playerID == 1 )
-			m_enTargetVector = D3DXVECTOR2( m_enTargetPointX-WIDTH, m_enTargetPointY );
-		else
-			m_enTargetVector = D3DXVECTOR2( m_enTargetPointX-0, m_enTargetPointY );
+		//	ただし、エフェクト演出時にプレイヤー側に出てくるまで透過などをするつもり	
+		for( unsigned int i=0; i<m_enemySelect.size(); i++ )
+		{
+			m_enTargetPointX += m_enemySelect[i].GetPositionX();
+			m_enTargetPointY += m_enemySelect[i].GetPositionY();
+		}
+		//	標的座標の平均座標を調べる
+		m_enTargetPointX = m_enTargetPointX/m_enemySelect.size();
+		m_enTargetPointY = m_enTargetPointY/m_enemySelect.size();
 
-		Vec2Normalize( m_enTargetVector );	///<一度ベクトルの正規化を行う
+		//	敵側のX軸のポジションは画面端基準
+		m_enTargetVector = D3DXVECTOR2( m_enTargetPointX-( (m_playerID%_PLAYER_NUM_) * WIDTH), m_enTargetPointY-m_enTargetPointY );
+		
+		tempVec = m_enTargetVector;	///<一度ベクトルの正規化を行う
+		D3DXVec2Normalize( &m_enTargetVector, &tempVec );
+		//Vec2Normalize( m_enTargetVector );	///<一度ベクトルの正規化を行う
+		
 		//	移動速度を掛けてやる。
 		//	描画時にこの処理を毎回するのは面倒。
 		m_enTargetVector.x *= _MOVE_SPEED_RECON_;
@@ -97,9 +107,9 @@ void StageEffect::CheckSelectOfStage()
 
 void StageEffect::CheckOfMyShipPos()
 {
-	ShipObject* tempShip = m_pPlayer[m_playerID/2]->GetShip( static_cast<ShipObject::_SHIP_TYPE_NUM_>(m_ShipCount) );
+	ShipObject* tempShip = m_pPlayer[m_playerID/_PLAYER_NUM_]->GetShip( static_cast<ShipObject::_SHIP_TYPE_NUM_>(m_ShipCount) );
 	tempShip->GetArrayPos( m_actionShipPosColumn, m_actionShipPosLine );
-	m_myShipBlock = m_pStage->m_stageBlock[m_playerID/2][m_actionShipPosColumn][m_actionShipPosLine];
+	m_myShipBlock = m_pStage->m_stageBlock[m_playerID/_PLAYER_NUM_][m_actionShipPosColumn][m_actionShipPosLine];
 }
 
 
@@ -109,11 +119,11 @@ int StageEffect::Control()
 	//	ここではログに追加などをする。
 	if( m_elapsedTimeFormStateInstance < TIME_END_ACTION_EFFECT  )
 	{
-		if( m_selectType == _SELECT_ACTION_ )
+		if( m_plyaerSelectType == _SELECT_ACTION_ )
 		{
 			
 		}
-		else if( m_selectType == _SELECT_SEARCH_ )
+		else if( m_plyaerSelectType == _SELECT_SEARCH_ )
 		{
 			
 		}
@@ -124,19 +134,19 @@ int StageEffect::Control()
 	}
 	else if( m_elapsedTimeFormStateInstance < TIME_END_RUSULT_EFFECT )
 	{
-		if( m_selectType == _SELECT_ACTION_ )
+		if( m_plyaerSelectType == _SELECT_ACTION_ )
 		{
 			
 		}
-		else if( m_selectType == _SELECT_SEARCH_ )
+		else if( m_plyaerSelectType == _SELECT_SEARCH_ )
 		{
 			
 		}
-		if( m_enemyType == _SELECT_ACTION_ )
+		if( m_enemySelectType == _SELECT_ACTION_ )
 		{
 			
 		}
-		else if( m_enemyType == _SELECT_SEARCH_ )
+		else if( m_enemySelectType == _SELECT_SEARCH_ )
 		{
 			
 		}
@@ -177,7 +187,7 @@ void StageEffect::Draw()
 void StageEffect::AttackStartControl()
 {
 	//	プレイヤー側
-	if( m_selectType == _SELECT_ACTION_ )
+	if( m_plyaerSelectType == _SELECT_ACTION_ )
 	{
 		if( m_ShipCount == static_cast<int>(ShipObject::TYPE_AIRCARRIER) )
 		{
@@ -190,7 +200,7 @@ void StageEffect::AttackStartControl()
 	}
 	
 	//	敵側
-	if( m_enemyType == _SELECT_ACTION_ )
+	if( m_enemySelectType == _SELECT_ACTION_ )
 	{
 		if( m_ShipCount == static_cast<int>(ShipObject::TYPE_AIRCARRIER) )
 		{
@@ -203,7 +213,7 @@ void StageEffect::SearchStartControl()
 {
 	
 	//	プレイヤー側
-	if( m_selectType == _SELECT_SEARCH_ )
+	if( m_plyaerSelectType == _SELECT_SEARCH_ )
 	{
 		if( m_ShipCount >= static_cast<int>(ShipObject::TYPE_DESTROYER) )
 		{
@@ -215,7 +225,7 @@ void StageEffect::SearchStartControl()
 		}
 	}
 	//	敵側
-	if( m_enemyType == _SELECT_SEARCH_ )
+	if( m_enemySelectType == _SELECT_SEARCH_ )
 	{
 		//	敵側は駆逐潜水以外は索敵機を飛ばす
 		if( m_ShipCount < static_cast<int>(ShipObject::TYPE_DESTROYER) )
@@ -232,7 +242,7 @@ void StageEffect::HitEffectControl()
 	*/
 
 	//	プレイヤー側
-	if( m_selectType == _SELECT_ACTION_ )
+	if( m_plyaerSelectType == _SELECT_ACTION_ )
 	{
 		for( unsigned int i = 0; i< m_playerSelect.size(); i++ )
 		{
@@ -241,7 +251,7 @@ void StageEffect::HitEffectControl()
 	}
 	
 	//	敵側
-	if( m_enemyType == _SELECT_ACTION_ )
+	if( m_enemySelectType == _SELECT_ACTION_ )
 	{
 		for( unsigned int i = 0; i< m_enemySelect.size(); i++ )
 		{
@@ -257,14 +267,14 @@ void StageEffect::SearchResultControl()
 	*@details	選択されたマス分エフェクトを出す
 	*/
 
-	if( m_selectType == _SELECT_SEARCH_ )
+	if( m_plyaerSelectType == _SELECT_SEARCH_ )
 	{
 		for( unsigned int i = 0; i< m_playerSelect.size(); i++ )
 		{
 			SonarEffect( m_playerSelect[i] );
 		}
 	}
-	if( m_enemyType == _SELECT_SEARCH_ )
+	if( m_enemySelectType == _SELECT_SEARCH_ )
 	{
 		for( unsigned int i = 0; i< m_enemySelect.size(); i++ )
 		{
@@ -278,14 +288,15 @@ void StageEffect::SearchResultControl()
 void StageEffect::FireEffect( BoardOfFrame& _block )
 {
 	float tempX, tempY;
-	tempX = _block.GetPositionX();
-	tempY = _block.GetPositionY();
+	tempX = _block.GetPositionX()-_EFFECT_POS_TWEAK_;
+	tempY = _block.GetPositionY()-_EFFECT_POS_TWEAK_;
+
 	int wDiv = m_elapsedTimeFormStateInstance/2;	///<シーンの経過時間から何コマ目のアニメーションをさせるかを計算（テスト実装）
-	bool flipHorizontal = m_playerID/2 ? true : false;	///<プレイヤーによって画像の反転をさせる
+	bool flipHorizontal = m_playerID/_PLAYER_NUM_ ? true : false;	///<プレイヤーによって画像の反転をさせる
 
 	m_pDrawManager->AnimationDraw( _TEX_FIRE_EFFECT_, tempX, tempY, 
-				_block.GetWidth(), 
-				_block.GetHeight(),
+				_block.GetWidth()+_EFFECT_POS_TWEAK_*2, 
+				_block.GetHeight()+_EFFECT_POS_TWEAK_*2,
 				flipHorizontal, false, wDiv );	///<	マスの描画
 
 	
@@ -298,7 +309,7 @@ void StageEffect::ExplosionEffect( BoardOfFrame& _block )
 	tempX = _block.GetPositionX();
 	tempY = _block.GetPositionY();
 	int wDiv = m_elapsedTimeFormStateInstance/2;	///<シーンの経過時間から何コマ目のアニメーションをさせるかを計算（テスト実装）
-	bool flipHorizontal = m_playerID/2 ? true : false;	///<プレイヤーによって画像の反転をさせる
+	bool flipHorizontal = m_playerID/_PLAYER_NUM_ ? true : false;	///<プレイヤーによって画像の反転をさせる
 
 	m_pDrawManager->AnimationDraw( _TEX_EXPLOSION_EFFECT_, tempX, tempY, 
 				_block.GetWidth(), 
@@ -311,7 +322,7 @@ void StageEffect::ExplosionEffect( BoardOfFrame& _block )
 void StageEffect::ReconEffect( BoardOfFrame& _block, bool _appearanceInvisibility )
 {
 	float tempX, tempY;
-	bool flipHorizontal = m_playerID/2 ? true : false;	///<プレイヤーによって画像の反転をさせる
+	bool flipHorizontal = m_playerID/_PLAYER_NUM_ ? true : false;	///<プレイヤーによって画像の反転をさせる
 	unsigned long color = 0xffffffff;
 	
 	if( !_appearanceInvisibility )
@@ -329,26 +340,17 @@ void StageEffect::ReconEffect( BoardOfFrame& _block, bool _appearanceInvisibilit
 			どの場所から飛ばして可視化させれば良いか分からない。
 			被攻撃対象側の陣地に入った場合、徐々にアルファ値を上げていく。
 		*/
-		if( m_playerID == 1 )
-		{
-			//	出現位置は相手側の画面端
-			tempX = WIDTH+(m_enTargetVector.x)*m_elapsedTimeFormStateInstance;
-			tempY = m_enTargetPointY+(m_plTargetVector.y)*m_elapsedTimeFormStateInstance;
-			
-		}
-		if( m_playerID == 2 )
-		{
-			tempX = 0+(m_enTargetVector.x)*m_elapsedTimeFormStateInstance;
-			tempY = m_enTargetPointY+(m_enTargetVector.y)*m_elapsedTimeFormStateInstance;
-						
-		}
+		//	出現位置は相手側の画面端
+		tempX = ( (m_playerID%_PLAYER_NUM_) * WIDTH )+(m_enTargetVector.x)*m_elapsedTimeFormStateInstance;
+		tempY = m_enTargetPointY+(m_enTargetVector.y)*m_elapsedTimeFormStateInstance;
+									
 		alpha = m_elapsedTimeFormStateInstance*15;
 		
 		if( alpha >= 255 )
 			alpha = 255;
 
 		color = D3DCOLOR_ARGB( alpha, 255, 255, 255 );	///< アルファ値をカラー値に入れる
-		flipHorizontal = m_playerID/2 ? false : true;	///< 消している方は今の時点では自身とは
+		flipHorizontal = m_playerID/_PLAYER_NUM_ ? false : true;	///< 消している方は今の時点では自身とは
 	}
 
 	m_pDrawManager->AnimationDraw( _TEX_RECON_, tempX, tempY, 
