@@ -6,7 +6,7 @@
 #include "StageEffect.h"
 #include <cmath>
 
-#define _EFFECT_POS_TWEAK_	2.0f
+#define _EFFECT_POS_TWEAK_	4.0f
 
 bool StageEffect::Init()
 {
@@ -344,7 +344,7 @@ void StageEffect::ReconEffect( BoardOfFrame& _block, bool _appearanceInvisibilit
 		tempX = ( (m_playerID%_PLAYER_NUM_) * WIDTH )+(m_enTargetVector.x)*m_elapsedTimeFormStateInstance;
 		tempY = m_enTargetPointY+(m_enTargetVector.y)*m_elapsedTimeFormStateInstance;
 									
-		alpha = m_elapsedTimeFormStateInstance*15;
+		alpha = m_elapsedTimeFormStateInstance*10;
 		
 		if( alpha >= 255 )
 			alpha = 255;
@@ -393,11 +393,6 @@ void StageEffect::SonarEffect( BoardOfFrame& _block )
 				tempW, tempH, 0.f, 0.f, 1.f, 1.f, Alpha, 255, 255, 255 );	///<	ƒ}ƒX‚Ì•`‰æ
 
 	}
-}
-
-bool StageEffect::ComStandby()
-{
-	return true;
 }
 
 

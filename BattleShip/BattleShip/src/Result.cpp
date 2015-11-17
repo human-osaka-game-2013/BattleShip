@@ -89,12 +89,6 @@ void Result::Draw()
 	
 }
 
-//	
-bool Result::ComStandby()
-{
-	return true;
-}
-
 int Result::ResultOfAction( const int _playerIndex )
 {
 	int iReturn = RESULT_NONE;

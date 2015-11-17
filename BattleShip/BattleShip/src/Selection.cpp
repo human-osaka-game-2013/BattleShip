@@ -299,15 +299,3 @@ void Selection::Draw()
 	}
 }
 
-//	
-bool Selection::ComStandby()
-{
-#ifdef	_NOT_USE_COM_
-	//本来なら相手側のステージ情報が来るまで、「通信中」などの画像を表示して、待たせて置くが、
-	//今はテストの為、自分自身のステージ情報を相手と見立てて、マージする。
-	
-	return false;
-#else
-	return true;
-#endif
-}

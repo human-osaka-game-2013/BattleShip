@@ -106,7 +106,30 @@ public:
 	/**
 	*@brief	ステートパターン内での通信時のサブルーチン処理
 	*/
-	virtual bool ComStandby() = 0;
+	bool ComStandby( GameLog& _log )
+	{
+		std::ostringstream s; 
+		m_tempStr1 = "通信中．";
+		for( int i=0; i<(m_elapsedTimeFormStateInstance/3)%3; i++ )
+		{
+			s <<"．";
+		}
+		
+		m_tempStr2 = s.str();
+		m_tempStr1 = m_tempStr1+m_tempStr2;
+		//	経過時間ログが空じゃ無かったら
+		if( !_log.m_logStream.empty() )
+		{
+			//	中身（秒数表示ログ）を消す
+			LogStream* temp = _log.m_logStream.back();
+			delete temp;
+			_log.m_logStream.pop_back();
+		}
+		//	経過後の現在時点での新しい経過時間をログに追加する。
+		_log.AddStream(m_tempStr1.c_str());
+
+		return true;
+	}
 
 	/**
 	*@brief	ステートのID取得

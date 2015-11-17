@@ -68,11 +68,6 @@ public:
 	*@brief	í“¬Œ‹‰Ê‚Å‚Ì•`‰æ
 	*/
 	void Draw();
-	
-	/**
-	*@brief	í“¬Œ‹‰Ê‚Å‚Ì’ÊM‘Ò‹@ˆ—
-	*/
-	bool ComStandby();
 
 	/**
 	*@brief	í“¬Œ‹‰Ê‚Ìæ“¾

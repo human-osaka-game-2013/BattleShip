@@ -17,6 +17,7 @@
 
 #include <winsock2.h>
 #pragma comment(lib, "ws2_32.lib")
+#define _RECV_TIMEOUT_SECOND_	1	///< 受信のタイムアウトをするまでの秒数
 
 /**
 *@brief	通信管理クラス
@@ -27,13 +28,16 @@ public:
 	bool m_sockType;	///<	ソケットのフラグ（true：Client、false：Server）
 
 private:	
-	WSADATA	m_wsaData;	///<	Winsockデータ
-	SOCKET	m_ownSock;		///<	ソケットメンバ
-	SOCKET	m_partnersSock;	///<	相手側のソケット情報
-	struct 	sockaddr_in m_addr;	///<	接続先指定用構造体（自身）
-	struct 	sockaddr_in m_client;///<	接続先指定用構造体（クライアント側）
-	std::string 	m_domainStr;///<	サーバー側のドメイン名（orIPアドレス）（クライアント時）
-	int		m_ports;	///<	サーバー側のポート番号（クライアント時）
+	WSADATA	m_wsaData;		///< Winsockデータ
+	SOCKET	m_ownSock;		///< ソケットメンバ
+	SOCKET	m_partnersSock;	///< 相手側のソケット情報
+	struct 	sockaddr_in m_addr;		///< 接続先指定用構造体（自身）
+	struct 	sockaddr_in m_client;	///< 接続先指定用構造体（クライアント側）
+	std::string 	m_domainStr;///< サーバー側のドメイン名（orIPアドレス）（クライアント時）
+	int		m_ports;			///< サーバー側のポート番号（クライアント時）
+	fd_set	m_fds, m_readfds;	///< select関数に渡す為のソケットデータコピー用
+	int m_selectResult;		///< selectの結果
+	struct timeval m_tv;	///< selectでのタイムアウト用
 
 private:
 	/**

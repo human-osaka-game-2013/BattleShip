@@ -53,11 +53,6 @@ public:
 	*@brief	戦闘行動選択での描画
 	*/
 	void Draw();
-	
-	/**
-	*@brief	戦闘行動選択での通信待機処理
-	*/
-	bool ComStandby();
 
 	/**
 	*@brief	選択した行動の種類を取得

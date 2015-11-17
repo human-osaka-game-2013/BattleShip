@@ -34,6 +34,11 @@ private:
 	
 	bool	m_fadeInFlag;		///<ゲーム開始時はフェードインさせる。
 	bool	m_fadeOutFlag;		///<ゲーム終了時にフェードアウトさせる。
+	bool	m_sendFlagOfStage;	///<ステージ情報送信フラグ
+	bool	m_sendFlagOfShips;	///<駒情報送信フラグ
+	bool	m_recvFlagOfStage;	///<ステージ情報受信フラグ
+	bool	m_recvFlagOfShips;	///<駒情報受信フラグ
+	int		m_sendShipCount;	///<駒の情報を送っていた回数
 
 public:
 	/**
@@ -50,6 +55,11 @@ public:
 		: CScene( _id, _pRenderManager,	_pDrawManager, _pKey, m_pMouse)
 	{
 		m_playerID = 0;
+		m_sendFlagOfStage = false;
+		m_sendFlagOfShips = false;
+		m_recvFlagOfStage = false;
+		m_recvFlagOfShips = false;
+		m_sendShipCount = 0;
 	}
 	
 	/**
@@ -97,6 +107,17 @@ private:
 	*@retval false	データのやり取りが失敗した
 	*/
 	bool CommunicationProcessing();
+
+	/**
+	*@brief	ステージ情報通信処理
+	*/
+	bool ComStageData();
+
+	/**
+	*@brief	駒情報通信処理
+	*/
+	bool ComShipsData();
+
 };
 
 #endif

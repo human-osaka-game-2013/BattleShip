@@ -18,7 +18,7 @@ bool GameScene::Init()
 	//	ゲーム部分が始まったので通信の初期化をする
 	m_Connect.Init();
 
-	m_Connect.Connection();
+	while( m_Connect.Connection() == false );
 
 #endif
 	for( int iCount=0; iCount<_PLAYER_NUM_; iCount++ ) {
@@ -123,104 +123,128 @@ void GameScene::Draw()
 //	通信処理
 bool GameScene::CommunicationProcessing()
 {
-	int bufStageSize = sizeof(ConnectStage);
-	int bufShipSize = sizeof(ConnectShip);
-	ConnectStage bufStage;
-	ConnectShip bufShip[ShipObject::TYPE_MAX];
-	int enemyID = m_Connect.m_sockType ? 1:2;	//通信クラスの種類から相手のIDを調べる
-
+	bool result = false;
 
 	switch( m_stateManager->GetState() )
 	{
 	case StateManager::STATE_SET_SHIP:
 	case StateManager::STATE_SELECTION:
-	
-		if( !m_Connect.m_sockType )	//	サーバー側なら先に受信を行う
+		if( !m_sendFlagOfStage || !m_recvFlagOfStage )
 		{
-			if( m_Connect.Receive( (char*)&bufStage, bufStageSize ) )
-			{
-				m_pStageObject->MargeStage( &bufStage, m_playerID, enemyID, (int)m_stateManager->GetState() );
-				memmove_s( bufStage.m_stageArray, sizeof(int [_PLAYER_NUM_][_STAGE_COLUMN_MAX_][_STAGE_LINE_MAX_]),
-							m_pStageObject->m_stageArray, sizeof(int [_PLAYER_NUM_][_STAGE_COLUMN_MAX_][_STAGE_LINE_MAX_]));
-				if( m_Connect.Send( (char*)&bufStage, bufStageSize ))
-				{
-
-				}
-			}
-			else
-			{
-				return false;
-			}
-			for( int iShip = 0; iShip < ShipObject::TYPE_MAX; iShip++ )
-			{
-				if( m_Connect.Receive( (char*)&bufShip[iShip], bufShipSize ))
-				{
-					ShipObject* tempShip = m_Player[enemyID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
-					tempShip->SetShipData( &bufShip[iShip] );
-
-					tempShip = m_Player[m_playerID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
-					tempShip->SetConnectShipData( &bufShip[iShip] );
-					
-					if( m_Connect.Send( (char*)&bufShip[iShip], bufShipSize ))
-					{
-
-					}
-					else
-					{
-						return false;
-					}
-				}
-				else
-				{
-					return false;
-				}
-			}
-			
+			result = ComStageData();
 		}
-		else	//	クライアント側なら先に送信を行う
+		else if( !m_sendFlagOfShips || !m_recvFlagOfShips )
 		{
-			memmove_s( bufStage.m_stageArray, sizeof(int [_PLAYER_NUM_][_STAGE_COLUMN_MAX_][_STAGE_LINE_MAX_]),
-				m_pStageObject->m_stageArray, sizeof(int [_PLAYER_NUM_][_STAGE_COLUMN_MAX_][_STAGE_LINE_MAX_]));
-
-			if( m_Connect.Send( (char*)&bufStage, bufStageSize ))
-			{
-				if( m_Connect.Receive( (char*)&bufStage, bufStageSize ) )
-				{
-					m_pStageObject->MargeStage( &bufStage, m_playerID, enemyID, (int)m_stateManager->GetState() );
-				}
-				else
-				{
-					return false;
-				}
-			}
-			else
-			{
-				return false;
-			}
-			for( int iShip = 0; iShip < ShipObject::TYPE_MAX; iShip++ )
-			{
-				ShipObject* tempShip = m_Player[m_playerID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
-				tempShip->SetConnectShipData( &bufShip[iShip] );
-				if( m_Connect.Send( (char*)&bufShip[iShip], bufShipSize ))
-				{
-					if( m_Connect.Receive( (char*)&bufShip[iShip], bufShipSize ))
-					{
-						tempShip = m_Player[enemyID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
-						tempShip->SetShipData( &bufShip[iShip] );
-					}
-					else
-					{
-						return false;
-					}
-				}
-				else
-				{
-					return false;
-				}
-			}
-
+			result = ComShipsData();
 		}
 		break;
 	}
-	return true;
+	//	全部の情報の送受信が完了していたら
+	if( m_recvFlagOfStage && m_sendShipCount==ShipObject::TYPE_MAX && m_recvFlagOfShips )
+	{
+		m_sendFlagOfStage = false;
+		m_sendFlagOfShips = false;
+		m_recvFlagOfStage = false;
+		m_recvFlagOfShips = false;
+		m_sendShipCount = 0;
+		result = true;
+	}
+	else
+	{
+		result = false;
+	}
+
+	return result;
+}
+
+bool GameScene::ComStageData()
+{
+	int bufStageSize = sizeof(ConnectStage);
+	ConnectStage bufStage;
+	int enemyID = m_Connect.m_sockType ? 1:2;	//通信クラスの種類から相手のIDを調べる
+	bool result = false;
+
+	//	まだ送信を完了してなかったら
+	if( !m_sendFlagOfStage )
+	{
+		memmove_s( bufStage.m_stageArray, sizeof(int [_PLAYER_NUM_][_STAGE_COLUMN_MAX_][_STAGE_LINE_MAX_]),
+		m_pStageObject->m_stageArray, sizeof(int [_PLAYER_NUM_][_STAGE_COLUMN_MAX_][_STAGE_LINE_MAX_]));
+
+		if( m_Connect.Send( (char*)&bufStage, bufStageSize ))
+		{
+			m_sendFlagOfStage = true;
+		}
+		else
+		{
+			result = false;
+		}
+	}
+	//	まだ受信を完了してなかったら
+	if( !m_recvFlagOfStage )
+	{
+		if( m_Connect.Receive( (char*)&bufStage, bufStageSize ) )
+		{
+			m_pStageObject->MargeStage( &bufStage, m_playerID, enemyID, (int)m_stateManager->GetState() );
+			m_recvFlagOfStage = true;
+			result = true;
+		}
+		else
+		{
+			result = false;
+		}
+	}
+	else
+	{
+		result = true;
+	}
+	return result;
+}
+
+bool GameScene::ComShipsData()
+{
+	int bufShipSize = sizeof(ConnectShip);
+	ConnectShip bufShip[ShipObject::TYPE_MAX];
+	int enemyID = m_Connect.m_sockType ? 1:2;	//通信クラスの種類から相手のIDを調べる
+	ShipObject* tempShip;
+	bool result = false;
+
+	for( int iShip = m_sendShipCount; iShip < ShipObject::TYPE_MAX; iShip++ )
+	{
+		//	まだ送信を完了してなかったら
+		if( !m_sendFlagOfShips )
+		{
+			ShipObject* tempShip = m_Player[m_playerID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
+			tempShip->SetConnectShipData( &bufShip[iShip] );
+
+			if( m_Connect.Send( (char*)&bufShip[iShip], bufShipSize ))
+			{
+				m_sendFlagOfShips = true;
+			}
+			else
+			{
+				result = false;
+			}
+		}
+		//	まだ受信を完了してなかったら
+		if( !m_recvFlagOfShips )
+		{
+			if( m_Connect.Receive( (char*)&bufShip[iShip], bufShipSize ))
+			{
+				tempShip = m_Player[enemyID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
+				tempShip->SetShipData( &bufShip[iShip] );
+				m_sendShipCount++;	//	正常に受け取れたので、カウンタをインクリメント
+
+				//	全ての駒情報を送受信出来ていれば、送信フラグをtrue
+				m_recvFlagOfShips = m_sendFlagOfShips = m_sendShipCount==ShipObject::TYPE_MAX ? true : false;
+				result = true;
+			}
+			else
+			{
+				result = false;
+			}
+		}
+		if( result == false )
+			break;
+	}
+	return result;
 }

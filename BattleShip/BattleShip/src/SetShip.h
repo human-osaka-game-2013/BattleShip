@@ -42,13 +42,6 @@ public:
 	*/
 	void Draw();
 	
-	/**
-	*@brief	駒配置での通信待機処理
-	*/
-	bool ComStandby();
-
-	
-	
 private:	
 	/**
 	*@brief	盤面総チェックのルーチン処理

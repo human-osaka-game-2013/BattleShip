@@ -8,7 +8,7 @@
 
 #include "GameState.h"
 
-#define _MOVE_SPEED_RECON_	50.f
+#define _MOVE_SPEED_RECON_	20.f
 
 
 class StageEffect : public GameState
@@ -19,7 +19,7 @@ public:
 	*/
 	enum _STAGE_EFFECT_TIME_
 	{
-		TIME_END_ACTION_EFFECT =20,
+		TIME_END_ACTION_EFFECT = 30,
 
 		TIME_CHANGE_EFFECT = 10+TIME_END_ACTION_EFFECT,
 
@@ -78,11 +78,6 @@ public:
 	*/
 	void Draw();
 	
-	/**
-	*@brief	戦闘エフェクトでの通信待機処理
-	*/
-	bool ComStandby();
-
 	/**
 	*@brief	選択した行動の種類を更新
 	*@details	SelectionステートからStateManagerが行動の選択情報をもらっているので、

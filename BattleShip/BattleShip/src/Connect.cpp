@@ -69,7 +69,11 @@ void Connect::SetTable( char* _p, int _iColumn, int _iLine )
 		break;
 	case DOMAIN_STR:
 		if( m_sockType ){	///<	ドメイン名が必要なのはクライアント側だけなので
-			m_domainStr = _p;
+			if( memcmp( _p, "localhost", 9) == 0 ){
+				m_domainStr = "127.0.0.1";
+			}else{
+				m_domainStr = _p;
+			}
 		}
 		break;
 	case PORTS_NUM:
@@ -94,6 +98,9 @@ bool Connect::MakeSocket()
 
 bool Connect::SettingSocket()
 {
+	// fd_setの初期化します
+	FD_ZERO(&m_readfds);
+
 	if( m_sockType )
 	{
 		// 接続先指定用構造体の準備
@@ -103,9 +110,7 @@ bool Connect::SettingSocket()
 		//	m_domainStrがIPアドレスが入っていなかった場合
 		if( m_addr.sin_addr.S_un.S_addr == 0xffffffff )
 		{
-			
 			//	ドメイン名が入っている可能性があるので、IPアドレスに変換する。
-			
 			struct hostent* host = gethostbyname( (char*)m_domainStr.c_str() );
 			if( host == NULL )
 			{
@@ -126,6 +131,7 @@ bool Connect::SettingSocket()
 		bind( m_ownSock, (struct sockaddr *)&m_addr, sizeof(m_addr));
 		
 	}
+
 	return true;
 }
 
@@ -140,6 +146,8 @@ bool Connect::Connection()
 			puts("connect に失敗しました");
 			return false;
 		}
+		// selectで待つ読み込みソケットとしてm_ownSockを登録します
+		FD_SET(m_ownSock, &m_readfds);
 		
 	}
 	else{
@@ -154,6 +162,8 @@ bool Connect::Connection()
 			DebugMsgBox("accept : %d\n", WSAGetLastError());
 			return false;
 		}
+		// selectで待つ読み込みソケットとしてm_partnersSockを登録します
+		FD_SET(m_partnersSock, &m_readfds);
 	}
 	
 	return true;
@@ -162,14 +172,40 @@ bool Connect::Connection()
 //	受信メソッド
 bool Connect::Receive( char *_buf, int _bufSize )
 {
+	m_selectResult = 0;
+	m_tv.tv_sec = _RECV_TIMEOUT_SECOND_;	
+	m_tv.tv_usec = 0;
+
+	// 読み込み用fd_setの初期化
+	// selectが毎回内容を上書きしてしまうので、毎回初期化します
+	memcpy(&m_fds, &m_readfds, sizeof(fd_set));
+
+	// fdsに設定されたソケットが読み込み可能になるまで待ちます
+	m_selectResult = select( 0, &m_fds, NULL, NULL, &m_tv );
+	// タイムアウトの場合にselectは0を返します
+	if( m_selectResult == 0 )
+	{
+		// ループから抜けます
+		return false;
+	}
 	//	念のためバッファーの初期化
 	memset(_buf,0,_bufSize);
 	int iRecvResult = 0;
-	if( m_sockType ){
-		iRecvResult = recv(m_ownSock, _buf, _bufSize, 0 );
+	if( m_sockType )
+	{
+		// 自身のソケットにに読み込み可能データがある場合
+		if( FD_ISSET( m_ownSock, &m_fds) )
+		{
+			iRecvResult = recv(m_ownSock, _buf, _bufSize, 0 );
+		}
 	}
-	else {
-		iRecvResult = recv(m_partnersSock, _buf, _bufSize, 0 );
+	else 
+	{
+		// 相手のソケットにに読み込み可能データがある場合
+		if( FD_ISSET( m_partnersSock, &m_fds) ) 
+		{
+			iRecvResult = recv(m_partnersSock, _buf, _bufSize, 0 );
+		}
 	}
 
 	if (iRecvResult < 0)

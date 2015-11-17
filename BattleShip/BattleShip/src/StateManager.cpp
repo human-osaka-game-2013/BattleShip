@@ -51,8 +51,12 @@ void StateManager::StateInit()
 	int plIndex = m_playerID%2;	
 	m_gameLog.Init( static_cast<long>( m_PlayerFrame[plIndex].GetPositionX() + static_cast<long>(_LOG_POS_TWEAK_)), 
 		static_cast<long>( m_PlayerFrame[plIndex].GetPositionY() + static_cast<long>(_LOG_POS_TWEAK_)) );
+	//	ゲーム経過時間ログの初期化
 	m_gameElapsed.Init( static_cast<long>( m_PlayerFrame[plIndex].GetPositionX() + static_cast<long>(_LOG_POS_TWEAK_) ),
 		static_cast<long>( m_PlayerFrame[plIndex].GetPositionY()) + static_cast<long>(_LOG_HEIGHT_MAX_) );
+	//	通信状態ログの初期化
+	float tempX = ( m_playerID/_PLAYER_NUM_ ? (_BOARD_OF_SHIPDATA_LINE_P1_) : (_BOARD_OF_SHIPDATA_LINE_P2_+_SHIP_ARRAY_INDEX_) ) * _BLOCK_WIDTH_SIZE_;
+	m_gameConnectState.Init( static_cast<long>( tempX ), static_cast<long>( m_PlayerFrame[plIndex].GetPositionY()) + static_cast<long>(_LOG_HEIGHT_MAX_) );
 
 	m_tempStr1 = m_gameLog.m_fixedPhrase.m_phrase[FixedPhrase::START_BATTLE];
 	m_gameLog.AddStream( m_tempStr1.c_str() );
@@ -193,7 +197,6 @@ int StateManager::CheckState()
 			}else{
 				m_currentShip = ShipObject::TYPE_AIRCARRIER;
 			}
-			m_pStageObject->ResetSelect();
 			checkResult = 1;
 		}
 		break;
@@ -205,6 +208,7 @@ int StateManager::CheckState()
 			Result* pResult = dynamic_cast<Result*>(m_pGameState);	///<Resultの関数にアクセスする必要があるので、ダウンキャストする。
 			checkResult = -1;	//StateManager側に戦闘結果＝戦闘終了した事を教えてやる。
 			pResult->GetResultOfBattle( m_resultBattle );
+			m_pStageObject->ResetSelect();	//判定を取ったので選択情報は消す
 		}
 		//勝敗はまだついていない
 		else	
@@ -213,6 +217,7 @@ int StateManager::CheckState()
 			pResult->GetResultPlayerAndEnemy( m_resultPlayer, m_resultEnemy );
 			pResult->GetResultOfBattle( m_resultBattle );
 			checkResult = 1;
+			m_pStageObject->ResetSelect();	//判定を取ったので選択情報は消す
 			
 		}
 
@@ -228,8 +233,6 @@ int StateManager::CheckState()
 //	ステートパターンの切り替え
 bool StateManager::ChangeState( _STATE_NUM_ _stateType )
 {
-
-
 	if( _stateType > STATE_STAGE_EFFECT&& _stateType < STATE_SET_SHIP )
 	{
 		MessageBoxA(0,"ステートパターンの変更に失敗しました！\n引数を確認して下さい！(＞＜;)",NULL,MB_OK);
@@ -304,6 +307,12 @@ void StateManager::StateDraw()
 	m_pGameState->Draw();
 
 	DrawLog();
+
+	//	通信待ち中
+	if( GetConnectFlag() )
+	{
+		m_pGameState->ComStandby( m_gameConnectState );
+	}
 }
 
 void StateManager::DrawStageFrame()
@@ -427,7 +436,7 @@ void StateManager::DrawStageBlock( const int _playerIndex )
 			int tempArrayData = m_pStageObject->m_stageArray[_playerIndex][ic][il];
 		
 			//	選択マスor損傷マスは見えるようにする
-			if( StageObject::SelectOfData(tempArrayData) != StageObject::_SEARCH_NOMAL_ ||
+			if( StageObject::SelectOfData(tempArrayData) != StageObject::_SELECT_NOMAL_ ||
 				StageObject::ConditionOfData(tempArrayData) == StageObject::_CONDITION_DAMAGE_)
 			{
 					
@@ -524,6 +533,32 @@ void StateManager::DrawLog()
 			if(pDxFont->DrawA( tempX, tempY, tempW, tempH, lpTempStr, (*it)->GetColor() ))
 			{
 
+			}
+		}
+	}
+	//	通信待ち中
+	if( GetConnectFlag() )
+	{
+		//	通信中ログ
+		if( !m_gameConnectState.m_logStream.empty() )
+		{
+			logValue = m_gameConnectState.m_logStream.size();
+			long tempX = 0, tempY = 0;
+			unsigned int tempW = 0, tempH = 0;
+			std::string* pStr;
+			LPCSTR lpTempStr;
+			std::list<LogStream*>::const_iterator itEnd = m_gameConnectState.m_logStream.end();
+			for( std::list<LogStream*>::iterator it = m_gameConnectState.m_logStream.begin();
+				it != itEnd; ++it)
+			{
+				(*it)->GetPosition( tempX, tempY );
+				(*it)->GetSize( tempW, tempH );
+				pStr = (*it)->GetStringPtr();
+				lpTempStr = const_cast<char *>(pStr->c_str());
+				if(pDxFont->DrawA( tempX, tempY, tempW, tempH, lpTempStr, (*it)->GetColor() ))
+				{
+
+				}
 			}
 		}
 	}

@@ -56,6 +56,7 @@ private:
 	BoardOfFrame	m_PlayerFrame[_PLAYER_NUM_];	///<	プレイヤー情報のフレームオブジェクト	
 	GameLog			m_gameLog;		///<	ゲームログオブジェクト
 	GameLog			m_gameElapsed;	///<	経過時間出力ログ
+	GameLog			m_gameConnectState;	///<	通信状態のログ
 
 //	デバイス
 private:
@@ -114,7 +115,7 @@ public:
 			m_pGameState->SetElapsedTimeFromStateInstance( 
 				m_pGameState->GetElapsedTimeFromStateInstance()+1);
 
-#ifndef _DEBUG
+#ifdef _DEBUG
 			std::ostringstream s; 
 			m_tempStr1 = "経過時間：";
 			s << (m_pGameState->GetElapsedTimeFromStateInstance()/10) <<"."<< (m_pGameState->GetElapsedTimeFromStateInstance()%10) ;
