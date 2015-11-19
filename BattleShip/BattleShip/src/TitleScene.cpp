@@ -14,6 +14,8 @@ bool TitleScene::Init()
 	m_screenMask.SetColor( 255, 255, 255, 255);//フェードインさせたいのでアルファ値は255で
 
 	m_stopFadeFlag = false;
+	//	タイトルBGM再生
+	m_pAudio->SoundPlay( Audio::_TITLE_BGM_, true );
 	return true;
 }
 

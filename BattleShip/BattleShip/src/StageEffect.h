@@ -8,7 +8,8 @@
 
 #include "GameState.h"
 
-#define _MOVE_SPEED_RECON_	20.f
+#define _MOVE_SPEED_RECON_	35.f
+#define _DIVISON_OF_EFFECT_TIME_	1.5
 
 
 class StageEffect : public GameState
@@ -23,7 +24,7 @@ public:
 
 		TIME_CHANGE_EFFECT = 10+TIME_END_ACTION_EFFECT,
 
-		TIME_END_RUSULT_EFFECT = 20+TIME_CHANGE_EFFECT,
+		TIME_END_RUSULT_EFFECT = 30+TIME_CHANGE_EFFECT,
 	};
 
 private:

@@ -40,8 +40,9 @@ public:
 	*@param[in]	m_pMouse		マウス管理のポインタ
 	*/
 	TitleScene(int _id, CRenderManager* const _pRenderManager,
-		CDrawManager*	const _pDrawManager, CKey* const _pKey, CMouse* const m_pMouse)
-		: CScene( _id, _pRenderManager,	_pDrawManager, _pKey, m_pMouse)
+		CDrawManager*	const _pDrawManager, CKey* const _pKey,
+		CMouse* const m_pMouse, Audio* const _pAudio )
+		: CScene( _id, _pRenderManager,	_pDrawManager, _pKey, m_pMouse, _pAudio)
 	{
 		m_changeSceneFlag = false;
 		m_changeSceneTime = _CHANGE_TIME_;

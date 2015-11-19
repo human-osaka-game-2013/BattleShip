@@ -37,13 +37,16 @@ bool GameScene::Init()
 		
 	//	ここは後にメンバのオブジェクトにも管理クラスをセットする必要があるので、
 	//	順番に注意
-	m_stateManager->SetDraw( m_pDrawManager );	///<	描画管理クラスのアドレスセット
-	m_stateManager->SetMouse( m_pMouse );		///<	マウス管理クラスのアドレスセット
+	m_stateManager->SetDraw( m_pDrawManager );	///< 描画管理クラスのアドレスセット
+	m_stateManager->SetMouse( m_pMouse );		///< マウス管理クラスのアドレスセット
+	m_stateManager->SetAudio( m_pAudio );		///< 音声再生クラスアのドレスセット
 	m_stateManager->StateInit();
 	
 	m_fadeInFlag = true;	
 	m_fadeOutFlag = false;
 
+	//	ゲームBGM再生
+	m_pAudio->SoundPlay( Audio::_BATTLE_BGM_, true );
 	return true;
 }
 
@@ -102,14 +105,30 @@ int GameScene::Control()
 
 void GameScene::Draw()
 {
+	
+	BackGroundDraw();
+	
+	m_stateManager->StateDraw();
+
+	ScreenMaskDrawa();
+}
+
+
+void GameScene::BackGroundDraw()
+{
+	float tempX, tempY;
+	
+	m_background.GetPosition( &tempX, &tempY);
+	m_pDrawManager->AnimationDraw( _TEX_BACKGROUND_, tempX, tempY, 
+		m_background.GetWidth(),  m_background.GetHeight(),
+		static_cast<unsigned int>(GetTimeInScene()*5) );
+}
+
+
+void GameScene::ScreenMaskDrawa()
+{
 	float tempX, tempY;
 	int tempA, tempR, tempG, tempB;
-
-	m_background.GetPosition( &tempX, &tempY);
-	m_pDrawManager->VertexDraw( _TEX_BACKGROUND_, tempX, tempY, 
-		m_background.GetWidth(),  m_background.GetHeight(),
-		0.f, 0.f, 1.f, 1.f);
-	m_stateManager->StateDraw();
 
 	//	フェード用のマスク描画
 	m_screenMask.GetPosition( &tempX, &tempY);
@@ -118,7 +137,6 @@ void GameScene::Draw()
 		m_screenMask.GetWidth(),  m_screenMask.GetHeight(),
 		0.f, 0.f, 1.f, 1.f,	tempA, tempR, tempG, tempB);
 }
-
 
 //	通信処理
 bool GameScene::CommunicationProcessing()

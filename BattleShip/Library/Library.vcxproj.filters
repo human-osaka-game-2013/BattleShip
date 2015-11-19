@@ -56,6 +56,12 @@
     <Filter Include="ソースファイル\lib_src\Proc">
       <UniqueIdentifier>{b2a531cb-56e6-4f7d-baaa-08a94fb21157}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソースファイル\lib_src\Audio">
+      <UniqueIdentifier>{ff867f20-66f2-4bc6-b31b-0b39071b10e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\lib_h\Audio">
+      <UniqueIdentifier>{091a9df2-f427-41c2-89b8-d88289997bdf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ViewManage.cpp">
@@ -118,6 +124,9 @@
     <ClCompile Include="src\Device.cpp">
       <Filter>ソースファイル\lib_src\directX</Filter>
     </ClCompile>
+    <ClCompile Include="src\Audio.cpp">
+      <Filter>ソースファイル\lib_src\Audio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Proc.h">
@@ -176,6 +185,9 @@
     </ClInclude>
     <ClInclude Include="src\SceneManage.h">
       <Filter>ヘッダーファイル\lib_h\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Audio.h">
+      <Filter>ヘッダーファイル\lib_h\Audio</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

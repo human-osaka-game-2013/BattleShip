@@ -1,5 +1,5 @@
 /**
-*@file	SceneManager.h
+*@file	SceneManage.h
 *@author	亀田
 *@brief	シーン管理
 */
@@ -11,10 +11,11 @@
 #include "device.h"
 #include "RenderManager.h"
 #include "DrawManager.h"
-#include "../../BattleShip/src/SceneInterface.h"
+#include "SceneInterface.h"
 #include "Key.h"
 #include "Mouse.h"
 #include "joystick_XInput.h"
+#include "Audio.h"
 
 /**
 *@brief	シーン管理クラス
@@ -35,13 +36,14 @@ public:
 	};
 
 private:
-	CScene*			m_sceneObj;			///<	シーンオブジェクトポインタ
-	CDevice* const	m_pDevice;			///<	デバイスクラスポインタ
-	CRenderManager* m_pRenderManager;	///<	3D描画オブジェクトポインタ
-	CDrawManager*	m_pDrawManager;		///<	2D描画オブジェクトポインタ
-	CKey*			m_pKey;				///<	キー管理クラスオブジェクトポインタ
-	CMouse*			m_pMouse;			///<	マウス管理クラスオブジェクトポインタ
-	CXInput*		m_pXInput;		///<ジョイスティック管理クラス
+	CScene*			m_sceneObj;			///< シーンオブジェクトポインタ
+	CDevice* const	m_pDevice;			///< デバイスクラスポインタ
+	CRenderManager* m_pRenderManager;	///< 3D描画オブジェクトポインタ
+	CDrawManager*	m_pDrawManager;		///< 2D描画オブジェクトポインタ
+	CKey*			m_pKey;				///< キー管理クラスオブジェクトポインタ
+	CMouse*			m_pMouse;			///< マウス管理クラスオブジェクトポインタ
+	CXInput*		m_pXInput;			///< ジョイスティック管理クラス
+	Audio*			m_pAudio;			///< 音声再生クラスオブジェクトポインタ
 
 	int		iCurrentScene;		///<	今のシーン
 	bool	bChangeSceneFlag;	///<	シーン変更フラグ
@@ -52,8 +54,6 @@ public:
 	*@brief	 コンストラクタ
 	*/
 	CSceneManager( int _scene , CDevice* const _pDevice, bool _bRenderType );	//	コンストラクタ
-
-
 
 public:
 	/**

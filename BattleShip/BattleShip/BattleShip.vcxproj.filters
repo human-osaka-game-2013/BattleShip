@@ -57,12 +57,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\DebugInterface.cpp">
-      <Filter>追加機能系\DebugInterface</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Connect.cpp">
-      <Filter>追加機能系\Connect</Filter>
-    </ClCompile>
     <ClCompile Include="src\TitleScene.cpp">
       <Filter>ソース ファイル\Title</Filter>
     </ClCompile>
@@ -102,18 +96,6 @@
     <ClCompile Include="..\Library\src\WinMain.cpp">
       <Filter>ソース ファイル\Lib_Interface</Filter>
     </ClCompile>
-    <ClCompile Include="src\SceneInterface.cpp">
-      <Filter>ソース ファイル\Lib_Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SceneManagerInterface.cpp">
-      <Filter>ソース ファイル\Lib_Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DrawManagherInterface.cpp">
-      <Filter>ソース ファイル\Lib_Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="src\RenderManagherInterface.cpp">
-      <Filter>ソース ファイル\Lib_Interface</Filter>
-    </ClCompile>
     <ClCompile Include="src\GameScene.cpp">
       <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
@@ -129,17 +111,29 @@
     <ClCompile Include="src\StageObject.cpp">
       <Filter>ソース ファイル\Game\Object</Filter>
     </ClCompile>
+    <ClCompile Include="..\Library\src\DrawManagherInterface.cpp">
+      <Filter>ソース ファイル\Lib_Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\RenderManagherInterface.cpp">
+      <Filter>ソース ファイル\Lib_Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\SceneInterface.cpp">
+      <Filter>ソース ファイル\Lib_Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\SceneManagerInterface.cpp">
+      <Filter>ソース ファイル\Lib_Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\Connect.cpp">
+      <Filter>追加機能系\Connect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\DebugInterface.cpp">
+      <Filter>追加機能系\DebugInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\AudioInterface.cpp">
+      <Filter>ソース ファイル\Lib_Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\DebugInterface.h">
-      <Filter>追加機能系\DebugInterface</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Connect.h">
-      <Filter>追加機能系\Connect</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ConnectStruct.h">
-      <Filter>追加機能系\Connect</Filter>
-    </ClInclude>
     <ClInclude Include="src\TitleScene.h">
       <Filter>ヘッダー ファイル\Title</Filter>
     </ClInclude>
@@ -172,9 +166,6 @@
     </ClInclude>
     <ClInclude Include="src\Destroyer.h">
       <Filter>ヘッダー ファイル\Ship</Filter>
-    </ClInclude>
-    <ClInclude Include="src\SceneInterface.h">
-      <Filter>ヘッダー ファイル\Lib_Interface</Filter>
     </ClInclude>
     <ClInclude Include="src\Player.h">
       <Filter>ヘッダー ファイル\Game</Filter>
@@ -217,6 +208,18 @@
     </ClInclude>
     <ClInclude Include="src\StateManager.h">
       <Filter>ヘッダー ファイル\State</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\src\SceneInterface.h">
+      <Filter>ヘッダー ファイル\Lib_Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\src\Connect.h">
+      <Filter>追加機能系\Connect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\src\DebugInterface.h">
+      <Filter>追加機能系\DebugInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ConnectStruct.h">
+      <Filter>追加機能系\Connect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

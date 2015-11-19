@@ -286,6 +286,7 @@ bool StateManager::ChangeState( _STATE_NUM_ _stateType )
 	m_pGameState->SetStagePtr( m_pStageObject );
 	m_pGameState->SetDraw( m_pDrawManager );
 	m_pGameState->SetMouse( m_pMouse );
+	m_pGameState->SetAudio( m_pAudio );
 	m_pGameState->SetPlayerID( m_playerID );
 	m_pGameState->Init();	///<最後にステート側の初期化も行う（引数はこのクラスが持っている現在の選択駒）
 
@@ -294,15 +295,9 @@ bool StateManager::ChangeState( _STATE_NUM_ _stateType )
 
 //	ステートの基本描画
 void StateManager::StateDraw()
-{
+{	
 	DrawStageFrame();
 
-	//	プレイヤー数ループして、駒とマス目を描画する
-	for( int ip=0; ip<_PLAYER_NUM_; ip++ )
-	{
-		DrawShipObject( ip );
-		DrawStageBlock( ip );
-	}
 	//	ステート別の描画
 	m_pGameState->Draw();
 
@@ -316,8 +311,37 @@ void StateManager::StateDraw()
 }
 
 void StateManager::DrawStageFrame()
-{
+{	
 	float tempX, tempY;
+
+	if( m_playerID == 1 )
+	{
+		//	プレイヤー1枠表示
+		m_PlayerFrame[0].GetPosition( &tempX, &tempY );
+		m_pDrawManager->VertexDraw( _TEX_STAGEMAP_, tempX, tempY, 
+			m_PlayerFrame[0].GetWidth(),  m_PlayerFrame[0].GetHeight(),
+			0.f, _STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_, 
+			11/_BLOCK_WIDTH_MAX_, 1.f,
+			180, 255, 100, 100);	///<	プレイヤー1の枠描画
+		
+	}
+	else
+	{
+		//	プレイヤー2枠表示
+		m_PlayerFrame[1].GetPosition( &tempX, &tempY );
+		m_pDrawManager->VertexDraw( _TEX_STAGEMAP_, tempX, tempY, 
+			m_PlayerFrame[1].GetWidth(),  m_PlayerFrame[1].GetHeight(),
+			12/_BLOCK_WIDTH_MAX_, _STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_, 
+			1.f, 1.f,
+			180, 100, 100, 255);	///<	プレイヤー2の枠描画
+	}
+
+	//	プレイヤー数ループして、駒とマス目を描画する
+	for( int ip=0; ip<_PLAYER_NUM_; ip++ )
+	{
+		DrawShipObject( ip );
+		DrawStageBlock( ip );
+	}
 	
 	//	盤面枠表示（左）
 	m_StageFrame.GetPosition( &tempX, &tempY );
@@ -339,40 +363,9 @@ void StateManager::DrawStageFrame()
 		_BLOCK_WIDTH_SIZE_, HEIGHT,
 		_STAGE_WIDTH_MAX_/_BLOCK_WIDTH_MAX_, 0.f,
 		(_STAGE_WIDTH_MAX_+1)/_BLOCK_WIDTH_MAX_, 1.f,
-		180, 220, 220, 220);	///<	盤面の真ん中の描画
+		100, 220, 220, 220);	///<	盤面の真ん中の描画
 
-	if( m_playerID == 1 )
-	{
-		//	プレイヤー1枠表示
-		m_PlayerFrame[0].GetPosition( &tempX, &tempY );
-		m_pDrawManager->VertexDraw( _TEX_STAGEMAP_, tempX, tempY, 
-			m_PlayerFrame[0].GetWidth(),  m_PlayerFrame[0].GetHeight(),
-			0.f, _STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_, 
-			11/_BLOCK_WIDTH_MAX_, 1.f,
-			180, 255, 100, 100);	///<	プレイヤー1の枠描画
-		//	ゲームログ表示
-		m_PlayerFrame[1].GetPosition( &tempX, &tempY );
-		m_pDrawManager->VertexDraw( _TEX_GAMELOG_, tempX, tempY, 
-			m_PlayerFrame[1].GetWidth(),  m_PlayerFrame[1].GetHeight(),
-			0.f, 0.f, 1.f, 1.f,
-			200, 255, 255, 255 );	///<	プレイヤー2の枠描画
-	}
-	else
-	{
-		//	プレイヤー2枠表示
-		m_PlayerFrame[1].GetPosition( &tempX, &tempY );
-		m_pDrawManager->VertexDraw( _TEX_STAGEMAP_, tempX, tempY, 
-			m_PlayerFrame[1].GetWidth(),  m_PlayerFrame[1].GetHeight(),
-			12/_BLOCK_WIDTH_MAX_, _STAGE_HEIGHT_MAX_/_BLOCK_HEIGHT_MAX_, 
-			1.f, 1.f,
-			180, 100, 100, 255);	///<	プレイヤー2の枠描画
-		//	ゲームログ表示
-		m_PlayerFrame[0].GetPosition( &tempX, &tempY );
-		m_pDrawManager->VertexDraw( _TEX_GAMELOG_, tempX, tempY, 
-			m_PlayerFrame[0].GetWidth(),  m_PlayerFrame[0].GetHeight(),
-			0.f, 0.f, 1.f, 1.f,
-			200, 255, 255, 255 );	///<	プレイヤー1の枠描画
-	}
+	
 }
 
 void StateManager::DrawShipObject( const int _playerIndex )
@@ -492,6 +485,28 @@ void StateManager::DrawLog()
 {
 	DirectXFont* const pDxFont =  &m_pDrawManager->m_dxFont;
 	int logValue = 0;
+	float tempX, tempY;
+
+	//ログの枠表示
+	if( m_playerID == 1 )
+	{
+		//	ゲームログ表示
+		m_PlayerFrame[1].GetPosition( &tempX, &tempY );
+		m_pDrawManager->VertexDraw( _TEX_GAMELOG_, tempX, tempY, 
+			m_PlayerFrame[1].GetWidth(),  m_PlayerFrame[1].GetHeight(),
+			0.f, 0.f, 1.f, 1.f,
+			200, 255, 255, 255 );	///<	プレイヤー2の枠描画
+	}
+	else
+	{
+		//	ゲームログ表示
+		m_PlayerFrame[0].GetPosition( &tempX, &tempY );
+		m_pDrawManager->VertexDraw( _TEX_GAMELOG_, tempX, tempY, 
+			m_PlayerFrame[0].GetWidth(),  m_PlayerFrame[0].GetHeight(),
+			0.f, 0.f, 1.f, 1.f,
+			200, 255, 255, 255 );	///<	プレイヤー1の枠描画
+	}
+	
 	//	戦闘系ログ
 	if( !m_gameLog.m_logStream.empty() )
 	{

@@ -27,6 +27,8 @@ CSceneManager::CSceneManager(  int _scene , CDevice* const _pDevice, bool _bRend
 	m_pMouse = new CMouse( m_pDevice->GetMouseDevice() );
 
 	m_pXInput = new CXInput();
+
+	m_pAudio = new Audio();
 }
 
 

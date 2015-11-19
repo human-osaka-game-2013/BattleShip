@@ -43,7 +43,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\Library\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Library\src;..\BattleShip\src</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -66,22 +66,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Library\src\AudioInterface.cpp" />
+    <ClCompile Include="..\Library\src\Connect.cpp" />
+    <ClCompile Include="..\Library\src\DebugInterface.cpp" />
+    <ClCompile Include="..\Library\src\DrawManagherInterface.cpp" />
+    <ClCompile Include="..\Library\src\RenderManagherInterface.cpp" />
+    <ClCompile Include="..\Library\src\SceneInterface.cpp" />
+    <ClCompile Include="..\Library\src\SceneManagerInterface.cpp" />
     <ClCompile Include="..\Library\src\WinMain.cpp" />
     <ClCompile Include="src\AircraftCarrier.cpp" />
     <ClCompile Include="src\BattleShip.cpp" />
-    <ClCompile Include="src\Connect.cpp" />
     <ClCompile Include="src\Cruiser.cpp" />
-    <ClCompile Include="src\DebugInterface.cpp" />
     <ClCompile Include="src\Destroyer.cpp" />
-    <ClCompile Include="src\DrawManagherInterface.cpp" />
     <ClCompile Include="src\GameLog.cpp" />
     <ClCompile Include="src\GameScene.cpp" />
     <ClCompile Include="src\GameState.cpp" />
     <ClCompile Include="src\Player.cpp" />
-    <ClCompile Include="src\RenderManagherInterface.cpp" />
     <ClCompile Include="src\Result.cpp" />
-    <ClCompile Include="src\SceneInterface.cpp" />
-    <ClCompile Include="src\SceneManagerInterface.cpp" />
     <ClCompile Include="src\Selection.cpp" />
     <ClCompile Include="src\SetShip.cpp" />
     <ClCompile Include="src\ShipObject.cpp" />
@@ -97,16 +98,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Library\src\Connect.h" />
+    <ClInclude Include="..\Library\src\DebugInterface.h" />
     <ClInclude Include="..\Library\src\DebugNew.h" />
+    <ClInclude Include="..\Library\src\SceneInterface.h" />
     <ClInclude Include="src\AircraftCarrier.h" />
     <ClInclude Include="src\Background.h" />
     <ClInclude Include="src\BattleShip.h" />
     <ClInclude Include="src\BoardOfFrame.h" />
     <ClInclude Include="src\Button.h" />
-    <ClInclude Include="src\Connect.h" />
     <ClInclude Include="src\ConnectStruct.h" />
     <ClInclude Include="src\Cruiser.h" />
-    <ClInclude Include="src\DebugInterface.h" />
     <ClInclude Include="src\Destroyer.h" />
     <ClInclude Include="src\FixedPhrase.h" />
     <ClInclude Include="src\GameLog.h" />
@@ -115,7 +117,6 @@
     <ClInclude Include="src\LogStream.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\Result.h" />
-    <ClInclude Include="src\SceneInterface.h" />
     <ClInclude Include="src\ScreenMask.h" />
     <ClInclude Include="src\Selection.h" />
     <ClInclude Include="src\SetShip.h" />

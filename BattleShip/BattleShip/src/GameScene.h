@@ -51,8 +51,9 @@ public:
 	*@param[in]	m_pMouse		マウス管理のポインタ
 	*/
 	GameScene(int _id, CRenderManager* const _pRenderManager,
-		CDrawManager*	const _pDrawManager, CKey* const _pKey, CMouse* const m_pMouse)
-		: CScene( _id, _pRenderManager,	_pDrawManager, _pKey, m_pMouse)
+		CDrawManager*	const _pDrawManager, CKey* const _pKey, 
+		CMouse* const m_pMouse, Audio* const _pAudio )
+		: CScene( _id, _pRenderManager,	_pDrawManager, _pKey, m_pMouse, _pAudio )
 	{
 		m_playerID = 0;
 		m_sendFlagOfStage = false;
@@ -99,6 +100,19 @@ public:
 	void Draw();
 	void Render(){};
 
+private:
+	/**
+	*@brief	背景部分の描画
+	*@details	ちょっとした描画に処理を加えたくて、関数を分けました。
+	*/
+	void BackGroundDraw();
+
+	/**
+	*@brief	フェード用マスク描画
+	*/
+	void ScreenMaskDrawa();
+
+//	通信処理系
 private:
 	/**
 	*@brief	通信処理

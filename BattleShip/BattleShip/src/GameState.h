@@ -11,6 +11,7 @@
 #include "Player.h"
 #include "StageObject.h"
 #include "GameLog.h"
+#include "Audio.h"
 
 #define __NOT_USE_COM_	///<通信を使わないテスト
 
@@ -64,13 +65,14 @@ protected:
 	float m_tempY;	///<	マウスなどの座標の仮保存変数
 	ShipObject* m_tempShip;	///<	駒の仮保存変数
 
-	int m_elapsedTimeFormStateInstance;	///<	ステートが生成されていからの経過時間
+	unsigned int m_elapsedTimeFormStateInstance;	///<	ステートが生成されていからの経過時間
 
 //	デバイス
 protected:
-	CDrawManager*	m_pDrawManager;	///<	2D描画管理クラスポインタ(constポインタ)
-	CMouse*			m_pMouse;		///<	マウス管理クラスポインタ(constポインタ)
-	
+	CDrawManager*	m_pDrawManager;	///< 2D描画管理クラスポインタ(constポインタ)
+	CMouse*			m_pMouse;		///< マウス管理クラスポインタ(constポインタ)
+	Audio*			m_pAudio;		///< 音声再生クラスポインタ(constポインタ)
+
 public:
 	/**
 	*@brief	コンストラクタ
@@ -110,7 +112,7 @@ public:
 	{
 		std::ostringstream s; 
 		m_tempStr1 = "通信中．";
-		for( int i=0; i<(m_elapsedTimeFormStateInstance/3)%3; i++ )
+		for( unsigned int i=0; i<(m_elapsedTimeFormStateInstance/3)%3; i++ )
 		{
 			s <<"．";
 		}
@@ -181,6 +183,13 @@ public:
 	*/
 	void SetMouse( CMouse* const _pMouse ){
 		m_pMouse = _pMouse;
+	}
+
+	/**
+	*@brief	音声クラスセット
+	*/
+	void SetAudio( Audio* const _pAudio ){
+		m_pAudio = _pAudio;
 	}
 
 	/**

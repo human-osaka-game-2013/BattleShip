@@ -15,14 +15,15 @@
 class CDevice
 {
 private:
-	LPDIRECT3D9				m_pDirect3D;	///<3Dオブジェクト
-	D3DPRESENT_PARAMETERS	m_d3dpp;		///<プレゼンテーション パラメータ
-	LPDIRECT3DDEVICE9		m_pD3Device;	///<D3Dデバイス
-	LPDIRECTINPUT8			m_pDinput;		///<インプット -> 入力処理
-	LPDIRECTINPUTDEVICE8	m_pKeyDevice;	///<キーデバイス -> 外部キー入力
-	LPDIRECTINPUTDEVICE8	m_pMouseDevice;	///<マウスデバイス -> 外部マウス入力
-	HWND*					m_hWnd;			///<ウインドウハンドル
+	LPDIRECT3D9				m_pDirect3D;	///< 3Dオブジェクト
+	D3DPRESENT_PARAMETERS	m_d3dpp;		///< プレゼンテーション パラメータ
+	LPDIRECT3DDEVICE9		m_pD3Device;	///< D3Dデバイス
+	LPDIRECTINPUT8			m_pDinput;		///< インプット -> 入力処理
+	LPDIRECTINPUTDEVICE8	m_pKeyDevice;	///< キーデバイス -> 外部キー入力
+	LPDIRECTINPUTDEVICE8	m_pMouseDevice;	///< マウスデバイス -> 外部マウス入力
+	HWND*					m_hWnd;			///< ウインドウハンドル
 	
+
 public:
 	/**
 	*@brief	コンストラクタ

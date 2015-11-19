@@ -128,6 +128,52 @@ void CDrawManager::CenterDraw ( int _textuerNumber, float _fXpos, float _fYpos, 
 		sizeof ( CUSTOMVERTEX ) );	
 }
 
+void CDrawManager::AnimationDraw( int _textuerNumber, float _fXpos, float _fYpos, float _fWidth, float _fHeight, 
+						unsigned int _tuSize, unsigned int _tvSize )
+{
+	CUSTOMVERTEX customVertex[4];
+
+	_tuSize = _tuSize%m_TextureInfo[_textuerNumber].width;
+	_tvSize = _tvSize%m_TextureInfo[_textuerNumber].height;
+
+	float tu1 = static_cast<float>( _tuSize / m_TextureInfo[_textuerNumber].width );
+	float tv1 = static_cast<float>( _tvSize / m_TextureInfo[_textuerNumber].height);
+	float tu2 = static_cast<float>( (_tuSize + _fWidth) / m_TextureInfo[_textuerNumber].width  );
+	float tv2 = static_cast<float>( (_tvSize + _fHeight) / m_TextureInfo[_textuerNumber].height);
+
+	for( int i = 0; i < 4; i++ )
+	{
+		customVertex[i].z = 0.5f;
+		customVertex[i].rhw = 1.0f;
+		customVertex[i].color = 0xffffffff;
+	}
+
+	customVertex[0].x	= _fXpos;
+	customVertex[0].y	= _fYpos;
+	customVertex[1].x	= _fXpos + _fWidth;
+	customVertex[1].y	= _fYpos;
+	customVertex[2].x	= _fXpos + _fWidth;
+	customVertex[2].y	= _fYpos +_fHeight;
+	customVertex[3].x	= _fXpos;
+	customVertex[3].y	= _fYpos +_fHeight;
+	
+	customVertex[0].tu	= tu1;
+	customVertex[0].tv	= tv1;
+	customVertex[1].tu	= tu2;
+	customVertex[1].tv	= tv1;
+	customVertex[2].tu	= tu2;
+	customVertex[2].tv	= tv2;
+	customVertex[3].tu	= tu1;
+	customVertex[3].tv	= tv2;
+	
+	m_pD3Device -> SetTexture( 0, m_TextureInfo[_textuerNumber].pTexture );
+	m_pD3Device -> DrawPrimitiveUP(
+		D3DPT_TRIANGLEFAN,
+		2,
+		customVertex,
+		sizeof ( CUSTOMVERTEX ) );
+}
+
 void CDrawManager::AnimationDraw( int _textuerNumber, float _fXpos, float _fYpos, float _fWidth, float _fHeight,
 									bool _flipHorizontal, bool _flipVertical, int _wDiv, int _hDiv, unsigned long _color )
 {

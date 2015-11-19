@@ -7,6 +7,7 @@
 #include "DrawStructList.h"
 #include "BoardOfFrame.h"
 #include "GameLog.h"
+#include "Audio.h"
 
 class StateManager
 {
@@ -26,9 +27,9 @@ public:
 	
 //	通常のメンバ変数
 private:	
-	GameState*		m_pGameState;	///<	戦闘ステートパターンオブジェクトのポインタ
-	_STATE_NUM_		m_beforeState;	///<	以前のステートパターン
-	_STATE_NUM_		m_currentState;	///<	現在のステートパターン
+	GameState*		m_pGameState;	///< 戦闘ステートパターンオブジェクトのポインタ
+	_STATE_NUM_		m_beforeState;	///< 以前のステートパターン
+	_STATE_NUM_		m_currentState;	///< 現在のステートパターン
 	StageObject* const	m_pStageObject;	///<	ステージ情報格納ポインタ
 	ShipObject::_SHIP_TYPE_NUM_	m_currentShip;	///<	現在選択対象の駒。GameStateと共有するため取り扱いに注意！
 	std::string		m_tempStr1;
@@ -37,31 +38,32 @@ private:
 //	他のオブジェクトと値のやり取りする可能性のある変数
 private:
 	
-	Player* const 	m_pPlayer1;		///<	プレイヤー1情報格納ポインタ
-	Player* const 	m_pPlayer2;		///<	プレイヤー2情報格納ポインタ
-	const int		m_playerID;		///<	起動側のプレイヤーID。GameScene側からもらってくる。
+	Player* const 	m_pPlayer1;		///< プレイヤー1情報格納ポインタ
+	Player* const 	m_pPlayer2;		///< プレイヤー2情報格納ポインタ
+	const int		m_playerID;		///< 起動側のプレイヤーID。GameScene側からもらってくる。
 
 	bool			m_connectFlag;	///<	通信を行うフラグ
 
 	int m_plyaerSelectType;	///< 選択した行動の種類
 
-	int m_resultPlayer;	///<	プレイヤー側に起きている戦闘結果
-	int m_resultEnemy;	///<	敵側に起きている戦闘結果
-	int m_resultBattle;	///<	両者の戦況結果
-	int m_stateTime;	///<	各ステート内で秒数をカウントさせたい時に、シーン側で計測した秒数を渡す為のメンバ
+	int m_resultPlayer;		///< プレイヤー側に起きている戦闘結果
+	int m_resultEnemy;		///< 敵側に起きている戦闘結果
+	int m_resultBattle;		///< 両者の戦況結果
+	unsigned int m_stateTime;	///<	各ステート内で秒数をカウントさせたい時に、シーン側で計測した秒数を渡す為のメンバ
 
 //	ステート共通の描画オブジェクトの情報
 private:
-	BoardOfFrame	m_StageFrame;	///<	ステージ部分のフレームオブジェクト
-	BoardOfFrame	m_PlayerFrame[_PLAYER_NUM_];	///<	プレイヤー情報のフレームオブジェクト	
-	GameLog			m_gameLog;		///<	ゲームログオブジェクト
-	GameLog			m_gameElapsed;	///<	経過時間出力ログ
-	GameLog			m_gameConnectState;	///<	通信状態のログ
+	BoardOfFrame	m_StageFrame;		///< ステージ部分のフレームオブジェクト
+	BoardOfFrame	m_PlayerFrame[_PLAYER_NUM_];	///< プレイヤー情報のフレームオブジェクト	
+	GameLog			m_gameLog;			///< ゲームログオブジェクト
+	GameLog			m_gameElapsed;		///< 経過時間出力ログ
+	GameLog			m_gameConnectState;	///< 通信状態のログ
 
 //	デバイス
 private:
-	CDrawManager*	m_pDrawManager;	///<	2D描画管理クラスポインタ(constポインタ)
-	CMouse*			m_pMouse;		///<	マウス管理クラスポインタ(constポインタ)
+	CDrawManager*	m_pDrawManager;	///< 2D描画管理クラスポインタ(constポインタ)
+	CMouse*			m_pMouse;		///< マウス管理クラスポインタ(constポインタ)
+	Audio*			m_pAudio;		
 
 public:
 	/**
@@ -191,6 +193,13 @@ public:
 		m_pMouse = _pMouse;
 	}
 	
+	/**
+	*@brief	音声クラスセット
+	*/
+	void SetAudio( Audio* const _pAudio ){
+		m_pAudio = _pAudio;
+	}
+
 	/**
 	*@brief	通信を行うフラグを取得
 	*/

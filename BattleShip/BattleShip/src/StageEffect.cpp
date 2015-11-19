@@ -291,7 +291,7 @@ void StageEffect::FireEffect( BoardOfFrame& _block )
 	tempX = _block.GetPositionX()-_EFFECT_POS_TWEAK_;
 	tempY = _block.GetPositionY()-_EFFECT_POS_TWEAK_;
 
-	int wDiv = m_elapsedTimeFormStateInstance/2;	///<シーンの経過時間から何コマ目のアニメーションをさせるかを計算（テスト実装）
+	int wDiv = static_cast<int>(m_elapsedTimeFormStateInstance/_DIVISON_OF_EFFECT_TIME_);	///<シーンの経過時間から何コマ目のアニメーションをさせるかを計算（テスト実装）
 	bool flipHorizontal = m_playerID/_PLAYER_NUM_ ? true : false;	///<プレイヤーによって画像の反転をさせる
 
 	m_pDrawManager->AnimationDraw( _TEX_FIRE_EFFECT_, tempX, tempY, 
@@ -308,7 +308,7 @@ void StageEffect::ExplosionEffect( BoardOfFrame& _block )
 	float tempX, tempY;
 	tempX = _block.GetPositionX();
 	tempY = _block.GetPositionY();
-	int wDiv = m_elapsedTimeFormStateInstance/2;	///<シーンの経過時間から何コマ目のアニメーションをさせるかを計算（テスト実装）
+	int wDiv = static_cast<int>(m_elapsedTimeFormStateInstance/_DIVISON_OF_EFFECT_TIME_);	///<シーンの経過時間から何コマ目のアニメーションをさせるかを計算（テスト実装）
 	bool flipHorizontal = m_playerID/_PLAYER_NUM_ ? true : false;	///<プレイヤーによって画像の反転をさせる
 
 	m_pDrawManager->AnimationDraw( _TEX_EXPLOSION_EFFECT_, tempX, tempY, 
@@ -324,7 +324,8 @@ void StageEffect::ReconEffect( BoardOfFrame& _block, bool _appearanceInvisibilit
 	float tempX, tempY;
 	bool flipHorizontal = m_playerID/_PLAYER_NUM_ ? true : false;	///<プレイヤーによって画像の反転をさせる
 	unsigned long color = 0xffffffff;
-	
+	static const int multiplOfAircraftAlpha = 8;	///< 航空機のアルファ値をtimeから乗算して出す際の数
+
 	if( !_appearanceInvisibility )
 	{
 		//	航空機の移動先の位置をゲームカウントで制御
@@ -344,7 +345,7 @@ void StageEffect::ReconEffect( BoardOfFrame& _block, bool _appearanceInvisibilit
 		tempX = ( (m_playerID%_PLAYER_NUM_) * WIDTH )+(m_enTargetVector.x)*m_elapsedTimeFormStateInstance;
 		tempY = m_enTargetPointY+(m_enTargetVector.y)*m_elapsedTimeFormStateInstance;
 									
-		alpha = m_elapsedTimeFormStateInstance*10;
+		alpha = m_elapsedTimeFormStateInstance*multiplOfAircraftAlpha;
 		
 		if( alpha >= 255 )
 			alpha = 255;
