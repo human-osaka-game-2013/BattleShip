@@ -1,6 +1,6 @@
-
 #include "Audio.h"
 #include "lib_head.h"
+
 
 //全ての音声ファイルの解放
 void Audio::ReleaseAllSoundFile(void)
@@ -114,7 +114,7 @@ void Audio::ReleaseSoundFile(int ID)
 
 
 //　Xオーディオの初期化
-HRESULT Audio::InitXAudio2(void)
+bool Audio::InitXAudio2(void)
 {
 	HRESULT			hr = NULL;
 	unsigned int flag = 0;
@@ -144,13 +144,18 @@ HRESULT Audio::InitXAudio2(void)
 			MessageBox(NULL,TEXT("オーディオの再生に失敗しました。"),TEXT("XAudio2がNULL"),S_OK);
 			ShowCursor(false);
 	}
-
-	return hr;
+	if( hr == S_OK )
+	{
+		return true;
+	}else
+	{
+		return false;
+	}
 
 }
 
 //.wavファイルを開いて解析
-bool Audio::OpenWaveFile(LPSTR FileName,WAVEFORMATEX &waveFormatEx, BYTE **ppData, DWORD &dataSize)
+bool Audio::OpenWaveFile( char* FileName,WAVEFORMATEX &waveFormatEx, unsigned char **ppData, unsigned long &dataSize)
 {
 	if(FileName == 0)
 	{
@@ -162,7 +167,7 @@ bool Audio::OpenWaveFile(LPSTR FileName,WAVEFORMATEX &waveFormatEx, BYTE **ppDat
 
 	//Waveファイルオープン
 	memset( &mmioInfo,0,sizeof(MMIOINFO) );
-	hMmio = mmioOpenA(FileName, &mmioInfo, MMIO_READ);
+	hMmio = mmioOpenA( FileName, &mmioInfo, MMIO_READ);
 
 	if(!hMmio)
 	{
@@ -233,7 +238,7 @@ bool Audio::OpenWaveFile(LPSTR FileName,WAVEFORMATEX &waveFormatEx, BYTE **ppDat
 
 
 //.wavファイルの読み込み
-void Audio::LoadSoundFile (LPSTR FileName, int IN_ID)
+void Audio::LoadSoundFile ( char* FileName, int IN_ID)
 {
 	//////////////////////////////////
 	//	サウンドデータ(.wavファイル)の読み込み
@@ -284,7 +289,7 @@ void Audio::LoadSoundFile (LPSTR FileName, int IN_ID)
 
 
 //	Xオーディオの解放を行う
-HRESULT Audio::ReleaseXAudio2(void)
+bool Audio::ReleaseXAudio2(void)
 {
 	//再生中のファイルがあった場合に備えて、念のための停止処理
 	SoundAllStop();
@@ -313,6 +318,6 @@ HRESULT Audio::ReleaseXAudio2(void)
 	// CO_Mの初期化
 	CoUninitialize();
 
-	return S_OK;
+	return true;
 
 }

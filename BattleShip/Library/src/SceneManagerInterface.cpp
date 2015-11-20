@@ -1,5 +1,5 @@
-#include "SceneManage.h"
 #include "GameScene.h"
+#include "SceneManage.h"
 #include "TitleScene.h"
 
 //	ÉVÅ[Éìä«óù
@@ -25,11 +25,11 @@ void CSceneManager::Manage ()
 		switch ( iCurrentScene )
 		{
 		case SCENE_BATTLE:
-			m_sceneObj = new GameScene( iCurrentScene, m_pRenderManager, m_pDrawManager, m_pKey, m_pMouse );
+			m_sceneObj = new GameScene( iCurrentScene, m_pRenderManager, m_pDrawManager, m_pKey, m_pMouse, m_pAudio );
 			break;
 
 		case SCENE_TITLE:
-			m_sceneObj = new TitleScene( iCurrentScene, m_pRenderManager, m_pDrawManager, m_pKey, m_pMouse );
+			m_sceneObj = new TitleScene( iCurrentScene, m_pRenderManager, m_pDrawManager, m_pKey, m_pMouse, m_pAudio );
 			
 			break;
 		}

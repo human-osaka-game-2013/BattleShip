@@ -10,15 +10,12 @@
 
 #define DIRECTINPUT_VERSION 0x0800
 
-
-
 //プリプロ関連ヘッダーファイル
 #include <stdio.h>
 #include <d3dx9.h>	
 #include <dinput.h>
 #include <dinputd.h>
 #include <mmsystem.h>	//wav再生
-#include <XAudio2.h>	//mp3,wma再生
 #include <time.h>
 #include <XInput.h>
 #include <cstdlib>

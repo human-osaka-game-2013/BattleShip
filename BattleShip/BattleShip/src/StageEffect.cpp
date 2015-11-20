@@ -117,48 +117,19 @@ int StageEffect::Control()
 {
 	//	エフェクトを再生する際に基準にするカウンタ
 	//	ここではログに追加などをする。
-	if( m_elapsedTimeFormStateInstance < TIME_END_ACTION_EFFECT  )
+	if( m_elapsedTimeFormStateInstance < TIME_END_RUSULT_EFFECT  )
 	{
-		if( m_plyaerSelectType == _SELECT_ACTION_ )
-		{
-			
-		}
-		else if( m_plyaerSelectType == _SELECT_SEARCH_ )
-		{
-			
-		}
-	}
-	else if( m_elapsedTimeFormStateInstance < TIME_CHANGE_EFFECT )
-	{
-
-	}
-	else if( m_elapsedTimeFormStateInstance < TIME_END_RUSULT_EFFECT )
-	{
-		if( m_plyaerSelectType == _SELECT_ACTION_ )
-		{
-			
-		}
-		else if( m_plyaerSelectType == _SELECT_SEARCH_ )
-		{
-			
-		}
-		if( m_enemySelectType == _SELECT_ACTION_ )
-		{
-			
-		}
-		else if( m_enemySelectType == _SELECT_SEARCH_ )
-		{
-			
-		}
+		EffectSoundControl();
 	}
 	else
 	{
+		m_plSoundFlag = false;
+		m_enSoundFlag = false;
 		return 1;
 	}
 
 	return 0;
 }
-
 
 
 //	
@@ -191,7 +162,7 @@ void StageEffect::AttackStartControl()
 	{
 		if( m_ShipCount == static_cast<int>(ShipObject::TYPE_AIRCARRIER) )
 		{
-			ReconEffect( m_myShipBlock );
+			AircraftEffect( m_myShipBlock, 0 );
 		}
 		else
 		{
@@ -204,7 +175,7 @@ void StageEffect::AttackStartControl()
 	{
 		if( m_ShipCount == static_cast<int>(ShipObject::TYPE_AIRCARRIER) )
 		{
-			ReconEffect( m_myShipBlock, true );
+			AircraftEffect( m_myShipBlock, 0, true );
 		}
 	}
 }
@@ -221,7 +192,7 @@ void StageEffect::SearchStartControl()
 		}
 		else
 		{
-			ReconEffect( m_myShipBlock );
+			AircraftEffect( m_myShipBlock, 1 );
 		}
 	}
 	//	敵側
@@ -230,7 +201,7 @@ void StageEffect::SearchStartControl()
 		//	敵側は駆逐潜水以外は索敵機を飛ばす
 		if( m_ShipCount < static_cast<int>(ShipObject::TYPE_DESTROYER) )
 		{
-			ReconEffect( m_myShipBlock, true );
+			AircraftEffect( m_myShipBlock, 1, true );
 		}
 	}
 }
@@ -319,12 +290,13 @@ void StageEffect::ExplosionEffect( BoardOfFrame& _block )
 	
 }
 
-void StageEffect::ReconEffect( BoardOfFrame& _block, bool _appearanceInvisibility )
+void StageEffect::AircraftEffect( BoardOfFrame& _block, int _aircraftType, bool _appearanceInvisibility )
 {
 	float tempX, tempY;
 	bool flipHorizontal = m_playerID/_PLAYER_NUM_ ? true : false;	///<プレイヤーによって画像の反転をさせる
 	unsigned long color = 0xffffffff;
 	static const int multiplOfAircraftAlpha = 8;	///< 航空機のアルファ値をtimeから乗算して出す際の数
+	int texNum;
 
 	if( !_appearanceInvisibility )
 	{
@@ -353,8 +325,17 @@ void StageEffect::ReconEffect( BoardOfFrame& _block, bool _appearanceInvisibilit
 		color = D3DCOLOR_ARGB( alpha, 255, 255, 255 );	///< アルファ値をカラー値に入れる
 		flipHorizontal = m_playerID/_PLAYER_NUM_ ? false : true;	///< 消している方は今の時点では自身とは
 	}
-
-	m_pDrawManager->AnimationDraw( _TEX_RECON_, tempX, tempY, 
+	//	航空機のテクスチャを設定
+	switch( _aircraftType )
+	{
+	case 0:
+		texNum = _TEX_RECON_;
+		break;
+	case 1:
+		texNum = _TEX_RECON_;
+		break;
+	}
+	m_pDrawManager->AnimationDraw( texNum, tempX, tempY, 
 				_block.GetWidth(), 
 				_block.GetHeight(),
 				flipHorizontal, false, 0, 0, color );	///<	マスの描画
@@ -408,4 +389,79 @@ int StageEffect::Vec2Normalize( D3DXVECTOR2& _vec2 )
 	_vec2.x *= len;
 	_vec2.y *= len;
 	return 1;
+}
+
+void StageEffect::EffectSoundControl()
+{
+	if( m_elapsedTimeFormStateInstance == 0 ){
+		m_plSoundFlag = false;
+		m_enSoundFlag = false;
+	}
+	else if( m_elapsedTimeFormStateInstance < TIME_END_ACTION_EFFECT &&
+		( !m_plSoundFlag || !m_enSoundFlag ))	{
+		if( m_plyaerSelectType == _SELECT_ACTION_ )
+		{
+			
+		}
+		else if( m_plyaerSelectType == _SELECT_SEARCH_ )
+		{
+			
+		}
+		if( m_enemySelectType == _SELECT_ACTION_ )
+		{
+			
+		}
+		else if( m_enemySelectType == _SELECT_SEARCH_ )
+		{
+			
+		}
+	}
+	else if( m_elapsedTimeFormStateInstance == TIME_END_ACTION_EFFECT )	{
+		m_plSoundFlag = false;
+		m_enSoundFlag = false;
+	}
+	else if( m_elapsedTimeFormStateInstance < TIME_CHANGE_EFFECT &&
+		( !m_plSoundFlag || !m_enSoundFlag ) )
+	{
+		if( m_plyaerSelectType == _SELECT_ACTION_ )
+		{
+			
+		}
+		else if( m_plyaerSelectType == _SELECT_SEARCH_ )
+		{
+			
+		}
+		if( m_enemySelectType == _SELECT_ACTION_ )
+		{
+			
+		}
+		else if( m_enemySelectType == _SELECT_SEARCH_ )
+		{
+			
+		}
+	}
+	else if( m_elapsedTimeFormStateInstance == TIME_CHANGE_EFFECT )	{
+		m_plSoundFlag = false;
+		m_enSoundFlag = false;
+	}
+	else if( m_elapsedTimeFormStateInstance < TIME_END_RUSULT_EFFECT &&
+		( !m_plSoundFlag || !m_enSoundFlag ) )
+	{
+		if( m_plyaerSelectType == _SELECT_ACTION_ )
+		{
+			
+		}
+		else if( m_plyaerSelectType == _SELECT_SEARCH_ )
+		{
+			
+		}
+		if( m_enemySelectType == _SELECT_ACTION_ )
+		{
+			
+		}
+		else if( m_enemySelectType == _SELECT_SEARCH_ )
+		{
+			
+		}
+	}
 }

@@ -5,12 +5,12 @@
 
 #ifndef _SCENE_H_
 #define _SCENE_H_
-#include "Audio.h"
 #include "RenderManager.h"
 #include "DrawManager.h"
 #include "Key.h"
 #include "Mouse.h"
 #include "gameObject.h"
+#include "Audio.h"
 #include <list>
 
 #define _PLAYER_ID_	1

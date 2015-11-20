@@ -2,21 +2,29 @@
 *@file	Connect.h
 *@author	亀田
 *@brief	通信のテストクラス
+*@warning	このヘッダーはwinsock2.hをインクルードしていて、
+			windows.hの仕様上、旧バージョンのWinsockと定数の再定義がされてしまいます。
+			再定義を回避するにはこのヘッダーななるべく一番最初にインクルードしてください。
+			他のSDK系のヘッダー内にもwindows.hが宣言されていることも確認しましたので、
+			なるべくそのようなヘッダーと一緒にしないようにもお願いします。
 */
 
 #ifndef _CONNECT_H_
 #define _CONNECT_H_
 
+//----Winsock定数の再定義回避処理----
 #ifndef _WINSOCKAPI_
 #define _WINSOCKAPI_
 #endif
+#include <winsock2.h>
+#pragma comment(lib, "ws2_32.lib")
+//----ここまで----
 
 #include "DebugInterface.h"
 #include "read_file.h"
 #include "ConnectStruct.h"
 
-#include <winsock2.h>
-#pragma comment(lib, "ws2_32.lib")
+
 #define _RECV_TIMEOUT_SECOND_	1	///< 受信のタイムアウトをするまでの秒数
 
 /**

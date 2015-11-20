@@ -1,8 +1,7 @@
 #ifndef _AUDIO_H_
 #define _AUDIO_H_
 
-#include <Windows.h>
-#include <XAudio2.h>	//mp3,wma再生
+#include <XAudio2.h>
 
 /**
 *@brief	音楽ファイルクラス（現状wavファイルのみ）
@@ -23,8 +22,11 @@
 	アプリ終了時にリリース処理で呼出
 			ReleaseXAudio2
 */
+
+
 class Audio
 {
+
 
 public:
 	enum SOUND_ID
@@ -51,6 +53,7 @@ public:
 
 	};
 	
+
 private:
 	//デバイスの準備
 	IXAudio2*				pXAudio2;
@@ -64,8 +67,16 @@ public:
 	*/
 	Audio()
 	{
+		//	メンバ変数をNULLで初期化しよう
+		pXAudio2 = NULL;
+		pMasteringVo = NULL;
+		for( int i = 0; i < SOUND_MAX; i++ )
+		{
+			pSourceVo[i] = NULL;
+			buffer[i].pAudioData = NULL;
+		}
+		//---
 		InitXAudio2();
-
 		LoadAllSoundFile();
 	}
 	
@@ -83,7 +94,7 @@ public:
 	
 public:
 	//XAudioの初期化
-	HRESULT InitXAudio2(void);
+	bool InitXAudio2(void);
 
 	//サウンド全読み込み
 	void LoadAllSoundFile();
@@ -103,17 +114,17 @@ public:
 private:	
 	
 	//音声ファイルの読み込み	->	解析できたら使用準備完了
-	void LoadSoundFile(LPSTR FileName, int IN_ID);
+	void LoadSoundFile( char* FileName, int IN_ID);
 	
 	//読込んだ.wavファイルを開いて解析
-	bool OpenWaveFile(LPSTR FileName, WAVEFORMATEX &waveFormatEx, BYTE **ppData, DWORD &dataSize);
+	bool OpenWaveFile( char* FileName, WAVEFORMATEX &waveFormatEx, unsigned char **ppData, unsigned long &dataSize);
 
 	//ファイル->解放
 	void ReleaseSoundFile(int ID);
 	
 	//XAudioの解放
-	HRESULT ReleaseXAudio2(void);
+	bool ReleaseXAudio2(void);
 
-}
+};
 
 #endif
