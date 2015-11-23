@@ -8,6 +8,7 @@
 
 #define _EFFECT_POS_TWEAK_	4.0f
 
+
 bool StageEffect::Init()
 {
 	CheckOfMyShipPos();		///< 
@@ -24,6 +25,7 @@ void StageEffect::CheckSelectOfStage()
 		{
 			for( int iLine = 0; iLine < _STAGE_LINE_MAX_; iLine++ )
 			{
+
 				int selectType = StageObject::SelectOfData( m_pStage->m_stageArray[iPlayer][iColumn][iLine]);
 				//	エフェクトは攻撃索敵のみ
 				switch( selectType )
@@ -54,6 +56,7 @@ void StageEffect::CheckSelectOfStage()
 					}
 					break;
 				}
+
 			}
 		}
 	}
@@ -123,8 +126,7 @@ int StageEffect::Control()
 	}
 	else
 	{
-		m_plSoundFlag = false;
-		m_enSoundFlag = false;
+		
 		return 1;
 	}
 
@@ -393,75 +395,109 @@ int StageEffect::Vec2Normalize( D3DXVECTOR2& _vec2 )
 
 void StageEffect::EffectSoundControl()
 {
-	if( m_elapsedTimeFormStateInstance == 0 ){
-		m_plSoundFlag = false;
-		m_enSoundFlag = false;
-	}
-	else if( m_elapsedTimeFormStateInstance < TIME_END_ACTION_EFFECT &&
-		( !m_plSoundFlag || !m_enSoundFlag ))	{
-		if( m_plyaerSelectType == _SELECT_ACTION_ )
-		{
-			
-		}
-		else if( m_plyaerSelectType == _SELECT_SEARCH_ )
-		{
-			
-		}
-		if( m_enemySelectType == _SELECT_ACTION_ )
-		{
-			
-		}
-		else if( m_enemySelectType == _SELECT_SEARCH_ )
-		{
-			
-		}
-	}
-	else if( m_elapsedTimeFormStateInstance == TIME_END_ACTION_EFFECT )	{
-		m_plSoundFlag = false;
-		m_enSoundFlag = false;
-	}
-	else if( m_elapsedTimeFormStateInstance < TIME_CHANGE_EFFECT &&
-		( !m_plSoundFlag || !m_enSoundFlag ) )
+	/*
+		不格好ですが取り敢えず時間に合わせて各艦別に発生SEを変えたりしています
+	*/
+	switch(m_plyaerSelectType)
 	{
-		if( m_plyaerSelectType == _SELECT_ACTION_ )
-		{
+	case _SELECT_ACTION_:
+		if( m_elapsedTimeFormStateInstance == 0 ){
+			switch(m_ShipCount)
+			{
+			case ShipObject::TYPE_AIRCARRIER:
+				m_pAudio->SoundPlay( Audio::_AIRCRAFT_SE_ );
+				break;
+			case ShipObject::TYPE_BATTLESHIP:
+				m_pAudio->SoundPlay( Audio::_FIRE_H_SE_ );
+				break;
+			case ShipObject::TYPE_CRUISER:
+				m_pAudio->SoundPlay( Audio::_FIRE_M_SE_ );
+				break;
+			case ShipObject::TYPE_DESTROYER:
+			case ShipObject::TYPE_SUBMARINE:
+				m_pAudio->SoundPlay( Audio::_FIRE_L_SE_ );
+
+				break; 
+			}
+		
+		}
+		if( m_elapsedTimeFormStateInstance == TIME_END_ACTION_EFFECT ){
+			if( m_ShipCount == ShipObject::TYPE_AIRCARRIER ) 
+				m_pAudio->SoundPlay( Audio::_AC_ATTACK_SE_ );
+		}
+		if( m_elapsedTimeFormStateInstance == TIME_CHANGE_EFFECT ){
+			m_pAudio->SoundPlay( Audio::_WATER_SE_ );
+			m_pAudio->SoundPlay( Audio::_EXPLOSION_SE_ );
+		}
+
+		break;
+
+	case _SELECT_SEARCH_:
+		if( m_elapsedTimeFormStateInstance == 0 ){
+			if( m_ShipCount <= ShipObject::TYPE_CRUISER ){
+				m_pAudio->SoundPlay( Audio::_AIRCRAFT_SE_ );
+			}else{
+				m_pAudio->SoundPlay( Audio::_SONAR_SE_ );
+			}
+		}
+		if( m_elapsedTimeFormStateInstance == TIME_END_ACTION_EFFECT ){
 			
 		}
-		else if( m_plyaerSelectType == _SELECT_SEARCH_ )
-		{
-			
+		if( m_elapsedTimeFormStateInstance == TIME_CHANGE_EFFECT ){
+			m_pAudio->SoundPlay( Audio::_SONAR_SE_ );
 		}
-		if( m_enemySelectType == _SELECT_ACTION_ )
-		{
-			
-		}
-		else if( m_enemySelectType == _SELECT_SEARCH_ )
-		{
-			
-		}
-	}
-	else if( m_elapsedTimeFormStateInstance == TIME_CHANGE_EFFECT )	{
-		m_plSoundFlag = false;
-		m_enSoundFlag = false;
-	}
-	else if( m_elapsedTimeFormStateInstance < TIME_END_RUSULT_EFFECT &&
-		( !m_plSoundFlag || !m_enSoundFlag ) )
+		break;
+	}		 
+	
+	switch(m_enemySelectType)
 	{
-		if( m_plyaerSelectType == _SELECT_ACTION_ )
-		{
+	case _SELECT_ACTION_:
+		if( m_elapsedTimeFormStateInstance == 0 ){
+			switch(m_ShipCount)
+			{
+			case ShipObject::TYPE_AIRCARRIER:
+				m_pAudio->SoundPlay( Audio::_AIRCRAFT_SE_ );
+				break;
+			case ShipObject::TYPE_BATTLESHIP:
+				m_pAudio->SoundPlay( Audio::_FIRE_H_SE_ );
+				break;
+			case ShipObject::TYPE_CRUISER:
+				m_pAudio->SoundPlay( Audio::_FIRE_M_SE_ );
+				break;
+			case ShipObject::TYPE_DESTROYER:
+			case ShipObject::TYPE_SUBMARINE:
+				m_pAudio->SoundPlay( Audio::_FIRE_L_SE_ );
+
+				break; 
+			}
+		
+		}
+		if( m_elapsedTimeFormStateInstance == TIME_END_ACTION_EFFECT ){
+			if( m_ShipCount == ShipObject::TYPE_AIRCARRIER ) 
+				m_pAudio->SoundPlay( Audio::_AC_ATTACK_SE_ );
+		}
+		if( m_elapsedTimeFormStateInstance == TIME_CHANGE_EFFECT ){
+			m_pAudio->SoundPlay( Audio::_WATER_SE_ );
+			m_pAudio->SoundPlay( Audio::_EXPLOSION_SE_ );
+		}
+
+		break;
+
+	case _SELECT_SEARCH_:
+		if( m_elapsedTimeFormStateInstance == 0 ){
+			if( m_ShipCount <= ShipObject::TYPE_CRUISER ){
+				m_pAudio->SoundPlay( Audio::_AIRCRAFT_SE_ );
+			}else{
+				m_pAudio->SoundPlay( Audio::_SONAR_SE_ );
+			}
+		}
+		if( m_elapsedTimeFormStateInstance == TIME_END_ACTION_EFFECT ){
 			
 		}
-		else if( m_plyaerSelectType == _SELECT_SEARCH_ )
-		{
-			
+		if( m_elapsedTimeFormStateInstance == TIME_CHANGE_EFFECT ){
+			m_pAudio->SoundPlay( Audio::_SONAR_SE_ );
 		}
-		if( m_enemySelectType == _SELECT_ACTION_ )
-		{
-			
-		}
-		else if( m_enemySelectType == _SELECT_SEARCH_ )
-		{
-			
-		}
+		break;
 	}
+
 }
