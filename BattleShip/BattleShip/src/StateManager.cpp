@@ -59,7 +59,7 @@ void StateManager::StateInit()
 	m_gameConnectState.Init( static_cast<long>( tempX ), static_cast<long>( m_PlayerFrame[plIndex].GetPositionY()) + static_cast<long>(_LOG_HEIGHT_MAX_) );
 
 	m_tempStr1 = m_gameLog.m_fixedPhrase.m_phrase[FixedPhrase::START_BATTLE];
-	m_gameLog.AddStream( m_tempStr1.c_str() );
+	m_gameLog.AddStream( m_tempStr1.c_str(), _LOG_COLOR_DEFAULT_, _LOG_FONT_BIGSIZE_, _LOG_FONT_BIGSIZE_, DT_CENTER );
 	
 	//	ステート変更（＆初期化）
 	ChangeState(m_currentState);	///<	まだステートポイントには何も入っていないので初期化も兼ねて
@@ -126,23 +126,29 @@ int StateManager::StateCotrol()
 	}
 	else if( stateResult == -1 )
 	{
+		m_pAudio->SoundAllStop();
 		//	戦闘終了に伴う戦況の最終結果をログに表示
 		if( m_resultBattle == Result::TYPE_DRAW )
 		{
 			m_tempStr1 = m_gameLog.GetPhrase( FixedPhrase::RESULT_DRAW_STR );
+			m_pAudio->SoundPlay( Audio::_TITLE_BGM_, true );
 		}
 		else if( m_resultBattle == Result::TYPE_VICTORY )
 		{
 			m_tempStr1 = m_gameLog.GetPhrase( FixedPhrase::RESULT_VICTORY_STR );
+			m_pAudio->SoundPlay( Audio::_WIN_BGM_, true );
 		}
 		else if( m_resultBattle == Result::TYPE_DEFEAT )
 		{
 			m_tempStr1 = m_gameLog.GetPhrase( FixedPhrase::RESULT_DEFEAT_STR );
+			m_pAudio->SoundPlay( Audio::_LOSE_BGM_, true );
 		}
-		m_gameLog.AddStream( m_tempStr1.c_str() );
+		m_gameLog.AddStream( m_tempStr1.c_str(), _LOG_COLOR_DEFAULT_, _LOG_FONT_BIGSIZE_, _LOG_FONT_BIGSIZE_, DT_CENTER );
 		//	戦闘終了ログを表示
 		m_tempStr1 = m_gameLog.GetPhrase( FixedPhrase::RESULT_END );
-		m_gameLog.AddStream( m_tempStr1.c_str() );
+		m_gameLog.AddStream( m_tempStr1.c_str(), _LOG_COLOR_DEFAULT_, _LOG_FONT_BIGSIZE_, _LOG_FONT_BIGSIZE_, DT_CENTER );
+		m_tempStr1 = "左クリックでタイトルに戻りましょう";
+		m_gameLog.AddStream( m_tempStr1.c_str(), _LOG_COLOR_NOMAL_, _LOG_FONT_BIGSIZE_, _LOG_FONT_BIGSIZE_, DT_CENTER );
 	}
 	
 	return stateResult;
@@ -249,14 +255,14 @@ bool StateManager::ChangeState( _STATE_NUM_ _stateType )
 	{
 	case STATE_SET_SHIP:
 		m_tempStr1 = m_gameLog.m_fixedPhrase.m_phrase[FixedPhrase::STATE_SET_SHIP_STR];
-		m_gameLog.AddStream(m_tempStr1.c_str());
+		m_gameLog.AddStream(m_tempStr1.c_str(), _LOG_COLOR_DEFAULT_, _LOG_FONT_BIGSIZE_, _LOG_FONT_BIGSIZE_, DT_CENTER );
 		// 現状は最初に配置するのは空母で、CheckState関数内では空母のログ
 		m_pGameState = new SetShip( m_currentShip, &m_gameLog );
 
 		break;
 	case STATE_SELECTION:
 		m_tempStr1 = m_gameLog.m_fixedPhrase.m_phrase[FixedPhrase::STATE_SELECTION_STR];
-		m_gameLog.AddStream(m_tempStr1.c_str());
+		m_gameLog.AddStream(m_tempStr1.c_str(), _LOG_COLOR_DEFAULT_, _LOG_FONT_BIGSIZE_, _LOG_FONT_BIGSIZE_, DT_CENTER );
 		m_pGameState = new Selection( m_currentShip, &m_gameLog );
 
 		break;
@@ -268,7 +274,7 @@ bool StateManager::ChangeState( _STATE_NUM_ _stateType )
 
 	case STATE_RESULT:
 		m_tempStr1 = m_gameLog.m_fixedPhrase.m_phrase[FixedPhrase::STATE_RESULT_STR];
-		m_gameLog.AddStream(m_tempStr1.c_str());
+		m_gameLog.AddStream(m_tempStr1.c_str(), _LOG_COLOR_DEFAULT_, _LOG_FONT_BIGSIZE_, _LOG_FONT_BIGSIZE_, DT_CENTER );
 		m_pGameState = new Result( m_currentShip, &m_gameLog );
 
 		break;
@@ -523,7 +529,8 @@ void StateManager::DrawLog()
 			(*it)->GetSize( tempW, tempH );
 			pStr = (*it)->GetStringPtr();
 			lpTempStr = const_cast<char *>(pStr->c_str());
-			if(pDxFont->DrawA( tempX, tempY, tempW, tempH, lpTempStr, (*it)->GetColor() ))
+			if(pDxFont->DrawA( tempX, tempY, static_cast<unsigned long>(_LOG_FONT_WIDTH_), 
+							tempH, lpTempStr, (*it)->GetColor(), (*it)->GetFormat() ))
 			{
 
 			}
@@ -545,7 +552,7 @@ void StateManager::DrawLog()
 			(*it)->GetSize( tempW, tempH );
 			pStr = (*it)->GetStringPtr();
 			lpTempStr = const_cast<char *>(pStr->c_str());
-			if(pDxFont->DrawA( tempX, tempY, tempW, tempH, lpTempStr, (*it)->GetColor() ))
+			if(pDxFont->DrawA( tempX, tempY, tempW, tempH, lpTempStr, (*it)->GetColor(), (*it)->GetFormat() ))
 			{
 
 			}
@@ -570,7 +577,7 @@ void StateManager::DrawLog()
 				(*it)->GetSize( tempW, tempH );
 				pStr = (*it)->GetStringPtr();
 				lpTempStr = const_cast<char *>(pStr->c_str());
-				if(pDxFont->DrawA( tempX, tempY, tempW, tempH, lpTempStr, (*it)->GetColor() ))
+				if(pDxFont->DrawA( tempX, tempY, tempW, tempH, lpTempStr, (*it)->GetColor(), (*it)->GetFormat() ))
 				{
 
 				}

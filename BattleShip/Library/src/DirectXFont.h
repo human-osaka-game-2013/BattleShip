@@ -79,6 +79,7 @@ public:
 	@param[ in ] フォントの描画高さ
 	@param[ in ] 描画文字列
 	@param[ in ] フォントのカラー
+	@param[ in ] 文字列表示フォーマット（デフォルトで左詰め）
 	@return	true	成功
 	@return	false	失敗
 	*/
@@ -87,7 +88,8 @@ public:
 		LONG _draw_pos_y,
 		LONG _w, LONG _h,
 		LPCSTR _font,
-		const D3DXCOLOR *_font_color
+		const D3DXCOLOR *_font_color,
+		unsigned long _format = DT_LEFT
 		);
 
 };

@@ -22,7 +22,7 @@ public:
 	{
 		TIME_END_ACTION_EFFECT = 30,
 
-		TIME_CHANGE_EFFECT = 10+TIME_END_ACTION_EFFECT,
+		TIME_CHANGE_EFFECT = 30+TIME_END_ACTION_EFFECT,
 
 		TIME_END_RUSULT_EFFECT = 30+TIME_CHANGE_EFFECT,
 	};
@@ -167,6 +167,12 @@ private:
 	*@param[in]	_appearanceInvisibility	出現位置を見えなくさせるフラグ
 	*/
 	void AircraftEffect( BoardOfFrame& _block, int _aircraftType, bool _appearanceInvisibility = false );
+
+	/**
+	*@brief	魚雷攻撃エフェクト
+	*@details	航空機エフェクトを一部流用して、作りました
+	*/
+	void TorpedoEffect( BoardOfFrame& _block, bool _appearanceInvisibility = false );
 
 	/**
 	*@brief	爆発エフェクト

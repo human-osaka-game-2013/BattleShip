@@ -46,7 +46,11 @@ bool GameScene::Init()
 	m_fadeOutFlag = false;
 
 	//	ゲームBGM再生
+#ifdef _DEBUG
+	m_pAudio->SoundPlay( Audio::_WIN_BGM_, true );
+#else
 	m_pAudio->SoundPlay( Audio::_BATTLE_BGM_, true );
+#endif
 	return true;
 }
 
@@ -87,8 +91,11 @@ int GameScene::Control()
 			//各ステートの結果により戦闘が終了されたので、
 			//フェードアウトさせてからこのシーンを終了させる。
 			SetSceneEndFlag( true );
-			m_fadeOutFlag = true;
 		}
+	}
+	if( m_pMouse->MouseStCheck( MOUSE_L, PUSH ) )
+	{
+		m_fadeOutFlag = true;
 	}
 	//	フェードアウトさせていき、完了すればシーンを終了させる
 	if( m_fadeOutFlag )

@@ -8,7 +8,12 @@ void CRenderManager::BeginRender( )
 	{
 
 	}
-
+	m_pD3Device->SetRenderState( D3DRS_ZENABLE, TRUE );			// Zバッファー処理を有効に
+	//m_pD3Device->SetRenderState( D3DRS_CULLMODE, D3DCULL_NONE );	// カリングしない
+	m_pD3Device->SetRenderState( D3DRS_CULLMODE, D3DCULL_CCW );	// カリングする
+	m_pD3Device->SetRenderState( D3DRS_LIGHTING, TRUE );			// ライトを有効に
+	m_pD3Device->SetRenderState( D3DRS_AMBIENT, 0x00000000 );		// アンビエントライト(環境光)を設定
+	m_pD3Device->SetRenderState( D3DRS_SPECULARENABLE, TRUE );	// スペキュラ(鏡面反射)を有効に
 	m_pD3Device->LightEnable(0, TRUE);
 
 	// 画面の消去

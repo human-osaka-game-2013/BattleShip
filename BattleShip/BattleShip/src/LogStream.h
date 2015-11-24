@@ -8,6 +8,7 @@
 
 #define _LOG_FONT_WIDTH_	_STAGE_COLUMN_MAX_*_BLOCK_WIDTH_SIZE_
 #define _LOG_FONT_HEIGHT_	16
+#define _LOG_FONT_BIGSIZE_	24
 
 /**
 *@brief	ゲーム中でのログの文字列情報クラス
@@ -23,13 +24,15 @@ private:
 	unsigned int	m_width;	///<	一文字分の横幅
 	unsigned int	m_height;	///<	一文字分の縦幅
 	D3DXCOLOR		m_color;	///<	文字のカラー値
-	
+	unsigned long	m_format;	///<	文字列を表示する時のフォーマット（DrawText関数依存）
+
 public:
 	/**
 	*@brief	コンストラクタ
 	*/
 	LogStream( const char* _str, const long _x, const long _y,
-		const unsigned int& _width = _LOG_FONT_WIDTH_, const unsigned int& _height = _LOG_FONT_HEIGHT_, const D3DXCOLOR& _color = 0xFFFFFF )
+		const unsigned int& _width = _LOG_FONT_WIDTH_, const unsigned int& _height = _LOG_FONT_HEIGHT_, 
+		const D3DXCOLOR& _color = 0xFFFFFF, unsigned long _format = DT_LEFT ):m_format( _format )
 	{
 		SetString( _str );
 		SetPosition( _x, _y );
@@ -109,6 +112,8 @@ public:
 	*@brief	文字列のカラー値取得
 	*/
 	D3DXCOLOR* GetColor(){ return &m_color; }
+
+	unsigned long GetFormat(){ return m_format; }
 };
 
 #endif

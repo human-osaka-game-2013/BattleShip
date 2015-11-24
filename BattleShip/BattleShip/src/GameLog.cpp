@@ -9,7 +9,9 @@ void GameLog::Init( const long& _x, const long& _y, const char* _firstStr )
 	}
 }
 
-void GameLog::AddStream( const char* _str, const D3DXCOLOR& _color, const unsigned int _width, const unsigned int _height )
+void GameLog::AddStream( const char* _str, const D3DXCOLOR& _color, 
+	const unsigned int _width, const unsigned int _height,
+	unsigned long _format )
 {
 	long tempX = m_posX, tempY = m_posY;
 
@@ -19,7 +21,7 @@ void GameLog::AddStream( const char* _str, const D3DXCOLOR& _color, const unsign
 		logBack->GetPosition( tempX, tempY );
 		tempY += logBack->GetHeight();	///< Šî–{‚‚³‚µ‚©•Ï‚í‚ç‚È‚¢‚Ì‚ÅYÀ•W‚¾‚¯•¶Žš‚Ìc••ª‰ÁŽZ
 	}
-	m_logStream.push_back( new LogStream( _str, tempX, tempY, _width, _height, _color ) );
+	m_logStream.push_back( new LogStream( _str, tempX, tempY, _width, _height, _color, _format ) );
 	CheckStream( static_cast<unsigned int>(_LOG_HEIGHT_MAX_) );
 }
 

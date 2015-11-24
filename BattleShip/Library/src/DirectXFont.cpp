@@ -105,7 +105,8 @@ bool DirectXFont::DrawA(
 	LONG _draw_pos_y,
 	LONG _w, LONG _h,
 	LPCSTR _font,
-	const D3DXCOLOR *_font_color
+	const D3DXCOLOR *_font_color,
+	unsigned long _format
 	)
 {
 	//フォントハンドルが無い
@@ -120,7 +121,7 @@ bool DirectXFont::DrawA(
 		_font,
 		-1,
 		&rec,
-		DT_LEFT | DT_NOCLIP,
+		_format,
 		( *_font_color )
 		);
 	

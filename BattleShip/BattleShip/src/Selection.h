@@ -100,6 +100,10 @@ private:
 	*/
 	void ResetTabFrame();
 
+	/**
+	*@brief	タブ選択状態リセット
+	*/
+	void ResetTabSelect();
 };
 
 #endif

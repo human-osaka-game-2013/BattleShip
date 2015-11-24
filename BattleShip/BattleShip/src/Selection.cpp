@@ -7,6 +7,10 @@
 
 bool Selection::Init()
 {
+	/*
+		基本的なメンバの初期化
+		プレイヤー別でタブの表示位置をずらす必要がある。
+	*/
 	m_tabSelectFlag = false;
 	m_areaSelectFlag= false;
 	m_arrayCheckResult = 0;
@@ -14,15 +18,15 @@ bool Selection::Init()
 	
 	m_tempShip = m_pPlayer[m_playerID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)(m_ShipCount) );
 		
-	m_actionFrame.Init( m_tempShip->GetPositionX(), m_tempShip->GetPositionY()+_TAB_HEIGHT_*2, 
+	m_actionFrame.Init( m_tempShip->GetPositionX()-(m_playerID/2*_TAB_WIDTH_), m_tempShip->GetPositionY()+_TAB_HEIGHT_*2, 
 						_TAB_WIDTH_, _TAB_HEIGHT_ );
 	m_actionFrame.SetColor( 255, 255, 255, 255 );
 	
-	m_searchFrame.Init( m_tempShip->GetPositionX(), m_tempShip->GetPositionY()+_TAB_HEIGHT_,
+	m_searchFrame.Init( m_tempShip->GetPositionX()-(m_playerID/2*_TAB_WIDTH_), m_tempShip->GetPositionY()+_TAB_HEIGHT_,
 						_TAB_WIDTH_, _TAB_HEIGHT_ );
 	m_searchFrame.SetColor( 255, 255, 255, 255 );
 
-	m_moveFrame.Init( m_tempShip->GetPositionX(), m_tempShip->GetPositionY(),
+	m_moveFrame.Init( m_tempShip->GetPositionX()-(m_playerID/2*_TAB_WIDTH_), m_tempShip->GetPositionY(),
 						_TAB_WIDTH_, _TAB_HEIGHT_ );
 	m_moveFrame.SetColor( 255, 255, 255, 255 );
 
@@ -60,10 +64,16 @@ int Selection::Control()
 		{
 			m_pStage->ResetSelect();
 			m_arrayCheckResult = SelectArrayCheck();
+			if( m_pMouse->MouseStCheck( MOUSE_R, PUSH ) )
+			{
+				ResetTabSelect();
+				m_pAudio->SoundPlay( Audio::_FAILED_SE_ );
+			}
 		}
 		else{	///<	行動選択も範囲選択完了した場合
 			m_connectFlag = true;	///<	通信フラグを立てて通信の準備に移る
 			m_StateCompFlag = true;	///<	行動選択自体は完了したので、フラグを立てる
+			m_pAudio->SoundPlay( Audio::_CLICK_SE_ );
 		}
 		
 	}
@@ -114,7 +124,11 @@ bool Selection::TabCheck()
 			tempFlag = true;
 		}
 	}
-
+	//	選択されたので
+	if( tempFlag )
+	{
+		m_pAudio->SoundPlay( Audio::_CLICK_SE_ );
+	}
 	return tempFlag;
 }
 
@@ -272,6 +286,16 @@ void Selection::ResetTabFrame()
 	m_searchFrame.SetColor( 255, 255, 255, 255 );
 	m_moveFrame.SetColor( 255, 255, 255, 255 );
 
+}
+
+void Selection::ResetTabSelect()
+{
+	ResetTabFrame();
+	m_pStage->ResetSelect();
+	m_tabSelectFlag = false;
+	m_areaSelectFlag= false;
+	m_arrayCheckResult = 0;
+	m_plyaerSelectType = _SELECT_NONE_;
 }
 
 //	

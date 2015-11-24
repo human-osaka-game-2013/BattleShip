@@ -82,10 +82,10 @@ public:
 		m_phrase[DS_STR]="駆逐艦";
 		m_phrase[SB_STR]="潜水艦";
 		
-		m_phrase[STATE_SET_SHIP_STR]	="　　　＜駒の配置＞";
+		m_phrase[STATE_SET_SHIP_STR]	="＜駒の配置＞";
 		m_phrase[SET_PHRASE_STR]		="を配置して下さい。";
 
-		m_phrase[STATE_SELECTION_STR]	="　　　＜行動の選択＞";
+		m_phrase[STATE_SELECTION_STR]	="＜行動の選択＞";
 		m_phrase[SELECTION_TYPE_MOVE]	="の移動範囲を自陣地から";
 		m_phrase[SELECTION_TYPE_ACTION]	="の攻撃を敵陣地から";
 		m_phrase[SELECTION_TYPE_SEARCH]	="の索敵を敵陣地から";
@@ -94,7 +94,7 @@ public:
 		m_phrase[SELECTION_KO_STR]		="この艦は戦闘不能中です。対戦相手の選択までお待ち下さい。";
 		m_phrase[SELECTION_DISABLED]	="その行動は現在の艦では出来ません。";
 		
-		m_phrase[STATE_RESULT_STR]		="　　　＜戦闘結果＞";
+		m_phrase[STATE_RESULT_STR]		="＜戦闘結果＞";
 		m_phrase[RESULT_IMPACT_STR]		="敵艦船に着弾！";
 		m_phrase[RESULT_HIT_STR]		="敵に攻撃された！";
 		m_phrase[RESULT_SIGHT_STR]		="索敵範囲内に敵を発見！";
@@ -104,9 +104,9 @@ public:
 		m_phrase[RESULT_DRAW_STR]		="戦力は現在拮抗しています。";
 		m_phrase[RESULT_SUPERIORITY_STR]="我が軍は現在優勢です！";
 		m_phrase[RESULT_VICTORY_STR]	="我が軍の勝利です！";	
-		m_phrase[RESULT_END]			="　　　＜戦闘終了！＞";	
+		m_phrase[RESULT_END]			="＜戦闘終了！＞";	
 
-		m_phrase[START_BATTLE]			="　　　＜戦闘開始！＞";
+		m_phrase[START_BATTLE]			="＜戦闘開始！＞";
 	}
 
 	~FixedPhrase()

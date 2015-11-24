@@ -44,7 +44,10 @@ void Audio::SoundPlay (int ID, bool LOOP)
 			//ループの指定があった場合ループの設定
 			buffer[ID].LoopCount	= XAUDIO2_LOOP_INFINITE;
 		}
-		
+		else
+		{
+			buffer[ID].LoopCount = 0;
+		}
 		pSourceVo[ID]->SubmitSourceBuffer(&buffer[ID]);
 		pSourceVo[ID]->Start(0);
 		

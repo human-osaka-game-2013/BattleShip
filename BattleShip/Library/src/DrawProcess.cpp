@@ -30,14 +30,16 @@ void CDrawManager::BeginDraw( bool _b3dView )
 	}
 
 	// ‰æ–Ê‚ÌÁ‹Ž
-	if(	m_pD3Device -> Clear (0, NULL,
-							D3DCLEAR_TARGET ,
-							D3DCOLOR_XRGB ( 0x00, 0x00, 0x00 ),
-							1.0, 0 ) != D3D_OK)
+	if( !_b3dView )
 	{
-		MessageBoxA(0, "Clear is Fail", NULL,MB_OK );
+		if(	m_pD3Device -> Clear (0, NULL,
+								D3DCLEAR_TARGET ,
+								D3DCOLOR_XRGB ( 0x00, 0x00, 0x00 ),
+								1.0, 0 ) != D3D_OK)
+		{
+			MessageBoxA(0, "Clear is Fail", NULL,MB_OK );
+		}
 	}
-
 	// •`‰æ‚ÌŠJŽn
 	m_pD3Device -> BeginScene();
 

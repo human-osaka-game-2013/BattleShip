@@ -10,7 +10,7 @@
 #define _LOG_COLOR_DEFAULT_		0xFFFFFFFF	///<ログテキストを表示する際のデフォルトカラー値	
 #define _LOG_COLOR_WARNING_		0xFFFF0000	///<ゲーム内での警告系ログを表示する際のカラー
 #define _LOG_COLOR_SUCCESS_		0xFF00FF00	///<ゲーム内でのプレイヤーに優位的なログを表示する際のカラー
-#define _LOG_COLOR_NOMAL_		0xFF0000FF	
+#define _LOG_COLOR_NOMAL_		0xFF00A0FF	
 
 /**
 *@brief	ゲーム中に表示させるログクラス
@@ -69,8 +69,11 @@ public:
 	*@param[in] _color	デフォルトでは
 	*@param[in] _width	デフォルトでは定数宣言したフォントサイズを使う	
 	*@param[in] _height	デフォルトでは定数宣言したフォントサイズを使う
+	*@param[in] _format	追加した文字列を表示する際のフォーマット（DrawText関数依存）
 	*/
-	void AddStream( const char* _str, const D3DXCOLOR& _color = _LOG_COLOR_DEFAULT_ , const unsigned int _width = _LOG_FONT_WIDTH_, const unsigned int _height = _LOG_FONT_HEIGHT_ );
+	void AddStream( const char* _str, const D3DXCOLOR& _color = _LOG_COLOR_DEFAULT_ , 
+		const unsigned int _width = _LOG_FONT_WIDTH_, const unsigned int _height = _LOG_FONT_HEIGHT_,
+		unsigned long _format = DT_LEFT );
 
 	/**
 	*@brief	登録している文字列の縦幅をチェック

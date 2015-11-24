@@ -41,12 +41,16 @@ public:
 		_FIRE_L_SE_,
 		_FIRE_M_SE_,
 		_FIRE_H_SE_,
+		_AC_ATTACK_SE_,
+		_TORPEDO_SE_,
 
 		_AIRCRAFT_SE_,
-		_AC_ATTACK_SE_,
 		_SONAR_SE_,
 		_WATER_SE_,
 		_EXPLOSION_SE_,
+
+		_CLICK_SE_,
+		_FAILED_SE_,
 
 		//îzóÒÇOï‚ê≥
 		SOUND_MAX

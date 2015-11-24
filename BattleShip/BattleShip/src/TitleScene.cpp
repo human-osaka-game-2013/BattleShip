@@ -60,6 +60,7 @@ int TitleScene::Control()
 					m_button.SetWidth( _BUTTON_WIDTH_ );
 					m_button.SetHeight( _BUTTON_HEIGHT_ );
 					m_changeSceneFlag = true;
+					m_pAudio->SoundPlay( Audio::_CLICK_SE_ );
 				}
 			}
 			else{

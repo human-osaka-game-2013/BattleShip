@@ -24,8 +24,9 @@ int SetShip::Control()
 		int iCheckResult = 0;
 		//	駒が置ける置けない関係なく、右クリックで駒を回転させる
 		if( m_pMouse->MouseStCheck( MOUSE_R, PUSH ) ) {
-			m_tempShip->RotationShip( 0, true );
-
+			//	プレイヤーによって右回り左回りを変える
+			m_tempShip->RotationShip( 0, m_playerID%_PLAYER_NUM_? true:false );
+			m_pAudio->SoundPlay( Audio::_FAILED_SE_ );
 		}
 		iCheckResult = CheckBoard();
 
@@ -71,6 +72,7 @@ int SetShip::CheckBoard()
 					//	駒が置けるマスであり、左クリックを押した時
 					if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )) {
 						m_pStage->SetShip( m_playerID, iColumn, iLine, m_tempShip );
+						m_pAudio->SoundPlay( Audio::_CLICK_SE_ );
 
 						return 2;
 					}
