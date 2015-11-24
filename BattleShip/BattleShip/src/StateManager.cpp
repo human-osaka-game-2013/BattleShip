@@ -32,7 +32,7 @@ StateManager::StateManager( Player* const _pPlayer1, Player* const _pPlayer2,
 	m_resultEnemy	= static_cast<int>(Result::RESULT_NONE);
 	m_resultBattle	= static_cast<int>(Result::TYPE_DRAW);
 	m_plyaerSelectType	= static_cast<int>(GameState::_SELECT_NONE_);
-
+	m_turnCount = 1;
 }
 
 //	ステートの初期化
@@ -192,17 +192,8 @@ int StateManager::CheckState()
 		break;
 
 	case STATE_STAGE_EFFECT:
-		/**
-		*@todo	エフェクト未実装の為ここは仮処理
-		*/
 		if( stageResult == 1 ){	///<　結果が1(ステージの演出が完了)の場合
-			// Selectionステートに移る前に現在のターンが終了したので次の駒を指定
-			if( m_currentShip < ShipObject::TYPE_SUBMARINE){
-
-				m_currentShip = static_cast< ShipObject::_SHIP_TYPE_NUM_ >( m_beforeShip+1 );
-			}else{
-				m_currentShip = ShipObject::TYPE_AIRCARRIER;
-			}
+			
 			checkResult = 1;
 		}
 		break;
@@ -225,6 +216,15 @@ int StateManager::CheckState()
 			checkResult = 1;
 			m_pStageObject->ResetSelect();	//判定を取ったので選択情報は消す
 			
+			// Selectionステートに移る前に現在のターンが終了したので次の駒を指定
+			if( m_currentShip < ShipObject::TYPE_SUBMARINE){
+
+				m_currentShip = static_cast< ShipObject::_SHIP_TYPE_NUM_ >( m_beforeShip+1 );
+			}else{
+				//	各艦の行動フェーズが一周したのでターン数を増やす
+				m_turnCount++;
+				m_currentShip = ShipObject::TYPE_AIRCARRIER;
+			}
 		}
 
 		break;

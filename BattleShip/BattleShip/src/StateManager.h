@@ -35,6 +35,7 @@ private:
 	std::string		m_tempStr1;
 	std::string		m_tempStr2;
 	int				m_beforeShip;	///<前フレームで選択（対象）されている駒を保持しておく。最初に入ってきた場合は初期値として-1を入れている。
+	unsigned int	m_turnCount;	///<現在のターン数
 //	他のオブジェクトと値のやり取りする可能性のある変数
 private:
 	
