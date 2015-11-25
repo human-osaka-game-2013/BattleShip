@@ -45,6 +45,7 @@ enum TEXTURES
 	_TEX_FIRE_EFFECT_,
 	_TEX_EXPLOSION_EFFECT_,
 	_TEX_SEARCH_EFFECT_,
+	_TEX_AIRCRAFT_,
 	_TEX_RECON_,
 	_TEX_TORPEDO_,	///<魚雷
 	_TEXTURE_MAX_
@@ -248,6 +249,28 @@ public:
 	*/
 	void VertexTransform(  int _textuerNumber, CUSTOMVERTEX (&_vertex)[4], float _fPosX, float _fPosY, 
 		float _fScaleX, float _fScaleY, float _fRotationZ);
+
+public:
+	/**
+	*@brief	矩形のカラー値を一度に全て変える
+	*@details	unsigned long型で16進数型で指定したい際
+	*/
+	void ChangeVertexColor( CUSTOMVERTEX (&_vertex)[4], const unsigned long _color )
+	{
+		for( int i = 0; i < 4; i++ ){
+			_vertex[i].color = _color;
+		}
+	}
+	/**
+	*@brief	矩形のカラー値を一度に全て変える
+	*@details	各カラー値をint型で指定したい際
+	*/
+	void ChangeVertexColor( CUSTOMVERTEX (&_vertex)[4], const int _A, const int _R, const int _G, const int _B )
+	{
+		for( int i = 0; i < 4; i++ ){
+			_vertex[i].color = D3DCOLOR_ARGB( _A, _R, _G, _B );
+		}
+	}
 
 public:
 	//	使用する全ての画像を読み込み

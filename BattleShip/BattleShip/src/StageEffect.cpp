@@ -362,7 +362,7 @@ void StageEffect::AircraftEffect( BoardOfFrame& _block, int _aircraftType, bool 
 	switch( _aircraftType )
 	{
 	case 0:
-		texNum = _TEX_RECON_;
+		texNum = _TEX_AIRCRAFT_;
 		break;
 	case 1:
 		texNum = _TEX_RECON_;
@@ -379,7 +379,7 @@ void StageEffect::TorpedoEffect( BoardOfFrame& _block, bool _appearanceInvisibil
 {
 	float tempX, tempY;
 	bool flipHorizontal = m_playerID/_PLAYER_NUM_ ? true : false;	///<プレイヤーによって画像の反転をさせる
-	unsigned long color = 0xe0a0a0ff;
+	unsigned long color = 0xc8a0a0ff;
 	static const int multiplOfTorpedoAlpha = 4;	///< 航空機のアルファ値をtimeから乗算して出す際の数
 	int texNum = _TEX_TORPEDO_;
 
@@ -404,8 +404,8 @@ void StageEffect::TorpedoEffect( BoardOfFrame& _block, bool _appearanceInvisibil
 									
 		alpha = m_elapsedTimeFormStateInstance*multiplOfTorpedoAlpha;
 		
-		if( alpha >= 224 )
-			alpha = 224;
+		if( alpha >= 200 )
+			alpha = 200;
 
 		color = D3DCOLOR_ARGB( alpha, 160, 160, 255 );	///< アルファ値をカラー値に入れる
 		flipHorizontal = m_playerID/_PLAYER_NUM_ ? false : true;	///< 消している方は今の時点では自身とは

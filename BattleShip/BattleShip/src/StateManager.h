@@ -9,6 +9,8 @@
 #include "GameLog.h"
 #include "Audio.h"
 
+#define _DEAD_COLOR_OF_SHIP_ 0xa0303030	///<自駒が撃破された際のカラー値
+
 class StateManager
 {
 public:
@@ -158,6 +160,11 @@ private:
 			false：変更失敗
 	*/
 	bool ChangeState( _STATE_NUM_ _stateType );
+
+	/**
+	*@brief	プレイヤーの所持駒情報
+	*/
+	void DrawPlayersShipInfo();
 
 	/**
 	*@brief	盤面の枠の表示

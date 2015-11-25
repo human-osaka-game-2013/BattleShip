@@ -82,13 +82,13 @@ bool ShipObject::RotationShip( int _arrayType, bool _rotType )
 		for( int iLine = 0; iLine < _SHIP_ARRAY_INDEX_; iLine++)
 		{
 			if( _rotType ){
-				_array[iColumn][iLine] = tempArray[(_SHIP_ARRAY_INDEX_-1)-iLine][iColumn];
+				_array[iLine][(_SHIP_ARRAY_INDEX_-1)-iColumn] = tempArray[iColumn][iLine];
+				if( _array2 != NULL )
+					_array2[iLine][(_SHIP_ARRAY_INDEX_-1)-iColumn] = tempArray2[iColumn][iLine];
+			} else {
+				_array[iColumn][iLine] = tempArray[iLine][(_SHIP_ARRAY_INDEX_-1)-iColumn];
 				if( _array2 != NULL )
 					_array2[iColumn][iLine] = tempArray2[iLine][(_SHIP_ARRAY_INDEX_-1)-iColumn];
-			} else {
-				_array[iLine][iColumn] = tempArray[(_SHIP_ARRAY_INDEX_-1)-iColumn][iLine];
-				if( _array2 != NULL )
-					_array2[iLine][iColumn] = tempArray2[(_SHIP_ARRAY_INDEX_-1)-iColumn][iLine];
 			}
 		}
 	}

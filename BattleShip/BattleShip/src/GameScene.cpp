@@ -93,7 +93,7 @@ int GameScene::Control()
 			SetSceneEndFlag( true );
 		}
 	}
-	if( m_pMouse->MouseStCheck( MOUSE_L, PUSH ) )
+	else if( m_pMouse->MouseStCheck( MOUSE_L, PUSH ) )
 	{
 		m_fadeOutFlag = true;
 	}

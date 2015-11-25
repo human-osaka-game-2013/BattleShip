@@ -302,10 +302,19 @@ bool StateManager::ChangeState( _STATE_NUM_ _stateType )
 //	ステートの基本描画
 void StateManager::StateDraw()
 {	
-	DrawStageFrame();
+	DrawPlayersShipInfo();
 
-	//	ステート別の描画
+	//	プレイヤー数ループして、駒とマス目を描画する
+	for( int ip=0; ip<_PLAYER_NUM_; ip++ )
+	{
+		DrawShipObject( ip );
+		DrawStageBlock( ip );
+	}
+
+	//	各ステート描画
 	m_pGameState->Draw();
+
+	DrawStageFrame();
 
 	DrawLog();
 
@@ -316,8 +325,8 @@ void StateManager::StateDraw()
 	}
 }
 
-void StateManager::DrawStageFrame()
-{	
+void StateManager::DrawPlayersShipInfo()
+{
 	float tempX, tempY;
 
 	if( m_playerID == 1 )
@@ -342,12 +351,11 @@ void StateManager::DrawStageFrame()
 			180, 100, 100, 255);	///<	プレイヤー2の枠描画
 	}
 
-	//	プレイヤー数ループして、駒とマス目を描画する
-	for( int ip=0; ip<_PLAYER_NUM_; ip++ )
-	{
-		DrawShipObject( ip );
-		DrawStageBlock( ip );
-	}
+}
+
+void StateManager::DrawStageFrame()
+{	
+	float tempX, tempY;
 	
 	//	盤面枠表示（左）
 	m_StageFrame.GetPosition( &tempX, &tempY );
@@ -369,7 +377,7 @@ void StateManager::DrawStageFrame()
 		_BLOCK_WIDTH_SIZE_, HEIGHT,
 		_STAGE_WIDTH_MAX_/_BLOCK_WIDTH_MAX_, 0.f,
 		(_STAGE_WIDTH_MAX_+1)/_BLOCK_WIDTH_MAX_, 1.f,
-		100, 220, 220, 220);	///<	盤面の真ん中の描画
+		80, 200, 200, 200);	///<	盤面の真ん中の描画
 
 	
 }
@@ -411,6 +419,27 @@ void StateManager::DrawShipObject( const int _playerIndex )
 						1.f, 1.f, CGameObject::CH_RIGHT*90.f );
 				}
 				
+			}
+			else if( m_currentState != STATE_SET_SHIP )
+			{
+				//	撃沈された艦はカラー値を暗めにして描画
+				if( tempShip->m_vertex[0].color != _DEAD_COLOR_OF_SHIP_ ){
+					m_pDrawManager->ChangeVertexColor( tempShip->m_vertex, _DEAD_COLOR_OF_SHIP_ );
+				}
+
+				if( _playerIndex== 0 ){	//	プレイヤー1の場合
+					//	配置したものからプレイヤー側の所持駒情報も描画
+					m_pDrawManager->VertexTransform( iShip + _TEX_AIRCARRIER_, tempShip->m_vertex, 
+						(_BOARD_OF_SHIPDATA_LINE_P1_*tempW)+(tempW/2), ((_BOARD_OF_SHIPDATA_COLUMN_+iShip)*tempH) + (tempH/2),
+						1.f, 1.f, CGameObject::CH_RIGHT*90.f );
+
+				}else{	//	プレイヤー2の場合
+
+					//	配置したものからプレイヤー側の所持駒情報も描画
+					m_pDrawManager->VertexTransform( iShip + _TEX_AIRCARRIER_, tempShip->m_vertex, 
+						(_BOARD_OF_SHIPDATA_LINE_P2_*tempW)+(tempW/2), ((_BOARD_OF_SHIPDATA_COLUMN_+iShip)*tempH) + (tempH/2),
+						1.f, 1.f, CGameObject::CH_RIGHT*90.f );
+				}
 			}
 		}
 		

@@ -62,6 +62,9 @@
     <Filter Include="ヘッダーファイル\lib_h\Audio">
       <UniqueIdentifier>{091a9df2-f427-41c2-89b8-d88289997bdf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソースファイル">
+      <UniqueIdentifier>{8995e863-1668-4bd6-b189-43e78e0f0759}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ViewManage.cpp">
