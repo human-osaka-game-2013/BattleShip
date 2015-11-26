@@ -47,7 +47,13 @@ int Result::Control()
 		switch( m_resultEnemy )
 		{
 		case RESULT_SEARCH:
-			m_tempStr2 = m_pGameLog->GetPhrase(FixedPhrase::RESULT_SIGHT_STR);
+			m_tempStr2 = "敵の";
+			for( int i = 0; i < ShipObject::TYPE_MAX; i++ ){
+				if( (m_seachFlag&m_bitFlag[i]) == m_bitFlag[i] ){
+					m_tempStr2 +=  m_pGameLog->GetPhrase(static_cast<FixedPhrase::_PHRASE_STR_TYPE_>(i));
+				}
+			}
+			m_tempStr2 += m_pGameLog->GetPhrase(FixedPhrase::RESULT_SIGHT_STR);
 			break;
 		case RESULT_ATTACK:
 			m_tempStr2 = m_pGameLog->GetPhrase(FixedPhrase::RESULT_IMPACT_STR);
@@ -56,9 +62,10 @@ int Result::Control()
 		//	何かイベントがあった場合、ログに追加する
 		if( m_resultPlayer > 0 )
 			m_pGameLog->AddStream( m_tempStr1.c_str(), _LOG_COLOR_WARNING_ );
-		if( m_resultEnemy > 0 )
+			
+		if( m_resultEnemy > 0 ){
 			m_pGameLog->AddStream( m_tempStr2.c_str(), _LOG_COLOR_SUCCESS_ );
-		
+		}
 		switch( m_resultBattle )
 		{
 		case TYPE_INFERIORITY:
@@ -107,7 +114,7 @@ int Result::ResultOfAction( const int _playerIndex )
 			const int iShipNum = m_pStage->m_stageArray[_playerIndex][ic][il]%10;
 			
 			//	索敵or攻撃の指示がされていて、且つ駒があるマスだったら
-			if( iConditionNum != StageObject::_CONDITION_NONE_ && iSelectNum > StageObject::_SELECT_FALSE_ )
+			if( iConditionNum == StageObject::_CONDITION_NOMAL_ && iSelectNum >= StageObject::_SEARCH_NOMAL_ )
 			{
 				JudgmentOfActionProcess( iReturn, _playerIndex, ic, il, iSelectNum, iShipNum );
 			}
@@ -131,6 +138,8 @@ void Result::JudgmentOfActionProcess( int& _iReturn, const int _plIndex, int& _c
 			_shipNum < ShipObject::TYPE_MAX )
 		{
 			_iReturn = RESULT_SEARCH;
+			m_seachFlag = m_seachFlag | m_bitFlag[_shipNum];
+
 		}
 		//	指示されている行動が攻撃で、駒があれば
 		else if( _selectNum >= StageObject::_ACTION_NOMAL_ &&
@@ -159,7 +168,9 @@ void Result::JudgmentOfActionProcess( int& _iReturn, const int _plIndex, int& _c
 			if( _selectNum < StageObject::_ACTION_NOMAL_ &&
 					_shipNum < ShipObject::TYPE_MAX )
 			{
-				_iReturn = RESULT_SEARCH; ///<
+				_iReturn = RESULT_SEARCH; 
+				m_seachFlag = m_seachFlag | m_bitFlag[_shipNum];
+
 			}
 			//	指示されている行動が攻撃で、駒があれば
 			else if( _selectNum >= StageObject::_ACTION_NOMAL_ &&

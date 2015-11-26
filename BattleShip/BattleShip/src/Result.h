@@ -10,6 +10,12 @@
 
 #define _ANNIHILATION_NUM_ 16
 
+#define _BIT_A_ 0x01
+#define _BIT_B_ 0x02
+#define _BIT_C_ 0x04
+#define _BIT_D_ 0x08
+#define _BIT_S_ 0x10
+
 class Result : public GameState
 {
 public:
@@ -39,6 +45,8 @@ private:
 	int m_resultPlayer;	///<	プレイヤー側に起きている戦闘結果
 	int m_resultEnemy;	///<	敵側に起きている戦闘結果
 	int m_resultBattle;	///<	両者の戦況結果
+	byte m_seachFlag;	///< 索敵で発見された艦種
+	byte m_bitFlag[ShipObject::TYPE_MAX];
 
 public:
 	/**
@@ -49,6 +57,12 @@ public:
 		m_resultPlayer	= 0;
 		m_resultEnemy	= 0;
 		m_resultBattle	= 0;
+		m_seachFlag = 0x00;
+		m_bitFlag[0] = _BIT_A_;
+		m_bitFlag[1] = _BIT_B_;
+		m_bitFlag[2] = _BIT_C_;
+		m_bitFlag[3] = _BIT_D_;
+		m_bitFlag[4] = _BIT_S_;
 	}
 
 	~Result(){};

@@ -11,11 +11,14 @@
 #define _TAB_WIDTH_		128.f
 #define _TAB_HEIGHT_	(float)_TAB_WIDTH_/3
 
+#define _SELECT_LOG_BIT_	0x1
+#define _TAB_SELECT_BIT_	0x2
+#define _AREA_SELECT_BIT_	0x4
+
 class Selection : public GameState
 {
 private:
-	bool m_tabSelectFlag;		///< タブを選択しているか
-	bool m_areaSelectFlag;		///< 行動別の範囲を選択しているか
+	byte m_selectionFlag;	///<	行動・タブ・行動選択開始ログ表示の管理フラグ	
 	_SELECT_NUM_ m_plyaerSelectType;	///< 選択した行動の種類
 	int m_arrayCheckResult;		///< 行動選択時の範囲チェックの結果
 	
@@ -31,8 +34,7 @@ public:
 	*@param	_type	現在選択している艦の種類
 	*/
 	Selection( ShipObject::_SHIP_TYPE_NUM_& _type, GameLog* _pGameLog ): GameState( _type, _pGameLog ){
-		m_tabSelectFlag = false;
-		m_areaSelectFlag= false;
+		m_selectionFlag = 0x0;
 		m_arrayCheckResult = 0;
 		m_plyaerSelectType = _SELECT_NONE_;
 	}

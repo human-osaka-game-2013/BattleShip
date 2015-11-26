@@ -15,6 +15,11 @@
 #include "Player.h"
 #include "ScreenMask.h"
 
+#define _BIT_STAGE_S_ 0x1	///< ステージデータ送信フラグビット
+#define _BIT_STAGE_R_ 0x2	///< ステージデータ受信フラグビット
+#define _BIT_SHIP_S_ 0x4	///< 駒データ送信フラグビット
+#define _BIT_SHIP_R_ 0x8	///< 駒データ受信フラグビット
+#define _BIT_ALL_SR_ 0xf	///< 全てのデータ送受信フラグビット
 /**
 *@brief	戦闘シーンクラス
 *@details	シーン基本クラス(CScene)を派生したクラス。@n
@@ -34,11 +39,9 @@ private:
 	
 	bool	m_fadeInFlag;		///<ゲーム開始時はフェードインさせる。
 	bool	m_fadeOutFlag;		///<ゲーム終了時にフェードアウトさせる。
-	bool	m_sendFlagOfStage;	///<ステージ情報送信フラグ
-	bool	m_sendFlagOfShips;	///<駒情報送信フラグ
-	bool	m_recvFlagOfStage;	///<ステージ情報受信フラグ
-	bool	m_recvFlagOfShips;	///<駒情報受信フラグ
-	int		m_sendShipCount;	///<駒の情報を送っていた回数
+	
+	byte	m_connectFlag;	///< ビット管理の通信管理フラグ
+	int		m_sendShipCount;		///<駒の情報を送っていた回数
 
 public:
 	/**
@@ -56,11 +59,8 @@ public:
 		: CScene( _id, _pRenderManager,	_pDrawManager, _pKey, m_pMouse, _pAudio )
 	{
 		m_playerID = 0;
-		m_sendFlagOfStage = false;
-		m_sendFlagOfShips = false;
-		m_recvFlagOfStage = false;
-		m_recvFlagOfShips = false;
 		m_sendShipCount = 0;
+		m_connectFlag = 0x0;
 	}
 	
 	/**

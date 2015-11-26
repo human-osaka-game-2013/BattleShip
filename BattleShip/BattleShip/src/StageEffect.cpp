@@ -41,14 +41,14 @@ void StageEffect::CheckSelectOfStage()
 						//	敵の選択した行動をプレイヤー側の選択されたマスから判断する
 						switch(selectType)
 						{
-							case StageObject::_SEARCH_NOMAL_:
-							case StageObject::_SEARCH_ALL_:
-								m_enemySelectType = _SELECT_SEARCH_;
+						case StageObject::_SEARCH_NOMAL_:
+						case StageObject::_SEARCH_ALL_:
+							m_enemySelectType = _SELECT_SEARCH_;
+							break;
+						case StageObject::_ACTION_NOMAL_:
+						case StageObject::_ACTION_ALL_:
+							m_enemySelectType = _SELECT_ACTION_;
 								break;
-							case StageObject::_ACTION_NOMAL_:
-							case StageObject::_ACTION_ALL_:
-								m_enemySelectType = _SELECT_ACTION_;
-									break;
 						}
 					}
 					else	///<敵側のマス（プレイヤーによる行動マス）

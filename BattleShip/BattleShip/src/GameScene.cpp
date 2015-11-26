@@ -154,23 +154,20 @@ bool GameScene::CommunicationProcessing()
 	{
 	case StateManager::STATE_SET_SHIP:
 	case StateManager::STATE_SELECTION:
-		if( !m_sendFlagOfStage || !m_recvFlagOfStage )
+		if( !(m_connectFlag&_BIT_STAGE_R_) )
 		{
 			result = ComStageData();
 		}
-		else if( !m_sendFlagOfShips || !m_recvFlagOfShips )
+		else if( !(m_connectFlag&_BIT_SHIP_R_) )
 		{
 			result = ComShipsData();
 		}
 		break;
 	}
 	//	全部の情報の送受信が完了していたら
-	if( m_recvFlagOfStage && m_sendShipCount==ShipObject::TYPE_MAX && m_recvFlagOfShips )
+	if( m_sendShipCount==ShipObject::TYPE_MAX && (m_connectFlag==_BIT_ALL_SR_) )
 	{
-		m_sendFlagOfStage = false;
-		m_sendFlagOfShips = false;
-		m_recvFlagOfStage = false;
-		m_recvFlagOfShips = false;
+		m_connectFlag = m_connectFlag^_BIT_ALL_SR_;
 		m_sendShipCount = 0;
 		result = true;
 	}
@@ -190,14 +187,14 @@ bool GameScene::ComStageData()
 	bool result = false;
 
 	//	まだ送信を完了してなかったら
-	if( !m_sendFlagOfStage )
+	if( !(m_connectFlag&_BIT_STAGE_S_) )
 	{
 		memmove_s( bufStage.m_stageArray, sizeof(int [_PLAYER_NUM_][_STAGE_COLUMN_MAX_][_STAGE_LINE_MAX_]),
 		m_pStageObject->m_stageArray, sizeof(int [_PLAYER_NUM_][_STAGE_COLUMN_MAX_][_STAGE_LINE_MAX_]));
 
 		if( m_Connect.Send( (char*)&bufStage, bufStageSize ))
 		{
-			m_sendFlagOfStage = true;
+			m_connectFlag += _BIT_STAGE_S_;
 		}
 		else
 		{
@@ -205,12 +202,12 @@ bool GameScene::ComStageData()
 		}
 	}
 	//	まだ受信を完了してなかったら
-	if( !m_recvFlagOfStage )
+	if( !(m_connectFlag&_BIT_STAGE_R_) )
 	{
 		if( m_Connect.Receive( (char*)&bufStage, bufStageSize ) )
 		{
 			m_pStageObject->MargeStage( &bufStage, m_playerID, enemyID, (int)m_stateManager->GetState() );
-			m_recvFlagOfStage = true;
+			m_connectFlag += _BIT_STAGE_R_;
 			result = true;
 		}
 		else
@@ -236,14 +233,14 @@ bool GameScene::ComShipsData()
 	for( int iShip = m_sendShipCount; iShip < ShipObject::TYPE_MAX; iShip++ )
 	{
 		//	まだ送信を完了してなかったら
-		if( !m_sendFlagOfShips )
+		if( !(m_connectFlag&_BIT_SHIP_S_) )
 		{
 			ShipObject* tempShip = m_Player[m_playerID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
 			tempShip->SetConnectShipData( &bufShip[iShip] );
 
 			if( m_Connect.Send( (char*)&bufShip[iShip], bufShipSize ))
 			{
-				m_sendFlagOfShips = true;
+				m_connectFlag += _BIT_SHIP_S_;
 			}
 			else
 			{
@@ -251,7 +248,7 @@ bool GameScene::ComShipsData()
 			}
 		}
 		//	まだ受信を完了してなかったら
-		if( !m_recvFlagOfShips )
+		if( !(m_connectFlag&_BIT_SHIP_R_) )
 		{
 			if( m_Connect.Receive( (char*)&bufShip[iShip], bufShipSize ))
 			{
@@ -260,7 +257,7 @@ bool GameScene::ComShipsData()
 				m_sendShipCount++;	//	正常に受け取れたので、カウンタをインクリメント
 
 				//	全ての駒情報を送受信出来ていれば、送信フラグをtrue
-				m_recvFlagOfShips = m_sendFlagOfShips = m_sendShipCount==ShipObject::TYPE_MAX ? true : false;
+				m_connectFlag = m_sendShipCount==ShipObject::TYPE_MAX ? _BIT_ALL_SR_ : m_connectFlag>>1;
 				result = true;
 			}
 			else

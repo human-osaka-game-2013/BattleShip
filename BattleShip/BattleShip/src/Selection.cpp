@@ -11,8 +11,6 @@ bool Selection::Init()
 		基本的なメンバの初期化
 		プレイヤー別でタブの表示位置をずらす必要がある。
 	*/
-	m_tabSelectFlag = false;
-	m_areaSelectFlag= false;
 	m_arrayCheckResult = 0;
 	m_plyaerSelectType = _SELECT_NONE_;
 	
@@ -43,7 +41,7 @@ int Selection::Control()
 
 	if( !m_StateCompFlag )
 	{
-		if( !m_tabSelectFlag )	///<	タブがまだ選ばれていない場合
+		if( !m_selectionFlag )
 		{
 			if( m_pPlayer[m_playerID-1]->CheckDestroy( static_cast<ShipObject::_SHIP_TYPE_NUM_>( m_ShipCount) ) )
 			{
@@ -52,23 +50,31 @@ int Selection::Control()
 				m_connectFlag = true;	///<	通信フラグを立てて通信の準備に移る
 				m_StateCompFlag = true;	///<	行動選択自体は完了したので、フラグを立てる
 			}
-			m_tabSelectFlag = TabCheck();
+			else
+			{
+				m_tempStr1 = m_pGameLog->GetMultiplePhrase( 3, m_ShipCount,
+					static_cast<int>(FixedPhrase::SELECTION_TAB), 
+					static_cast<int>(FixedPhrase::SELECTION_PHRASE_STR));
+				m_pGameLog->AddStream( m_tempStr1.c_str(), D3DXCOLOR( _LOG_COLOR_NOMAL_ ) );
+				m_selectionFlag = _SELECT_LOG_BIT_;
+			}
 		}
-		else if( !m_areaSelectFlag )	///<	対象エリアなどの選択が終わっていない場合
+		else if( !(m_selectionFlag>>1) )	///<	タブがまだ選ばれていない場合
 		{
-			m_areaSelectFlag = SetTypeArray();
-			if( !m_areaSelectFlag )	///< 選択した範囲にデータが無い（orその行動は出来ない）場合、タブの選択も解除する。
-				m_tabSelectFlag = false;
+			
+			m_selectionFlag = TabCheck()? (m_selectionFlag+_TAB_SELECT_BIT_): m_selectionFlag;
+		}
+		else if( !(m_selectionFlag>>2) )	///<	対象エリアなどの選択が終わっていない場合
+		{
+			m_selectionFlag = SetTypeArray()?(m_selectionFlag+_AREA_SELECT_BIT_): m_selectionFlag>>1;
+			if( !m_selectionFlag>>2 )	///< 選択した範囲にデータが無い（orその行動は出来ない）場合、タブの選択も解除する。
+				m_selectionFlag = m_selectionFlag>>1;
 		}
 		else if( m_arrayCheckResult != 2 )	///<	選択した範囲は有効で無い場合
 		{
 			m_pStage->ResetSelect();
 			m_arrayCheckResult = SelectArrayCheck();
-			if( m_pMouse->MouseStCheck( MOUSE_R, PUSH ) )
-			{
-				ResetTabSelect();
-				m_pAudio->SoundPlay( Audio::_FAILED_SE_ );
-			}
+			
 		}
 		else{	///<	行動選択も範囲選択完了した場合
 			m_connectFlag = true;	///<	通信フラグを立てて通信の準備に移る
@@ -94,7 +100,8 @@ bool Selection::TabCheck()
 		m_actionFrame.SetColor( 255, 150, 150, 150 );
 		if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )){
 			m_tempStr1 = m_pGameLog->GetMultiplePhrase( 3, m_ShipCount,
-				static_cast<int>( FixedPhrase::SELECTION_TYPE_ACTION ), static_cast<int>( FixedPhrase::SELECTION_PHRASE_STR ));
+				static_cast<int>( FixedPhrase::SELECTION_TYPE_ACTION ),
+				static_cast<int>( FixedPhrase::SELECTION_PHRASE_STR ));
 			m_pGameLog->AddStream( m_tempStr1.c_str() );	///
 			m_plyaerSelectType = _SELECT_ACTION_;
 			tempFlag = true;
@@ -106,7 +113,8 @@ bool Selection::TabCheck()
 		m_searchFrame.SetColor( 255, 150, 150, 150 );
 		if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )){
 			m_tempStr1 = m_pGameLog->GetMultiplePhrase( 3, m_ShipCount,
-				static_cast<int>( FixedPhrase::SELECTION_TYPE_SEARCH ), static_cast<int>( FixedPhrase::SELECTION_PHRASE_STR ));
+				static_cast<int>( FixedPhrase::SELECTION_TYPE_SEARCH ), 
+				static_cast<int>( FixedPhrase::SELECTION_PHRASE_STR ));
 			m_pGameLog->AddStream( m_tempStr1.c_str() );
 			m_plyaerSelectType = _SELECT_SEARCH_;
 			tempFlag = true;
@@ -118,7 +126,8 @@ bool Selection::TabCheck()
 		m_moveFrame.SetColor( 255, 150, 150, 150 );
 		if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )){
 			m_tempStr1 = m_pGameLog->GetMultiplePhrase( 3, m_ShipCount,
-				static_cast<int>( FixedPhrase::SELECTION_TYPE_MOVE ), static_cast<int>( FixedPhrase::SELECTION_PHRASE_STR ));
+				static_cast<int>( FixedPhrase::SELECTION_TYPE_MOVE ), 
+				static_cast<int>( FixedPhrase::SELECTION_PHRASE_STR ));
 			m_pGameLog->AddStream( m_tempStr1.c_str() );
 			m_plyaerSelectType = _SELECT_MOVE_;
 			tempFlag = true;
@@ -209,7 +218,30 @@ int Selection::SelectArrayCheck( )
 						if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )) 
 						{
 							m_pStage->SetRange( tempID, iColumn, iLine, tempArray, m_plyaerSelectType );
+							/*char tempC1[3];
+							char tempC2[3];
+							char tempL[3];
+							int temp;
+							if( iColumn == 9 )
+							{
+								_itoa_s( 0x31, tempC1, 16 );
+								_itoa_s( 0x30, tempC2, 16 );
+							}
+							else
+							{
+								temp = 0x30 + (iColumn+1);
+								_itoa_s( temp, tempC2, 16);
+							}
+							temp = 0x40+(iLine+1);
+							_itoa_s( temp, tempL, 16 );
 							
+							'temp';
+
+							m_tempStr1 = "【";
+							m_tempStr1 += tempL[0];
+							m_tempStr1 += tempC1[0];
+							m_tempStr1 += tempC2[0];
+							m_tempStr1 += "】を選択しました。";*/
 							return 2;
 						}
 					}
@@ -246,6 +278,7 @@ int Selection::SelectArrayCheck( )
 				m_tempX = (iLine+_STAGE_HEIGHT_MAX_)*tempW + tempW*1.5f ;
 				m_tempY = iColumn*tempH + tempH*1.5f;
 			}
+			//	移動可能マスだから移動先に駒を仮配置
 			m_tempShip->SetPosition( m_tempX, m_tempY, 0.5f );
 			if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )) 
 			{
@@ -256,6 +289,7 @@ int Selection::SelectArrayCheck( )
 		}
 		else
 		{
+			//	移動可能マスにカーソルが無いので、駒の位置を元に戻す
 			m_tempShip->GetArrayPos( iColumn, iLine );
 
 			if(tempID == 1)	//プレイヤーIDが1（=配列の指数だと0）だったら
@@ -270,11 +304,16 @@ int Selection::SelectArrayCheck( )
 			}
 			m_tempShip->SetPosition( m_tempX, m_tempY, 0.5f );
 		}
-		
+		//	タブ選択の取り消しをする時も、ちゃんと駒を元の場所に戻す
+		if( m_pMouse->MouseStCheck( MOUSE_R, PUSH ) )
+		{
+			m_tempShip->GetArrayPos( tempColumn, tempLine );
+			m_tempShip->SetPosition( m_tempX, m_tempY, 0.5f );
+			ResetTabSelect();
+			m_pAudio->SoundPlay( Audio::_FAILED_SE_ );
+		}
 		break;
 	}
-
-	
 
 	return 0;
 }
@@ -292,8 +331,7 @@ void Selection::ResetTabSelect()
 {
 	ResetTabFrame();
 	m_pStage->ResetSelect();
-	m_tabSelectFlag = false;
-	m_areaSelectFlag= false;
+	m_selectionFlag = _SELECT_LOG_BIT_;
 	m_arrayCheckResult = 0;
 	m_plyaerSelectType = _SELECT_NONE_;
 }
@@ -301,7 +339,7 @@ void Selection::ResetTabSelect()
 //	
 void Selection::Draw()
 {
-	if( !m_tabSelectFlag ){
+	if( !(m_selectionFlag>>1) ){
 		m_pDrawManager->VertexDraw( _TEX_TABFRAME_, m_actionFrame.GetPositionX(), m_actionFrame.GetPositionY(),
 			m_actionFrame.GetWidth(), m_actionFrame.GetHeight(),
 			0.f, (_TAB_HEIGHT_*2)/_TAB_WIDTH_, 1.f, 1.f,
