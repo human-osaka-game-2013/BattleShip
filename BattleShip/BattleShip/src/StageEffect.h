@@ -8,7 +8,7 @@
 
 #include "GameState.h"
 
-#define _MOVE_SPEED_RECON_	35.f
+#define _MOVE_SPEED_RECON_	33.f
 #define _DIVISON_OF_EFFECT_TIME_	1.5
 
 

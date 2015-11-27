@@ -48,13 +48,9 @@ bool GameLog::CheckStream( const unsigned int _height )
 	if( allStreamHeight > _height )
 	{
 		int tempHeight = 0;	///< 削除する対象の文字列の高さを保持しておく
-
 		//	一番先頭（古い）データを解放＆削除
-		std::list<LogStream*>::iterator it = m_logStream.begin();
-		tempHeight = (*it)->GetHeight();
-		delete *it;
-		m_logStream.pop_front();
-
+		DeleteStream(tempHeight);
+		
 		RealignmentStream();
 
 		//	削除した文字の高さ分を引いて再度計算して、まだはみ出ていたらもう一度削除させる。

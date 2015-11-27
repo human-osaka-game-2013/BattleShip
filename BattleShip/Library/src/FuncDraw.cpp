@@ -282,7 +282,7 @@ void CDrawManager::VertexTransform(  int _textuerNumber, CUSTOMVERTEX (&_vertex)
 		tempVertex[i].y = 0.f;
 		tempVertex[i].z = 0.f;
 		tempVertex[i].rhw = 1.0f;
-		tempVertex[i].color = 0xFFFFFFFF;
+		tempVertex[i].color = _vertex[i].color;
 	}
 
 	for( int iCount = 0; iCount < 4; iCount++ ){

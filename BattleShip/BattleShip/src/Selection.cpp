@@ -99,10 +99,7 @@ bool Selection::TabCheck()
 		//	攻撃のタブ
 		m_actionFrame.SetColor( 255, 150, 150, 150 );
 		if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )){
-			m_tempStr1 = m_pGameLog->GetMultiplePhrase( 3, m_ShipCount,
-				static_cast<int>( FixedPhrase::SELECTION_TYPE_ACTION ),
-				static_cast<int>( FixedPhrase::SELECTION_PHRASE_STR ));
-			m_pGameLog->AddStream( m_tempStr1.c_str() );	///
+			
 			m_plyaerSelectType = _SELECT_ACTION_;
 			tempFlag = true;
 		}
@@ -112,10 +109,7 @@ bool Selection::TabCheck()
 		//	索敵のタブ
 		m_searchFrame.SetColor( 255, 150, 150, 150 );
 		if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )){
-			m_tempStr1 = m_pGameLog->GetMultiplePhrase( 3, m_ShipCount,
-				static_cast<int>( FixedPhrase::SELECTION_TYPE_SEARCH ), 
-				static_cast<int>( FixedPhrase::SELECTION_PHRASE_STR ));
-			m_pGameLog->AddStream( m_tempStr1.c_str() );
+			
 			m_plyaerSelectType = _SELECT_SEARCH_;
 			tempFlag = true;
 		}
@@ -125,10 +119,7 @@ bool Selection::TabCheck()
 		//	移動のタブ
 		m_moveFrame.SetColor( 255, 150, 150, 150 );
 		if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )){
-			m_tempStr1 = m_pGameLog->GetMultiplePhrase( 3, m_ShipCount,
-				static_cast<int>( FixedPhrase::SELECTION_TYPE_MOVE ), 
-				static_cast<int>( FixedPhrase::SELECTION_PHRASE_STR ));
-			m_pGameLog->AddStream( m_tempStr1.c_str() );
+			
 			m_plyaerSelectType = _SELECT_MOVE_;
 			tempFlag = true;
 		}
@@ -144,29 +135,48 @@ bool Selection::TabCheck()
 
 bool Selection::SetTypeArray()
 {
+	bool result = false;
 	switch( m_plyaerSelectType )
 	{
 	case _SELECT_ACTION_:
 		m_tempArray = m_tempShip->m_actionArray;
+		m_tempStr1 = m_pGameLog->GetMultiplePhrase( 3, m_ShipCount,
+				static_cast<int>( FixedPhrase::SELECTION_TYPE_ACTION ),
+				static_cast<int>( FixedPhrase::SELECTION_PHRASE_STR ));
+			m_pGameLog->AddStream( m_tempStr1.c_str() );	
 		break;
 	case _SELECT_SEARCH_:
 		m_tempArray = m_tempShip->m_searchArray;
+		m_tempStr1 = m_pGameLog->GetMultiplePhrase( 3, m_ShipCount,
+				static_cast<int>( FixedPhrase::SELECTION_TYPE_SEARCH ), 
+				static_cast<int>( FixedPhrase::SELECTION_PHRASE_STR ));
+			m_pGameLog->AddStream( m_tempStr1.c_str() );
 		break;
 	case _SELECT_MOVE_:
 		m_tempArray = m_tempShip->m_moveArray;
+		m_tempStr1 = m_pGameLog->GetMultiplePhrase( 3, m_ShipCount,
+				static_cast<int>( FixedPhrase::SELECTION_TYPE_MOVE ), 
+				static_cast<int>( FixedPhrase::SELECTION_PHRASE_STR ));
+			m_pGameLog->AddStream( m_tempStr1.c_str() );
 		
 		break;
 	}
-
+	//	選択した行動は使えるのかチェック
 	for( int iColumn = 0; iColumn < _SHIP_ARRAY_INDEX_; iColumn++ ){
 		for( int iLine = 0; iLine < _SHIP_ARRAY_INDEX_; iLine++ ){
 			if( m_tempArray[iColumn][iLine] != StageObject::_CONDITION_NONE_)
-			return true;
+				result = true;
 		}
 	}
-	m_tempStr1 = m_pGameLog->GetPhrase( FixedPhrase::SELECTION_DISABLED );
-	m_pGameLog->AddStream( m_tempStr1.c_str(), _LOG_COLOR_WARNING_ );
-	return false;
+
+	//	選択した行動は使えなかった
+	if( !result ){
+		m_pGameLog->DeleteStream( false );
+		m_tempStr1 = m_pGameLog->GetPhrase( FixedPhrase::SELECTION_DISABLED );
+		m_pGameLog->AddStream( m_tempStr1.c_str(), _LOG_COLOR_WARNING_ );
+	}
+
+	return result;
 }
 
 
@@ -218,30 +228,32 @@ int Selection::SelectArrayCheck( )
 						if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )) 
 						{
 							m_pStage->SetRange( tempID, iColumn, iLine, tempArray, m_plyaerSelectType );
-							/*char tempC1[3];
-							char tempC2[3];
-							char tempL[3];
+							/*
+								選択した箇所をログに出力
+							*/
+							char tempC1[2]	= "";
+							char tempC2[2]	= "";
+							char tempL1[2]	= "";
 							int temp;
 							if( iColumn == 9 )
 							{
-								_itoa_s( 0x31, tempC1, 16 );
-								_itoa_s( 0x30, tempC2, 16 );
+								sprintf_s( tempC1, "%c",0x31 );
+								sprintf_s( tempC2, "%c",0x30 );
 							}
 							else
 							{
-								temp = 0x30 + (iColumn+1);
-								_itoa_s( temp, tempC2, 16);
+								temp = 0x30+(iColumn+1);
+								sprintf_s( tempC2, "%c",temp );
 							}
 							temp = 0x40+(iLine+1);
-							_itoa_s( temp, tempL, 16 );
-							
-							'temp';
-
+							sprintf_s( tempL1, "%c",temp );
+					
 							m_tempStr1 = "【";
-							m_tempStr1 += tempL[0];
-							m_tempStr1 += tempC1[0];
-							m_tempStr1 += tempC2[0];
-							m_tempStr1 += "】を選択しました。";*/
+							m_tempStr1.append(tempL1);
+							m_tempStr1.append(tempC1);
+							m_tempStr1.append(tempC2);
+							m_tempStr1 += "】を選択しました。";
+							m_pGameLog->AddStream( m_tempStr1.c_str(), _LOG_COLOR_PHASE_ );
 							return 2;
 						}
 					}
@@ -339,7 +351,9 @@ void Selection::ResetTabSelect()
 //	
 void Selection::Draw()
 {
-	if( !(m_selectionFlag>>1) ){
+	if( !(m_selectionFlag>>1) || 
+		 m_pPlayer[m_playerID-1]->CheckDestroy( static_cast<ShipObject::_SHIP_TYPE_NUM_>( m_ShipCount) ))
+	{
 		m_pDrawManager->VertexDraw( _TEX_TABFRAME_, m_actionFrame.GetPositionX(), m_actionFrame.GetPositionY(),
 			m_actionFrame.GetWidth(), m_actionFrame.GetHeight(),
 			0.f, (_TAB_HEIGHT_*2)/_TAB_WIDTH_, 1.f, 1.f,

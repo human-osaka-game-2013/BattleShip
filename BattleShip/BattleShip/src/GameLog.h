@@ -10,7 +10,8 @@
 #define _LOG_COLOR_DEFAULT_		0xFFFFFFFF	///<ログテキストを表示する際のデフォルトカラー値	
 #define _LOG_COLOR_WARNING_		0xFFFF0000	///<ゲーム内での警告系ログを表示する際のカラー
 #define _LOG_COLOR_SUCCESS_		0xFF00FF00	///<ゲーム内でのプレイヤーに優位的なログを表示する際のカラー
-#define _LOG_COLOR_NOMAL_		0xFF00A0FF	
+#define _LOG_COLOR_NOMAL_		0xFF00A0FF		
+#define _LOG_COLOR_PHASE_		0xFF00FFFF
 
 /**
 *@brief	ゲーム中に表示させるログクラス
@@ -109,11 +110,42 @@ public:
 	}
 
 	/**
-	*@brief
+	*@brief	定型文の文字列を取得
 	*/
 	std::string GetPhrase( FixedPhrase::_PHRASE_STR_TYPE_ _phraseType )
 	{
 		return m_fixedPhrase.m_phrase[ _phraseType ];
+	}
+
+	/**
+	*@brief	文字列の削除
+	*@param[in]	_deleteType	true：前から消す、false：後から消す
+	*/
+	void DeleteStream( bool _deleteType = true )
+	{
+		if( _deleteType ){
+			std::list<LogStream*>::iterator it = m_logStream.begin();
+			delete *it;
+			m_logStream.pop_front();
+		}else{
+			LogStream* tempList = m_logStream.back();
+			delete tempList;
+			m_logStream.pop_back();
+		}
+	}
+
+	/**
+	*@brief	文字列の削除
+	*@details	ログはリスト型なので、整列させる必要があるので文字列の幅を取得
+	*@param[out]_height	削除した文字列の幅を取得
+	*@param[in]	_deleteType	true：前から消す、false：後から消す
+	*/
+	void DeleteStream( int& _height, bool _deleteType = true )
+	{
+		std::list<LogStream*>::iterator it = m_logStream.begin();
+		_height = (*it)->GetHeight();
+		delete *it;
+		m_logStream.pop_front();
 	}
 };
 

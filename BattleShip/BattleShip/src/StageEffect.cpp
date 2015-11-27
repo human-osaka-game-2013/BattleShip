@@ -108,7 +108,6 @@ void StageEffect::CheckSelectOfStage()
 		
 		tempVec = m_enTargetVector;	///<一度ベクトルの正規化を行う
 		D3DXVec2Normalize( &m_enTargetVector, &tempVec );
-		//Vec2Normalize( m_enTargetVector );	///<一度ベクトルの正規化を行う
 		
 		//	移動速度を掛けてやる。
 		//	描画時にこの処理を毎回するのは面倒。
@@ -425,27 +424,30 @@ void StageEffect::SonarEffect( BoardOfFrame& _block )
 				縮小→拡大させていく。
 				4～12秒のパターンが経過時間%8+4/5なのは他の2パターンとの差をつけるため。
 	*/
-	if( m_elapsedTimeFormStateInstance <= 8 || m_elapsedTimeFormStateInstance >= 12 )
+
+	const int xalpha = 20;
+
+	if( m_elapsedTimeFormStateInstance <= TIME_CHANGE_EFFECT+8 || m_elapsedTimeFormStateInstance >= TIME_CHANGE_EFFECT+12 )
 	{
 		float tempX, tempY, tempW, tempH;
-		int Alpha = 255;
+		unsigned int Alpha = 200;
 		tempX = _block.GetPositionX()+_BLOCK_WIDTH_SIZE_/2;
 		tempY = _block.GetPositionY()+_BLOCK_HEIGHT_SIZE_/2;		
 		tempW = _block.GetWidth() *(m_elapsedTimeFormStateInstance%8)/5;
 		tempH =	_block.GetHeight()*(m_elapsedTimeFormStateInstance%8)/5;
-		Alpha -= (m_elapsedTimeFormStateInstance%(TIME_END_ACTION_EFFECT/2))*2;
+		Alpha -= (m_elapsedTimeFormStateInstance%8)*xalpha;
 		m_pDrawManager->CenterDraw( _TEX_SEARCH_EFFECT_, tempX, tempY, 0.f, 
 					tempW, tempH, 0.f, 0.f, 1.f, 1.f, Alpha, 255, 255, 255 );
 	}
-	if( m_elapsedTimeFormStateInstance >= 4 || m_elapsedTimeFormStateInstance <= 12 )
+	if( m_elapsedTimeFormStateInstance >= TIME_CHANGE_EFFECT+4 || m_elapsedTimeFormStateInstance <= TIME_CHANGE_EFFECT+12 )
 	{
 		float tempX, tempY, tempW, tempH;
-		int Alpha = 255;
+		unsigned int Alpha = 200;
 		tempX = _block.GetPositionX()+_BLOCK_WIDTH_SIZE_/2;
 		tempY = _block.GetPositionY()+_BLOCK_HEIGHT_SIZE_/2;
 		tempW = _block.GetWidth() *((m_elapsedTimeFormStateInstance%8)+4)/5;
 		tempH =	_block.GetHeight()*((m_elapsedTimeFormStateInstance%8)+4)/5;
-		Alpha -= (m_elapsedTimeFormStateInstance%(TIME_END_ACTION_EFFECT/2))*2;
+		Alpha -= (m_elapsedTimeFormStateInstance%8)*xalpha;
 
 	m_pDrawManager->CenterDraw( _TEX_SEARCH_EFFECT_, tempX, tempY, 0.f, 
 				tempW, tempH, 0.f, 0.f, 1.f, 1.f, Alpha, 255, 255, 255 );	///<	マスの描画
