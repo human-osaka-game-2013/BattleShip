@@ -10,6 +10,7 @@
 #include "Background.h"
 #include "ScreenMask.h"
 #include "Button.h"
+#include "ConnectSetting.h"
 
 #define _BUTTON_POS_X_  400.0f
 #define _BUTTON_POS_Y_	500.0f
@@ -24,9 +25,9 @@ private:
 	Background	m_background;	///<背景オブジェクト
 	ScreenMask	m_screenMask;	///<画面遷移時のフェード用
 	Button		m_button;		///<ボタンオブジェクト（現時点ではゲームをスタートする時に使用）
+	ConnectSetting	m_connectSetting;
+	
 	bool		m_changeSceneFlag;
-	float		m_changeSceneTime;
-
 	bool		m_stopFadeFlag;	///<フェード停止（終了）フラグ
 
 public:
@@ -44,9 +45,6 @@ public:
 		CMouse* const m_pMouse, Audio* const _pAudio )
 		: CScene( _id, _pRenderManager,	_pDrawManager, _pKey, m_pMouse, _pAudio)
 	{
-		m_changeSceneFlag = false;
-		m_changeSceneTime = _CHANGE_TIME_;
-
 		Init();
 	}
 

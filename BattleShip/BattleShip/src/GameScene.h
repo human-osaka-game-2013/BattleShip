@@ -37,6 +37,7 @@ private:
 	Connect			m_Connect;			///<	通信デバイスクラス
 	ScreenMask		m_screenMask;		///<	画面遷移時のフェード用
 	
+
 	bool	m_fadeInFlag;		///<ゲーム開始時はフェードインさせる。
 	bool	m_fadeOutFlag;		///<ゲーム終了時にフェードアウトさせる。
 	

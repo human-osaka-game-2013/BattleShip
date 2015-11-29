@@ -77,6 +77,7 @@
     <ClCompile Include="..\Library\src\WinMain.cpp" />
     <ClCompile Include="src\AircraftCarrier.cpp" />
     <ClCompile Include="src\BattleShip.cpp" />
+    <ClCompile Include="src\ConnectSetting.cpp" />
     <ClCompile Include="src\Cruiser.cpp" />
     <ClCompile Include="src\Destroyer.cpp" />
     <ClCompile Include="src\GameLog.cpp" />

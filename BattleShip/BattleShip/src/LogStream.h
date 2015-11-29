@@ -114,6 +114,15 @@ public:
 	D3DXCOLOR* GetColor(){ return &m_color; }
 
 	unsigned long GetFormat(){ return m_format; }
+
+	void AppendStr( const char* _str )
+	{
+		m_logStr.append(_str);
+	}
+	void DeleteStr()
+	{
+		m_logStr.erase();
+	}
 };
 
 #endif

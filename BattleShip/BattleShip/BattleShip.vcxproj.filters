@@ -132,6 +132,9 @@
     <ClCompile Include="..\Library\src\AudioInterface.cpp">
       <Filter>ソース ファイル\Lib_Interface</Filter>
     </ClCompile>
+    <ClCompile Include="src\ConnectSetting.cpp">
+      <Filter>ソース ファイル\Game\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\TitleScene.h">
@@ -222,7 +225,7 @@
       <Filter>追加機能系\Connect</Filter>
     </ClInclude>
     <ClInclude Include="src\ConnectSetting.h">
-      <Filter>ヘッダー ファイル\Game\Object</Filter>
+      <Filter>追加機能系\Connect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

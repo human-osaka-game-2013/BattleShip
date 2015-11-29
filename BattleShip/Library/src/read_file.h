@@ -7,6 +7,8 @@
 #define _READ_FILE_H_
 #include <iostream>
 
+#define _READ_FILE_PASS_1_ "table/ConnectData.txt"
+
 /**
 *@brief	ファイルを読み込み
 *@details	textやCSV形式のファイルを読み込み、数値をテーブルにセットするためのクラス。@n

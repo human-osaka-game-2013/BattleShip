@@ -13,6 +13,10 @@ bool TitleScene::Init()
 					_BUTTON_WIDTH_, _BUTTON_HEIGHT_ );
 	m_screenMask.SetColor( 255, 255, 255, 255);//フェードインさせたいのでアルファ値は255で
 
+	m_changeSceneFlag = false;
+	
+	m_connectSetting.Init( m_pMouse, m_pKey );
+
 	m_stopFadeFlag = false;
 	//	タイトルBGM再生
 	m_pAudio->SoundPlay( Audio::_TITLE_BGM_, true );
@@ -29,14 +33,13 @@ int TitleScene::Control()
 	//	シーンが代わる時
 	if( m_changeSceneFlag )
 	{
-		m_changeSceneTime -= 1.f;
 		if( m_stopFadeFlag == false)
 		{
 			m_stopFadeFlag = m_screenMask.FadeOut(_FADE_OUT_TIME_);
 		}
 
 		//	シーン変更
-		if( m_changeSceneTime <= 0.f || m_stopFadeFlag )
+		if( m_stopFadeFlag )
 		{
 			result = 1;
 		}

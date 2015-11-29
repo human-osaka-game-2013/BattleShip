@@ -11,7 +11,7 @@
 bool Connect::Init()
 {
 	//	通信の必要なデータを外部ファイルからセット
-	ReadTableData("table/ConnectData.txt", CONNECT_INFO_MAX, 1);
+	ReadTableData(_READ_FILE_PASS_1_, CONNECT_INFO_MAX, 1);
 	
 	m_ownSock = NULL;
 	m_partnersSock = NULL;
