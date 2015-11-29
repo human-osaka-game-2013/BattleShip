@@ -10,7 +10,6 @@ CKey::CKey( IDirectInputDevice8* const _pKeyDevice ): m_pKeyDevice(_pKeyDevice)
 		m_preKey[iCount] = false;
 	}
 	
-
 }
 
 //	キー状態チェック
@@ -61,9 +60,16 @@ bool CKey::StCheck(int _st, int _keySt)
 //	全てのキーの状態チェック
 void CKey::AllKeyCheck ()
 {
-	KeyCheck ( DIK_RETURN, ENTER );
-	KeyCheck ( DIK_A, LEFT );
-	KeyCheck ( DIK_D, RIGHT );
-	KeyCheck ( DIK_W, UP );
-	KeyCheck ( DIK_S, DOWN );
+	KeyCheck ( DIK_0, KEY_0 );
+	KeyCheck ( DIK_1, KEY_1 );
+	KeyCheck ( DIK_2, KEY_2 );
+	KeyCheck ( DIK_3, KEY_3 );
+	KeyCheck ( DIK_4, KEY_4 );
+	KeyCheck ( DIK_5, KEY_5 );
+	KeyCheck ( DIK_6, KEY_6 );
+	KeyCheck ( DIK_7, KEY_7 );
+	KeyCheck ( DIK_8, KEY_8 );
+	KeyCheck ( DIK_9, KEY_9 );
+	KeyCheck ( DIK_COMMA, COMMA );
+	
 }

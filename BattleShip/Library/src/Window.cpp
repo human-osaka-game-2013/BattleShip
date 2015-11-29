@@ -37,5 +37,7 @@ int CreateWindowProcess ( HINSTANCE hInst, HWND* hWnd )
 						 HEIGHT + dH,		// Height
 						 NULL, NULL, hInst, NULL );
 
+	
+
 	return 1;
 }

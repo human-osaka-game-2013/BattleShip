@@ -12,7 +12,7 @@
 #include "Button.h"
 
 #define _BUTTON_POS_X_  400.0f
-#define _BUTTON_POS_Y_	420.0f
+#define _BUTTON_POS_Y_	500.0f
 #define _BUTTON_WIDTH_	226.0f
 #define _BUTTON_HEIGHT_	50.0f
 #define _CHANGE_TIME_	3.0f*60.f

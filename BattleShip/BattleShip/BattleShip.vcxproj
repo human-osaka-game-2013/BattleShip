@@ -108,6 +108,7 @@
     <ClInclude Include="src\BattleShip.h" />
     <ClInclude Include="src\BoardOfFrame.h" />
     <ClInclude Include="src\Button.h" />
+    <ClInclude Include="src\ConnectSetting.h" />
     <ClInclude Include="src\ConnectStruct.h" />
     <ClInclude Include="src\Cruiser.h" />
     <ClInclude Include="src\Destroyer.h" />

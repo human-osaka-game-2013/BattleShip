@@ -49,6 +49,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	ZeroMemory (&msg, sizeof(msg));
 
+	/*HWND temp = CreateWindow(	TEXT("EDIT"),
+					TEXT("Kitty on your lap") ,
+					WS_CHILD | WS_VISIBLE | WS_BORDER | ES_LEFT ,
+					0 , 0 , 200 , 30 ,
+					hWnd ,
+					(HMENU)1 ,
+					hInstance,
+					NULL );*/
+
 	while (msg.message != WM_QUIT)
 	{
 		Sleep(1);
@@ -58,7 +67,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 			TranslateMessage (&msg);
 			DispatchMessage (&msg);
 		}
-
 		else
 		{
 			SyncNow = timeGetTime();

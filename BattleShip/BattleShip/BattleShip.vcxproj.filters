@@ -221,5 +221,8 @@
     <ClInclude Include="src\ConnectStruct.h">
       <Filter>追加機能系\Connect</Filter>
     </ClInclude>
+    <ClInclude Include="src\ConnectSetting.h">
+      <Filter>ヘッダー ファイル\Game\Object</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
