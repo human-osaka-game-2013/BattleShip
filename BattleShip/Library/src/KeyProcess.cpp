@@ -57,6 +57,16 @@ bool CKey::StCheck(int _st, int _keySt)
 	return ( m_key[_st] == _keySt );
 }
 
+int CKey::CheckStateToAllKey( int _keySt )
+{
+	for( int i = 0; i < KEYMAX; i++ )
+	{
+		if(m_key[i] == _keySt)
+			return i;
+	}
+	return -1;
+}
+
 //	全てのキーの状態チェック
 void CKey::AllKeyCheck ()
 {

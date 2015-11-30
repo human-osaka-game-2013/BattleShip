@@ -6,8 +6,6 @@
 #ifndef _GAMEOBJECT_H_
 #define _GAMEOBJECT_H_
 
-
-
 /**
 *@brief	ゲームオブジェクトクラス
 *@details	ゲーム内で使うオブジェクトの

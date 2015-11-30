@@ -33,8 +33,8 @@ int CreateWindowProcess ( HINSTANCE hInst, HWND* hWnd )
 						 WS_OVERLAPPEDWINDOW | WS_VISIBLE,
 						 CW_USEDEFAULT,		// x
 						 CW_USEDEFAULT,		// y
-						 WIDTH + dW,		// Width
-						 HEIGHT + dH,		// Height
+						 static_cast<int>(WIDTH + dW ),		// Width
+						 static_cast<int>(HEIGHT + dH),		// Height
 						 NULL, NULL, hInst, NULL );
 
 	

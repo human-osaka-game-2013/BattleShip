@@ -88,7 +88,7 @@ public:
 		LONG _draw_pos_y,
 		LONG _w, LONG _h,
 		LPCSTR _font,
-		const D3DXCOLOR *_font_color,
+		const D3DXCOLOR *_font_color = &D3DXCOLOR(0xffffffff),
 		unsigned long _format = DT_LEFT
 		);
 

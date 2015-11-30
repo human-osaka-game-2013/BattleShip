@@ -8,17 +8,29 @@
 */
 class Button: public CGameObject
 {
+public:
+	enum BUTTON_STATE
+	{
+		STATE_OFF_CURSOR,
+		STATE_ON_CURSOR,		
+		STATE_SELECT
+	};
+
 private:
+	float defaultPosX, defaultPosY;		///< ボタンの初期基準位置
+	float selectVol;					///< ボタンの（選択時の）拡大率
+	float defaultWidth, defaultHeight;	///< ボタンの初期基準幅高さ
 	float fWidth ,fHeight;
 	int iA, iR, iG, iB; 
-	
+	BUTTON_STATE m_state;
+
 public:
 	/**
 	*@brief コンストラクタ
 	*/
 	Button() : CGameObject()
 	{
-
+		m_state = STATE_OFF_CURSOR;
 	}
 
 	/**
@@ -32,14 +44,31 @@ public:
 	/**
 	*@brief	初期化
 	*/
-	void Init( float _fx, float _fy, float _fWidth, float _fHeight )
+	void Init( float _fx, float _fy, float _fWidth, float _fHeight, float _selectVol = 2.f )
 	{
 		SetPosition(_fx, _fy, 0.5f);
-		fHeight = _fHeight;
+		selectVol = _selectVol;
+		defaultPosX = _fx;
+		defaultPosY = _fy;
+		
+		defaultWidth = _fWidth;
+		defaultHeight= _fHeight;
+		
 		fWidth = _fWidth;
+		fHeight = _fHeight;
+		
 		SetColor( 255, 255, 255, 255 );
 	}
+
 	void Control(){};
+	/**
+	*@brief	ボタンのルーチン処理
+	*@param[in] _x	カーソル位置X
+	*@param[in] _y	カーソル位置Y
+	*@param[in] _state	カーソル（orキー）の状態
+	*/
+	char Contorl( const float _x, const float _y, const char _inputState );
+
 	void Draw(){};
 	
 	inline float GetWidth(){ return fWidth; }
@@ -58,6 +87,8 @@ public:
 		_iB	= iB;
 	}
 
+	char GetState(){ return static_cast<char>(m_state); }
+
 	void SetWidth( const float& _width  ){ fWidth = _width; }
 	void SetHeight( const float& _height ){ fHeight = _height; }
 
@@ -68,7 +99,9 @@ public:
 		iG = _iG;
 		iB = _iB;
 	}
-	
+
+	void SetState( const BUTTON_STATE _state ){ m_state = _state; }
+
 	/**
 	*@brief	当たり判定処理
 	*@details	引数内のxy座標が、自身のオブジェクト内に入っているかを判定

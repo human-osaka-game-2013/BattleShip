@@ -9,7 +9,6 @@
 #include "SceneInterface.h"
 #include "Background.h"
 #include "ScreenMask.h"
-#include "Button.h"
 #include "ConnectSetting.h"
 
 #define _BUTTON_POS_X_  400.0f

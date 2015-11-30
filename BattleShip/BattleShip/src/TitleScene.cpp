@@ -48,30 +48,19 @@ int TitleScene::Control()
 	{
 		if( m_screenMask.FadeIn(_FADE_IN_TIME_) )
 		{
+			char inputState = 0;
+			inputState = m_pMouse->GetMouseSt( MOUSE_L );
+
 			//	ゲームスタートボタン上にカーソルがあったら
-			if( m_button.HitBlockCheck( tempX, tempY ) && !m_changeSceneFlag )
+
+			if( m_button.Contorl( tempX, tempY, inputState ) )
 			{
-				m_button.SetPosition( _BUTTON_POS_X_-1.f, _BUTTON_POS_Y_-1.f, 0.5f );
-				m_button.SetColor( 255, 200, 200, 200 );
-				m_button.SetWidth( _BUTTON_WIDTH_+2.f );
-				m_button.SetHeight( _BUTTON_HEIGHT_+2.f );
-				//	右クリック
-				if(m_pMouse->MouseStCheck( MOUSE_L, PUSH ))
-				{
-					m_button.SetPosition( _BUTTON_POS_X_, _BUTTON_POS_Y_, 0.5f );
-					m_button.SetColor( 255, 200, 200, 200 );
-					m_button.SetWidth( _BUTTON_WIDTH_ );
-					m_button.SetHeight( _BUTTON_HEIGHT_ );
+				if( m_button.GetState() == Button::STATE_SELECT ){
 					m_changeSceneFlag = true;
 					m_pAudio->SoundPlay( Audio::_CLICK_SE_ );
 				}
 			}
-			else{
-				m_button.SetPosition( _BUTTON_POS_X_, _BUTTON_POS_Y_, 0.5f );
-				m_button.SetColor( 255, 255, 255, 255 );
-				m_button.SetWidth( _BUTTON_WIDTH_ );
-				m_button.SetHeight( _BUTTON_HEIGHT_ );
-			}
+			m_connectSetting.Control();
 		}
 	}
 	return result;
@@ -103,5 +92,5 @@ void TitleScene::Draw()
 		m_screenMask.GetWidth(),  m_screenMask.GetHeight(),
 		0.f, 0.f, 1.f, 1.f,	tempA, tempR, tempG, tempB);
 	
-	
+	m_connectSetting.Draw( m_pDrawManager );	
 }

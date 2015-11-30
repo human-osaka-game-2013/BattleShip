@@ -67,5 +67,9 @@ public:
 	*/
 	bool StCheck(int _st, int _keySt);
 
+	/**
+	*@brief	キー状態と全てキーのチェック
+	*/
+	int CheckStateToAllKey( int _keySt );
 };
 #endif

@@ -77,6 +77,7 @@
     <ClCompile Include="..\Library\src\WinMain.cpp" />
     <ClCompile Include="src\AircraftCarrier.cpp" />
     <ClCompile Include="src\BattleShip.cpp" />
+    <ClCompile Include="src\Button.cpp" />
     <ClCompile Include="src\ConnectSetting.cpp" />
     <ClCompile Include="src\Cruiser.cpp" />
     <ClCompile Include="src\Destroyer.cpp" />
@@ -92,6 +93,7 @@
     <ClCompile Include="src\StageObject.cpp" />
     <ClCompile Include="src\StateManager.cpp" />
     <ClCompile Include="src\Submarine.cpp" />
+    <ClCompile Include="src\TextField.cpp" />
     <ClCompile Include="src\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -129,6 +131,7 @@
     <ClInclude Include="src\StageObject.h" />
     <ClInclude Include="src\StateManager.h" />
     <ClInclude Include="src\Submarine.h" />
+    <ClInclude Include="src\TextField.h" />
     <ClInclude Include="src\TitleScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

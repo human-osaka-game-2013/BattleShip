@@ -71,6 +71,8 @@ public:
 	*/
 	long GetCursorMoveVolY () { return m_moveMouseVol.lMVolY; }
 	
+	char GetMouseSt( int _st ){ return static_cast<char>(m_mouse[_st]); }
+
 	/**
 	*@brief	マウス状態チェック
 	*/
