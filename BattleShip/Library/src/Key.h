@@ -12,6 +12,9 @@
 */ 
 enum eKEYKIND
 {
+	/*
+		数値の入力など（ここの並びは変えないで下さい。）
+	*/
 	KEY_0,
 	KEY_1,
 	KEY_2,
@@ -22,8 +25,11 @@ enum eKEYKIND
 	KEY_7,
 	KEY_8,
 	KEY_9,
-	COMMA,
-	
+	PERIOD,
+
+	/*
+		その他
+	*/	
 	ENTER,
 
 	KEYMAX
@@ -69,6 +75,8 @@ public:
 
 	/**
 	*@brief	キー状態と全てキーのチェック
+	*@details	引数のキー状態になっているキーを配列データから探し、
+				一番最初に合致したキーのIDを返す。該当しなかった場合は-1を返す
 	*/
 	int CheckStateToAllKey( int _keySt );
 };

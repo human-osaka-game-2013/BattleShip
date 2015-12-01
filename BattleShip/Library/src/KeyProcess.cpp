@@ -80,6 +80,6 @@ void CKey::AllKeyCheck ()
 	KeyCheck ( DIK_7, KEY_7 );
 	KeyCheck ( DIK_8, KEY_8 );
 	KeyCheck ( DIK_9, KEY_9 );
-	KeyCheck ( DIK_COMMA, COMMA );
+	KeyCheck ( DIK_PERIOD, PERIOD );
 	
 }

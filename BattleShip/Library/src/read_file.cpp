@@ -6,6 +6,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <fstream>
 
 #include "read_file.h"
 
@@ -56,3 +57,13 @@ bool ReadFile::ReadTableData( char* _pFileName, const int _ColumnMax, const int 
 	return true;
 }
 
+bool ReadFile::SetDataFile( const std::string& _str )
+{
+	std::ofstream ofs;
+	ofs.open( _READ_FILE_PASS_1_ );
+
+	ofs <<_str.c_str()<< std::endl;
+
+	ofs.close();
+	return true;
+}

@@ -6,7 +6,7 @@
 void CSceneManager::Manage ()
 {
 	static int	iBeforeScene = SCENE_NONE;	//	前のシーン。最初だけNONEで初期化
-
+	m_pKey->AllKeyCheck();	///<キーの状態更新
 	m_pMouse->AllButtonCheck();	///<マウスボタンの状態更新
 	m_pMouse->CursorSet( m_pDevice->GetWindowHandle() );	///<マウス座標更新
 

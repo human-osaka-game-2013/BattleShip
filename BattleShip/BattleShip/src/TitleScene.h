@@ -11,7 +11,7 @@
 #include "ScreenMask.h"
 #include "ConnectSetting.h"
 
-#define _BUTTON_POS_X_  400.0f
+#define _BUTTON_POS_X_  150.0f
 #define _BUTTON_POS_Y_	500.0f
 #define _BUTTON_WIDTH_	226.0f
 #define _BUTTON_HEIGHT_	50.0f

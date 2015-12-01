@@ -23,6 +23,20 @@ public:
 	bool ReadTableData( char* _pFileName, const int _ColumnMax, const int _LineMax );
 	
 	/**
+	*@brief	文字列からデータファイルに変換
+	*@details	文字列をデータファイルにセット出来るように変換する。
+				SetDataFile関数を用いる際にこの関数を各クラスでオーバーライドして使って下さい。
+	*@retval false	データファイルにセットするデータに不備があった。
+	*@retval true	成功
+	*/
+	virtual bool ConvertDataFileFromStr( std::string* _outStr ){ return true; }
+
+	/**
+	*@brief	データファイルへ情報セット
+	*/
+	bool SetDataFile( const std::string& _str );
+
+	/**
 	*@brief	読み取ったデータをテーブルにセット
 	*@details	テーブルデータは派生クラスに1種類のファイルのみを使う事。@n
 				よってどのテーブルにデータを入れるかの調節は派生先の関数で行う事。
