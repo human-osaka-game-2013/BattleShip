@@ -22,7 +22,8 @@ private:
 	LPDIRECTINPUTDEVICE8	m_pKeyDevice;	///< キーデバイス -> 外部キー入力
 	LPDIRECTINPUTDEVICE8	m_pMouseDevice;	///< マウスデバイス -> 外部マウス入力
 	HWND*					m_hWnd;			///< ウインドウハンドル
-	
+	RECT DevDesc;
+	RECT WindowPos;
 
 public:
 	/**

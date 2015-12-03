@@ -34,9 +34,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	if( FAILED (deviceObj.InitDevice())) return 0;	///<デバイス管理クラスの初期化
 
-	// サウンドの初期化
-	//InitXAudio2();
-
 	//	シーン管理オブジェクトの生成
 	CSceneManager* pSceneManage = new CSceneManager( CSceneManager::SCENE_TITLE, &deviceObj, false );
 
@@ -48,15 +45,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	timeBeginPeriod(1);
 
 	ZeroMemory (&msg, sizeof(msg));
-
-	/*HWND temp = CreateWindow(	TEXT("EDIT"),
-					TEXT("Kitty on your lap") ,
-					WS_CHILD | WS_VISIBLE | WS_BORDER | ES_LEFT ,
-					0 , 0 , 200 , 30 ,
-					hWnd ,
-					(HMENU)1 ,
-					hInstance,
-					NULL );*/
 
 	while (msg.message != WM_QUIT)
 	{
