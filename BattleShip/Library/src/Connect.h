@@ -72,17 +72,6 @@ public:
 	bool Init();
 	
 	/**
-	*@brief	読み取ったデータをテーブルにセット
-	*@details	通信に必要なデータを外部ファイルから読み取り、それに合うメンバ変数にセットする。
-	*/
-	void SetTable( char* _p, int _iColumn, int _iLine );
-
-	/**
-	*@brief	ソケット設定メソッド
-	*/
-	bool SettingSocket();
-
-	/**
 	*@brief	ソケットの接続
 	*/
 	bool Connection();
@@ -105,7 +94,7 @@ public:
 	*@retval true	sendに成功
 	*@retval false	sendに失敗
 	*/
-	bool Send( char *_buf, int _bufSize );
+	bool Send( char* _buf, int _bufSize );
 	
 	/**
 	*@brief	通信終了処理
@@ -113,6 +102,16 @@ public:
 	void EndConnect();
 
 private:
+	/**
+	*@brief	読み取ったデータをテーブルにセット
+	*@details	通信に必要なデータを外部ファイルから読み取り、それに合うメンバ変数にセットする。
+	*/
+	void SetTable( char* _p, int _iColumn, int _iLine );
+
+	/**
+	*@brief	ソケット設定メソッド
+	*/
+	bool SettingSocket();
 
 	/**
 	*@brief	ソケット生成メソッド
