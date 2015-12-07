@@ -36,11 +36,11 @@ public:
 	/**
 	*@brief	èâä˙âª
 	*/
-	void Init()
+	void Init( float _x = 0.f, float _y = 0.f, float _w =WIDTH, float _h = HEIGHT )
 	{
-		SetPosition(0.f, 0.f, 0.5f);
-		fHeight = HEIGHT;
-		fWidth = WIDTH;
+		SetPosition(_x, _x, 0.5f);
+		fWidth = _w;
+		fHeight = _h;
 	}
 	void Control(){};
 	void Draw(){};

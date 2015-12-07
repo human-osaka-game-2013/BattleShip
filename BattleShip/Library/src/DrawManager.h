@@ -27,6 +27,7 @@ struct TEXTUREINFO
 // 使いたいテクスチャがあれば列挙子内に追加していく
 enum TEXTURES
 {
+	//	ゲームメイン中
 	_TEX_BACKGROUND_,
 
 	_TEX_AIRCARRIER_,
@@ -40,21 +41,26 @@ enum TEXTURES
 	_TEX_BLOCKFRAME_,
 	_TEX_TABFRAME_,
 	
+	//	タイトル画面中
+	_TEX_TITLE_MAIN_,
 	_TEX_TITLE_BACK_,
 	_TEX_STARTBUTTON_,
 	_TEX_TITLEMASK_,
 	_TEX_SERVERBUTTON_,
 	_TEX_CLIENTBUTTON_,
 	_TEX_UPDATEBUTTON_,
+
 	
+	//	その他
 	_TEX_GAMEMASK_,
 	_TEX_GAMELOG_,
 	
-	_TEX_FIRE_EFFECT_,
-	_TEX_EXPLOSION_EFFECT_,
-	_TEX_SEARCH_EFFECT_,
-	_TEX_AIRCRAFT_,
-	_TEX_RECON_,
+	//	エフェクト
+	_TEX_FIRE_EFFECT_,		///<砲撃
+	_TEX_EXPLOSION_EFFECT_,	///<爆発
+	_TEX_SEARCH_EFFECT_,	///<索敵
+	_TEX_AIRCRAFT_,	///<航空機
+	_TEX_RECON_,	///<偵察機
 	_TEX_TORPEDO_,	///<魚雷
 	
 	_TEXTURE_MAX_

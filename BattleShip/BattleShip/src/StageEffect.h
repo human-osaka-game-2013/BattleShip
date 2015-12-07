@@ -180,11 +180,6 @@ private:
 	void ExplosionEffect( BoardOfFrame& _block );
 
 //	‚»‚Ì‘¼
-private:
-	/**
-	*@brief	2ŸŒ³ƒxƒNƒgƒ‹‚Ì³‹K‰»
-	*/
-	int Vec2Normalize( D3DXVECTOR2& _vec2 );
 
 };
 

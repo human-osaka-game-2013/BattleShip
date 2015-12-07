@@ -378,10 +378,9 @@ void StageEffect::TorpedoEffect( BoardOfFrame& _block, bool _appearanceInvisibil
 {
 	float tempX, tempY;
 	bool flipHorizontal = m_playerID/_PLAYER_NUM_ ? true : false;	///<プレイヤーによって画像の反転をさせる
-	unsigned long color = 0xc8a0a0ff;
-	static const int multiplOfTorpedoAlpha = 4;	///< 航空機のアルファ値をtimeから乗算して出す際の数
-	int texNum = _TEX_TORPEDO_;
-
+	unsigned long color = 0xc8a0a0ff;	///< 魚雷のデフォルトカラー値（青っぽくすることで、水中を進んでいるように表現）
+	static const int multiplOfTorpedoAlpha = 4;	///< 魚雷のアルファ値をtimeから乗算して出す際の数
+	
 	if( !_appearanceInvisibility )
 	{
 		//	航空機の移動先の位置をゲームカウントで制御
@@ -410,7 +409,7 @@ void StageEffect::TorpedoEffect( BoardOfFrame& _block, bool _appearanceInvisibil
 		flipHorizontal = m_playerID/_PLAYER_NUM_ ? false : true;	///< 消している方は今の時点では自身とは
 	}
 	
-	m_pDrawManager->AnimationDraw( texNum, tempX, tempY, 
+	m_pDrawManager->AnimationDraw( _TEX_TORPEDO_, tempX, tempY, 
 				_block.GetWidth(), 
 				_block.GetHeight(),
 				flipHorizontal, false, 0, 0, color );	///<	マスの描画
@@ -456,18 +455,6 @@ void StageEffect::SonarEffect( BoardOfFrame& _block )
 }
 
 
-int StageEffect::Vec2Normalize( D3DXVECTOR2& _vec2 )
-{
-	float x, y;
-	float len;
-	x = _vec2.x;
-	y = _vec2.y;
-	len = 1/hypotf(x,y);
-	if( len <= 0 )	return 0;
-	_vec2.x *= len;
-	_vec2.y *= len;
-	return 1;
-}
 
 void StageEffect::EffectSoundControl()
 {
