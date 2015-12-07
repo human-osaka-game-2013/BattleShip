@@ -23,6 +23,8 @@ class TitleScene : public CScene
 private:
 	Background	m_background;	///<背景オブジェクト
 	Background	m_title;		///<タイトルオブジェクト
+	Background	m_rudder;
+
 	ScreenMask	m_screenMask;	///<画面遷移時のフェード用
 	Button		m_button;		///<ボタンオブジェクト（現時点ではゲームをスタートする時に使用）
 	ConnectSetting	m_connectSetting;

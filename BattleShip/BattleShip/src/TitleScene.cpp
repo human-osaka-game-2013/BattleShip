@@ -8,6 +8,9 @@
 bool TitleScene::Init()
 {
 	m_background.Init();
+	m_title.Init( 0.f, 0.f, 1024.f, 256.f );
+	m_rudder.Init( WIDTH/2.f, 128.f, 512.f, 512.f );
+
 	m_screenMask.Init();
 	m_button.Init( _BUTTON_POS_X_, _BUTTON_POS_Y_,
 					_BUTTON_WIDTH_, _BUTTON_HEIGHT_ );
@@ -52,7 +55,6 @@ int TitleScene::Control()
 			inputState = m_pMouse->GetMouseSt( MOUSE_L );
 
 			//	ゲームスタートボタン上にカーソルがあったら
-
 			if( m_button.Contorl( tempX, tempY, inputState ) )
 			{
 				if( m_button.GetState() == Button::STATE_SELECT ){
@@ -78,6 +80,18 @@ void TitleScene::Draw()
 		m_background.GetWidth(),  m_background.GetHeight(),
 		0.f, 0.f, 1.f, 1.f);
 	
+	m_rudder.GetPosition( &tempX, &tempY);
+	m_pDrawManager->CenterDraw( _TEX_TITLE_RUDDER_, tempX, tempY,
+		static_cast<float>(GetTimeInScene()),
+		m_rudder.GetWidth(),  m_rudder.GetHeight(),
+		0.f, 0.f, 1.f, 1.f);
+
+	//	タイトル
+	m_title.GetPosition( &tempX, &tempY);
+	m_pDrawManager->VertexDraw( _TEX_TITLE_MAIN_, tempX, tempY, 
+		m_title.GetWidth(),  m_title.GetHeight(),
+		0.f, 0.f, 1.f, 1.f);
+	
 	//	ゲームスタートボタン描画
 	m_button.GetPosition( &tempX, &tempY);
 	m_button.GetColor( tempA, tempR, tempG, tempB );
@@ -92,5 +106,6 @@ void TitleScene::Draw()
 		m_screenMask.GetWidth(),  m_screenMask.GetHeight(),
 		0.f, 0.f, 1.f, 1.f,	tempA, tempR, tempG, tempB);
 	
+	//	通信設定描画
 	m_connectSetting.Draw( m_pDrawManager );	
 }

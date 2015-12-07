@@ -38,7 +38,7 @@ public:
 	*/
 	void Init( float _x = 0.f, float _y = 0.f, float _w =WIDTH, float _h = HEIGHT )
 	{
-		SetPosition(_x, _x, 0.5f);
+		SetPosition(_x, _y, 0.5f);
 		fWidth = _w;
 		fHeight = _h;
 	}
