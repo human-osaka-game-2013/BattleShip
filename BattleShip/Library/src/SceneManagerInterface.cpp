@@ -33,8 +33,6 @@ void CSceneManager::Manage ()
 			
 			break;
 		}
-		//	シーンを変えたので初期化をさせる必要がある。
-		UpdateChangeFlag ( true );
 		//	ここで全ての再生している音声を念のためストップ
 		m_pAudio->SoundAllStop();
 	}

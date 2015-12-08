@@ -80,11 +80,12 @@ void TitleScene::Draw()
 		m_background.GetWidth(),  m_background.GetHeight(),
 		0.f, 0.f, 1.f, 1.f);
 	
+	//	‘Ç‚Ì•`‰æ
 	m_rudder.GetPosition( &tempX, &tempY);
 	m_pDrawManager->CenterDraw( _TEX_TITLE_RUDDER_, tempX, tempY,
 		static_cast<float>(GetTimeInScene()),
 		m_rudder.GetWidth(),  m_rudder.GetHeight(),
-		0.f, 0.f, 1.f, 1.f);
+		0.f, 0.f, 1.f, 1.f, 255, 150, 150, 150 );
 
 	//	ƒ^ƒCƒgƒ‹
 	m_title.GetPosition( &tempX, &tempY);

@@ -140,7 +140,7 @@ void GameScene::ScreenMaskDrawa()
 	//	フェード用のマスク描画
 	m_screenMask.GetPosition( &tempX, &tempY);
 	m_screenMask.GetColor( tempA, tempR, tempG, tempB );
-	m_pDrawManager->VertexDraw( _TEX_TITLEMASK_, tempX, tempY, 
+	m_pDrawManager->VertexDraw( _TEX_GAMEMASK_, tempX, tempY, 
 		m_screenMask.GetWidth(),  m_screenMask.GetHeight(),
 		0.f, 0.f, 1.f, 1.f,	tempA, tempR, tempG, tempB);
 }

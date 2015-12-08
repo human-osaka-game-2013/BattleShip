@@ -109,9 +109,9 @@ int Result::ResultOfAction( const int _playerIndex )
 		for( int il=0; il<_STAGE_LINE_MAX_; il++ )	//	列
 		{
 			//	ステージの各桁情報は何度もアクセスする可能性が高い為、コピーして少しでもアクセスのロスを減らす
-			const int iSelectNum = m_pStage->m_stageArray[_playerIndex][ic][il]/100;
-			const int iConditionNum = (m_pStage->m_stageArray[_playerIndex][ic][il]/10)%10;
-			const int iShipNum = m_pStage->m_stageArray[_playerIndex][ic][il]%10;
+			const int iSelectNum = StageObject::SelectOfData(m_pStage->m_stageArray[_playerIndex][ic][il]);
+			const int iConditionNum = StageObject::ConditionOfData(m_pStage->m_stageArray[_playerIndex][ic][il]);
+			const int iShipNum = StageObject::ShipTypeOfData(m_pStage->m_stageArray[_playerIndex][ic][il]);
 			
 			//	索敵or攻撃の指示がされていて、且つ駒があるマスだったら
 			if( iConditionNum == StageObject::_CONDITION_NOMAL_ && iSelectNum >= StageObject::_SEARCH_NOMAL_ )

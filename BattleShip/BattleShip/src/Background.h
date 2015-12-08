@@ -44,8 +44,8 @@ public:
 	}
 	void Control(){};
 	void Draw(){};
-	float GetWidth(){ return fWidth; }
-	float GetHeight(){ return fHeight; }
+	inline float GetWidth(){ return fWidth; }
+	inline float GetHeight(){ return fHeight; }
 };
 
 

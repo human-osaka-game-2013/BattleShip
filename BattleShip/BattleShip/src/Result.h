@@ -88,7 +88,7 @@ public:
 	*@param[in] _resultPlayer
 	*@param[in] _resultEnemy
 	*/
-	void GetResultPlayerAndEnemy( int& _resultPlayer, int& _resultEnemy )
+	inline void GetResultPlayerAndEnemy( int& _resultPlayer, int& _resultEnemy )
 	{
 		_resultPlayer = m_resultPlayer;
 		_resultEnemy = m_resultEnemy;

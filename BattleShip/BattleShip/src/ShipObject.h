@@ -132,7 +132,7 @@ public:
 	/**
 	*@brief	ステージ上での駒の中心位置のセット
 	*/
-	void SetArrayPos( int _column, int _line ){ 
+	inline void SetArrayPos( int _column, int _line ){ 
 		m_posColumn = _column;
 		m_posLine	= _line;
 	}
@@ -140,7 +140,7 @@ public:
 	/**
 	*@brief	ステージ上での駒の中心位置の取得
 	*/
-	void GetArrayPos( int& _column, int& _line ){ 
+	inline void GetArrayPos( int& _column, int& _line ){ 
 		_column	= m_posColumn;
 		_line	= m_posLine;
 	}

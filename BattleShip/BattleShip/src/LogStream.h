@@ -44,7 +44,7 @@ public:
 	*@brief	文字列セット
 	*@param[in] _str　セットしたい文字列
 	*/
-	void SetString( const char* _str )
+	inline void SetString( const char* _str )
 	{
 		m_logStr = _str;
 	}
@@ -54,7 +54,7 @@ public:
 	*@param[in] _width	1文字の横幅
 	*@param[in] _height	1文字の縦幅
 	*/
-	void SetSize( const unsigned int& _width, const unsigned int& _height )
+	inline void SetSize( const unsigned int& _width, const unsigned int& _height )
 	{
 		m_width	= _width;
 		m_height= _height;
@@ -65,7 +65,7 @@ public:
 	*@param[in] _x
 	*@param[in] _y
 	*/
-	void SetPosition( const long& _x, const long& _y )
+	inline void SetPosition( const long& _x, const long& _y )
 	{
 		m_x = _x;
 		m_y = _y;
@@ -74,7 +74,7 @@ public:
 	/**
 	*@brief	文字列のカラー値セット
 	*/
-	void SetColor( const D3DXCOLOR& _color )
+	inline void SetColor( const D3DXCOLOR& _color )
 	{
 		m_color = _color;
 	}
@@ -89,7 +89,7 @@ public:
 	*@param[out] _width		1文字の横幅
 	*@param[out] _height	1文字の縦幅
 	*/
-	void GetSize( unsigned int& _width, unsigned int& _height)
+	inline void GetSize( unsigned int& _width, unsigned int& _height)
 	{
 		_width	= m_width;
 		_height	= m_height;
@@ -100,7 +100,7 @@ public:
 	*@param[out] _x
 	*@param[out] _y
 	*/
-	void GetPosition( long& _x, long& _y)
+	inline void GetPosition( long& _x, long& _y)
 	{
 		_x = m_x;
 		_y = m_y;
@@ -115,11 +115,12 @@ public:
 
 	unsigned long GetFormat(){ return m_format; }
 
-	void AppendStr( const char* _str )
+	inline void AppendStr( const char* _str )
 	{
 		m_logStr.append(_str);
 	}
-	void DeleteStr()
+
+	inline void DeleteStr()
 	{
 		m_logStr.erase();
 	}

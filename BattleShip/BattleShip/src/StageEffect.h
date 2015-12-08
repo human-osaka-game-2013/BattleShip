@@ -45,10 +45,7 @@ private:
 	float m_enTargetPointY;	///< 敵が選択した座標Y
 	D3DXVECTOR2	m_enTargetVector;	///< 敵が航空機を飛ばす際のベクトル
 	BoardOfFrame m_myShipBlock;	///< 自駒の中心ブロック
-	
-	/*bool m_plSoundFlag;	///< SE鳴動フラグ（プレイヤー）
-	bool m_enSoundFlag;	///< SE鳴動フラグ（敵）
-*/
+
 public:
 	/**
 	*@brief	コンストラクタ
@@ -63,8 +60,7 @@ public:
 		m_enTargetPointY = 0.f;
 		m_actionShipPosColumn	= -1;
 		m_actionShipPosLine		= -1;
-		/*m_plSoundFlag = false;
-		m_enSoundFlag = false;*/
+		
 	}
 	/**
 	*@brief	デストラクタ
@@ -178,8 +174,6 @@ private:
 	*@brief	爆発エフェクト
 	*/
 	void ExplosionEffect( BoardOfFrame& _block );
-
-//	その他
 
 };
 

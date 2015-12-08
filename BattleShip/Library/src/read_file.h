@@ -7,7 +7,7 @@
 #define _READ_FILE_H_
 #include <iostream>
 
-#define _READ_FILE_PASS_1_ "table/ConnectData.txt"
+#define _READ_FILE_PASS_1_ "table/ConnectData.csv"
 
 /**
 *@brief	ƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚İ

@@ -11,7 +11,7 @@
 #define _LOG_COLOR_WARNING_		0xFFFF0000	///<ƒQ[ƒ€“à‚Å‚ÌŒxŒnƒƒO‚ð•\Ž¦‚·‚éÛ‚ÌƒJƒ‰[
 #define _LOG_COLOR_SUCCESS_		0xFF00FF00	///<ƒQ[ƒ€“à‚Å‚ÌƒvƒŒƒCƒ„[‚É—DˆÊ“I‚ÈƒƒO‚ð•\Ž¦‚·‚éÛ‚ÌƒJƒ‰[
 #define _LOG_COLOR_NOMAL_		0xFF00A0FF		
-#define _LOG_COLOR_PHASE_		0xFF00FFFF
+#define _LOG_COLOR_PHASE_		0xFFFFFF00
 
 /**
 *@brief	ƒQ[ƒ€’†‚É•\Ž¦‚³‚¹‚éƒƒOƒNƒ‰ƒX
@@ -61,7 +61,7 @@ public:
 	*@details	ƒƒO‚Ì•\Ž¦Šî€À•Wxy‚È‚ç‚Ñ‚ÉAÅ‰‚É’Ç‰Á‚µ‚½‚¢•¶Žš—ñ‚ª‚ ‚ê‚ÎA‚±‚±‚Å’Ç‰Á‚·‚éŽ–‚ào—ˆ‚éB
 				•¶Žš—ñ‚ÍƒfƒtƒHƒ‹ƒg‚ÅNULL‚È‚Ì‚ÅA’Ç‰Á‚µ‚È‚¢‚È‚çDirectXFontƒNƒ‰ƒX‚ð—p‚¢‚Ä•`‰æ‚·‚éê‡‚É•K—v‚Èî•ñ‚Í“n‚¹‚È‚¢‚Ì‚Å’ˆÓB
 	*/
-	void Init( const long& _x, const long& _y, const char* _firstStr = NULL );
+	void Init( const long& _x, const long& _y, const char* _firstStr = "" );
 
 
 	/**
@@ -77,33 +77,18 @@ public:
 		unsigned long _format = DT_LEFT );
 
 	/**
-	*@brief	“o˜^‚µ‚Ä‚¢‚é•¶Žš—ñ‚Ìc•‚ðƒ`ƒFƒbƒN
-	*@details	“o˜^‚µ‚Ä‚¢‚é•¶Žš—ñ‚Ìc•‚ð‰ÁŽZ‚µ‚Ä‚¢‚«A
-				Žw’è‚µ‚½”’lˆÈã‚É‚¾‚Á‚½ê‡‚ÍŒã‚É“o˜^‚µ‚Ä‚¢‚½‚à‚Ì‚©‚çíœ‚µ‚Ä‚¢‚­
-	*@param[in]	_height	”äŠr‚µ‚½‚¢c•ƒTƒCƒY
-	*/
-	bool CheckStream( const unsigned int _height );
-
-	/**
-	*@brief	ƒƒO‚ÌÄ”z’u
-	*@details	ƒƒO“à‚Ì•¶Žš‚ðÁ‚µ‚Ä‚à•`‰æÀ•W‚È‚Ç‚Í•Ï‚í‚Á‚Ä‚È‚¢‚Ì‚ÅA
-				Žc‚³‚ê‚½•¶Žš—ñ‚Ì•`‰æÀ•W‚ÌÄŒvŽZ‚ð‚µ‚Ä‚â‚é•K—v‚ª‚ ‚éB
-	*/
-	void RealignmentStream();
-
-	/**
 	*@brief	’èŒ^•¶Žš—ñ‚ð•¡”Œq‚¬‚ ‚í‚¹‚Ä‘—‚éŠÖ”
 	*@param[in]	‚Â‚È‚°‚é’èŒ^•ª‚Ì—Ê
 	*/
 	const std::string GetMultiplePhrase( int _phraseVal,... );
 
-	void SetPosition( const long& _x, const long& _y )
+	inline void SetPosition( const long& _x, const long& _y )
 	{
 		m_posX = _x;
 		m_posY = _y;
 	}
 
-	void GetPosition( long& _x, long& _y )
+	inline void GetPosition( long& _x, long& _y )
 	{
 		_x = m_posX;
 		_y = m_posY;
@@ -147,6 +132,23 @@ public:
 		delete *it;
 		m_logStream.pop_front();
 	}
+
+private:	
+	/**
+	*@brief	“o˜^‚µ‚Ä‚¢‚é•¶Žš—ñ‚Ìc•‚ðƒ`ƒFƒbƒN
+	*@details	“o˜^‚µ‚Ä‚¢‚é•¶Žš—ñ‚Ìc•‚ð‰ÁŽZ‚µ‚Ä‚¢‚«A
+				Žw’è‚µ‚½”’lˆÈã‚É‚¾‚Á‚½ê‡‚ÍŒã‚É“o˜^‚µ‚Ä‚¢‚½‚à‚Ì‚©‚çíœ‚µ‚Ä‚¢‚­
+	*@param[in]	_height	”äŠr‚µ‚½‚¢c•ƒTƒCƒY
+	*/
+	bool CheckStream( const unsigned int _height );
+
+	/**
+	*@brief	ƒƒO‚ÌÄ”z’u
+	*@details	ƒƒO“à‚Ì•¶Žš‚ðÁ‚µ‚Ä‚à•`‰æÀ•W‚È‚Ç‚Í•Ï‚í‚Á‚Ä‚È‚¢‚Ì‚ÅA
+				Žc‚³‚ê‚½•¶Žš—ñ‚Ì•`‰æÀ•W‚ÌÄŒvŽZ‚ð‚µ‚Ä‚â‚é•K—v‚ª‚ ‚éB
+	*/
+	void RealignmentStream();
+
 };
 
 

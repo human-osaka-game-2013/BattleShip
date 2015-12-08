@@ -85,17 +85,6 @@ private:
 	*/
 	int SelectArrayCheck();
 
-	///**
-	//*@brief	ステージの範囲チェック
-	//*@details	SelectArrayCheck関数に書くと今以上にネストが深くなると思ったため、コチラに処理を分ける事にする。@n
-	//			
-	//*@param[in]	_id		チェックするステージのプレイヤーID
-	//*@param[in]	_column	チェックする行
-	//*@param[in]	_line	チェックする列
-	//*@param[in]	_array	セットしたい配列データ
-	//*/
-	//int StageCheck( const int& _id, const int& _column, const int& _line, const int(*_array)[_SHIP_ARRAY_INDEX_]);
-
 	/**
 	*@brief	タブの情報をリセット
 	*@details	主にタブ情報のカラー値をリセット

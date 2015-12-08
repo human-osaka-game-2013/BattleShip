@@ -38,7 +38,8 @@ private:
 	std::string		m_tempStr2;
 	int				m_beforeShip;	///<前フレームで選択（対象）されている駒を保持しておく。最初に入ってきた場合は初期値として-1を入れている。
 	unsigned int	m_turnCount;	///<現在のターン数
-//	他のオブジェクトと値のやり取りする可能性のある変数
+
+//	他のオブジェクトと値のやり取りする変数
 private:
 	
 	Player* const 	m_pPlayer1;		///< プレイヤー1情報格納ポインタ
@@ -61,6 +62,7 @@ private:
 	GameLog			m_gameLog;			///< ゲームログオブジェクト
 	GameLog			m_gameElapsed;		///< 経過時間出力ログ
 	GameLog			m_gameConnectState;	///< 通信状態のログ
+	GameLog			m_gameTurn;			///< ターン表示
 
 //	デバイス
 private:
@@ -218,6 +220,20 @@ public:
 	*/
 	void SetConnectFlag( const bool _flag ){ m_connectFlag = _flag; }
 
+private:
+	/**
+	*@brief	ターン表示ログの更新
+	*/
+	void TurnLogUpdate()
+	{
+		char tempNumStr[5]={0};
+		std::string tempStr;
+		_itoa_s( m_turnCount, tempNumStr, sizeof(tempNumStr), 10 );
+		tempStr.append(tempNumStr);
+		tempStr += "ターン目";
+		m_gameTurn.DeleteStream();
+		m_gameTurn.AddStream(tempStr.c_str());
+	}
 };
 
 

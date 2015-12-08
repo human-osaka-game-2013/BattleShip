@@ -12,10 +12,7 @@
 
 class SetShip : public GameState
 {
-private:
-	
-	
-	
+
 public:
 	/**
 	*@brief	コンストラクタ
@@ -54,7 +51,7 @@ private:
 	/**
 	*@brief	配置回数の取得
 	*/
-	int GetSetCount(){ return m_ShipCount; }
+	inline int GetSetCount(){ return m_ShipCount; }
 };
 
 #endif

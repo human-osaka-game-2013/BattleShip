@@ -87,10 +87,10 @@ public:
 		_iB	= iB;
 	}
 
-	char GetState(){ return static_cast<char>(m_state); }
+	inline char GetState(){ return static_cast<char>(m_state); }
 
-	void SetWidth( const float& _width  ){ fWidth = _width; }
-	void SetHeight( const float& _height ){ fHeight = _height; }
+	inline void SetWidth( const float& _width  ){ fWidth = _width; }
+	inline void SetHeight( const float& _height ){ fHeight = _height; }
 
 	void SetColor( const int& _iA, const int& _iR, const int& _iG, const int& _iB )
 	{

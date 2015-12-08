@@ -38,6 +38,9 @@ StateManager::StateManager( Player* const _pPlayer1, Player* const _pPlayer2,
 //	ステートの初期化
 void StateManager::StateInit()
 {
+	float tempX = 0.f, tempY = 0.f;	
+	float tempW = 0.f, tempH = 0.f;
+
 	m_beforeState	= STATE_NONE;		///<	初期化なので以前のステートはそもそも無い為、STATE_NONEに。
 	m_currentState	= _FIRST_SETATE_;///<	ステートの初期化なので最初に読み込むであろうパターンの定数を入れる
 	m_currentShip	= ShipObject::TYPE_AIRCARRIER;	///<	初期選択駒は空母なので数値を空母にセット。
@@ -51,12 +54,19 @@ void StateManager::StateInit()
 	int plIndex = m_playerID%2;	
 	m_gameLog.Init( static_cast<long>( m_PlayerFrame[plIndex].GetPositionX() + static_cast<long>(_LOG_POS_TWEAK_)), 
 		static_cast<long>( m_PlayerFrame[plIndex].GetPositionY() + static_cast<long>(_LOG_POS_TWEAK_)) );
+	
 	//	ゲーム経過時間ログの初期化
 	m_gameElapsed.Init( static_cast<long>( m_PlayerFrame[plIndex].GetPositionX() + static_cast<long>(_LOG_POS_TWEAK_) ),
 		static_cast<long>( m_PlayerFrame[plIndex].GetPositionY()) + static_cast<long>(_LOG_HEIGHT_MAX_) );
+	
 	//	通信状態ログの初期化
-	float tempX = ( m_playerID/_PLAYER_NUM_ ? (_BOARD_OF_SHIPDATA_LINE_P1_) : (_BOARD_OF_SHIPDATA_LINE_P2_+_SHIP_ARRAY_INDEX_) ) * _BLOCK_WIDTH_SIZE_;
+	tempX = ( m_playerID/_PLAYER_NUM_ ? (_BOARD_OF_SHIPDATA_LINE_P1_) : (_BOARD_OF_SHIPDATA_LINE_P2_+_SHIP_ARRAY_INDEX_) ) * _BLOCK_WIDTH_SIZE_;
 	m_gameConnectState.Init( static_cast<long>( tempX ), static_cast<long>( m_PlayerFrame[plIndex].GetPositionY()) + static_cast<long>(_LOG_HEIGHT_MAX_) );
+	
+	//	ターン表示のログ初期化
+	tempX = _STAGE_LINE_MAX_*_BLOCK_WIDTH_SIZE_;
+	m_gameTurn.Init( static_cast<long>(tempX), 0, "");
+	TurnLogUpdate();
 
 	m_tempStr1 = m_gameLog.m_fixedPhrase.m_phrase[FixedPhrase::START_BATTLE];
 	m_gameLog.AddStream( m_tempStr1.c_str(), _LOG_COLOR_DEFAULT_, _LOG_FONT_BIGSIZE_, _LOG_FONT_BIGSIZE_, DT_CENTER );
@@ -68,12 +78,12 @@ void StateManager::StateInit()
 
 	for( int iPlayer=0; iPlayer<_PLAYER_NUM_; iPlayer++ )	///<表示位置などを予め初期化しておき、描画時や当たり判定時などにも利用する。
 	{
-		float tempX, tempY;	
 		//	艦種分ループで全ての駒を初期化
 		for( int iShip=0; iShip<ShipObject::TYPE_MAX; iShip++ ){
 
 		//	------自駒のステータス（損害情報）の初期化------
-			float tempW = _BLOCK_WIDTH_SIZE_, tempH = _BLOCK_HEIGHT_SIZE_;	///<駒別に可変性があるので縦横幅の仮保存をして少し効率を上げる。
+			tempW = _BLOCK_WIDTH_SIZE_;
+			tempH = _BLOCK_HEIGHT_SIZE_;	///<駒別に可変性があるので縦横幅の仮保存をして少し効率を上げる。
 			tempX = tempW;
 			tempY = (_STAGE_HEIGHT_MAX_*tempH)+(iShip*tempH);	///<Y座標はまずプレイヤー情報枠の基準点から
 			
@@ -127,7 +137,9 @@ int StateManager::StateCotrol()
 	else if( stateResult == -1 )
 	{
 		m_pAudio->SoundAllStop();
-		//	戦闘終了に伴う戦況の最終結果をログに表示
+		/*
+			戦闘終了に伴う戦況の最終結果をログに表示
+		*/
 		if( m_resultBattle == Result::TYPE_DRAW )
 		{
 			m_tempStr1 = m_gameLog.GetPhrase( FixedPhrase::RESULT_DRAW_STR );
@@ -149,6 +161,7 @@ int StateManager::StateCotrol()
 		m_gameLog.AddStream( m_tempStr1.c_str(), _LOG_COLOR_DEFAULT_, _LOG_FONT_BIGSIZE_, _LOG_FONT_BIGSIZE_, DT_CENTER );
 		m_tempStr1 = "左クリックでタイトルに戻りましょう";
 		m_gameLog.AddStream( m_tempStr1.c_str(), _LOG_COLOR_NOMAL_, _LOG_FONT_BIGSIZE_, _LOG_FONT_BIGSIZE_, DT_CENTER );
+		/**/
 	}
 	
 	return stateResult;
@@ -223,6 +236,7 @@ int StateManager::CheckState()
 			}else{
 				//	各艦の行動フェーズが一周したのでターン数を増やす
 				m_turnCount++;
+				TurnLogUpdate();	///< ターンログのアップデートも行う
 				m_currentShip = ShipObject::TYPE_AIRCARRIER;
 			}
 		}
@@ -520,14 +534,16 @@ void StateManager::DrawLog()
 {
 	DirectXFont* const pDxFont =  &m_pDrawManager->m_dxFont;
 	int logValue = 0;
-	float tempX, tempY;
+	float fTempX, fTempY;
+	unsigned int iTempW = 0, iTempH = 0;
+	long lTempX = 0, lTempY = 0;
 
 	//ログの枠表示
 	if( m_playerID == 1 )
 	{
 		//	ゲームログ表示
-		m_PlayerFrame[1].GetPosition( &tempX, &tempY );
-		m_pDrawManager->VertexDraw( _TEX_GAMELOG_, tempX, tempY, 
+		m_PlayerFrame[1].GetPosition( &fTempX, &fTempY );
+		m_pDrawManager->VertexDraw( _TEX_GAMELOG_, fTempX, fTempY, 
 			m_PlayerFrame[1].GetWidth(),  m_PlayerFrame[1].GetHeight(),
 			0.f, 0.f, 1.f, 1.f,
 			200, 255, 255, 255 );	///<	プレイヤー2の枠描画
@@ -535,8 +551,8 @@ void StateManager::DrawLog()
 	else
 	{
 		//	ゲームログ表示
-		m_PlayerFrame[0].GetPosition( &tempX, &tempY );
-		m_pDrawManager->VertexDraw( _TEX_GAMELOG_, tempX, tempY, 
+		m_PlayerFrame[0].GetPosition( &fTempX, &fTempY );
+		m_pDrawManager->VertexDraw( _TEX_GAMELOG_, fTempX, fTempY, 
 			m_PlayerFrame[0].GetWidth(),  m_PlayerFrame[0].GetHeight(),
 			0.f, 0.f, 1.f, 1.f,
 			200, 255, 255, 255 );	///<	プレイヤー1の枠描画
@@ -546,47 +562,80 @@ void StateManager::DrawLog()
 	if( !m_gameLog.m_logStream.empty() )
 	{
 		logValue = m_gameLog.m_logStream.size();
-		long tempX = 0, tempY = 0;
-		unsigned int tempW = 0, tempH = 0;
+		lTempX = 0; 
+		lTempY = 0;
+		iTempW = 0; 
+		iTempH = 0;
 		std::string* pStr;
 		LPCSTR lpTempStr;
 		std::list<LogStream*>::const_iterator itEnd = m_gameLog.m_logStream.end();
 		for( std::list<LogStream*>::iterator it = m_gameLog.m_logStream.begin();
 			it != itEnd; ++it)
 		{
-			(*it)->GetPosition( tempX, tempY );
-			(*it)->GetSize( tempW, tempH );
+			(*it)->GetPosition( lTempX, lTempY );
+			(*it)->GetSize( iTempW, iTempH );
 			pStr = (*it)->GetStringPtr();
 			lpTempStr = const_cast<char *>(pStr->c_str());
-			if(pDxFont->DrawA( tempX, tempY, static_cast<unsigned long>(_LOG_FONT_WIDTH_), 
-							tempH, lpTempStr, (*it)->GetColor(), (*it)->GetFormat() ))
+			if(pDxFont->DrawA( lTempX, lTempY, static_cast<unsigned long>(_LOG_FONT_WIDTH_), 
+							iTempH, lpTempStr, (*it)->GetColor(), (*it)->GetFormat() ))
 			{
 
 			}
 		}
 	}
+#ifdef _DEBUG
 	//	経過時間ログ
 	if( !m_gameElapsed.m_logStream.empty() )
 	{
 		logValue = m_gameElapsed.m_logStream.size();
-		long tempX = 0, tempY = 0;
-		unsigned int tempW = 0, tempH = 0;
+		lTempX = 0; 
+		lTempY = 0;
+		iTempW = 0; 
+		iTempH = 0;
 		std::string* pStr;
 		LPCSTR lpTempStr;
-		std::list<LogStream*>::const_iterator itEnd = m_gameElapsed.m_logStream.end();
-		for( std::list<LogStream*>::iterator it = m_gameElapsed.m_logStream.begin();
-			it != itEnd; ++it)
+		std::list<LogStream*>::iterator it = m_gameElapsed.m_logStream.begin();
+		(*it)->GetPosition( lTempX, lTempY );
+		(*it)->GetSize( iTempW, iTempH );
+		pStr = (*it)->GetStringPtr();
+		lpTempStr = const_cast<char *>(pStr->c_str());
+		if(pDxFont->DrawA( lTempX, lTempY, iTempW, iTempH, lpTempStr, (*it)->GetColor(), (*it)->GetFormat() ))
 		{
-			(*it)->GetPosition( tempX, tempY );
-			(*it)->GetSize( tempW, tempH );
-			pStr = (*it)->GetStringPtr();
-			lpTempStr = const_cast<char *>(pStr->c_str());
-			if(pDxFont->DrawA( tempX, tempY, tempW, tempH, lpTempStr, (*it)->GetColor(), (*it)->GetFormat() ))
-			{
 
-			}
 		}
 	}
+#endif
+	//	ターン数ログ
+	if( !m_gameTurn.m_logStream.empty() )
+	{
+		logValue = m_gameTurn.m_logStream.size();
+		lTempX = 0; 
+		lTempY = 0;
+		iTempW = 0; 
+		iTempH = 0;
+		std::string* pStr;
+		LPCSTR lpTempStr;
+		std::list<LogStream*>::iterator it = m_gameTurn.m_logStream.begin();
+		(*it)->GetPosition( lTempX, lTempY );
+		(*it)->GetSize( iTempW, iTempH );
+		fTempX = static_cast<float>(lTempX);
+		fTempY = static_cast<float>(lTempY);
+		m_pDrawManager->VertexDraw( _TEX_GAMELOG_, fTempX, fTempY, 
+			_BLOCK_WIDTH_SIZE_*3.f, _BLOCK_HEIGHT_SIZE_*1.f,
+			1.f, 1.f, 0.f, 0.f,
+			150, 255, 255, 255 );	///< ターン数表示の枠描画
+
+		pStr = (*it)->GetStringPtr();
+		lpTempStr = const_cast<char *>(pStr->c_str());
+		if(pDxFont->DrawA( lTempX+static_cast<long>(_LOG_POS_TWEAK_), lTempY+static_cast<long>(_LOG_POS_TWEAK_),
+						static_cast<unsigned long>(_LOG_FONT_WIDTH_), 
+						iTempH, lpTempStr, (*it)->GetColor(), (*it)->GetFormat() ))
+		{
+
+		}
+	}
+
+
 	//	通信待ち中
 	if( GetConnectFlag() )
 	{
@@ -594,22 +643,20 @@ void StateManager::DrawLog()
 		if( !m_gameConnectState.m_logStream.empty() )
 		{
 			logValue = m_gameConnectState.m_logStream.size();
-			long tempX = 0, tempY = 0;
-			unsigned int tempW = 0, tempH = 0;
+			lTempX = 0; 
+			lTempY = 0;
+			iTempW = 0; 
+			iTempH = 0;
 			std::string* pStr;
 			LPCSTR lpTempStr;
-			std::list<LogStream*>::const_iterator itEnd = m_gameConnectState.m_logStream.end();
-			for( std::list<LogStream*>::iterator it = m_gameConnectState.m_logStream.begin();
-				it != itEnd; ++it)
+			std::list<LogStream*>::iterator it = m_gameConnectState.m_logStream.begin();
+			(*it)->GetPosition( lTempX, lTempY );
+			(*it)->GetSize( iTempW, iTempH );
+			pStr = (*it)->GetStringPtr();
+			lpTempStr = const_cast<char *>(pStr->c_str());
+			if(pDxFont->DrawA( lTempX, lTempY, iTempW, iTempH, lpTempStr, (*it)->GetColor(), (*it)->GetFormat() ))
 			{
-				(*it)->GetPosition( tempX, tempY );
-				(*it)->GetSize( tempW, tempH );
-				pStr = (*it)->GetStringPtr();
-				lpTempStr = const_cast<char *>(pStr->c_str());
-				if(pDxFont->DrawA( tempX, tempY, tempW, tempH, lpTempStr, (*it)->GetColor(), (*it)->GetFormat() ))
-				{
 
-				}
 			}
 		}
 	}
