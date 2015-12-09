@@ -20,7 +20,11 @@ void CSceneManager::Manage ()
 		//	本当にシーンの切り替わりであるか（m_sceneObjにまだデータが入っていなかった場合を考慮）
 		if( iBeforeScene != SCENE_NONE )
 		{
-			CLASS_DELETE( m_sceneObj );
+			CLASS_DELETE( m_sceneObj );	
+		}
+		else
+		{
+			UpdateChangeFlag(true);	///< 初期状態だとシーン切り替えフラグは降りているので
 		}
 		switch ( iCurrentScene )
 		{

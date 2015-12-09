@@ -11,7 +11,7 @@ void CSceneManager::SceneRoutingManage ()
 {
 	int _SceneIDTemp = SCENE_NONE;
 
-	if ( true == GetChangeSceneFlag() )
+	if ( GetChangeSceneFlag() == true )
 	{
 		m_sceneObj -> Init ();
 		UpdateChangeFlag ( false );	//	シーン変更も終わり、初期化も通ったから

@@ -2,6 +2,7 @@
 #define _BUTTON_H_
 
 #include "gameObject.h"
+#include "Audio.h"
 
 /**
 *@brief	簡易なボタンオブジェクト用クラス
@@ -23,6 +24,7 @@ private:
 	float fWidth ,fHeight;
 	int iA, iR, iG, iB; 
 	BUTTON_STATE m_state;
+	Audio*	m_pAudio;
 
 public:
 	/**
@@ -44,7 +46,7 @@ public:
 	/**
 	*@brief	初期化
 	*/
-	void Init( float _fx, float _fy, float _fWidth, float _fHeight, float _selectVol = 2.f )
+	void Init( float _fx, float _fy, float _fWidth, float _fHeight,  Audio* const _pAudio, float _selectVol = 2.f )
 	{
 		SetPosition(_fx, _fy, 0.5f);
 		selectVol = _selectVol;
@@ -58,6 +60,7 @@ public:
 		fHeight = _fHeight;
 		
 		SetColor( 255, 255, 255, 255 );
+		SetAudioPtr( _pAudio );
 	}
 
 	void Control(){};
@@ -120,6 +123,8 @@ public:
 		}
 		return false;
 	}
+
+	void SetAudioPtr( Audio* const _pAudio ){ m_pAudio = _pAudio; }
 };
 
 

@@ -47,7 +47,7 @@ public:
 		CMouse* const m_pMouse, Audio* const _pAudio )
 		: CScene( _id, _pRenderManager,	_pDrawManager, _pKey, m_pMouse, _pAudio)
 	{
-		Init();
+
 	}
 
 	/**

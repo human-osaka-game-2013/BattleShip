@@ -60,46 +60,6 @@ bool DirectXFont::Init(
 @return	true	成功
 @return	false	失敗
 */
-bool DirectXFont::DrawW( 
-	LONG _draw_pos_x,
-	LONG _draw_pos_y,
-	LONG _w, LONG _h,
-	const LPWSTR _font,
-	const D3DXCOLOR *_font_color
-	)
-{
-	//フォントハンドルが無い
-	if( m_font == NULL ){ return false; }
-
-	//表示場所(範囲)
-	RECT rec ={ _draw_pos_x, _draw_pos_y, _w, _h };
-
-	//文字表示
-	m_font->DrawTextW(
-		NULL,
-		_font,
-		-1,
-		&rec,
-		DT_LEFT,
-		( *_font_color )
-		);
-	
-	//成功
-	return true;
-}
-
-/**
-@brief	フォントの描画
-		第三と四引数で幅を指定しますがこれが小さいと途切れてしまいます
-@param[ in ] フォントの表示X位置
-@param[ in ] フォントの表示Y位置
-@param[ in ] フォントの描画幅
-@param[ in ] フォントの描画高さ
-@param[ in ] 描画文字列
-@param[ in ] フォントのカラー
-@return	true	成功
-@return	false	失敗
-*/
 bool DirectXFont::DrawA( 
 	LONG _draw_pos_x,
 	LONG _draw_pos_y,

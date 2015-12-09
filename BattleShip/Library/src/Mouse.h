@@ -70,26 +70,33 @@ public:
 	*@brief	マウス移動量の取得Y
 	*/
 	long GetCursorMoveVolY () { return m_moveMouseVol.lMVolY; }
-	
+
+	/**
+	*@brief	指定したマウスのボタンの状態を取得
+	*/
 	char GetMouseSt( int _st ){ return static_cast<char>(m_mouse[_st]); }
 
 	/**
-	*@brief	マウス状態チェック
+	*@brief	マウスの全てのボタンをチェック
 	*/
-	void MouseCheck ( int st );
-
-	void AllButtonCheck ();	//	マウスの全てのボタンをチェック
+	void AllButtonCheck ();
 	
 	/**
 	*@brief	マウスボタン別状態判定
 	*@param[in]	_st	ボタンの種類
-	ボタンの状態 )
+	*@param[in]	MouseStボタンの状態
 	*/
 	bool MouseStCheck ( int _st, int MouseSt );
 
 	//	マウス座標の取得と毎フレーム間の移動量を更新。
 	//	引数1：ウインドウハンドル
 	void CursorSet(HWND* hWnd);
+
+private:
+	/**
+	*@brief	マウス状態チェック
+	*/
+	void MouseCheck ( int st );
 
 };
 

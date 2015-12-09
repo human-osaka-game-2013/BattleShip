@@ -22,8 +22,6 @@ private:
 	LPDIRECTINPUTDEVICE8	m_pKeyDevice;	///< キーデバイス -> 外部キー入力
 	LPDIRECTINPUTDEVICE8	m_pMouseDevice;	///< マウスデバイス -> 外部マウス入力
 	HWND*					m_hWnd;			///< ウインドウハンドル
-	RECT DevDesc;
-	RECT WindowPos;
 
 public:
 	/**
@@ -45,11 +43,12 @@ public:
 	*/
 	HRESULT	InitDevice();
 
+private:
 	/**
 	*@brief	 Direct3Dの初期化
 	*@return	初期化結果
 	*/
-	HRESULT InitD3d ();
+	HRESULT InitD3d();
 
 	/**
 	*@brief	 ダイレクトインプットの初期化
@@ -80,13 +79,13 @@ public:
 	*@brief	D3Dデバイスの取得
 	*@return	m_pD3Device	
 	*/
-	LPDIRECT3DDEVICE9	Getd3Device () { return m_pD3Device; }
+	LPDIRECT3DDEVICE9	Getd3Device() { return m_pD3Device; }
 	
 	/**
 	*@brief	インプットデバイスの取得
 	*@return	m_pDinput
 	*/
-	LPDIRECTINPUT8	GetInputDevice () { return m_pDinput; }
+	LPDIRECTINPUT8	GetInputDevice() { return m_pDinput; }
 	
 	/**
 	*@brief	キーデバイスの取得

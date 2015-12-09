@@ -10,6 +10,7 @@
 
 class DirectXFont
 {
+private:
 	LPD3DXFONT m_font;		///< @brief 描画先フォント
 	UINT m_font_heigh;		///< @brief フォントの高さ
 	UINT m_font_width;		///< @brief フォントの幅
@@ -49,25 +50,6 @@ public:
 		const LPDIRECT3DDEVICE9 _dev,
 		const UINT _font_heigh = _FONT_HEIGHT_,
 		const UINT _font_width = 0
-	);
-
-	/**
-	@brief	フォントの描画
-			第三と四引数で幅を指定しますがこれが小さいと途切れてしまいます
-	@param[ in ] フォントの表示X位置
-	@param[ in ] フォントの表示Y位置
-	@param[ in ] フォントの描画幅
-	@param[ in ] フォントの描画高さ
-	@param[ in ] 描画文字列
-	@param[ in ] フォントのカラー
-	@return	true	成功
-	@return	false	失敗
-	*/
-	bool DrawW( 
-		LONG _draw_pos_x, LONG _draw_pos_y,
-		LONG _w, LONG _h, 
-		const LPWSTR _font,
-		const D3DXCOLOR *_font_color
 	);
 
 	/**

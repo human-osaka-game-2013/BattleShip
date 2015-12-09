@@ -15,6 +15,7 @@ char Button::Contorl( const float _x, const float _y, const char _inputState )
 		//	¶ƒNƒŠƒbƒN
 		if( _inputState==PUSH )
 		{
+			m_pAudio->SoundPlay( Audio::_CLICK_SE_ );
 			m_state = STATE_SELECT;
 		}
 	}

@@ -13,12 +13,13 @@ bool TitleScene::Init()
 
 	m_screenMask.Init();
 	m_button.Init( _BUTTON_POS_X_, _BUTTON_POS_Y_,
-					_BUTTON_WIDTH_, _BUTTON_HEIGHT_ );
+					_BUTTON_WIDTH_, _BUTTON_HEIGHT_,
+					m_pAudio );
 	m_screenMask.SetColor( 255, 255, 255, 255);//フェードインさせたいのでアルファ値は255で
 
 	m_changeSceneFlag = false;
 	
-	m_connectSetting.Init( m_pMouse, m_pKey );
+	m_connectSetting.Init( m_pMouse, m_pKey, m_pAudio );
 
 	m_stopFadeFlag = false;
 	//	タイトルBGM再生
@@ -59,7 +60,6 @@ int TitleScene::Control()
 			{
 				if( m_button.GetState() == Button::STATE_SELECT ){
 					m_changeSceneFlag = true;
-					m_pAudio->SoundPlay( Audio::_CLICK_SE_ );
 				}
 			}
 			m_connectSetting.Control();

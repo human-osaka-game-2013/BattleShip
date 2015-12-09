@@ -115,8 +115,6 @@ public:
 	float GetRad()	{ return CameraInfo.radian; }
 
 public:
-	
-
 	/*
 		ビルボード用の頂点描画
 	*/

@@ -97,7 +97,7 @@ public:
 	*param[in] _b3dView：3D描画などをする場合など、@n
 						描画設定の再設定をする場合にtrueを渡す。
 	*/
-	void BeginDraw ( bool _b3dView = false );
+	void BeginDraw( bool _b3dView = false );
 
 	/**
 	*@brief	テクスチャ読み込み
@@ -112,7 +112,7 @@ public:
 	*@param[in]	_wDiv	アニメーションする場合のテクスチャの分割数幅（デフォルトで1）
 	*@param[in]	_hDiv	アニメーションする場合のテクスチャの分割数高さ（デフォルトで1）
 	*/ 
-	bool LoadTexture ( LPCSTR _lpFileName, int _textuerNumber, int _iColorRed, int _iColorGreen, int _iColorBlue, int _wDiv = 1, int _hDiv = 1 );
+	bool LoadTexture( LPCSTR _lpFileName, int _textuerNumber, int _iColorRed, int _iColorGreen, int _iColorBlue, int _wDiv = 1, int _hDiv = 1 );
 
 	// テクスチャの解放
 	// 第1引数：テクスチャの番号

@@ -97,12 +97,7 @@ public:
 	}
 	
 public:
-	//XAudioの初期化
-	bool InitXAudio2(void);
-
-	//サウンド全読み込み
-	void LoadAllSoundFile();
-
+	
 	//サウンド再生
 	void SoundPlay(int ID, bool LOOP = false);
 
@@ -112,11 +107,13 @@ public:
 	//サウンド全停止
 	void SoundAllStop(void);
 	
-	//ファイル->全解放
-	void ReleaseAllSoundFile(void);
-
 private:	
-	
+	//XAudioの初期化
+	bool InitXAudio2(void);
+
+	//サウンド全読み込み
+	void LoadAllSoundFile();
+
 	//音声ファイルの読み込み	->	解析できたら使用準備完了
 	void LoadSoundFile( char* FileName, int IN_ID);
 	
@@ -126,6 +123,9 @@ private:
 	//ファイル->解放
 	void ReleaseSoundFile(int ID);
 	
+	//ファイル->全解放
+	void ReleaseAllSoundFile(void);
+
 	//XAudioの解放
 	bool ReleaseXAudio2(void);
 

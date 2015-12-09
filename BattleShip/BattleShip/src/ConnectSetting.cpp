@@ -1,25 +1,29 @@
 #include "ConnectSetting.h"
 #include "DebugInterface.h"
 
-void ConnectSetting::Init( CMouse* const _pMouse, CKey* const _pKey )
+void ConnectSetting::Init( CMouse* const _pMouse, CKey* const _pKey, Audio* const _pAudio )
 {
 	m_serverButton.Init( _COM_SET_POS_X_,
 						 _COM_TYPE_BUTTON_POS_Y_,
 						 _COM_TYPE_BUTTON_WIDTH_, 
-						 _COM_TYPE_BUTTON_HEIGTH_);
+						 _COM_TYPE_BUTTON_HEIGTH_,
+						 _pAudio );
 
 	m_clientButton.Init( _COM_SET_POS_X_+_COM_TYPE_BUTTON_WIDTH_+_COM_TYPE_BUTTON_HEIGTH_,
 						 _COM_TYPE_BUTTON_POS_Y_,
 						 _COM_TYPE_BUTTON_WIDTH_, 
-						 _COM_TYPE_BUTTON_HEIGTH_);
+						 _COM_TYPE_BUTTON_HEIGTH_,
+						 _pAudio );
 
 	m_updateButton.Init( m_clientButton.GetPositionX(),
 						 _UPDATE_BUTTON_POS_Y_,
 						 _COM_TYPE_BUTTON_WIDTH_,
-						 _COM_TYPE_BUTTON_HEIGTH_);
+						 _COM_TYPE_BUTTON_HEIGTH_,
+						 _pAudio );
 
 	SetMousePtr( _pMouse );
 	SetKeyPtr( _pKey );
+	SetAudioPtr( _pAudio );
 
 	if( sockType ){
 		m_clientButton.SetState( Button::STATE_SELECT );
@@ -122,7 +126,9 @@ void ConnectSetting::Control()
 	//	通信設定情報の更新ボタンの処理
 	//	すでにクリックされていたら一度状態をリセット
 	if( m_updateButton.GetState() == Button::STATE_SELECT )
+	{
 		m_updateButton.SetState( Button::STATE_OFF_CURSOR );
+	}
 
 	//	押されていたら
 	if( m_updateButton.Contorl( tempX, tempY, inputState ) == 2 )
@@ -137,8 +143,10 @@ void ConnectSetting::Control()
 	//	IP＆ポート番号のテキストフィールド処理
 	if( m_pMouse->MouseStCheck( MOUSE_L, PUSH ))
 	{
-		m_ipAddr.SelectCheck( tempX, tempY );
-		m_port.SelectCheck( tempX, tempY );
+		if(m_ipAddr.SelectCheck( tempX, tempY ) || m_port.SelectCheck( tempX, tempY ))
+		{
+			m_pAudio->SoundPlay( Audio::_FAILED_SE_ );
+		}
 	}
 	//	IPアドレスのテキストフィールドが選択中
 	if( m_ipAddr.m_settingFlag )

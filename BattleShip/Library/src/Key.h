@@ -53,13 +53,7 @@ public:
 	CKey( IDirectInputDevice8* const _pKeyDevice);
 
 public:
-	/**
-	*@brief	キー状態チェック
-	*@param[in]	_dik	キーの定数
-	*@param[in]	_st		キーの種類
-	*/
-	void KeyCheck ( int _dik, int _st );
-
+	
 	/**
 	*@brief	複数のキーの状態をまとめてチェック
 	*@details	KeyCheck関数をまとめて呼び出す
@@ -79,5 +73,13 @@ public:
 				一番最初に合致したキーのIDを返す。該当しなかった場合は-1を返す
 	*/
 	int CheckStateToAllKey( int _keySt );
+private:
+	/**
+	*@brief	キー状態チェック
+	*@param[in]	_dik	キーの定数
+	*@param[in]	_st		キーの種類
+	*/
+	void KeyCheck ( int _dik, int _st );
+
 };
 #endif

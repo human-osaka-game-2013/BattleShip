@@ -5,6 +5,7 @@
 #include "Button.h"
 #include "Mouse.h"
 #include "Key.h"
+#include "Audio.h"
 #include "read_file.h"
 #include "TextField.h"
 
@@ -35,6 +36,7 @@ private:
 private:
 	CMouse*		m_pMouse;	///< マウスポインタ
 	CKey*		m_pKey;		///< キーポインタ
+	Audio*		m_pAudio;	
 	TextField	m_ipAddr;	///< IPアドレステキストフィールド
 	TextField	m_port;		///< ポート番号テキストフィールド
 	Button		m_serverButton;	///< サーバーボタン 
@@ -54,7 +56,7 @@ public:
 		m_port.AddStr(strPort.c_str());
 	}
 
-	void Init( CMouse* const _pMouse, CKey* const _pKey );
+	void Init( CMouse* const _pMouse, CKey* const _pKey, Audio* const _pAudio );
 
 	void Control();
 
@@ -73,7 +75,7 @@ public:
 
 	void SetMousePtr( CMouse* const _pMouse ){ m_pMouse = _pMouse; }
 	void SetKeyPtr( CKey* const _pKey ){ m_pKey = _pKey; }
-	//void SetDXFPtr( DirectXFont* const _pDXFont ){ m_pDXFont = _pDXFont; }
+	void SetAudioPtr( Audio* const _pAudio ){ m_pAudio = _pAudio; }
 };
 
 #endif
