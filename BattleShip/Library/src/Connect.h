@@ -25,7 +25,7 @@
 #include "ConnectStruct.h"
 
 
-#define _RECV_TIMEOUT_SECOND_	0.3	///< 受信のタイムアウトをするまでの秒数
+#define _RECV_TIMEOUT_SECOND_	0	///< 受信のタイムアウトをするまでの秒数
 
 /**
 *@brief	通信管理クラス
