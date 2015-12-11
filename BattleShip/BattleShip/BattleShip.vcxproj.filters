@@ -141,6 +141,9 @@
     <ClCompile Include="src\Button.cpp">
       <Filter>ソース ファイル\Game\Object</Filter>
     </ClCompile>
+    <ClCompile Include="src\ActionReport.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\TitleScene.h">
@@ -234,6 +237,12 @@
       <Filter>追加機能系\Connect</Filter>
     </ClInclude>
     <ClInclude Include="src\TextField.h">
+      <Filter>ヘッダー ファイル\Game\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ActionReport.h">
+      <Filter>ヘッダー ファイル\State</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ReportData.h">
       <Filter>ヘッダー ファイル\Game\Object</Filter>
     </ClInclude>
   </ItemGroup>

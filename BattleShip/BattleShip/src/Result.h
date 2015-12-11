@@ -10,6 +10,11 @@
 
 #define _ANNIHILATION_NUM_ 16
 
+/**
+*@brief	艦種別の戦闘結果フラグのビット情報
+*@details 索敵されたフラグを多量に作りたくなかった為、
+		　どの艦が見つかったかをビットで取る事にしました。
+*/
 #define _BIT_A_ 0x01
 #define _BIT_B_ 0x02
 #define _BIT_C_ 0x04
@@ -38,7 +43,8 @@ public:
 		TYPE_INFERIORITY,	///<	劣勢
 		TYPE_DRAW,			///<	引き分け
 		TYPE_SUPERIORITY,	///<	優勢
-		TYPE_VICTORY		///<	勝利
+		TYPE_VICTORY,		///<	勝利
+		TYPE_STALEMATE		///<	手詰まり
 	};
 
 private:
@@ -125,13 +131,23 @@ private:
 									const int _selectNum, const int _shipNum );
 
 	/**
-	*@brief	戦闘結果による戦況判定
+	*@brief	戦闘結果の判定
+	*@details	プレイヤー各々の駒の損害率をProgressOfBattle関数に渡し、
+				_PROGRESS_OF_BATTLE_TYPE_に応じた値を返す。
+	*@param[in]	_playerIndex プレイヤー側の指数
+	*@param[in]	_enemyIndex 敵側の指数
+	*@return	_PROGRESS_OF_BATTLE_TYPE_に合わせた値
+	*/
+	int ResultOfBattle( const int _playerIndex, const int _enemyIndex );
+
+	/**
+	*@brief	戦況判定
 	*@details	プレイヤー各々の駒の損害率から、_PROGRESS_OF_BATTLE_TYPE_に応じた値を返す
 	*@param[in]	_playerIndex プレイヤー側の指数
 	*@param[in]	_enemyIndex 敵側の指数
 	*@return	_PROGRESS_OF_BATTLE_TYPE_に合わせた値
 	*/
-	int ResultProgressOfBattle( const int _playerIndex, const int _enemyIndex );
+	int ProgressOfBattle( int& _plHitCount, int& _enHitCount );
 };
 
 #endif

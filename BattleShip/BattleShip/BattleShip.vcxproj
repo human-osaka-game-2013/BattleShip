@@ -75,6 +75,7 @@
     <ClCompile Include="..\Library\src\SceneInterface.cpp" />
     <ClCompile Include="..\Library\src\SceneManagerInterface.cpp" />
     <ClCompile Include="..\Library\src\WinMain.cpp" />
+    <ClCompile Include="src\ActionReport.cpp" />
     <ClCompile Include="src\AircraftCarrier.cpp" />
     <ClCompile Include="src\BattleShip.cpp" />
     <ClCompile Include="src\Button.cpp" />
@@ -106,6 +107,7 @@
     <ClInclude Include="..\Library\src\DebugInterface.h" />
     <ClInclude Include="..\Library\src\DebugNew.h" />
     <ClInclude Include="..\Library\src\SceneInterface.h" />
+    <ClInclude Include="src\ActionReport.h" />
     <ClInclude Include="src\AircraftCarrier.h" />
     <ClInclude Include="src\Background.h" />
     <ClInclude Include="src\BattleShip.h" />
@@ -121,6 +123,7 @@
     <ClInclude Include="src\GameState.h" />
     <ClInclude Include="src\LogStream.h" />
     <ClInclude Include="src\Player.h" />
+    <ClInclude Include="src\ReportData.h" />
     <ClInclude Include="src\Result.h" />
     <ClInclude Include="src\ScreenMask.h" />
     <ClInclude Include="src\Selection.h" />

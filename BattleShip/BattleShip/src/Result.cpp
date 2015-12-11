@@ -25,12 +25,11 @@ int Result::Control()
 		{
 
 		}
-
 		if( m_resultEnemy != 0 )
 		{
 
 		}
-		m_resultBattle = ResultProgressOfBattle( tempPlID, tempEnID );
+		m_resultBattle = ResultOfBattle( tempPlID, tempEnID );
 
 		//	戦闘結果の仮表示
 		//	自プレイヤー側に起きたイベント（敵の行動選択による結果）
@@ -129,7 +128,7 @@ int Result::ResultOfAction( const int _playerIndex )
 void Result::JudgmentOfActionProcess( int& _iReturn, const int _plIndex, int& _column, int& _line,
 										const int _selectNum, const int _shipNum )
 {
-	
+	bool resultDamageCtrl = false;
 	//	全ての艦種に効果のある指示だった場合（_SEARCH_ALL_or_ACTION_ALL_）
 	if( _selectNum%2 == 0 )
 	{
@@ -146,7 +145,8 @@ void Result::JudgmentOfActionProcess( int& _iReturn, const int _plIndex, int& _c
 				_shipNum < ShipObject::TYPE_MAX)
 		{
 			//	そのマスに攻撃指示が出ていた場合、プレイヤーが持っている駒にヒットの判断させる。
-			if( m_pPlayer[_plIndex]->DamageControl( _column, _line, (ShipObject::_SHIP_TYPE_NUM_)_shipNum))
+			resultDamageCtrl = m_pPlayer[_plIndex]->DamageControl( _column, _line, (ShipObject::_SHIP_TYPE_NUM_)_shipNum);
+			if( resultDamageCtrl )
 			{
 				//	駒に攻撃が当たったので、ステージ側のデータも損傷状態（２桁目を_CONDITION_DAMAGE_に）をつける
 				m_pStage->m_stageArray[_plIndex][_column][_line] += 10;
@@ -177,7 +177,8 @@ void Result::JudgmentOfActionProcess( int& _iReturn, const int _plIndex, int& _c
 					_shipNum < ShipObject::TYPE_MAX)
 			{
 				//	そのマスに攻撃指示が出ていた場合、プレイヤーが持っている駒にヒットの判断させる。
-				if( m_pPlayer[_plIndex]->DamageControl( _column, _line, (ShipObject::_SHIP_TYPE_NUM_)_shipNum))
+				resultDamageCtrl = m_pPlayer[_plIndex]->DamageControl( _column, _line, (ShipObject::_SHIP_TYPE_NUM_)_shipNum);
+				if( resultDamageCtrl )
 				{
 					//	駒に攻撃が当たったので、ステージ側のデータも損傷状態（２桁目を_CONDITION_DAMAGE_に）をつける
 					m_pStage->m_stageArray[_plIndex][_column][_line] += 10;
@@ -190,7 +191,7 @@ void Result::JudgmentOfActionProcess( int& _iReturn, const int _plIndex, int& _c
 }
 
 
-int Result::ResultProgressOfBattle( const int _playerIndex, const int _enemyIndex )
+int Result::ResultOfBattle( const int _playerIndex, const int _enemyIndex )
 {
 	int iResult = -1;
 	int iHitCount[_PLAYER_NUM_] ={0,0};
@@ -219,19 +220,32 @@ int Result::ResultProgressOfBattle( const int _playerIndex, const int _enemyInde
 		}
 	}
 
-	if( iHitCount[_playerIndex] == iHitCount[_enemyIndex] )
+	iResult = ProgressOfBattle( iHitCount[_playerIndex], iHitCount[_enemyIndex] );
+
+	return iResult;
+}
+
+int Result::ProgressOfBattle( int& _plHitCount, int& _enHitCount )
+{
+	int iResult;
+	if( _plHitCount >= _ANNIHILATION_NUM_ && _enHitCount >= _ANNIHILATION_NUM_ )
+	{
+		return TYPE_STALEMATE;
+	}
+
+	if( _plHitCount == _enHitCount )
 	{
 		iResult = TYPE_DRAW;
 	}
-	else if( iHitCount[_playerIndex] >= _ANNIHILATION_NUM_ )
+	else if( _plHitCount >= _ANNIHILATION_NUM_ )
 	{
 		iResult = TYPE_DEFEAT;
 	}
-	else if( iHitCount[_enemyIndex] >= _ANNIHILATION_NUM_ )
+	else if( _enHitCount >= _ANNIHILATION_NUM_ )
 	{
 		iResult = TYPE_VICTORY;
 	}
-	else if( iHitCount[_playerIndex] < iHitCount[_enemyIndex] )
+	else if( _plHitCount < _enHitCount )
 	{
 		iResult = TYPE_SUPERIORITY;
 	}
@@ -239,6 +253,5 @@ int Result::ResultProgressOfBattle( const int _playerIndex, const int _enemyInde
 	{
 		iResult = TYPE_INFERIORITY;
 	}
-
 	return iResult;
 }

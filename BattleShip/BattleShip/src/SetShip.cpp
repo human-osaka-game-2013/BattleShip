@@ -47,13 +47,16 @@ int SetShip::Control()
 int SetShip::CheckBoard()
 {
 	bool tempFlag = false;	///<	ネストが深くなる事を防止するために、ブロックのクリック判定がtrue
+	bool resultBlockHit = false;
 
 	//	行
 	for( int iColumn=0; iColumn<_STAGE_COLUMN_MAX_; iColumn++ ){	
 		//	列
 		for( int iLine=0; iLine<_STAGE_LINE_MAX_; iLine++ ){
-			
-			if( m_pStage->m_stageBlock[m_playerID-1][iColumn][iLine].HitBlockCheck( m_tempX, m_tempY ))
+
+			resultBlockHit = m_pStage->m_stageBlock[m_playerID-1][iColumn][iLine].HitBlockCheck( m_tempX, m_tempY );
+
+			if( resultBlockHit )
 			{
 				int iCheckResult=0;
 				

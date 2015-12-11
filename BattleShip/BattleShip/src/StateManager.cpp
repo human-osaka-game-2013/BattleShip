@@ -28,9 +28,9 @@ StateManager::StateManager( Player* const _pPlayer1, Player* const _pPlayer2,
 	: m_pPlayer1(_pPlayer1), m_pPlayer2(_pPlayer2), m_pStageObject( _pStageObject), m_playerID(_playerID)
 {
 	m_connectFlag = false;
-	m_resultPlayer	= static_cast<int>(Result::RESULT_NONE);
-	m_resultEnemy	= static_cast<int>(Result::RESULT_NONE);
 	m_resultBattle	= static_cast<int>(Result::TYPE_DRAW);
+	m_resultPlayer = static_cast<int>(Result::RESULT_NONE);
+	m_resultEnemy = static_cast<int>(Result::RESULT_NONE);
 	m_plyaerSelectType	= static_cast<int>(GameState::_SELECT_NONE_);
 	m_turnCount = 1;
 }
@@ -105,14 +105,14 @@ void StateManager::StateInit()
 int StateManager::StateCotrol()
 {
 	m_beforeState = m_currentState;	///<	ルーチン的にな処理で前フレーム時のステートを現在のステートに合わせる。
-	int stateResult = this->CheckState();	///<	ステートの変更チェックの処理
+	int gameResult = this->CheckState();	///<	ステートの変更チェックの処理
 	UpdateStatInTime( m_stateTime );	///<	タイムの更新
 	
 #ifdef _DEBUG_SCENE_TEST_
-	stateResult = -1;
+	gameResult = -1;
 
 #endif
-	if( stateResult == 1 )	///<	ステートのルーチン処理の結果シーンが変わる必要があれば
+	if( gameResult == 1 )	///<	ステートのルーチン処理の結果シーンが変わる必要があれば
 	{
 		switch( m_currentState )	///<	変更するステートは順番がある程度決まっているので分岐
 		{
@@ -134,16 +134,16 @@ int StateManager::StateCotrol()
 			break;
 		}
 	}
-	else if( stateResult == -1 )
+	else if( gameResult == -1 )
 	{
 		m_pAudio->SoundAllStop();
 		/*
 			戦闘終了に伴う戦況の最終結果をログに表示
 		*/
-		if( m_resultBattle == Result::TYPE_DRAW )
+		if( m_resultBattle == Result::TYPE_STALEMATE )
 		{
-			m_tempStr1 = m_gameLog.GetPhrase( FixedPhrase::RESULT_DRAW_STR );
-			m_pAudio->SoundPlay( Audio::_TITLE_BGM_, true );
+			m_tempStr1 = m_gameLog.GetPhrase( FixedPhrase::RESULT_STALEMATE_STR );
+			m_pAudio->SoundPlay( Audio::_LOSE_BGM_, true );
 		}
 		else if( m_resultBattle == Result::TYPE_VICTORY )
 		{
@@ -164,19 +164,19 @@ int StateManager::StateCotrol()
 		/**/
 	}
 	
-	return stateResult;
+	return gameResult;
 }
 
 int StateManager::CheckState()
 {
 	
 	int checkResult = 0;
-	int stageResult = 0;
+	int stateResult = 0;
 
 	//	戦闘続行中なら各ステートの処理を通す
 	//	通信を必要とするステートはSetShip、Selectionのみなので、他のステートではこのm_connectFlagには干渉しない事。
 	m_pGameState->SetConnectFlag( m_connectFlag );	//	毎フレーム通信のフラグを更新
-	stageResult = m_pGameState->Control();	///<　ステートごとの処理に移行
+	stateResult = m_pGameState->Control();	///<　ステートごとの処理に移行
 	SetConnectFlag( m_pGameState->GetConnectFlag() );	//	ステート内でのフラグ変更を反映させる
 	
 	switch( m_currentState )	///<　シーン毎にステートの結果への対処が変わるので分岐
@@ -196,7 +196,7 @@ int StateManager::CheckState()
 		break;
 
 	case STATE_SELECTION:
-		if( stageResult == 1 && !m_connectFlag ){	///<　結果が1且つ、通信が完了していた場合
+		if( stateResult == 1 && !m_connectFlag ){	///<　結果が1且つ、通信が完了していた場合
 			Selection* pSelection = dynamic_cast<Selection*>(m_pGameState);	///<Selectionの関数にアクセスする必要があるので、ダウンキャストする。
 			m_plyaerSelectType = pSelection->GetSelectionType();
 		
@@ -205,27 +205,29 @@ int StateManager::CheckState()
 		break;
 
 	case STATE_STAGE_EFFECT:
-		if( stageResult == 1 ){	///<　結果が1(ステージの演出が完了)の場合
+		if( stateResult == 1 ){	///<　結果が1(ステージの演出が完了)の場合
 			
 			checkResult = 1;
 		}
 		break;
 
 	case STATE_RESULT:
+
+		Result* pResult = dynamic_cast<Result*>(m_pGameState);	///<Resultの関数にアクセスする必要があるので、ダウンキャストする。	
+		pResult->GetResultOfBattle( m_resultBattle );	///< 戦闘結果を取得
+		pResult->GetResultPlayerAndEnemy( m_resultPlayer, m_resultEnemy );
+
 		//勝利or敗北or戦闘終了
-		if( stageResult == Result::TYPE_VICTORY || stageResult == Result::TYPE_DEFEAT )
+		if( stateResult == Result::TYPE_VICTORY ||
+			stateResult == Result::TYPE_DEFEAT ||
+			stateResult == Result::TYPE_STALEMATE )
 		{
-			Result* pResult = dynamic_cast<Result*>(m_pGameState);	///<Resultの関数にアクセスする必要があるので、ダウンキャストする。
 			checkResult = -1;	//StateManager側に戦闘結果＝戦闘終了した事を教えてやる。
-			pResult->GetResultOfBattle( m_resultBattle );
 			m_pStageObject->ResetSelect();	//判定を取ったので選択情報は消す
 		}
 		//勝敗はまだついていない
 		else	
 		{
-			Result* pResult = dynamic_cast<Result*>(m_pGameState);	///<Resultの関数にアクセスする必要があるので、ダウンキャストする。
-			pResult->GetResultPlayerAndEnemy( m_resultPlayer, m_resultEnemy );
-			pResult->GetResultOfBattle( m_resultBattle );
 			checkResult = 1;
 			m_pStageObject->ResetSelect();	//判定を取ったので選択情報は消す
 			

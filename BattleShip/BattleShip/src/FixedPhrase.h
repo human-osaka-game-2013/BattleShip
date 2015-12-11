@@ -57,8 +57,8 @@ public:
 		RESULT_DRAW_STR,		///<ˆø‚«•ª‚¯
 		RESULT_SUPERIORITY_STR,	///<—D¨
 		RESULT_VICTORY_STR,		///<Ÿ—˜
+		RESULT_STALEMATE_STR,	///<Žè‹l‚Ü‚è
 		RESULT_END,				///<í“¬I—¹
-
 
 		/*
 			‚»‚Ì‘¼
@@ -106,7 +106,8 @@ public:
 		m_phrase[RESULT_INFERIORITY_STR]="‰ä‚ªŒR‚ÍŒ»Ý—ò¨‚Å‚·B";
 		m_phrase[RESULT_DRAW_STR]		="í—Í‚ÍŒ»ÝhR‚µ‚Ä‚¢‚Ü‚·B";
 		m_phrase[RESULT_SUPERIORITY_STR]="‰ä‚ªŒR‚ÍŒ»Ý—D¨‚Å‚·I";
-		m_phrase[RESULT_VICTORY_STR]	="‰ä‚ªŒR‚ÌŸ—˜‚Å‚·I";	
+		m_phrase[RESULT_VICTORY_STR]	="‰ä‚ªŒR‚ÌŸ—˜‚Å‚·I";
+		m_phrase[RESULT_STALEMATE_STR]	="—¼ŒR‚Ìí—Í‚ª‘S–Å‚µ‚Ü‚µ‚½Bˆø‚«•ª‚¯‚Æ‚È‚è‚Ü‚·B";
 		m_phrase[RESULT_END]			="ƒí“¬I—¹I„";	
 
 		m_phrase[START_BATTLE]			="ƒí“¬ŠJŽnI„";

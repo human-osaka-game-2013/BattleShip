@@ -43,7 +43,8 @@ int Selection::Control()
 	{
 		if( !m_selectionFlag )
 		{
-			if( m_pPlayer[m_playerID-1]->CheckDestroy( static_cast<ShipObject::_SHIP_TYPE_NUM_>( m_ShipCount) ) )
+			bool deadFlag = m_pPlayer[m_playerID-1]->CheckDestroy( static_cast<ShipObject::_SHIP_TYPE_NUM_>( m_ShipCount) );
+			if( deadFlag )
 			{
 				m_tempStr1 = m_pGameLog->GetPhrase( FixedPhrase::SELECTION_KO_STR );
 				m_pGameLog->AddStream( m_tempStr1.c_str(), D3DXCOLOR( _LOG_COLOR_WARNING_ ) );
@@ -199,8 +200,8 @@ int Selection::SelectArrayCheck( )
 		for( iColumn=0; iColumn<_STAGE_COLUMN_MAX_; iColumn++ ){	
 			//	列
 			for( iLine=0; iLine<_STAGE_LINE_MAX_; iLine++ ){
-				
-				if( m_pStage->m_stageBlock[tempID-1][iColumn][iLine].HitBlockCheck( m_tempX, m_tempY ))
+				bool resultBlockHit = m_pStage->m_stageBlock[tempID-1][iColumn][iLine].HitBlockCheck( m_tempX, m_tempY );
+				if( resultBlockHit )
 				{
 					//	ステージブロックのチェック
 					switch( m_plyaerSelectType )
