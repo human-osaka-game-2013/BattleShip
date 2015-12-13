@@ -77,9 +77,19 @@ public:
 	*@brief	撃沈フラグの更新
 	*@details	撃沈フラグと被弾回数の更新
 	*/
-	void UpdateKOFlag( Player* const _player )
+	void UpdateKOFlag( Player* const _pPlayer )
 	{
-
+		for( int iShip = 0; iShip < ShipObject::TYPE_MAX; iShip++ )
+		{
+			bool destroyFlag = false;
+			byte flagCheck = 0x00;
+			destroyFlag = _pPlayer->CheckDestroy(static_cast<ShipObject::_SHIP_TYPE_NUM_>(iShip));
+			if( destroyFlag )
+			{
+				flagCheck = 0x01;
+			}
+			KOFlag = destroyFlag? (KOFlag | flagCheck<<iShip) : KOFlag;
+		}
 	}
 
 public:

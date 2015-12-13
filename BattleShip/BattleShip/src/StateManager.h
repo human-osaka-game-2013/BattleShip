@@ -8,6 +8,7 @@
 #include "BoardOfFrame.h"
 #include "GameLog.h"
 #include "Audio.h"
+#include "ReportData.h"
 
 #define _DEAD_COLOR_OF_SHIP_ 0xa0303030	///<自駒が撃破された際のカラー値
 
@@ -54,6 +55,8 @@ private:
 	int m_resultEnemy;		///< 敵側に起きている戦闘結果
 	int m_resultBattle;		///< 両者の戦況結果
 	unsigned int m_stateTime;	///<	各ステート内で秒数をカウントさせたい時に、シーン側で計測した秒数を渡す為のメンバ
+
+	ReportData		m_reportData;
 
 //	ステート共通の描画オブジェクトの情報
 private:

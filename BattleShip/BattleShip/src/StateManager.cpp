@@ -181,6 +181,7 @@ int StateManager::CheckState()
 	
 	switch( m_currentState )	///<　シーン毎にステートの結果への対処が変わるので分岐
 	{
+	//	駒が配置され、配置情報などの送受信が完了するまでループ
 	case STATE_SET_SHIP:
 		//	駒配置を促すログを出す
 		if( m_beforeShip != m_currentShip && m_currentShip != ShipObject::TYPE_MAX )
@@ -194,16 +195,28 @@ int StateManager::CheckState()
 		if( m_currentShip >= ShipObject::TYPE_MAX && !m_connectFlag )	///<　全ての駒がセットされた
 			checkResult = 1;
 		break;
-
+	//	選択が完了して、その情報の送受信が完了するまでループ
 	case STATE_SELECTION:
-		if( stateResult == 1 && !m_connectFlag ){	///<　結果が1且つ、通信が完了していた場合
-			Selection* pSelection = dynamic_cast<Selection*>(m_pGameState);	///<Selectionの関数にアクセスする必要があるので、ダウンキャストする。
-			m_plyaerSelectType = pSelection->GetSelectionType();
-		
-			checkResult = 1;	///<　選択結果に移る
+		if( stateResult == 1 ){	///<　結果が1且つ、通信が完了していた場合
+			static bool selectTimeUpdateFlag = false;	///< 行動決定までの時間計測の更新のためのフラグ
+			if( !selectTimeUpdateFlag )
+			{
+				m_reportData.SetSelectAveTime( GetStateInTime() );	///< 行動決定までの時間の更新
+				selectTimeUpdateFlag = true;
+			}
+			if( !m_connectFlag )
+			{
+				Selection* pSelection = dynamic_cast<Selection*>(m_pGameState);	///<Selectionの関数にアクセスする必要があるので、ダウンキャストする。
+				m_plyaerSelectType = pSelection->GetSelectionType();
+				m_reportData.UpdateSelectCount( m_plyaerSelectType );	///< 選択した行動の回数カウントの更新
+
+				checkResult = 1;	///<　エフェクトに移る
+				selectTimeUpdateFlag = false;
+			}
+			
 		}
 		break;
-
+	//	エフェクトが終わるまでループ
 	case STATE_STAGE_EFFECT:
 		if( stateResult == 1 ){	///<　結果が1(ステージの演出が完了)の場合
 			
@@ -211,12 +224,14 @@ int StateManager::CheckState()
 		}
 		break;
 
+	//	戦闘結果を判定しているだけなので事実上1フレームしか入らない。
 	case STATE_RESULT:
 
 		Result* pResult = dynamic_cast<Result*>(m_pGameState);	///<Resultの関数にアクセスする必要があるので、ダウンキャストする。	
 		pResult->GetResultOfBattle( m_resultBattle );	///< 戦闘結果を取得
 		pResult->GetResultPlayerAndEnemy( m_resultPlayer, m_resultEnemy );
-
+		m_reportData.UpdateResultCount( m_resultPlayer );
+		
 		//勝利or敗北or戦闘終了
 		if( stateResult == Result::TYPE_VICTORY ||
 			stateResult == Result::TYPE_DEFEAT ||
@@ -224,6 +239,9 @@ int StateManager::CheckState()
 		{
 			checkResult = -1;	//StateManager側に戦闘結果＝戦闘終了した事を教えてやる。
 			m_pStageObject->ResetSelect();	//判定を取ったので選択情報は消す
+			//	プレイヤー自身のポインタを取得
+			Player* pPlayerPtr = m_playerID/_PLAYER_NUM_? m_pPlayer2 : m_pPlayer1;
+			m_reportData.UpdateKOFlag( pPlayerPtr );
 		}
 		//勝敗はまだついていない
 		else	
