@@ -201,7 +201,7 @@ int StateManager::CheckState()
 			static bool selectTimeUpdateFlag = false;	///< 行動決定までの時間計測の更新のためのフラグ
 			if( !selectTimeUpdateFlag )
 			{
-				m_reportData.SetSelectAveTime( GetStateInTime() );	///< 行動決定までの時間の更新
+				m_reportData.UpdateSelectAveTime( GetStateInTime() );	///< 行動決定までの時間の更新
 				selectTimeUpdateFlag = true;
 			}
 			if( !m_connectFlag )
@@ -328,7 +328,7 @@ bool StateManager::ChangeState( _STATE_NUM_ _stateType )
 	m_pGameState->SetMouse( m_pMouse );
 	m_pGameState->SetAudio( m_pAudio );
 	m_pGameState->SetPlayerID( m_playerID );
-	m_pGameState->Init();	///<最後にステート側の初期化も行う（引数はこのクラスが持っている現在の選択駒）
+	m_pGameState->Init();	///<最後にステート側の初期化も行う
 
 	return true;
 }

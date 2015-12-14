@@ -3,6 +3,9 @@
 
 #include "Player.h"
 
+#define _REWARD_MAX_	6
+#define _SET_REPORTDATA_VAR_VOL_ 10
+
 /**
 *@brief	戦績保存クラス
 *@details	戦績の評価をするために必要なデータクラス
@@ -18,6 +21,8 @@ private:
 	int		turnCount;
 	int		damageCount;
 	byte	KOFlag;
+	float	hitProbability;
+	float	sightProbability;
 
 public:
 	ReportData()
@@ -30,12 +35,14 @@ public:
 		turnCount	= 0;
 		damageCount	= 0;
 		KOFlag		= 0x00;
+		hitProbability	= 0.f;
+		sightProbability= 0.f;
 	}
 
 	/**
 	*@brief	行動選択までの平均時間
 	*/
-	void SetSelectAveTime( const int _elapsed )
+	void UpdateSelectAveTime( const int _elapsed )
 	{
 		selectAveTime += _elapsed;
 		selectAveTime = selectAveTime/2;
@@ -66,9 +73,13 @@ public:
 		{
 		case 1:	///<発見
 			sightCount++;
+			sightProbability = sightCount/searchCount;
+			sightProbability *= 100.f;
 			break;
 		case 2: ///<着弾
 			hitCount++;
+			hitProbability = hitCount/attackCount;
+			hitProbability *= 100.f;
 			break;
 		}
 	}
@@ -88,7 +99,7 @@ public:
 			{
 				flagCheck = 0x01;
 			}
-			KOFlag = destroyFlag? (KOFlag | flagCheck<<iShip) : KOFlag;
+			KOFlag = destroyFlag? (KOFlag | flagCheck<<iShip) : KOFlag;	//駒の撃沈フラグをビット管理し、下位ビットから空母～潜水艦で管理
 		}
 	}
 
@@ -97,11 +108,24 @@ public:
 	inline int GetAttackCount()	{ return attackCount; }
 	inline int GetHitCount()	{ return hitCount; }
 	inline int GetSightCount()	{ return sightCount; }
-	inline int GetAveCount()	{ return selectAveTime; }
+	inline int GetAveTime()	{ return selectAveTime; }
 	inline int GetTurnCount()	{ return turnCount; }
 	inline int GetDamageCount()	{ return damageCount; }
 	inline byte GetKOFlag()		{ return KOFlag; }
+	inline float GetHitProbability(){ return hitProbability; }
+	inline float GetSightProbability(){ return sightProbability; }
 
+public:
+	inline void SetSearchCount( int _searchCount)	{ searchCount = _searchCount; }
+	inline void SetAttackCount( int _attackCount)	{ attackCount = _attackCount; }
+	inline void SetHitCount( int _hitCount )		{ hitCount = _hitCount; }
+	inline void SetSightCount( int _sightCount )	{ sightCount = _sightCount; }
+	inline void SetAveTime( int _aveTime )			{ selectAveTime = _aveTime; }
+	inline void SetTurnCount( int _turnCount )		{ turnCount = _turnCount; }
+	inline void SetDamageCount( int _damageCount )	{ damageCount = _damageCount; }
+	inline void SetKOFlag( byte _koFlag )		{ KOFlag = _koFlag; }
+	inline void SetHitProbability( float _hitProbability ){ hitProbability = _hitProbability; }
+	inline void SetSightProbability( float _sightProbability){ sightProbability = _sightProbability; }
 };
 
 #endif
