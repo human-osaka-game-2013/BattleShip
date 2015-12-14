@@ -24,6 +24,9 @@ private:
 	float	hitProbability;
 	float	sightProbability;
 
+private:
+	bool	m_completeFlag;
+
 public:
 	ReportData()
 	{
@@ -37,6 +40,7 @@ public:
 		KOFlag		= 0x00;
 		hitProbability	= 0.f;
 		sightProbability= 0.f;
+		m_completeFlag = false;
 	}
 
 	/**
