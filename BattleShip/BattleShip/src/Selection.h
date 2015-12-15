@@ -18,7 +18,7 @@
 class Selection : public GameState
 {
 private:
-	byte m_selectionFlag;	///<	行動・タブ・行動選択開始ログ表示の管理フラグ	
+	unsigned char m_selectionFlag;	///<	行動・タブ・行動選択開始ログ表示の管理フラグ	
 	_SELECT_NUM_ m_plyaerSelectType;	///< 選択した行動の種類
 	int m_arrayCheckResult;		///< 行動選択時の範囲チェックの結果
 	

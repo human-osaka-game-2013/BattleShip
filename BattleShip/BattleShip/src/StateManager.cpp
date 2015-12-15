@@ -10,6 +10,7 @@
 #include "Selection.h"
 #include "Result.h"
 #include "StageEffect.h"
+#include "ActionReport.h"
 //-------------------------------------------
 #include "DebugNew.h"
 
@@ -134,6 +135,10 @@ int StateManager::StateCotrol()
 			break;
 		}
 	}
+	else if( gameResult == 2 )
+	{
+		ChangeState(STATE_ACTION_REPORT);
+	}
 	else if( gameResult == -1 )
 	{
 		m_pAudio->SoundAllStop();
@@ -241,7 +246,7 @@ int StateManager::CheckState()
 			m_pStageObject->ResetSelect();	//判定を取ったので選択情報は消す
 			//	プレイヤー自身のポインタを取得
 			Player* pPlayerPtr = m_playerID/_PLAYER_NUM_? m_pPlayer2 : m_pPlayer1;
-			m_reportData.UpdateKOFlag( pPlayerPtr );
+			m_reportData.UpdateKOCount( pPlayerPtr );
 		}
 		//勝敗はまだついていない
 		else	
@@ -300,16 +305,19 @@ bool StateManager::ChangeState( _STATE_NUM_ _stateType )
 		m_pGameState = new Selection( m_currentShip, &m_gameLog );
 
 		break;
-
 	case STATE_STAGE_EFFECT:
 		m_pGameState = new StageEffect( m_currentShip, &m_gameLog );
 		static_cast<StageEffect*>(m_pGameState)->SetSelectionType( m_plyaerSelectType );	///<エフェクトにはどの行動を選択したかの判断がいるので情報を渡してやる。
+		
 		break;
-
 	case STATE_RESULT:
 		m_tempStr1 = m_gameLog.m_fixedPhrase.m_phrase[FixedPhrase::STATE_RESULT_STR];
 		m_gameLog.AddStream(m_tempStr1.c_str(), _LOG_COLOR_DEFAULT_, _LOG_FONT_BIGSIZE_, _LOG_FONT_BIGSIZE_, DT_CENTER );
 		m_pGameState = new Result( m_currentShip, &m_gameLog );
+
+		break;
+	case STATE_ACTION_REPORT:
+		m_pGameState = new ActionReport( m_currentShip, &m_gameLog, m_reportData );
 
 		break;
 	}

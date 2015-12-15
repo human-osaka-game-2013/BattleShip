@@ -3,12 +3,9 @@
 
 #include "Player.h"
 
-#define _REWARD_MAX_	6
-#define _SET_REPORTDATA_VAR_VOL_ 10
-
 /**
 *@brief	戦績保存クラス
-*@details	戦績の評価をするために必要なデータクラス
+*@details	戦闘中に戦績判定に必要なデータを収集するクラス
 */
 class ReportData
 {
@@ -20,12 +17,7 @@ private:
 	int		selectAveTime;
 	int		turnCount;
 	int		damageCount;
-	byte	KOFlag;
-	float	hitProbability;
-	float	sightProbability;
-
-private:
-	bool	m_completeFlag;
+	unsigned char	KOCount;
 
 public:
 	ReportData()
@@ -37,10 +29,7 @@ public:
 		selectAveTime = 0;
 		turnCount	= 0;
 		damageCount	= 0;
-		KOFlag		= 0x00;
-		hitProbability	= 0.f;
-		sightProbability= 0.f;
-		m_completeFlag = false;
+		KOCount		= 0;
 	}
 
 	/**
@@ -77,13 +66,11 @@ public:
 		{
 		case 1:	///<発見
 			sightCount++;
-			sightProbability = sightCount/searchCount;
-			sightProbability *= 100.f;
+			
 			break;
 		case 2: ///<着弾
 			hitCount++;
-			hitProbability = hitCount/attackCount;
-			hitProbability *= 100.f;
+			
 			break;
 		}
 	}
@@ -92,18 +79,17 @@ public:
 	*@brief	撃沈フラグの更新
 	*@details	撃沈フラグと被弾回数の更新
 	*/
-	void UpdateKOFlag( Player* const _pPlayer )
+	void UpdateKOCount( Player* const _pPlayer )
 	{
 		for( int iShip = 0; iShip < ShipObject::TYPE_MAX; iShip++ )
 		{
 			bool destroyFlag = false;
-			byte flagCheck = 0x00;
+			
 			destroyFlag = _pPlayer->CheckDestroy(static_cast<ShipObject::_SHIP_TYPE_NUM_>(iShip));
 			if( destroyFlag )
 			{
-				flagCheck = 0x01;
+				KOCount++;
 			}
-			KOFlag = destroyFlag? (KOFlag | flagCheck<<iShip) : KOFlag;	//駒の撃沈フラグをビット管理し、下位ビットから空母～潜水艦で管理
 		}
 	}
 
@@ -115,11 +101,20 @@ public:
 	inline int GetAveTime()	{ return selectAveTime; }
 	inline int GetTurnCount()	{ return turnCount; }
 	inline int GetDamageCount()	{ return damageCount; }
-	inline byte GetKOFlag()		{ return KOFlag; }
-	inline float GetHitProbability(){ return hitProbability; }
-	inline float GetSightProbability(){ return sightProbability; }
+	inline unsigned char GetKOCount() { return KOCount; }
+	inline float GetHitProbability()
+	{
+		float hitProbability = 0.f;
+		hitProbability = (static_cast<float>(attackCount)/static_cast<float>(hitCount))*100.f;
+		return hitProbability; 
+	}
+	inline float GetSightProbability()
+	{
+		float sightProbability = 0.f;
+		sightProbability = (static_cast<float>(searchCount)/static_cast<float>(sightCount))*100.f;
+		return sightProbability; 
+	}
 
-public:
 	inline void SetSearchCount( int _searchCount)	{ searchCount = _searchCount; }
 	inline void SetAttackCount( int _attackCount)	{ attackCount = _attackCount; }
 	inline void SetHitCount( int _hitCount )		{ hitCount = _hitCount; }
@@ -127,9 +122,7 @@ public:
 	inline void SetAveTime( int _aveTime )			{ selectAveTime = _aveTime; }
 	inline void SetTurnCount( int _turnCount )		{ turnCount = _turnCount; }
 	inline void SetDamageCount( int _damageCount )	{ damageCount = _damageCount; }
-	inline void SetKOFlag( byte _koFlag )		{ KOFlag = _koFlag; }
-	inline void SetHitProbability( float _hitProbability ){ hitProbability = _hitProbability; }
-	inline void SetSightProbability( float _sightProbability){ sightProbability = _sightProbability; }
+	inline void SetKOCount( unsigned char _koFlag )		{ KOCount = _koFlag; }
 };
 
 #endif

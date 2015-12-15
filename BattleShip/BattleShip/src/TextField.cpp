@@ -1,9 +1,9 @@
 
 #include "TextField.h"
 
-const byte TextField::ConvertNumFromWord( int _num )
+const unsigned char TextField::ConvertNumFromWord( int _num )
 {
-	byte result = 0;
+	unsigned char result = 0;
 	switch( _num )
 	{
 	case 0:

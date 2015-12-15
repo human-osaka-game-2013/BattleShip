@@ -42,7 +42,7 @@ public:
 	*/
 	void AddStr( int _num )
 	{
-		const byte _word = ConvertNumFromWord(_num);
+		const unsigned char _word = ConvertNumFromWord(_num);
 		char temp[2];
 		sprintf_s( temp, "%c", _word );
 		AddStr( temp );
@@ -88,7 +88,7 @@ private:
 				基本的にAddStr関数と併用する形にしてください。
 	*@return	変換した文字の1バイトデータ
 	*/
-	const byte ConvertNumFromWord( int _num );
+	const unsigned char ConvertNumFromWord( int _num );
 
 };
 

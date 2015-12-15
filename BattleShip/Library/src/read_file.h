@@ -43,6 +43,23 @@ public:
 	*/
 	virtual void SetTable( char* _p, int _iColumn, int _iLine)=0;
 
+	static unsigned char binToUChar(const char *ptr)
+	{
+	    unsigned char val = 0x00;
+		int i = 0;
+	    while( *ptr != '\0' ) {
+	        switch( *ptr++ ) {
+	            case '0':
+	                val = val|(0x00<<i);
+	                break;
+	            case '1':
+	                val = val |(0x01<<i);
+	                break;
+	        }
+			i++;
+	    }
+	    return val;
+	}
 };
 
 #endif _READ_FILE_H_

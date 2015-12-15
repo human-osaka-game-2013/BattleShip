@@ -3,28 +3,32 @@
 
 #include "GameState.h"
 #include "read_file.h"
-#include "ReportData.h"
+#include "ReportResult.h"
+#include "Reward.h"
+
+#define _READ_CONDITIONSFILE_PASS_ "table/RewardTable.csv"
 
 /**
 *@brief	戦績の報告を行うクラス
-*@details	戦闘中にReportDataクラスに蓄積されたデータを元に、
+*@details	戦闘中にReportResultクラスに蓄積されたデータを元に、
 			戦績の判定などを行うクラス
 *@todo		勲章などの取得なども出来るようにしたいです。
 */
 class ActionReport : public GameState, public ReadFile
 {
 private:
-	ReportData* const m_pReportData;
-	ReportData	m_reportConditions[_REWARD_MAX_];	
-	byte		m_getRewardFlag;
+	ReportResult	m_reportResult;
+	ReportResult	m_reportConditions[_REWARD_MAX_];	
+	Reward			m_reward;
 public:
 	/**
 	*@brief	コンストラクタ
 	*/
-	ActionReport(ShipObject::_SHIP_TYPE_NUM_& _type, GameLog* _pGameLog, ReportData* _pReportData ):
-	  GameState( _type, _pGameLog ), m_pReportData( _pReportData )
+	ActionReport(ShipObject::_SHIP_TYPE_NUM_& _type, GameLog* _pGameLog, ReportData& _pReportData ):
+	  GameState( _type, _pGameLog )
 	{
-
+		//	戦闘中のデータを結果方式に整理
+		m_reportResult.ArrangementReport( _pReportData );
 	}
 	
 	bool Init();
@@ -33,10 +37,55 @@ public:
 
 	void Draw();
 
-	void SetTable( char* _p, int _iColumn = _REWARD_MAX_, int _iLine = _SET_REPORTDATA_VAR_VOL_);
+	void SetTable( char* _p, int _iColumn = _REWARD_MAX_, int _iLine = _MAX_REPORT_VAR_);
 
 private:
-	void JudgmentReward();
+	/**
+	*@brief	全ての称号の判定
+	*/
+	void AllCheckReward()
+	{
+		for( int i = 0; i < _REWARD_MAX_; i++ )
+		{
+			bool result = false;
+			result = m_reward.CheckReward( i );
+			if( result )
+			{
+				JudgmentReward( i );
+			}
+		}
+	}
+
+	/**
+	*@brief	称号の取得判定
+	*/
+	void JudgmentReward( int _rewardNum );
+
+	template <class T>
+	/**
+	*@brief	称号の条件要素のチェック
+	*/
+	bool CheckJudgeItem( T _item, T _val )
+	{
+		//	0は条件に当てはまらない
+		if( _val == 0 )
+		{
+			return true;
+		}
+		//	マイナス値だったら_valの絶対値>_itemで判定
+		if( _val < 0 )
+		{
+			if( abs(_val) >= _item )
+				return true;
+		}
+		//	プラス値だったら_val<_itemで判定
+		else if( _val > 0 )
+		{
+			if( abs(_val) <= _item )
+				return true;
+		}
+		return false;
+	}
 
 };
 

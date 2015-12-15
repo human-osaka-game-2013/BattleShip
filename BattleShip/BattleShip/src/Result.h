@@ -51,8 +51,8 @@ private:
 	int m_resultPlayer;	///<	ƒvƒŒƒCƒ„[‘¤‚É‹N‚«‚Ä‚¢‚éí“¬Œ‹‰Ê
 	int m_resultEnemy;	///<	“G‘¤‚É‹N‚«‚Ä‚¢‚éí“¬Œ‹‰Ê
 	int m_resultBattle;	///<	—¼ŽÒ‚Ìí‹µŒ‹‰Ê
-	byte m_seachFlag;	///< õ“G‚Å”­Œ©‚³‚ê‚½ŠÍŽí
-	byte m_bitFlag[ShipObject::TYPE_MAX];
+	unsigned char m_seachFlag;	///< õ“G‚Å”­Œ©‚³‚ê‚½ŠÍŽí
+	unsigned char m_bitFlag[ShipObject::TYPE_MAX];
 
 public:
 	/**

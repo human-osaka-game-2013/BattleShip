@@ -144,6 +144,9 @@
     <ClCompile Include="src\ActionReport.cpp">
       <Filter>ソース ファイル\State</Filter>
     </ClCompile>
+    <ClCompile Include="src\Reward.cpp">
+      <Filter>ソース ファイル\Game\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\TitleScene.h">
@@ -243,6 +246,12 @@
       <Filter>ヘッダー ファイル\State</Filter>
     </ClInclude>
     <ClInclude Include="src\ReportData.h">
+      <Filter>ヘッダー ファイル\Game\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ReportResult.h">
+      <Filter>ヘッダー ファイル\Game\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Reward.h">
       <Filter>ヘッダー ファイル\Game\Object</Filter>
     </ClInclude>
   </ItemGroup>

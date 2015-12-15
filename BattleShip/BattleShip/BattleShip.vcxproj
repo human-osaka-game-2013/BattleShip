@@ -87,6 +87,7 @@
     <ClCompile Include="src\GameState.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Result.cpp" />
+    <ClCompile Include="src\Reward.cpp" />
     <ClCompile Include="src\Selection.cpp" />
     <ClCompile Include="src\SetShip.cpp" />
     <ClCompile Include="src\ShipObject.cpp" />
@@ -124,7 +125,9 @@
     <ClInclude Include="src\LogStream.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\ReportData.h" />
+    <ClInclude Include="src\ReportResult.h" />
     <ClInclude Include="src\Result.h" />
+    <ClInclude Include="src\Reward.h" />
     <ClInclude Include="src\ScreenMask.h" />
     <ClInclude Include="src\Selection.h" />
     <ClInclude Include="src\SetShip.h" />

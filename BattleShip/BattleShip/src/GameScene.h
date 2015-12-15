@@ -41,7 +41,7 @@ private:
 	bool	m_fadeInFlag;		///<ゲーム開始時はフェードインさせる。
 	bool	m_fadeOutFlag;		///<ゲーム終了時にフェードアウトさせる。
 	
-	byte	m_connectFlag;	///< ビット管理の通信管理フラグ
+	unsigned char	m_connectFlag;	///< ビット管理の通信管理フラグ
 	int		m_sendShipCount;		///<駒の情報を送っていた回数
 
 public:

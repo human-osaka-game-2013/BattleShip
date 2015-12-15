@@ -162,9 +162,6 @@
     <ClInclude Include="src\AllocateHierarchy.h">
       <Filter>ヘッダーファイル\lib_h\graphic</Filter>
     </ClInclude>
-    <ClInclude Include="src\DirectXFont.h">
-      <Filter>ヘッダーファイル\lib_h\graphic</Filter>
-    </ClInclude>
     <ClInclude Include="src\DrawManager.h">
       <Filter>ヘッダーファイル\lib_h\graphic</Filter>
     </ClInclude>
@@ -190,6 +187,9 @@
       <Filter>ヘッダーファイル\lib_h\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\Audio.h">
+      <Filter>ヘッダーファイル\lib_h\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DirectXFont.h">
       <Filter>ヘッダーファイル\lib_h\Audio</Filter>
     </ClInclude>
   </ItemGroup>
