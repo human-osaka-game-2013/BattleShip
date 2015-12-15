@@ -25,7 +25,7 @@ int ActionReport::Control()
 
 void ActionReport::Draw()
 {
-
+	m_reward.DrawReward();
 }
 
 void ActionReport::SetTable( char* _p, int _iColumn, int _iLine )
@@ -109,7 +109,7 @@ void ActionReport::JudgmentReward( int _rewardNum )
 			break;
 		}
 	}
-	//	‘S‚Ä‚ÌğŒ‚ğ–‚½‚µ‚Ä‚¢‚½‚Ì‚ÅÌ†‚ğæ“¾
+	//	‘S‚Ä‚ÌğŒ‚ğ–‚½‚µ‚Ä‚¢‚½‚Ì‚Å•ñV‚ğæ“¾
 	if( result )
 	{
 		m_reward.GetReward( _rewardNum );

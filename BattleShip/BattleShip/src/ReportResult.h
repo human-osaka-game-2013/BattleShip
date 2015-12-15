@@ -21,7 +21,7 @@ enum _REPORT_RESULT_VAR_
 
 /**
 *@brief	戦績の判定用のデータクラス
-*@details	ReportDataクラスで収集したデータを、称号獲得
+*@details	ReportDataクラスで収集したデータを、報酬獲得
 */
 class ReportResult
 {

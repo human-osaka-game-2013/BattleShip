@@ -57,13 +57,13 @@ private:
 	}
 
 	/**
-	*@brief	称号の取得判定
+	*@brief	報酬の取得判定
 	*/
 	void JudgmentReward( int _rewardNum );
 
 	template <class T>
 	/**
-	*@brief	称号の条件要素のチェック
+	*@brief	報酬の条件要素のチェック
 	*/
 	bool CheckJudgeItem( T _item, T _val )
 	{
