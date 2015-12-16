@@ -35,9 +35,8 @@ bool Selection::Init()
 //	
 int Selection::Control()
 {
-	m_tempX = (float)m_pMouse->GetCursorPosX();
-	m_tempY = (float)m_pMouse->GetCursorPosY();
-	
+	m_tempX = static_cast<float>(m_pMouse->GetCursorPosX());
+	m_tempY = static_cast<float>(m_pMouse->GetCursorPosY());
 
 	if( !m_StateCompFlag )
 	{
@@ -275,6 +274,25 @@ int Selection::SelectArrayCheck( )
 		float tempW = _BLOCK_WIDTH_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
 		float tempH = _BLOCK_HEIGHT_SIZE_;		///<	ステージ上の1コマのサイズの入力を簡略化
 
+		//	タブ選択の取り消しをする時も、ちゃんと駒を元の場所に戻す
+		if( m_pMouse->MouseStCheck( MOUSE_R, PUSH ) )
+		{
+			m_tempShip->GetArrayPos( tempColumn, tempLine );
+			if(tempID == 1)	//プレイヤーIDが1（=配列の指数だと0）だったら
+			{
+				m_tempX = tempLine*tempW + tempW*1.5f ;		
+				m_tempY = tempColumn*tempH + tempH*1.5f;
+			}
+			else if(tempID == 2)
+			{
+				m_tempX = (tempLine+_STAGE_HEIGHT_MAX_)*tempW + tempW*1.5f ;
+				m_tempY = tempColumn*tempH + tempH*1.5f;
+			}
+			m_tempShip->SetPosition( m_tempX, m_tempY, 0.5f );
+			ResetTabSelect();
+			m_pAudio->SoundPlay( Audio::_FAILED_SE_ );
+		}
+
 		if( iCheckResult == -1 )	///<駒を置けるマスじゃなかった。
 		{	
 			return -1;
@@ -317,14 +335,7 @@ int Selection::SelectArrayCheck( )
 			}
 			m_tempShip->SetPosition( m_tempX, m_tempY, 0.5f );
 		}
-		//	タブ選択の取り消しをする時も、ちゃんと駒を元の場所に戻す
-		if( m_pMouse->MouseStCheck( MOUSE_R, PUSH ) )
-		{
-			m_tempShip->GetArrayPos( tempColumn, tempLine );
-			m_tempShip->SetPosition( m_tempX, m_tempY, 0.5f );
-			ResetTabSelect();
-			m_pAudio->SoundPlay( Audio::_FAILED_SE_ );
-		}
+		
 		break;
 	}
 

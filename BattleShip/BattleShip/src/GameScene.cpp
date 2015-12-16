@@ -128,7 +128,7 @@ void GameScene::BackGroundDraw()
 	m_background.GetPosition( &tempX, &tempY);
 	m_pDrawManager->AnimationDraw( _TEX_BACKGROUND_, tempX, tempY, 
 		m_background.GetWidth(),  m_background.GetHeight(),
-		static_cast<unsigned int>(GetTimeInScene()*5) );
+		static_cast<unsigned int>(GetTimeInScene()*3) );
 }
 
 

@@ -37,8 +37,15 @@ public:
 	*/
 	void UpdateSelectAveTime( const int _elapsed )
 	{
-		selectAveTime += _elapsed;
-		selectAveTime = selectAveTime/2;
+		if( selectAveTime == 0 )
+		{
+			selectAveTime = _elapsed;
+		}
+		else
+		{
+			selectAveTime += _elapsed;
+			selectAveTime = selectAveTime/2;
+		}
 	}
 	
 	/**
@@ -60,9 +67,9 @@ public:
 	/**
 	*@brief	戦闘結果の回数のカウント更新
 	*/
-	void UpdateResultCount( const int _resultPlayer )
+	void UpdateResultCount( const int _result )
 	{
-		switch( _resultPlayer )
+		switch( _result )
 		{
 		case 1:	///<発見
 			sightCount++;
@@ -81,16 +88,18 @@ public:
 	*/
 	void UpdateKOCount( Player* const _pPlayer )
 	{
+		int hitCheckCount = 0;
+		bool destroyFlag = false;
 		for( int iShip = 0; iShip < ShipObject::TYPE_MAX; iShip++ )
-		{
-			bool destroyFlag = false;
-			
+		{			
 			destroyFlag = _pPlayer->CheckDestroy(static_cast<ShipObject::_SHIP_TYPE_NUM_>(iShip));
 			if( destroyFlag )
 			{
 				KOCount++;
 			}
+			hitCheckCount+=_pPlayer->CheckHitCount(static_cast<ShipObject::_SHIP_TYPE_NUM_>(iShip));
 		}
+		SetDamageCount(hitCheckCount);
 	}
 
 public:
@@ -105,13 +114,13 @@ public:
 	inline float GetHitProbability()
 	{
 		float hitProbability = 0.f;
-		hitProbability = (static_cast<float>(attackCount)/static_cast<float>(hitCount))*100.f;
+		hitProbability = (static_cast<float>(hitCount)/static_cast<float>(attackCount))*100.f;
 		return hitProbability; 
 	}
 	inline float GetSightProbability()
 	{
 		float sightProbability = 0.f;
-		sightProbability = (static_cast<float>(searchCount)/static_cast<float>(sightCount))*100.f;
+		sightProbability = (static_cast<float>(sightCount)/static_cast<float>(searchCount))*100.f;
 		return sightProbability; 
 	}
 

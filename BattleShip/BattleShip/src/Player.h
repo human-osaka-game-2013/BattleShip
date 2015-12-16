@@ -72,6 +72,7 @@ public:
 	*/
 	bool CheckDestroy( const ShipObject::_SHIP_TYPE_NUM_ _shipType );
 
+	int	CheckHitCount( const ShipObject::_SHIP_TYPE_NUM_ _shipType );
 };
 
 #endif 

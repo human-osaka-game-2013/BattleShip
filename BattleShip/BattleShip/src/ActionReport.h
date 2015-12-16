@@ -6,7 +6,7 @@
 #include "ReportResult.h"
 #include "Reward.h"
 
-#define _READ_CONDITIONSFILE_PASS_ "table/RewardTable.csv"
+#define _REWARDTABLE_PASS_ "table/RewardTable.csv"
 
 /**
 *@brief	戦績の報告を行うクラス
@@ -20,6 +20,7 @@ private:
 	ReportResult	m_reportResult;
 	ReportResult	m_reportConditions[_REWARD_MAX_];	
 	Reward			m_reward;
+	
 public:
 	/**
 	*@brief	コンストラクタ
@@ -38,6 +39,11 @@ public:
 	void Draw();
 
 	void SetTable( char* _p, int _iColumn = _REWARD_MAX_, int _iLine = _MAX_REPORT_VAR_);
+
+	~ActionReport()
+	{
+		m_reward.SaveReward();
+	}
 
 private:
 	/**

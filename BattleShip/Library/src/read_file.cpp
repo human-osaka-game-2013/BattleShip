@@ -60,10 +60,49 @@ bool ReadFile::ReadTableData( char* _pFileName, const int _ColumnMax, const int 
 bool ReadFile::SetDataFile( const std::string& _str )
 {
 	std::ofstream ofs;
-	ofs.open( _READ_FILE_PASS_1_ );
+	ofs.open( _CONNECTDATA_PASS_ );
+
+	if (!ofs) {
+		std::cout << "ファイル file.txt が開けません";
+        return false;
+    }
 
 	ofs <<_str.c_str()<< std::endl;
 
 	ofs.close();
+	return true;
+}
+
+bool ReadFile::SaveToBinaryData( char* _pFileName, void* _data, int _size )
+{
+	std::ofstream ofs;
+	ofs.open( _pFileName, std::ios::out | std::ios::binary );
+
+	if (!ofs) {
+		std::cout << "ファイルが開けません";
+        return false;
+    }
+
+	ofs.write( static_cast<char*>(_data), sizeof(_size) );
+
+	ofs.close();
+
+	return true;
+}
+
+bool ReadFile::ReadBinaryData( char* _pFileName, void* _data, int _size )
+{
+	std::ifstream ifs;
+	ifs.open( _pFileName, std::ios::in | std::ios::binary );
+	
+	if (!ifs) {
+		std::cout << "ファイルが開けません";
+        return false;
+    }
+
+	ifs.read( static_cast<char*>(_data), sizeof(_size) );
+
+	ifs.close();
+
 	return true;
 }

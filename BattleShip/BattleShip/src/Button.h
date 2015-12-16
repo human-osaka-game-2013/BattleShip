@@ -22,7 +22,7 @@ private:
 	float selectVol;					///< ボタンの（選択時の）拡大率
 	float defaultWidth, defaultHeight;	///< ボタンの初期基準幅高さ
 	float fWidth ,fHeight;
-	int iA, iR, iG, iB; 
+	int iA, iR, iG, iB;
 	BUTTON_STATE m_state;
 	Audio*	m_pAudio;
 

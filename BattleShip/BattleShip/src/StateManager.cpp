@@ -145,25 +145,6 @@ int StateManager::StateCotrol()
 		/*
 			戦闘終了に伴う戦況の最終結果をログに表示
 		*/
-		if( m_resultBattle == Result::TYPE_STALEMATE )
-		{
-			m_tempStr1 = m_gameLog.GetPhrase( FixedPhrase::RESULT_STALEMATE_STR );
-			m_pAudio->SoundPlay( Audio::_LOSE_BGM_, true );
-		}
-		else if( m_resultBattle == Result::TYPE_VICTORY )
-		{
-			m_tempStr1 = m_gameLog.GetPhrase( FixedPhrase::RESULT_VICTORY_STR );
-			m_pAudio->SoundPlay( Audio::_WIN_BGM_, true );
-		}
-		else if( m_resultBattle == Result::TYPE_DEFEAT )
-		{
-			m_tempStr1 = m_gameLog.GetPhrase( FixedPhrase::RESULT_DEFEAT_STR );
-			m_pAudio->SoundPlay( Audio::_LOSE_BGM_, true );
-		}
-		m_gameLog.AddStream( m_tempStr1.c_str(), _LOG_COLOR_DEFAULT_, _LOG_FONT_BIGSIZE_, _LOG_FONT_BIGSIZE_, DT_CENTER );
-		//	戦闘終了ログを表示
-		m_tempStr1 = m_gameLog.GetPhrase( FixedPhrase::RESULT_END );
-		m_gameLog.AddStream( m_tempStr1.c_str(), _LOG_COLOR_DEFAULT_, _LOG_FONT_BIGSIZE_, _LOG_FONT_BIGSIZE_, DT_CENTER );
 		m_tempStr1 = "左クリックでタイトルに戻りましょう";
 		m_gameLog.AddStream( m_tempStr1.c_str(), _LOG_COLOR_NOMAL_, _LOG_FONT_BIGSIZE_, _LOG_FONT_BIGSIZE_, DT_CENTER );
 		/**/
@@ -204,9 +185,15 @@ int StateManager::CheckState()
 	case STATE_SELECTION:
 		if( stateResult == 1 ){	///<　結果が1且つ、通信が完了していた場合
 			static bool selectTimeUpdateFlag = false;	///< 行動決定までの時間計測の更新のためのフラグ
+			
 			if( !selectTimeUpdateFlag )
 			{
-				m_reportData.UpdateSelectAveTime( GetStateInTime() );	///< 行動決定までの時間の更新
+				Player* _pPlayer = m_playerID%_PLAYER_NUM_? m_pPlayer1: m_pPlayer2;
+				bool deadFlag = _pPlayer->CheckDestroy( m_currentShip );
+				//	もし駒が轟沈していた場合、行動選択の更新をしてしまうとダメなので調べておく
+				if(!deadFlag)
+					m_reportData.UpdateSelectAveTime( m_pGameState->GetElapsedTimeFromStateInstance() );	///< 行動決定までの時間の更新
+				
 				selectTimeUpdateFlag = true;
 			}
 			if( !m_connectFlag )
@@ -229,24 +216,54 @@ int StateManager::CheckState()
 		}
 		break;
 
+	case STATE_ACTION_REPORT:
+		if( stateResult == 1 ){	///<　結果が1(戦績結果終了)の場合
+			
+			checkResult = -1;
+		}
+		break;
+
 	//	戦闘結果を判定しているだけなので事実上1フレームしか入らない。
 	case STATE_RESULT:
 
 		Result* pResult = dynamic_cast<Result*>(m_pGameState);	///<Resultの関数にアクセスする必要があるので、ダウンキャストする。	
 		pResult->GetResultOfBattle( m_resultBattle );	///< 戦闘結果を取得
 		pResult->GetResultPlayerAndEnemy( m_resultPlayer, m_resultEnemy );
-		m_reportData.UpdateResultCount( m_resultPlayer );
-		
+		m_reportData.UpdateResultCount( m_resultEnemy );
+		m_reportData.SetTurnCount(m_turnCount);
+
 		//勝利or敗北or戦闘終了
 		if( stateResult == Result::TYPE_VICTORY ||
 			stateResult == Result::TYPE_DEFEAT ||
 			stateResult == Result::TYPE_STALEMATE )
 		{
-			checkResult = -1;	//StateManager側に戦闘結果＝戦闘終了した事を教えてやる。
+			checkResult = 2;	//StateManager側に戦闘結果＝戦闘終了した事を教えてやる。
 			m_pStageObject->ResetSelect();	//判定を取ったので選択情報は消す
 			//	プレイヤー自身のポインタを取得
 			Player* pPlayerPtr = m_playerID/_PLAYER_NUM_? m_pPlayer2 : m_pPlayer1;
 			m_reportData.UpdateKOCount( pPlayerPtr );
+			/*
+			戦闘終了に伴う戦況の最終結果をログに表示
+			*/
+			if( m_resultBattle == Result::TYPE_STALEMATE )
+			{
+				m_tempStr1 = m_gameLog.GetPhrase( FixedPhrase::RESULT_STALEMATE_STR );
+				m_pAudio->SoundPlay( Audio::_LOSE_BGM_, true );
+			}
+			else if( m_resultBattle == Result::TYPE_VICTORY )
+			{
+				m_tempStr1 = m_gameLog.GetPhrase( FixedPhrase::RESULT_VICTORY_STR );
+				m_pAudio->SoundPlay( Audio::_WIN_BGM_, true );
+			}
+			else if( m_resultBattle == Result::TYPE_DEFEAT )
+			{
+				m_tempStr1 = m_gameLog.GetPhrase( FixedPhrase::RESULT_DEFEAT_STR );
+				m_pAudio->SoundPlay( Audio::_LOSE_BGM_, true );
+			}
+			m_gameLog.AddStream( m_tempStr1.c_str(), _LOG_COLOR_DEFAULT_, _LOG_FONT_BIGSIZE_, _LOG_FONT_BIGSIZE_, DT_CENTER );
+			//	戦闘終了ログを表示
+			m_tempStr1 = m_gameLog.GetPhrase( FixedPhrase::RESULT_END );
+			m_gameLog.AddStream( m_tempStr1.c_str(), _LOG_COLOR_DEFAULT_, _LOG_FONT_BIGSIZE_, _LOG_FONT_BIGSIZE_, DT_CENTER );
 		}
 		//勝敗はまだついていない
 		else	
@@ -265,7 +282,6 @@ int StateManager::CheckState()
 				m_currentShip = ShipObject::TYPE_AIRCARRIER;
 			}
 		}
-
 		break;
 	
 	}

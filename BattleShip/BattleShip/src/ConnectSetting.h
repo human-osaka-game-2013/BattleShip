@@ -49,7 +49,7 @@ public:
 		m_ipAddr( "", _COM_SET_POS_X_, _IP_TEXT_POS_Y_, _COM_SET_WIDTH_, _LOG_FONT_BIGSIZE_),
 		m_port( "", _COM_SET_POS_X_, _PORT_TEXT_POS_Y_, _COM_SET_WIDTH_, _LOG_FONT_BIGSIZE_)
 	{
-		ReadTableData( _READ_FILE_PASS_1_, 3, 1 );
+		ReadTableData( _CONNECTDATA_PASS_, 3, 1 );
 		m_ipAddr.ResetStr();
 		m_ipAddr.AddStr(strAddr.c_str());
 		m_port.ResetStr();

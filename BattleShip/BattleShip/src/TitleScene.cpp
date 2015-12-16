@@ -15,6 +15,20 @@ bool TitleScene::Init()
 	m_button.Init( _BUTTON_POS_X_, _BUTTON_POS_Y_,
 					_BUTTON_WIDTH_, _BUTTON_HEIGHT_,
 					m_pAudio );
+
+	/*
+		勲章系の初期化
+	*/
+	m_rewardButton.Init( _REWARD_BUTTON_X_,
+						 _REWARD_BUTTON_Y_,
+						 _COM_TYPE_BUTTON_WIDTH_,
+						 _COM_TYPE_BUTTON_HEIGTH_,
+						 m_pAudio);
+
+	m_reward.GetDrawManagerPtr(m_pDrawManager);
+	m_reward.InitReward( m_pAudio );
+	/**/
+
 	m_screenMask.SetColor( 255, 255, 255, 255);//フェードインさせたいのでアルファ値は255で
 
 	m_changeSceneFlag = false;
@@ -52,17 +66,40 @@ int TitleScene::Control()
 	{
 		if( m_screenMask.FadeIn(_FADE_IN_TIME_) )
 		{
-			char inputState = 0;
-			inputState = m_pMouse->GetMouseSt( MOUSE_L );
-
+			char inputState = m_pMouse->GetMouseSt( MOUSE_L );
+			char buttonResult = m_button.Contorl( tempX, tempY, inputState );
+			
 			//	ゲームスタートボタン上にカーソルがあったら
-			if( m_button.Contorl( tempX, tempY, inputState ) )
+			if( buttonResult == Button::STATE_SELECT )
 			{
-				if( m_button.GetState() == Button::STATE_SELECT ){
-					m_changeSceneFlag = true;
-				}
+				m_changeSceneFlag = true;
 			}
 			m_connectSetting.Control();
+
+			/*
+				勲章関連の処理
+			*/
+			bool rewardFlag = m_reward.GetDrawFlag();
+			if(!rewardFlag)
+			{
+				buttonResult = m_rewardButton.Contorl( tempX, tempY, inputState );
+			
+				if( buttonResult == Button::STATE_SELECT )
+				{
+					m_reward.SetDrawFlag(true);
+				}
+				m_rewardButton.SetState( Button::STATE_OFF_CURSOR );
+
+			}
+			else
+			{
+				buttonResult = m_reward.ControlReward( tempX, tempY, inputState );
+				if( buttonResult == Button::STATE_SELECT )
+				{
+					m_reward.SetDrawFlag(false);
+				}
+			}
+			/**/
 		}
 	}
 	return result;
@@ -109,4 +146,13 @@ void TitleScene::Draw()
 	
 	//	通信設定描画
 	m_connectSetting.Draw( m_pDrawManager );	
+
+	//	勲章表示ボタン描画
+	m_rewardButton.GetPosition( &tempX, &tempY);
+	m_rewardButton.GetColor( tempA, tempR, tempG, tempB );
+	m_pDrawManager->VertexDraw( _TEX_STARTBUTTON_, tempX, tempY, 
+		m_rewardButton.GetWidth(),  m_rewardButton.GetHeight(),
+		0.f, 0.f, 1.f, 1.f, tempA, tempR, tempG, tempB);
+
+	m_reward.DrawReward();
 }

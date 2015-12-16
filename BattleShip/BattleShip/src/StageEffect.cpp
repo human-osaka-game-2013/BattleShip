@@ -138,13 +138,27 @@ int StageEffect::Control()
 {
 	//	エフェクトを再生する際に基準にするカウンタ
 	//	ここではログに追加などをする。
+	//	一度だけ駒が両者とも死んでいないか確認する
+	static bool destroyShipsCheck = false;
+	if(!destroyShipsCheck)
+	{
+		bool checkFlag[2];
+		checkFlag[0] = m_pPlayer[0]->CheckDestroy(static_cast<ShipObject::_SHIP_TYPE_NUM_>(m_ShipCount));
+		checkFlag[1] = m_pPlayer[1]->CheckDestroy(static_cast<ShipObject::_SHIP_TYPE_NUM_>(m_ShipCount));
+		//	どちらも駒が死んでいたのでエフェクトは終了させる
+		if( checkFlag[0] && checkFlag[1] )
+			return 1;
+
+		destroyShipsCheck = true;
+	}
+
 	if( m_elapsedTimeFormStateInstance < TIME_END_RUSULT_EFFECT  )
 	{
 		EffectSoundControl();
 	}
 	else
 	{
-		
+		destroyShipsCheck = false;	//シーン自体が終わったので初期化
 		return 1;
 	}
 

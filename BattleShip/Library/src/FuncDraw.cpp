@@ -136,10 +136,10 @@ void CDrawManager::AnimationDraw( int _textuerNumber, float _fXpos, float _fYpos
 	_tuSize = _tuSize%m_TextureInfo[_textuerNumber].width;
 	_tvSize = _tvSize%m_TextureInfo[_textuerNumber].height;
 
-	float tu1 = static_cast<float>( _tuSize / m_TextureInfo[_textuerNumber].width );
-	float tv1 = static_cast<float>( _tvSize / m_TextureInfo[_textuerNumber].height);
-	float tu2 = static_cast<float>( (_tuSize + _fWidth) / m_TextureInfo[_textuerNumber].width  );
-	float tv2 = static_cast<float>( (_tvSize + _fHeight) / m_TextureInfo[_textuerNumber].height);
+	float tu1 = static_cast<float>( (_tuSize+0.5f) / m_TextureInfo[_textuerNumber].width );
+	float tv1 = static_cast<float>( (_tvSize+0.5f) / m_TextureInfo[_textuerNumber].height);
+	float tu2 = static_cast<float>( (_tuSize + _fWidth	+ 0.5f) / m_TextureInfo[_textuerNumber].width  );
+	float tv2 = static_cast<float>( (_tvSize + _fHeight	+ 0.5f) / m_TextureInfo[_textuerNumber].height);
 
 	for( int i = 0; i < 4; i++ )
 	{

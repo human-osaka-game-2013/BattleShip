@@ -195,29 +195,13 @@ int Result::ResultOfBattle( const int _playerIndex, const int _enemyIndex )
 {
 	int iResult = -1;
 	int iHitCount[_PLAYER_NUM_] ={0,0};
-	ShipObject* pTempShip[_PLAYER_NUM_];
-
+	
 	for( int iShip = 0; iShip < ShipObject::TYPE_MAX; iShip++ )
 	{
-		//	プレイヤーの調べる駒のポインタをセット
-		pTempShip[_playerIndex] = m_pPlayer[_playerIndex]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
-		//	敵の調べる駒のポインタをセット
-		pTempShip[_enemyIndex] = m_pPlayer[_enemyIndex]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
-		
-		for( int iColumn = 0; iColumn < _SHIP_ARRAY_INDEX_; iColumn++ )
-		{
-			for( int iLine = 0; iLine < _SHIP_ARRAY_INDEX_; iLine++ )
-			{
-				int shipCondition = StageObject::ConditionOfData(pTempShip[_playerIndex]->m_shipArray[iColumn][iLine]);
-				if( shipCondition == StageObject::_CONDITION_DAMAGE_ ){	//プレイヤー側の判定
-					iHitCount[_playerIndex]+=1;	//ヒット回数インクリメント
-				}
-				shipCondition = StageObject::ConditionOfData(pTempShip[_enemyIndex]->m_shipArray[iColumn][iLine]);
-				if( shipCondition == StageObject::_CONDITION_DAMAGE_ ){	//敵側の判定
-					iHitCount[_enemyIndex]+=1;	//ヒット回数インクリメント
-				}
-			}
-		}
+		//	プレイヤーの駒を調べる
+		iHitCount[_playerIndex] += m_pPlayer[_playerIndex]->CheckHitCount( static_cast<ShipObject::_SHIP_TYPE_NUM_>(iShip) );
+		//	敵の駒を調べる
+		iHitCount[_enemyIndex] += m_pPlayer[_enemyIndex]->CheckHitCount( static_cast<ShipObject::_SHIP_TYPE_NUM_>(iShip) );
 	}
 
 	iResult = ProgressOfBattle( iHitCount[_playerIndex], iHitCount[_enemyIndex] );

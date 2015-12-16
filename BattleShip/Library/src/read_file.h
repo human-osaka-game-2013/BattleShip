@@ -7,7 +7,7 @@
 #define _READ_FILE_H_
 #include <iostream>
 
-#define _READ_FILE_PASS_1_ "table/ConnectData.csv"
+#define _CONNECTDATA_PASS_ "table/ConnectData.csv"
 
 /**
 *@brief	ファイルを読み込み
@@ -43,23 +43,39 @@ public:
 	*/
 	virtual void SetTable( char* _p, int _iColumn, int _iLine)=0;
 
-	static unsigned char binToUChar(const char *ptr)
+	/**
+	*@brief	文字列から01のバイトデータに書き換え
+	*/
+	static unsigned char StrToUChar(const char *ptr)
 	{
 	    unsigned char val = 0x00;
 		int i = 0;
-	    while( *ptr != '\0' ) {
-	        switch( *ptr++ ) {
+	    while( *ptr != '\0' ) 
+		{
+	        switch( *ptr++ ) 
+			{
 	            case '0':
 	                val = val|(0x00<<i);
 	                break;
 	            case '1':
-	                val = val |(0x01<<i);
+	                val = val|(0x01<<i);
 	                break;
 	        }
 			i++;
 	    }
 	    return val;
 	}
+
+	/**
+	*@brief	バイナリデータ形式で保存
+	*/
+	bool SaveToBinaryData( char* _pFileName, void* _data, int _size );
+
+	/**
+	*@brief	バイナリデータ形式のファイルを読み込み
+	*/
+	bool ReadBinaryData( char* _pFileName, void* _data, int _size );
+		
 };
 
 #endif _READ_FILE_H_

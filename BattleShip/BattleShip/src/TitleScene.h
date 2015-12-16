@@ -10,12 +10,15 @@
 #include "Background.h"
 #include "ScreenMask.h"
 #include "ConnectSetting.h"
+#include "Reward.h"
 
 #define _BUTTON_POS_X_  150.0f
 #define _BUTTON_POS_Y_	500.0f
 #define _BUTTON_WIDTH_	226.0f
 #define _BUTTON_HEIGHT_	50.0f
 #define _CHANGE_TIME_	3.0f*60.f
+#define _REWARD_BUTTON_X_	50.f
+#define _REWARD_BUTTON_Y_	650.f
 
 
 class TitleScene : public CScene
@@ -27,7 +30,9 @@ private:
 
 	ScreenMask	m_screenMask;	///<画面遷移時のフェード用
 	Button		m_button;		///<ボタンオブジェクト（現時点ではゲームをスタートする時に使用）
+	Button		m_rewardButton;
 	ConnectSetting	m_connectSetting;
+	Reward		m_reward;
 	
 	bool		m_changeSceneFlag;
 	bool		m_stopFadeFlag;	///<フェード停止（終了）フラグ

@@ -2,25 +2,36 @@
 
 bool ActionReport::Init()
 {
-	ReadTableData( _READ_CONDITIONSFILE_PASS_, _REWARD_MAX_, _MAX_REPORT_VAR_ );
+	ReadTableData( _REWARDTABLE_PASS_, _REWARD_MAX_, _MAX_REPORT_VAR_ );
 
 	m_reward.GetDrawManagerPtr(m_pDrawManager);
+
+	m_reward.InitReward( m_pAudio );
+
+	m_reward.SetDrawFlag(true);
+
+	for( int i = 0; i < _REWARD_MAX_; i++ )
+		JudgmentReward( i );
 
 	return true;
 }
 
 int ActionReport::Control()
 {
-	if( !m_connectFlag )
+	m_tempX = static_cast<float>(m_pMouse->GetCursorPosX());
+	m_tempY = static_cast<float>(m_pMouse->GetCursorPosY());
+
+	if( !m_StateCompFlag )
 	{
-		bool keyResult = m_pMouse->MouseStCheck( MOUSE_L, PUSH );
-		if( keyResult )
+		char inputState = m_pMouse->GetMouseSt( MOUSE_L );
+		char buttonResult = m_reward.ControlReward( m_tempX, m_tempY, inputState );
+		if( buttonResult == Button::STATE_SELECT )
 		{
-			m_connectFlag = true;
+			m_StateCompFlag = true;
 		}
 	}
 
-	return 0;
+	return ((m_StateCompFlag) ? 1 : 0);
 }
 
 void ActionReport::Draw()

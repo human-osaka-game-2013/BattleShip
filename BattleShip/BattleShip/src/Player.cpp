@@ -67,20 +67,10 @@ bool Player::CheckDestroy( const ShipObject::_SHIP_TYPE_NUM_ _shipType )
 {
 	if( m_pShip[_shipType]->GetDeadFlag() )
 		return true;
-
 	int hitCount = 0;
-	//	轟沈判定を取る
-	for( int iColumn = 0; iColumn < _SHIP_ARRAY_INDEX_; iColumn++)
-	{
-		for( int iLine = 0; iLine < _SHIP_ARRAY_INDEX_; iLine++)
-		{
-			if( StageObject::ConditionOfData(m_pShip[_shipType]->m_shipArray[iColumn][iLine]) == 
-				StageObject::_CONDITION_DAMAGE_)
-			{
-				hitCount++;
-			}
-		}
-	}
+
+	hitCount = CheckHitCount( _shipType );
+	
 	//	各艦のマス数に応じてカウントと照らしあわせて判定
 	switch( _shipType )
 	{
@@ -107,4 +97,22 @@ bool Player::CheckDestroy( const ShipObject::_SHIP_TYPE_NUM_ _shipType )
 		return true;
 
 	return false;
+}
+
+int	Player::CheckHitCount( const ShipObject::_SHIP_TYPE_NUM_ _shipType )
+{
+	int hitCount = 0;
+	//	轟沈判定を取る
+	for( int iColumn = 0; iColumn < _SHIP_ARRAY_INDEX_; iColumn++)
+	{
+		for( int iLine = 0; iLine < _SHIP_ARRAY_INDEX_; iLine++)
+		{
+			if( StageObject::ConditionOfData(m_pShip[_shipType]->m_shipArray[iColumn][iLine]) == 
+				StageObject::_CONDITION_DAMAGE_)
+			{
+				hitCount++;
+			}
+		}
+	}
+	return hitCount;
 }
