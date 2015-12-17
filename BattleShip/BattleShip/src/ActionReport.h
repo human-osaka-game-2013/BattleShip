@@ -6,8 +6,6 @@
 #include "ReportResult.h"
 #include "Reward.h"
 
-#define _REWARDTABLE_PASS_ "table/RewardTable.csv"
-
 /**
 *@brief	戦績の報告を行うクラス
 *@details	戦闘中にReportResultクラスに蓄積されたデータを元に、
@@ -63,13 +61,13 @@ private:
 	}
 
 	/**
-	*@brief	報酬の取得判定
+	*@brief	勲章の取得判定
 	*/
 	void JudgmentReward( int _rewardNum );
 
 	template <class T>
 	/**
-	*@brief	報酬の条件要素のチェック
+	*@brief	勲章の条件要素のチェック
 	*/
 	bool CheckJudgeItem( T _item, T _val )
 	{

@@ -120,7 +120,7 @@ void ActionReport::JudgmentReward( int _rewardNum )
 			break;
 		}
 	}
-	//	‘S‚Ä‚ÌğŒ‚ğ–‚½‚µ‚Ä‚¢‚½‚Ì‚Å•ñV‚ğæ“¾
+	//	‘S‚Ä‚ÌğŒ‚ğ–‚½‚µ‚Ä‚¢‚½‚Ì‚ÅŒMÍ‚ğæ“¾
 	if( result )
 	{
 		m_reward.GetReward( _rewardNum );

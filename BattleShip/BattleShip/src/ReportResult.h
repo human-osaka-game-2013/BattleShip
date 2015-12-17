@@ -16,12 +16,14 @@ enum _REPORT_RESULT_VAR_
 	_KO_COUNT_,		///< 轟沈艦数
 	_HIT_PROB_,		///< 命中確率
 	_SIGHT_PROB_,	///< 発見確率
+
+	_REWARD_NAME_,
 	_MAX_REPORT_VAR_
 };
 
 /**
 *@brief	戦績の判定用のデータクラス
-*@details	ReportDataクラスで収集したデータを、報酬獲得
+*@details	ReportDataクラスで収集したデータを、勲章獲得
 */
 class ReportResult
 {

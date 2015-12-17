@@ -369,12 +369,21 @@ void StateManager::StateDraw()
 		DrawStageBlock( ip );
 	}
 
-	//	各ステート描画
-	m_pGameState->Draw();
+	/**
+	*@brief	各ステート描画
+	*@details	例外的にActionReportステートだけは最後に描画させる。
+	*/
+	if( m_currentState != STATE_ACTION_REPORT )
+		m_pGameState->Draw();
 
 	DrawStageFrame();
 
 	DrawLog();
+
+	//	ActionReportのみ最後に描画
+	if( m_currentState == STATE_ACTION_REPORT )
+		m_pGameState->Draw();
+
 
 	//	通信待ち中
 	if( GetConnectFlag() )
