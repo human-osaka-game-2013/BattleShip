@@ -81,7 +81,7 @@ bool DirectXFont::DrawA(
 		_font,
 		-1,
 		&rec,
-		_format,
+		_format | DT_NOCLIP,
 		( *_font_color )
 		);
 	

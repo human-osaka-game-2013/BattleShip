@@ -80,6 +80,11 @@ bool ReadFile::SaveToBinaryData( char* _pFileName, void* _data, int _size )
 
 	if (!ofs) {
 		std::cout << "ファイルが開けません";
+		//	ファイルが無かった場合は全ての値を0で作成
+		void* dummy = calloc(1,_size);
+		ofs.write( static_cast<char*>(dummy), sizeof(_size) );
+		delete dummy;
+
         return false;
     }
 
@@ -97,6 +102,7 @@ bool ReadFile::ReadBinaryData( char* _pFileName, void* _data, int _size )
 	
 	if (!ifs) {
 		std::cout << "ファイルが開けません";
+	
         return false;
     }
 

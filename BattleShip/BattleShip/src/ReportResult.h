@@ -28,16 +28,19 @@ enum _REPORT_RESULT_VAR_
 class ReportResult
 {
 private:
-	int		attackCount;
-	int		searchCount;
-	int		selectAveTime;
-	int		turnCount;
-	int		damageCount;
-	unsigned char	KOCount;
-	float	hitProbability;
-	float	sightProbability;
+	int		attackCount;	///< 攻撃回数
+	int		searchCount;	///< 索敵回数
+	int		selectAveTime;	///< 行動選択までの時間
+	int		turnCount;		///< ターン数カウント
+	int		damageCount;	///< 被弾カウント
+	unsigned char	KOCount;  ///< 轟沈数
+	float	hitProbability;	  ///< 命中率
+	float	sightProbability; ///< 発見率
 
 public:
+	/**
+	*@brief	コンストラクタ
+	*/
 	ReportResult()
 	{
 		searchCount	= 0;
@@ -50,6 +53,9 @@ public:
 		sightProbability = 0.f;
 	}
 	
+	/**
+	*@brief	戦績データの整理
+	*/
 	void ArrangementReport( ReportData& _reportData )
 	{
 		searchCount	= _reportData.GetSearchCount();

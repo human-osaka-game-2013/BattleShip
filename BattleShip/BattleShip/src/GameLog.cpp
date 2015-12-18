@@ -1,11 +1,11 @@
 #include "GameLog.h"
 
-void GameLog::Init( const long& _x, const long& _y, const char* _firstStr )
+void GameLog::Init( const long& _x, const long& _y, const char* _firstStr, const D3DXCOLOR& _color )
 {
 	SetPosition( _x, _y );
 	if( _firstStr != NULL )
 	{
-		AddStream( _firstStr );
+		AddStream( _firstStr, _color );
 	}
 }
 

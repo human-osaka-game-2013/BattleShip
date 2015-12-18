@@ -33,7 +33,7 @@ bool CDrawManager::AllLoadTexture ()
 	LoadTexture ( "../BattleShip/texture/TorpedoBB.bmp", _TEX_TORPEDO_,		0, 0, 255 );
 	LoadTexture ( "../BattleShip/texture/cancelBB.bmp", _TEX_CANCELBUTTON_,	0, 0, 255 );
 	LoadTexture ( "../BattleShip/texture/RewardFrame.bmp", _TEX_REWARDFRAME_,	0, 0, 255 );
-	LoadTexture ( "../BattleShip/texture/RewardFrame.bmp", _TEX_REWARDMAP_,	0, 0, 255 );
+	LoadTexture ( "../BattleShip/texture/RewardMap.bmp", _TEX_REWARDMAP_,	0, 0, 255, 4, 4);
 	
 	return true;
 }

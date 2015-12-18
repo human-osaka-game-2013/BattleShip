@@ -61,7 +61,7 @@ public:
 	*@details	ログの表示基準座標xyならびに、最初に追加したい文字列があれば、ここで追加する事も出来る。
 				文字列はデフォルトでNULLなので、追加しないならDirectXFontクラスを用いて描画する場合に必要な情報は渡せないので注意。
 	*/
-	void Init( const long& _x, const long& _y, const char* _firstStr = "" );
+	void Init( const long& _x, const long& _y, const char* _firstStr = "", const D3DXCOLOR& _color = _LOG_COLOR_DEFAULT_ );
 
 
 	/**
