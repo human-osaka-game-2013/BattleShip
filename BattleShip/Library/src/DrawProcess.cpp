@@ -23,8 +23,7 @@ void CDrawManager::BeginDraw( bool _b3dView )
 		
 		m_pD3Device ->  SetRenderState ( D3DRS_SRCBLEND,	D3DBLEND_SRCALPHA	);
 		m_pD3Device ->  SetRenderState ( D3DRS_DESTBLEND,	D3DBLEND_INVSRCALPHA);
-		//m_pD3Device ->  SetRenderState ( D3DRS_DIFFUSEMATERIALSOURCE, D3DMCS_COLOR1		);
-
+		
 		m_pD3Device -> SetRenderState ( D3DRS_ZENABLE, false );
 		_SetStateFlag = true;
 	}

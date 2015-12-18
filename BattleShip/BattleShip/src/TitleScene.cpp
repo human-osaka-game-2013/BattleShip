@@ -89,7 +89,6 @@ int TitleScene::Control()
 					m_reward.SetDrawFlag(true);
 				}
 				m_rewardButton.SetState( Button::STATE_OFF_CURSOR );
-
 			}
 			else
 			{
