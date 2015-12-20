@@ -134,19 +134,23 @@ void Reward::DrawReward()
 		//	cancelƒ{ƒ^ƒ“•`‰æ
 		m_cancelButton.GetPosition( &x, &y);
 		m_cancelButton.GetColor( tempA, tempR, tempG, tempB );
-		m_pDraw->VertexDraw( _TEX_CANCELBUTTON_, x, y, 
-			m_cancelButton.GetWidth(),  m_cancelButton.GetHeight(),
-			0.f, 0.f, 1.f, 1.f, tempA, tempR, tempG, tempB);
+		m_pDraw->AnimationDraw( _TEX_BUTTONMAP_,x,y, 
+								m_cancelButton.GetWidth(),
+								m_cancelButton.GetHeight(),
+								false,false,1,1,
+								D3DCOLOR_ARGB(tempA,tempR,tempG,tempB));
 
 		//	–îˆóƒ{ƒ^ƒ“•`‰æ
 		for( int i = 0; i < _ARROW_MAX_; i++ )
 		{
-			bool flipFlag = i/_ARROW_MAX_ ? true:false;
+			bool flipFlag = i%_ARROW_MAX_ ? true:false;
 			m_arrowButton[i].GetPosition( &x, &y);
 			m_arrowButton[i].GetColor( tempA, tempR, tempG, tempB );
-			m_pDraw->AnimationDraw( _TEX_CANCELBUTTON_, x, y, 
-				m_arrowButton[i].GetWidth(), m_arrowButton[i].GetHeight(),
-				flipFlag );
+			m_pDraw->AnimationDraw( _TEX_BUTTONMAP_,x,y, 
+									m_arrowButton[i].GetWidth(),
+									m_arrowButton[i].GetHeight(),
+									flipFlag,false,1,2,
+									D3DCOLOR_ARGB(tempA,tempR,tempG,tempB));
 		}
 	}
 }

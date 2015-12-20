@@ -189,24 +189,27 @@ void ConnectSetting::Draw( CDrawManager* const _pDraw )
 	fTempW = m_serverButton.GetWidth();
 	fTempH = m_serverButton.GetHeight();
 	m_serverButton.GetColor( tempA, tempR, tempG, tempB );
-	_pDraw->VertexDraw( _TEX_SERVERBUTTON_, fTempX, fTempY, 
-		fTempW, fTempH, 0.f, 0.f, 1.f, 1.f, tempA, tempR, tempG, tempB);
+	_pDraw->AnimationDraw( _TEX_BUTTONMAP_,fTempX,fTempY,
+						   fTempW,fTempH,false,false,0,0,
+						   D3DCOLOR_ARGB(tempA,tempR,tempG,tempB));
 
 	//	クライアントボタン描画
 	m_clientButton.GetPosition( &fTempX, &fTempY );
 	fTempW = m_clientButton.GetWidth();
 	fTempH = m_clientButton.GetHeight();
 	m_clientButton.GetColor( tempA, tempR, tempG, tempB );
-	_pDraw->VertexDraw( _TEX_CLIENTBUTTON_, fTempX, fTempY, 
-		fTempW, fTempH, 0.f, 0.f, 1.f, 1.f, tempA, tempR, tempG, tempB);
+	_pDraw->AnimationDraw( _TEX_BUTTONMAP_,fTempX,fTempY,
+						   fTempW,fTempH,false,false,0,1,
+						   D3DCOLOR_ARGB(tempA,tempR,tempG,tempB));
 
 	//	情報設定更新ボタン描画
 	m_updateButton.GetPosition( &fTempX, &fTempY );
 	fTempW = m_updateButton.GetWidth();
 	fTempH = m_updateButton.GetHeight();
 	m_updateButton.GetColor( tempA, tempR, tempG, tempB );
-	_pDraw->VertexDraw( _TEX_UPDATEBUTTON_, fTempX, fTempY, 
-		fTempW, fTempH, 0.f, 0.f, 1.f, 1.f, tempA, tempR, tempG, tempB);
+	_pDraw->AnimationDraw( _TEX_BUTTONMAP_,fTempX,fTempY,
+						   fTempW,fTempH,false,false,0,2,
+						   D3DCOLOR_ARGB(tempA,tempR,tempG,tempB));
 
 	//	IPテキストフィールド描画
 	m_ipAddr.m_str.GetPosition( lTempX, lTempY );

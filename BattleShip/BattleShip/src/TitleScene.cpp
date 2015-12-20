@@ -132,9 +132,10 @@ void TitleScene::Draw()
 	//	ゲームスタートボタン描画
 	m_button.GetPosition( &tempX, &tempY);
 	m_button.GetColor( tempA, tempR, tempG, tempB );
-	m_pDrawManager->VertexDraw( _TEX_STARTBUTTON_, tempX, tempY, 
-		m_button.GetWidth(),  m_button.GetHeight(),
-		0.f, 0.f, 1.f, 1.f, tempA, tempR, tempG, tempB);
+	m_pDrawManager->AnimationDraw( _TEX_BUTTONMAP_,tempX,tempY,
+								   m_button.GetWidth(),m_button.GetHeight(),
+								   false,false,0,3,
+								   D3DCOLOR_ARGB(tempA,tempR,tempG,tempB));
 
 	//	フェード用のマスク描画
 	m_screenMask.GetPosition( &tempX, &tempY);
@@ -149,9 +150,12 @@ void TitleScene::Draw()
 	//	勲章表示ボタン描画
 	m_rewardButton.GetPosition( &tempX, &tempY);
 	m_rewardButton.GetColor( tempA, tempR, tempG, tempB );
-	m_pDrawManager->VertexDraw( _TEX_STARTBUTTON_, tempX, tempY, 
-		m_rewardButton.GetWidth(),  m_rewardButton.GetHeight(),
-		0.f, 0.f, 1.f, 1.f, tempA, tempR, tempG, tempB);
+	m_pDrawManager->AnimationDraw( _TEX_BUTTONMAP_,tempX,tempY,
+								   m_rewardButton.GetWidth(),
+								   m_rewardButton.GetHeight(),
+								   false,false,1,0, 
+								   D3DCOLOR_ARGB(tempA,tempR,tempG,tempB));
 
+	//	勲章の描画
 	m_reward.DrawReward();
 }

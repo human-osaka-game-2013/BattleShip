@@ -371,17 +371,19 @@ void StateManager::StateDraw()
 
 	/**
 	*@brief	各ステート描画
-	*@details	例外的にActionReportステートだけは最後に描画させる。
+	*@details	例外的にActionReportステートとSelectionだけは最後に描画させる。
 	*/
-	if( m_currentState != STATE_ACTION_REPORT )
+	if( m_currentState != STATE_ACTION_REPORT &&
+		m_currentState != STATE_SELECTION )
 		m_pGameState->Draw();
 
 	DrawStageFrame();
 
 	DrawLog();
 
-	//	ActionReportのみ最後に描画
-	if( m_currentState == STATE_ACTION_REPORT )
+	//	ActionReportとSelectionのみ最後に描画
+	if( m_currentState == STATE_ACTION_REPORT ||
+		m_currentState == STATE_SELECTION )
 		m_pGameState->Draw();
 
 

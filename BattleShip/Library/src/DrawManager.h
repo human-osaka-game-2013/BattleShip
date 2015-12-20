@@ -40,7 +40,6 @@ enum TEXTURES
 	_TEX_BLOCK_,
 	_TEX_BLOCKFRAME_,
 	_TEX_TABFRAME_,
-	_TEX_CANCELBUTTON_,
 	_TEX_REWARDFRAME_,
 	_TEX_REWARDMAP_,
 
@@ -48,24 +47,16 @@ enum TEXTURES
 	_TEX_TITLE_MAIN_,
 	_TEX_TITLE_BACK_,
 	_TEX_TITLE_RUDDER_,
-	_TEX_STARTBUTTON_,
 	_TEX_TITLEMASK_,
-	_TEX_SERVERBUTTON_,
-	_TEX_CLIENTBUTTON_,
-	_TEX_UPDATEBUTTON_,
-
 	
 	//	その他
 	_TEX_GAMEMASK_,
 	_TEX_GAMELOG_,
-	
+	_TEX_BUTTONMAP_,
+		
 	//	エフェクト
-	_TEX_FIRE_EFFECT_,		///<砲撃
-	_TEX_EXPLOSION_EFFECT_,	///<爆発
-	_TEX_SEARCH_EFFECT_,	///<索敵
-	_TEX_AIRCRAFT_,	///<航空機
-	_TEX_RECON_,	///<偵察機
-	_TEX_TORPEDO_,	///<魚雷
+	_TEX_EFFECTMAP1_,
+	_TEX_EFFECTMAP2_,
 	
 	_TEXTURE_MAX_
 };
@@ -247,8 +238,8 @@ public:
 	*@param[in]	_fHeight	矩形の縦幅
 	*@param[in]	_flipHorizontal	左右反転させる場合のフラグ
 	*@param[in]	_flipVertical	上下反転させる場合のフラグ
-	*@param[in]	_wDiv	分割した場合の何列目に並んだテクスチャか	
-	*@param[in]	_hDiv	分割した場合の何列目に並んだテクスチャか
+	*@param[in]	_wDiv	分割した場合のX軸の何番目に並んだテクスチャか	
+	*@param[in]	_hDiv	分割した場合のY軸の何番目に並んだテクスチャか
 	*@param[in] _color	色調も変えたい場合は値を入れる。
 	*/
 	void AnimationDraw( int _textuerNumber, float _fXpos, float _fYpos, float _fWidth, float _fHeight,

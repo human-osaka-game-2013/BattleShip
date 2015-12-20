@@ -311,10 +311,10 @@ void StageEffect::FireEffect( BoardOfFrame& _block )
 	int wDiv = static_cast<int>(m_elapsedTimeFormStateInstance/_DIVISON_OF_EFFECT_TIME_);	///<シーンの経過時間から何コマ目のアニメーションをさせるかを計算（テスト実装）
 	bool flipHorizontal = m_playerID/_PLAYER_NUM_ ? true : false;	///<プレイヤーによって画像の反転をさせる
 
-	m_pDrawManager->AnimationDraw( _TEX_FIRE_EFFECT_, tempX, tempY, 
-				_block.GetWidth()+_EFFECT_POS_TWEAK_*2, 
-				_block.GetHeight()+_EFFECT_POS_TWEAK_*2,
-				flipHorizontal, false, wDiv );	///<	マスの描画
+	m_pDrawManager->AnimationDraw( _TEX_EFFECTMAP1_,tempX,tempY, 
+								   _block.GetWidth()+_EFFECT_POS_TWEAK_*2, 
+								   _block.GetHeight()+_EFFECT_POS_TWEAK_*2,
+								   flipHorizontal,false,wDiv,0 );
 
 	
 }
@@ -328,10 +328,10 @@ void StageEffect::ExplosionEffect( BoardOfFrame& _block )
 	int wDiv = static_cast<int>(m_elapsedTimeFormStateInstance/_DIVISON_OF_EFFECT_TIME_);	///<シーンの経過時間から何コマ目のアニメーションをさせるかを計算（テスト実装）
 	bool flipHorizontal = m_playerID/_PLAYER_NUM_ ? true : false;	///<プレイヤーによって画像の反転をさせる
 
-	m_pDrawManager->AnimationDraw( _TEX_EXPLOSION_EFFECT_, tempX, tempY, 
-				_block.GetWidth(), 
-				_block.GetHeight(),
-				flipHorizontal, false, wDiv );	///<	マスの描画
+	m_pDrawManager->AnimationDraw(_TEX_EFFECTMAP1_,tempX,tempY, 
+								   _block.GetWidth(), 
+								   _block.GetHeight(),
+								   flipHorizontal,false,wDiv,1 );
 
 	
 }
@@ -342,7 +342,7 @@ void StageEffect::AircraftEffect( BoardOfFrame& _block, int _aircraftType, bool 
 	bool flipHorizontal = m_playerID/_PLAYER_NUM_ ? true : false;	///<プレイヤーによって画像の反転をさせる
 	unsigned long color = 0xffffffff;
 	static const int multiplOfAircraftAlpha = 8;	///< 航空機のアルファ値をtimeから乗算して出す際の数
-	int texNum;
+	//int texNum;
 
 	if( !_appearanceInvisibility )
 	{
@@ -371,20 +371,20 @@ void StageEffect::AircraftEffect( BoardOfFrame& _block, int _aircraftType, bool 
 		color = D3DCOLOR_ARGB( alpha, 255, 255, 255 );	///< アルファ値をカラー値に入れる
 		flipHorizontal = m_playerID/_PLAYER_NUM_ ? false : true;	///< 消している方は今の時点では自身とは
 	}
-	//	航空機のテクスチャを設定
-	switch( _aircraftType )
-	{
-	case 0:
-		texNum = _TEX_AIRCRAFT_;
-		break;
-	case 1:
-		texNum = _TEX_RECON_;
-		break;
-	}
-	m_pDrawManager->AnimationDraw( texNum, tempX, tempY, 
-				_block.GetWidth(), 
-				_block.GetHeight(),
-				flipHorizontal, false, 0, 0, color );	///<	マスの描画
+	////	航空機のテクスチャを設定
+	//switch( _aircraftType )
+	//{
+	//case 0:
+	//	texNum = _TEX_AIRCRAFT_;
+	//	break;
+	//case 1:
+	//	texNum = _TEX_RECON_;
+	//	break;
+	//}
+	m_pDrawManager->AnimationDraw( _TEX_EFFECTMAP2_,tempX,tempY, 
+								   _block.GetWidth(), 
+								   _block.GetHeight(),
+								   flipHorizontal,false,0,_aircraftType,color );
 }
 
 
@@ -423,10 +423,10 @@ void StageEffect::TorpedoEffect( BoardOfFrame& _block, bool _appearanceInvisibil
 		flipHorizontal = m_playerID/_PLAYER_NUM_ ? false : true;	///< 消している方は今の時点では自身とは
 	}
 	
-	m_pDrawManager->AnimationDraw( _TEX_TORPEDO_, tempX, tempY, 
-				_block.GetWidth(), 
-				_block.GetHeight(),
-				flipHorizontal, false, 0, 0, color );	///<	マスの描画
+	m_pDrawManager->AnimationDraw( _TEX_EFFECTMAP2_,tempX,tempY, 
+								   _block.GetWidth(), 
+								   _block.GetHeight(),
+								   flipHorizontal,false,0,2,color );
 }
 
 void StageEffect::SonarEffect( BoardOfFrame& _block )
@@ -439,31 +439,37 @@ void StageEffect::SonarEffect( BoardOfFrame& _block )
 	*/
 
 	const int xalpha = 20;
+	const float blockW = _BLOCK_WIDTH_SIZE_, blockH = _BLOCK_HEIGHT_SIZE_;
 
 	if( m_elapsedTimeFormStateInstance <= TIME_CHANGE_EFFECT+8 || m_elapsedTimeFormStateInstance >= TIME_CHANGE_EFFECT+12 )
 	{
 		float tempX, tempY, tempW, tempH;
 		unsigned int Alpha = 200;
-		tempX = _block.GetPositionX()+_BLOCK_WIDTH_SIZE_/2;
-		tempY = _block.GetPositionY()+_BLOCK_HEIGHT_SIZE_/2;		
 		tempW = _block.GetWidth() *(m_elapsedTimeFormStateInstance%8)/5;
 		tempH =	_block.GetHeight()*(m_elapsedTimeFormStateInstance%8)/5;
+		tempX = _block.GetPositionX()-(tempW/2.0f)+(blockW/2);
+		tempY = _block.GetPositionY()-(tempH/2.0f)+(blockW/2);
 		Alpha -= (m_elapsedTimeFormStateInstance%8)*xalpha;
-		m_pDrawManager->CenterDraw( _TEX_SEARCH_EFFECT_, tempX, tempY, 0.f, 
-					tempW, tempH, 0.f, 0.f, 1.f, 1.f, Alpha, 255, 255, 255 );
+		
+		m_pDrawManager->AnimationDraw( _TEX_EFFECTMAP2_,tempX,tempY, 
+									   tempW,tempH,
+									   false,false,0,3,
+									   D3DCOLOR_ARGB(Alpha,255,255,255));
 	}
 	if( m_elapsedTimeFormStateInstance >= TIME_CHANGE_EFFECT+4 || m_elapsedTimeFormStateInstance <= TIME_CHANGE_EFFECT+12 )
 	{
 		float tempX, tempY, tempW, tempH;
 		unsigned int Alpha = 200;
-		tempX = _block.GetPositionX()+_BLOCK_WIDTH_SIZE_/2;
-		tempY = _block.GetPositionY()+_BLOCK_HEIGHT_SIZE_/2;
 		tempW = _block.GetWidth() *((m_elapsedTimeFormStateInstance%8)+4)/5;
 		tempH =	_block.GetHeight()*((m_elapsedTimeFormStateInstance%8)+4)/5;
+		tempX = _block.GetPositionX()-(tempW/2.0f)+(blockW/2);
+		tempY = _block.GetPositionY()-(tempH/2.0f)+(blockW/2);
 		Alpha -= (m_elapsedTimeFormStateInstance%8)*xalpha;
 
-	m_pDrawManager->CenterDraw( _TEX_SEARCH_EFFECT_, tempX, tempY, 0.f, 
-				tempW, tempH, 0.f, 0.f, 1.f, 1.f, Alpha, 255, 255, 255 );	///<	マスの描画
+		m_pDrawManager->AnimationDraw( _TEX_EFFECTMAP2_,tempX,tempY, 
+									   tempW,tempH,
+									   false,false,0,3,
+									   D3DCOLOR_ARGB(Alpha,255,255,255));
 
 	}
 }
