@@ -237,7 +237,11 @@ int StateManager::CheckState()
 			stateResult == Result::TYPE_DEFEAT ||
 			stateResult == Result::TYPE_STALEMATE )
 		{
-			checkResult = 2;	//StateManager側に戦闘結果＝戦闘終了した事を教えてやる。
+			if( stateResult != Result::TYPE_DEFEAT )
+				checkResult = 2;	//StateManager側に戦闘結果＝戦闘終了した事を教えてやる。
+			else
+				checkResult = -1;	///負けた時は戦績の報告はしない。
+
 			m_pStageObject->ResetSelect();	//判定を取ったので選択情報は消す
 			//	プレイヤー自身のポインタを取得
 			Player* pPlayerPtr = m_playerID/_PLAYER_NUM_? m_pPlayer2 : m_pPlayer1;
@@ -286,7 +290,7 @@ int StateManager::CheckState()
 	
 	}
 
-	///< ステート別Controlが終わったので前フレームでの選択駒を更新
+	// ステート別Controlが終わったので前フレームでの選択駒を更新
 	m_beforeShip = static_cast<int>(m_currentShip);
 	return checkResult;
 }
