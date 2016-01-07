@@ -260,6 +260,12 @@ int Selection::SelectArrayCheck( )
 				}
 			}
 		}
+		//	タブ選択の取り消しをする
+		if( m_pMouse->MouseStCheck( MOUSE_R, PUSH ) )
+		{
+			ResetTabSelect();
+			m_pAudio->SoundPlay( Audio::_FAILED_SE_ );
+		}
 		break;
 
 	case _SELECT_MOVE_:
@@ -291,6 +297,8 @@ int Selection::SelectArrayCheck( )
 			m_tempShip->SetPosition( m_tempX, m_tempY, 0.5f );
 			ResetTabSelect();
 			m_pAudio->SoundPlay( Audio::_FAILED_SE_ );
+
+			return 0;
 		}
 
 		if( iCheckResult == -1 )	///<駒を置けるマスじゃなかった。

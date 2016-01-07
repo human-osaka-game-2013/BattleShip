@@ -127,8 +127,9 @@ void Reward::DrawReward()
 										false,false,
 										wDiv,hDiv);
 
-				RewardNameDraw( i );
+				
 			}
+			RewardNameDraw( i );
 		}
 		
 		//	cancelƒ{ƒ^ƒ“•`‰æ

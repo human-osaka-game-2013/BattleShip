@@ -18,8 +18,8 @@ bool GameScene::Init()
 	//	ゲーム部分が始まったので通信の初期化をする
 	m_Connect.Init();
 
-	while( m_Connect.Connection() == false );
-
+	m_connectionResult = m_Connect.Connection();
+	
 #endif
 	for( int iCount=0; iCount<_PLAYER_NUM_; iCount++ ) {
 		m_Player.push_back( new Player( iCount ));	///<	プレイヤーの初期化
@@ -57,6 +57,9 @@ bool GameScene::Init()
 
 int GameScene::Control()
 {
+	//もし接続に失敗していた状態でここまで来ていた場合、タイトルに戻す
+	if( !m_connectionResult )
+		return 1;
 
 	m_stateManager->UpdateStatInTime( GetTimeInScene() );	///<経過時間の更新状態をステート側に伝える
 

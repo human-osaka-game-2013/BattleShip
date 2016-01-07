@@ -41,6 +41,7 @@ private:
 	bool	m_fadeInFlag;		///<ゲーム開始時はフェードインさせる。
 	bool	m_fadeOutFlag;		///<ゲーム終了時にフェードアウトさせる。
 	
+	bool	m_connectionResult; ///<通信クラスのConnection関数の結果を格納
 	unsigned char	m_connectFlag;	///< ビット管理の通信管理フラグ
 	int		m_sendShipCount;		///<駒の情報を送っていた回数
 
@@ -62,6 +63,7 @@ public:
 		m_playerID = 0;
 		m_sendShipCount = 0;
 		m_connectFlag = 0x0;
+		m_connectionResult = false;
 	}
 	
 	/**
