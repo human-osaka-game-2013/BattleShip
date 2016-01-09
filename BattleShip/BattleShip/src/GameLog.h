@@ -16,40 +16,25 @@
 /**
 *@brief	ゲーム中に表示させるログクラス
 */
-class GameLog
-{
-public:
-	std::list<LogStream*> m_logStream;	///< listのアクセス＞安全性というコスト判断をしたので、publicです。
-private:
-	long m_posX;	///< ログの基準となるX座標
-	long m_posY;	///< ログの基準となるY座標
-
-//	ログに表示させる文字の定型文字列
-public:
-	const FixedPhrase m_fixedPhrase;
-
-public:
+class GameLog {
+ public:
 	/**
 	*@brief	コンストラクタ
 	*@details	念のためパラメータなどを0で初期化
 	*/
-	GameLog()
-	{
+	GameLog() {
 		SetPosition( 0, 0 );
 	}
 
 	/**
 	*@breif	デストラクタ
 	*/
-	~GameLog()
-	{
+	~GameLog() {
 		//	要素が空で無かったら
-		if( !m_logStream.empty() ){
+		if (!m_logStream.empty()) {
 			//	要素の解放および削除
 			std::list<LogStream*>::const_iterator itEnd = m_logStream.end();
-			for( std::list<LogStream*>::iterator it = m_logStream.begin();
-				it != itEnd; ++it)
-			{
+			for ( std::list<LogStream*>::iterator it = m_logStream.begin(); it != itEnd; ++it ) {
 				delete *it;	///< 中身を解放
 			}
 			m_logStream.clear();	///< listの全削除
@@ -63,7 +48,6 @@ public:
 	*/
 	void Init( const long& _x, const long& _y, const char* _firstStr = "", const D3DXCOLOR& _color = _LOG_COLOR_DEFAULT_ );
 
-
 	/**
 	*@brief	文字列の追加
 	*@param[in] _str	追加したい文字列
@@ -72,9 +56,10 @@ public:
 	*@param[in] _height	デフォルトでは定数宣言したフォントサイズを使う
 	*@param[in] _format	追加した文字列を表示する際のフォーマット（DrawText関数依存）
 	*/
-	void AddStream( const char* _str, const D3DXCOLOR& _color = _LOG_COLOR_DEFAULT_ , 
-		const unsigned int _width = _LOG_FONT_WIDTH_, const unsigned int _height = _LOG_FONT_HEIGHT_,
-		unsigned long _format = DT_LEFT );
+	void AddStream( const char* _str,const D3DXCOLOR& _color = _LOG_COLOR_DEFAULT_ ,
+					const unsigned int _width = _LOG_FONT_WIDTH_,
+					const unsigned int _height = _LOG_FONT_HEIGHT_,
+					unsigned long _format = DT_LEFT );
 
 	/**
 	*@brief	定型文字列を複数繋ぎあわせて送る関数
@@ -82,14 +67,12 @@ public:
 	*/
 	const std::string GetMultiplePhrase( int _phraseVal,... );
 
-	inline void SetPosition( const long& _x, const long& _y )
-	{
+	inline void SetPosition( const long& _x, const long& _y ) {
 		m_posX = _x;
 		m_posY = _y;
 	}
 
-	inline void GetPosition( long& _x, long& _y )
-	{
+	inline void GetPosition( long& _x, long& _y ) {
 		_x = m_posX;
 		_y = m_posY;
 	}
@@ -97,8 +80,7 @@ public:
 	/**
 	*@brief	定型文の文字列を取得
 	*/
-	std::string GetPhrase( FixedPhrase::_PHRASE_STR_TYPE_ _phraseType )
-	{
+	std::string GetPhrase( FixedPhrase::_PHRASE_STR_TYPE_ _phraseType ) {
 		return m_fixedPhrase.m_phrase[ _phraseType ];
 	}
 
@@ -106,13 +88,12 @@ public:
 	*@brief	文字列の削除
 	*@param[in]	_deleteType	true：前から消す、false：後から消す
 	*/
-	void DeleteStream( bool _deleteType = true )
-	{
-		if( _deleteType ){
+	void DeleteStream( bool _deleteType = true ) {
+		if (_deleteType) {
 			std::list<LogStream*>::iterator it = m_logStream.begin();
 			delete *it;
 			m_logStream.pop_front();
-		}else{
+		}else {
 			LogStream* tempList = m_logStream.back();
 			delete tempList;
 			m_logStream.pop_back();
@@ -125,15 +106,17 @@ public:
 	*@param[out]_height	削除した文字列の幅を取得
 	*@param[in]	_deleteType	true：前から消す、false：後から消す
 	*/
-	void DeleteStream( int& _height, bool _deleteType = true )
-	{
+	void DeleteStream( int& _height, bool _deleteType = true ) {
 		std::list<LogStream*>::iterator it = m_logStream.begin();
 		_height = (*it)->GetHeight();
 		delete *it;
 		m_logStream.pop_front();
 	}
 
-private:	
+	std::list<LogStream*> m_logStream;	///< listのアクセス＞安全性というコスト判断をしたので、publicです。
+	const FixedPhrase m_fixedPhrase; ///<	ログに表示させる文字の定型文字列
+	
+ private:	
 	/**
 	*@brief	登録している文字列の縦幅をチェック
 	*@details	登録している文字列の縦幅を加算していき、
@@ -148,6 +131,9 @@ private:
 				残された文字列の描画座標の再計算をしてやる必要がある。
 	*/
 	void RealignmentStream();
+
+	long m_posX;	///< ログの基準となるX座標
+	long m_posY;	///< ログの基準となるY座標
 
 };
 

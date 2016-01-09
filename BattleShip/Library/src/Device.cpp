@@ -28,7 +28,7 @@ HRESULT CDevice::InitD3d ()
 	D3DDISPLAYMODE d3ddm;
 	
 	// DirectX オブジェクトの生成
-	if( NULL == ( m_pDirect3D = Direct3DCreate9 ( D3D_SDK_VERSION ) ) )
+	if ( NULL == ( m_pDirect3D = Direct3DCreate9 ( D3D_SDK_VERSION ) ) )
 	{
 		MessageBoxA(0,"Direct3Dの作成に失敗しました","",MB_OK);
 		return E_FAIL;
@@ -44,7 +44,7 @@ HRESULT CDevice::InitD3d ()
 	m_d3dpp.SwapEffect	   = D3DSWAPEFFECT_DISCARD;
 	m_d3dpp.Windowed		   = TRUE;
 
-	if( FAILED( m_pDirect3D->CreateDevice( D3DADAPTER_DEFAULT,
+	if ( FAILED( m_pDirect3D->CreateDevice( D3DADAPTER_DEFAULT,
 										 D3DDEVTYPE_HAL,
 										 *m_hWnd,
 										 D3DCREATE_HARDWARE_VERTEXPROCESSING,
@@ -52,7 +52,7 @@ HRESULT CDevice::InitD3d ()
 										 &m_pD3Device ) ) )
 	{
 		MessageBoxA(0,"HALモードでDIRECT3Dデバイスを作成できません\nREFモードで再試行します",NULL,MB_OK);
-		if( FAILED( m_pDirect3D->CreateDevice( D3DADAPTER_DEFAULT,
+		if ( FAILED( m_pDirect3D->CreateDevice( D3DADAPTER_DEFAULT,
 											 D3DDEVTYPE_REF,
 											 *m_hWnd,
 											 D3DCREATE_SOFTWARE_VERTEXPROCESSING,
@@ -73,7 +73,7 @@ HRESULT CDevice::InitDinput()
 	HRESULT hr;
 	
 	//｢DirectInput｣オブジェクトの作成
-	if(FAILED (hr = DirectInput8Create ( GetModuleHandle(NULL),
+	if (FAILED (hr = DirectInput8Create ( GetModuleHandle(NULL),
 										 DIRECTINPUT_VERSION,
 										 IID_IDirectInput8,
 										 (VOID**)&m_pDinput,
@@ -103,19 +103,19 @@ HRESULT CDevice::InitKeyDevice ()
 	HRESULT hr;
 	
 	//｢DirectInputデバイス｣オブジェクトの作成(キーボード)
-	if(FAILED (hr = m_pDinput->CreateDevice (	GUID_SysKeyboard,
+	if (FAILED (hr = m_pDinput->CreateDevice (	GUID_SysKeyboard,
 											&m_pKeyDevice,
 											NULL ) ) )
 	{
 		return hr;
 	}
 	//デバイスをキーボードに設定
-	if(FAILED (hr = m_pKeyDevice->SetDataFormat (&c_dfDIKeyboard) ) )
+	if (FAILED (hr = m_pKeyDevice->SetDataFormat (&c_dfDIKeyboard) ) )
 	{
 		return hr;
 	}
 	//協調レベルの設定		*当該アプリケーション(ゲーム)と、windowsOS自体のキーボードデバイスの占有率設定
-	if(FAILED (hr = m_pKeyDevice->SetCooperativeLevel( *m_hWnd,
+	if (FAILED (hr = m_pKeyDevice->SetCooperativeLevel( *m_hWnd,
 													 DISCL_NONEXCLUSIVE | DISCL_BACKGROUND ) ) )	// * 非排他でバック・グラウンド
 	{
 		return hr;
@@ -137,7 +137,7 @@ HRESULT CDevice::InitMouseDevice ( bool bForeGroundMode )
 	HGLOBAL	hGlobal	= NULL;	//	グローバルハンドル	
 	
 	//｢DirectInputデバイス｣オブジェクトの作成(マウス)
-	if(FAILED (hr = m_pDinput->CreateDevice ( GUID_SysMouseEm,
+	if (FAILED (hr = m_pDinput->CreateDevice ( GUID_SysMouseEm,
 											&m_pMouseDevice,
 											NULL ) ) )
 	{
@@ -145,7 +145,7 @@ HRESULT CDevice::InitMouseDevice ( bool bForeGroundMode )
 	}
 
 	//デバイスをマウスに設定
-	if(FAILED (hr = m_pMouseDevice->SetDataFormat (&c_dfDIMouse) ) )
+	if (FAILED (hr = m_pMouseDevice->SetDataFormat (&c_dfDIMouse) ) )
 	{
 		return hr;
 	}
@@ -153,7 +153,7 @@ HRESULT CDevice::InitMouseDevice ( bool bForeGroundMode )
 	if ( bForeGroundMode )	// フォアグラウンドでマウスを使うなら
 	{
 		//	マウスの動作の設定
-		if(FAILED (hr = m_pMouseDevice->SetCooperativeLevel( *m_hWnd,
+		if (FAILED (hr = m_pMouseDevice->SetCooperativeLevel( *m_hWnd,
 														   DISCL_EXCLUSIVE | DISCL_FOREGROUND ) ) )
 		{
 			return hr;
@@ -162,7 +162,7 @@ HRESULT CDevice::InitMouseDevice ( bool bForeGroundMode )
 	else
 	{
 		//	マウスの動作の設定
-		if(FAILED (hr = m_pMouseDevice->SetCooperativeLevel( *m_hWnd,
+		if (FAILED (hr = m_pMouseDevice->SetCooperativeLevel( *m_hWnd,
 														   DISCL_EXCLUSIVE | DISCL_BACKGROUND ) ) )
 		{
 			/*return hr;*/
@@ -173,7 +173,7 @@ HRESULT CDevice::InitMouseDevice ( bool bForeGroundMode )
 	//	マウスからのバッファリング入力を読み取る
 	hGlobal = CreateEvent(NULL, FALSE, FALSE, NULL);
 
-	if( hGlobal == NULL )
+	if ( hGlobal == NULL )
 	{
 		return FALSE;
 	}
@@ -218,12 +218,12 @@ CDevice::~CDevice()
 void CDevice::FreeDx(bool _flag)
 {		
 	//	キーデバイスの解放
-	if( m_pKeyDevice ) 
+	if ( m_pKeyDevice ) 
 	{
 		m_pKeyDevice->Unacquire();
 	}
 	//	マウスデバイスの解放
-	if( m_pMouseDevice ) 
+	if ( m_pMouseDevice ) 
 	{
 		m_pMouseDevice->Unacquire();
 	}
@@ -232,7 +232,7 @@ void CDevice::FreeDx(bool _flag)
 	SAFE_RELEASE( m_pMouseDevice );
 	SAFE_RELEASE( m_pDinput );
 
-	if(_flag)
+	if (_flag)
 	{
 		SAFE_RELEASE( m_pDirect3D );
 		SAFE_RELEASE( m_pD3Device );

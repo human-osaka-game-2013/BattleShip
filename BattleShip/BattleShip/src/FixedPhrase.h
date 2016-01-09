@@ -5,16 +5,13 @@
 /**
 *@brief	ゲーム内で使う定型文字列の列挙をするクラス
 */
-class FixedPhrase
-{
-//	定型文字列の種類
-public:
+class FixedPhrase {
+ public:
 	/**
 	*@brief	使用する定型文字列の列挙
 	*@details	使う文字列があればここに列挙していき、m_phraseに代入していくこと	
 	*/
-	enum _PHRASE_STR_TYPE_
-	{
+	enum _PHRASE_STR_TYPE_ {
 		/*
 			艦種
 		*/
@@ -68,15 +65,11 @@ public:
 		STR_MAX
 	};
 
-public:
-	std::string m_phrase[STR_MAX];
-
-public:
 	/**
 	*@brief	コンストラクタ
 	*/
-	FixedPhrase()
-	{
+	FixedPhrase() {
+
 		m_phrase[AC_STR]="『空母』";
 		m_phrase[BS_STR]="『戦艦』";
 		m_phrase[CR_STR]="『巡洋艦』";
@@ -113,10 +106,11 @@ public:
 		m_phrase[START_BATTLE]			="＜戦闘開始！＞";
 	}
 
-	~FixedPhrase()
-	{
+	~FixedPhrase() {
 
 	}
+
+	std::string m_phrase[STR_MAX];	///< 定型文格納用
 
 };
 

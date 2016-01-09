@@ -28,27 +28,15 @@
 */
 class ConnectSetting : public ReadFile
 {
-private:
-	bool		sockType;	///< 元々の通設定ファイルのデータを仮保存用
-	std::string strAddr;	///< 元々の通設定ファイルのデータを仮保存用
-	std::string strPort;	///< 元々の通設定ファイルのデータを仮保存用
-
-private:
-	CMouse*		m_pMouse;	///< マウスポインタ
-	CKey*		m_pKey;		///< キーポインタ
-	Audio*		m_pAudio;	
-	TextField	m_ipAddr;	///< IPアドレステキストフィールド
-	TextField	m_port;		///< ポート番号テキストフィールド
-	Button		m_serverButton;	///< サーバーボタン 
-	Button		m_clientButton;	///< クライアントボタン
-	Button		m_updateButton;	
-
-public:
-	ConnectSetting():
-		strAddr(""), strPort(""), 
-		m_ipAddr( "", _COM_SET_POS_X_, _IP_TEXT_POS_Y_, _COM_SET_WIDTH_, _LOG_FONT_BIGSIZE_),
-		m_port( "", _COM_SET_POS_X_, _PORT_TEXT_POS_Y_, _COM_SET_WIDTH_, _LOG_FONT_BIGSIZE_)
-	{
+ public:
+	/**
+	*@brief	コンストラクタ
+	*/
+	ConnectSetting()
+		: strAddr(""), strPort(""), 
+		  m_ipAddr( "", _COM_SET_POS_X_, _IP_TEXT_POS_Y_, _COM_SET_WIDTH_, _LOG_FONT_BIGSIZE_),
+		  m_port( "", _COM_SET_POS_X_, _PORT_TEXT_POS_Y_, _COM_SET_WIDTH_, _LOG_FONT_BIGSIZE_) {
+		
 		ReadTableData( _CONNECTDATA_PASS_, 3, 1 );
 		m_ipAddr.ResetStr();
 		m_ipAddr.AddStr(strAddr.c_str());
@@ -76,6 +64,21 @@ public:
 	void SetMousePtr( CMouse* const _pMouse ){ m_pMouse = _pMouse; }
 	void SetKeyPtr( CKey* const _pKey ){ m_pKey = _pKey; }
 	void SetAudioPtr( Audio* const _pAudio ){ m_pAudio = _pAudio; }
+
+ private:
+	bool		sockType;	///< 元々の通設定ファイルのデータを仮保存用
+	std::string strAddr;	///< 元々の通設定ファイルのデータを仮保存用
+	std::string strPort;	///< 元々の通設定ファイルのデータを仮保存用
+
+	CMouse*		m_pMouse;	///< マウスポインタ
+	CKey*		m_pKey;		///< キーポインタ
+	Audio*		m_pAudio;	
+	TextField	m_ipAddr;	///< IPアドレステキストフィールド
+	TextField	m_port;		///< ポート番号テキストフィールド
+	Button		m_serverButton;	///< サーバーボタン 
+	Button		m_clientButton;	///< クライアントボタン
+	Button		m_updateButton;	
+
 };
 
 #endif

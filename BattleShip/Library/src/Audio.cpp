@@ -6,10 +6,10 @@
 void Audio::ReleaseAllSoundFile(void)
 {
 	//サウンドデータの最大数分停止処理を実行
-	for(int LOOP = 0; LOOP < SOUND_MAX; LOOP++)
+	for (int LOOP = 0; LOOP < SOUND_MAX; LOOP++)
 	{
 		//再生データを検索
-		if(buffer[LOOP].pAudioData != NULL)
+		if (buffer[LOOP].pAudioData != NULL)
 		{
 			ReleaseSoundFile(LOOP);
 		}
@@ -32,14 +32,14 @@ void Audio::SoundPlay (int ID, bool LOOP)
 	//再生中のファイルがあった場合に備えて、念のための停止処理
 	SoundStop(ID);
 
-	if(buffer[ID].pAudioData != NULL)
+	if (buffer[ID].pAudioData != NULL)
 	{
 		buffer[ID].LoopBegin	= 0;
 		buffer[ID].LoopLength	= 0;
 		buffer[ID].PlayBegin	= 0;
 		buffer[ID].PlayLength	= 0;
 
-		if(LOOP)
+		if (LOOP)
 		{
 			//ループの指定があった場合ループの設定
 			buffer[ID].LoopCount	= XAUDIO2_LOOP_INFINITE;
@@ -63,9 +63,9 @@ void Audio::SoundStop (int ID)
 	//	ID	->	停止したいデータのIDを指定（DxAudioX2.hにて列挙している）
 	//--------------------------------------------
 
-	if(buffer[ID].pAudioData != NULL)
+	if (buffer[ID].pAudioData != NULL)
 	{
-		if(buffer[ID].LoopCount == XAUDIO2_LOOP_INFINITE)
+		if (buffer[ID].LoopCount == XAUDIO2_LOOP_INFINITE)
 		{
 			buffer[ID].LoopCount = 0;
 		}
@@ -86,10 +86,10 @@ void Audio::SoundAllStop (void)
 	//--------------------------------------------
 
 	//サウンドデータの最大数分停止処理を実行
-	for(int LOOP = 0; LOOP < SOUND_MAX; LOOP++)
+	for (int LOOP = 0; LOOP < SOUND_MAX; LOOP++)
 	{
 		//再生データを検索
-		if(buffer[LOOP].pAudioData != NULL)
+		if (buffer[LOOP].pAudioData != NULL)
 		{
 			SoundStop(LOOP);
 		}
@@ -128,10 +128,10 @@ bool Audio::InitXAudio2(void)
 	pXAudio2 = NULL;
 	hr = XAudio2Create(&pXAudio2,flag,XAUDIO2_DEFAULT_PROCESSOR);
 
-	if(SUCCEEDED(hr))
+	if (SUCCEEDED(hr))
 	{
 		hr = pXAudio2->CreateMasteringVoice(&pMasteringVo,0,0,0,0,0);
-		if(FAILED(hr))
+		if (FAILED(hr))
 		{
 			//エラー時にはメッセージボックスで表示
 			ShowCursor(true);
@@ -147,7 +147,7 @@ bool Audio::InitXAudio2(void)
 			MessageBox(NULL,TEXT("オーディオの再生に失敗しました。"),TEXT("XAudio2がNULL"),S_OK);
 			ShowCursor(false);
 	}
-	if( hr == S_OK )
+	if ( hr == S_OK )
 	{
 		return true;
 	}else
@@ -160,7 +160,7 @@ bool Audio::InitXAudio2(void)
 //.wavファイルを開いて解析
 bool Audio::OpenWaveFile( char* FileName,WAVEFORMATEX &waveFormatEx, unsigned char **ppData, unsigned long &dataSize)
 {
-	if(FileName == 0)
+	if (FileName == 0)
 	{
 		return false;
 	}
@@ -172,7 +172,7 @@ bool Audio::OpenWaveFile( char* FileName,WAVEFORMATEX &waveFormatEx, unsigned ch
 	memset( &mmioInfo,0,sizeof(MMIOINFO) );
 	hMmio = mmioOpenA( FileName, &mmioInfo, MMIO_READ);
 
-	if(!hMmio)
+	if (!hMmio)
 	{
 		return false;		//ファイルオープンに失敗
 	}
@@ -184,7 +184,7 @@ bool Audio::OpenWaveFile( char* FileName,WAVEFORMATEX &waveFormatEx, unsigned ch
 	riffChunk.fccType = mmioFOURCC('W','A','V','E');	//WAVEファイルかを確認？？
 	mmRes = mmioDescend(hMmio, &riffChunk, NULL, MMIO_FINDRIFF);
 
-	if(mmRes != MMSYSERR_NOERROR)
+	if (mmRes != MMSYSERR_NOERROR)
 	{
 		mmioClose(hMmio, 0);
 		return false;
@@ -195,7 +195,7 @@ bool Audio::OpenWaveFile( char* FileName,WAVEFORMATEX &waveFormatEx, unsigned ch
 	formatChunk.ckid = mmioFOURCC('f','m','t',' ');
 	mmRes = mmioDescend(hMmio, &formatChunk, &riffChunk, MMIO_FINDCHUNK);
 
-	if(mmRes != MMSYSERR_NOERROR)
+	if (mmRes != MMSYSERR_NOERROR)
 	{
 		mmioClose(hMmio, 0);
 		return false;
@@ -204,7 +204,7 @@ bool Audio::OpenWaveFile( char* FileName,WAVEFORMATEX &waveFormatEx, unsigned ch
 	DWORD fmsize	= formatChunk.cksize;
 	DWORD size	= mmioRead(hMmio, (HPSTR)&waveFormatEx, fmsize);
 
-	if(size != fmsize)
+	if (size != fmsize)
 	{
 		mmioClose(hMmio, 0);
 		return false;
@@ -217,7 +217,7 @@ bool Audio::OpenWaveFile( char* FileName,WAVEFORMATEX &waveFormatEx, unsigned ch
 	dataChunk.ckid = mmioFOURCC('d','a','t','a');
 	mmRes = mmioDescend(hMmio, &dataChunk, &riffChunk, MMIO_FINDCHUNK);
 
-	if(mmRes != MMSYSERR_NOERROR)
+	if (mmRes != MMSYSERR_NOERROR)
 	{
 		mmioClose(hMmio, 0);
 		return false;
@@ -226,7 +226,7 @@ bool Audio::OpenWaveFile( char* FileName,WAVEFORMATEX &waveFormatEx, unsigned ch
 	*ppData = new BYTE[ dataChunk.cksize];
 	size = mmioRead(hMmio, (HPSTR)*ppData, dataChunk.cksize);
 
-	if(size != dataChunk.cksize)
+	if (size != dataChunk.cksize)
 	{
 		delete[] *ppData;
 		return false;
@@ -250,7 +250,7 @@ void Audio::LoadSoundFile ( char* FileName, int IN_ID)
 	//////////////////////////////////
 
 	//同じIDへの上書きが起こった際、以前のものを解放処理(メモリリーク防止)
-	if(buffer[IN_ID].pAudioData != NULL)
+	if (buffer[IN_ID].pAudioData != NULL)
 	{
 		ReleaseSoundFile(IN_ID);
 	}
@@ -260,9 +260,9 @@ void Audio::LoadSoundFile ( char* FileName, int IN_ID)
 	BYTE*		pWaveData	= 0;
 	DWORD		waveSize	= 0;
 
-	if(pXAudio2 != NULL)
+	if (pXAudio2 != NULL)
 	{
-		if(!OpenWaveFile (FileName, wFmt, &pWaveData, waveSize) )
+		if (!OpenWaveFile (FileName, wFmt, &pWaveData, waveSize) )
 		{
 			//失敗した原因をメッセージボックスで表示
 			ShowCursor(true);
@@ -271,7 +271,7 @@ void Audio::LoadSoundFile ( char* FileName, int IN_ID)
 			return;
 		}
 
-		if(FAILED(hr = pXAudio2->CreateSourceVoice(&pSourceVo[IN_ID],&wFmt, 0, XAUDIO2_DEFAULT_FREQ_RATIO, NULL, NULL, NULL) ) )
+		if (FAILED(hr = pXAudio2->CreateSourceVoice(&pSourceVo[IN_ID],&wFmt, 0, XAUDIO2_DEFAULT_FREQ_RATIO, NULL, NULL, NULL) ) )
 		{
 			//失敗した原因をメッセージボックスで表示
 			ShowCursor(true);
@@ -299,14 +299,14 @@ bool Audio::ReleaseXAudio2(void)
 	ReleaseAllSoundFile();
 
 
-	if(pMasteringVo)
+	if (pMasteringVo)
 	{
 		//読み込んでメモリに保存されている音源ファイルを解放
 		pMasteringVo->DestroyVoice();
 		pMasteringVo = NULL;
 	}
 
-	if(pXAudio2)
+	if (pXAudio2)
 	{
 		// XAudio自体を解放
 		SAFE_RELEASE(pXAudio2);

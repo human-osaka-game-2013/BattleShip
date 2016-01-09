@@ -34,7 +34,7 @@ bool CRenderManager::LoadXFile( MESH_ID _id, LPCSTR _xFileName )
 	//xファイルからメッシュをロードする
 	LPD3DXBUFFER	pD3DXMtrlBuffer	= NULL;
 
-	if(FAILED(D3DXLoadMeshFromX(
+	if (FAILED(D3DXLoadMeshFromX(
 		_xFileName,
 		D3DXMESH_SYSTEMMEM,
 		m_pD3Device,
@@ -54,15 +54,15 @@ bool CRenderManager::LoadXFile( MESH_ID _id, LPCSTR _xFileName )
 	MeshInfo[ _id ].pMeshMaterials		= new D3DMATERIAL9[MeshInfo[ _id ].dwNumMaterials];
 	MeshInfo[ _id ].pMeshTextures		= new LPDIRECT3DTEXTURE9[MeshInfo[ _id ].dwNumMaterials];
 
-	for(DWORD i=0;	i<MeshInfo[ _id ].dwNumMaterials;	i++)
+	for (DWORD i=0;	i<MeshInfo[ _id ].dwNumMaterials;	i++)
 	{
 		MeshInfo[ _id ].pMeshMaterials[i]			= d3dxMaterials[i].MatD3D;
 		MeshInfo[ _id ].pMeshMaterials[i].Ambient	= MeshInfo[ _id ].pMeshMaterials[i].Diffuse;
 		MeshInfo[ _id ].pMeshTextures[i]			= NULL;
 
-		if(d3dxMaterials[i].pTextureFilename != NULL && lstrlen(d3dxMaterials[i].pTextureFilename) >0)
+		if (d3dxMaterials[i].pTextureFilename != NULL && lstrlen(d3dxMaterials[i].pTextureFilename) >0)
 		{
-			if(FAILED (D3DXCreateTextureFromFileEx (m_pD3Device,
+			if (FAILED (D3DXCreateTextureFromFileEx (m_pD3Device,
 													d3dxMaterials[i].pTextureFilename,
 													D3DX_DEFAULT_NONPOW2,
 													D3DX_DEFAULT_NONPOW2,
@@ -116,7 +116,7 @@ void CRenderManager::ReleaseMesh( int _id )
 	SAFE_RELEASE( MeshInfo[ _id ].pMesh );
 	
 	//テクスチャ解放
-	for( DWORD i = 0; i < MeshInfo[ _id ].dwNumMaterials; i++ )
+	for ( DWORD i = 0; i < MeshInfo[ _id ].dwNumMaterials; i++ )
 	{
 		SAFE_RELEASE( MeshInfo[ _id ].pMeshTextures[i] );
 	}
@@ -132,11 +132,11 @@ void CRenderManager::ReleaseMesh( int _id )
 */
 void CRenderManager::AllReleaseMesh()
 {
-	for( int iCount = 0; iCount < MESH_MAX; iCount++ )
+	for ( int iCount = 0; iCount < MESH_MAX; iCount++ )
 	{
 		ReleaseMesh( iCount );
 	}
-	for( int iCount = 0; iCount < AN_MESH_MAX; iCount++ )
+	for ( int iCount = 0; iCount < AN_MESH_MAX; iCount++ )
 	{
 		LPD3DXFRAME pFrame = NULL;
 		pFrame = AllocateHierarchy[iCount].GetFrame();

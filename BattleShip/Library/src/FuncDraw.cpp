@@ -141,7 +141,7 @@ void CDrawManager::AnimationDraw( int _textuerNumber, float _fXpos, float _fYpos
 	float tu2 = static_cast<float>( (_tuSize + _fWidth	+ 0.5f) / m_TextureInfo[_textuerNumber].width  );
 	float tv2 = static_cast<float>( (_tvSize + _fHeight	+ 0.5f) / m_TextureInfo[_textuerNumber].height);
 
-	for( int i = 0; i < 4; i++ )
+	for ( int i = 0; i < 4; i++ )
 	{
 		customVertex[i].z = 0.5f;
 		customVertex[i].rhw = 1.0f;
@@ -185,7 +185,7 @@ void CDrawManager::AnimationDraw( int _textuerNumber, float _fXpos, float _fYpos
 	float tv2 = tv1+m_TextureInfo[_textuerNumber].divTvSize;
 
 
-	for( int i = 0; i < 4; i++ )
+	for ( int i = 0; i < 4; i++ )
 	{
 		customVertex[i].z = 0.5f;
 		customVertex[i].rhw = 1.0f;
@@ -201,7 +201,7 @@ void CDrawManager::AnimationDraw( int _textuerNumber, float _fXpos, float _fYpos
 	customVertex[3].x	= _fXpos;
 	customVertex[3].y	= _fYpos +_fHeight;
 
-	if( !_flipHorizontal )
+	if ( !_flipHorizontal )
 	{
 		
 		customVertex[0].tu	= tu1;
@@ -231,7 +231,7 @@ void CDrawManager::AnimationDraw( int _textuerNumber, float _fXpos, float _fYpos
 		customVertex[3].tu	= tu2;
 		customVertex[3].tv	= tv2;
 	}
-	if( _flipVertical )
+	if ( _flipVertical )
 	{
 		float tempTU[4] = { customVertex[0].tu, customVertex[1].tu,
 							customVertex[2].tu, customVertex[3].tu };
@@ -285,7 +285,7 @@ void CDrawManager::VertexTransform(  int _textuerNumber, CUSTOMVERTEX (&_vertex)
 		tempVertex[i].color = _vertex[i].color;
 	}
 
-	for( int iCount = 0; iCount < 4; iCount++ ){
+	for ( int iCount = 0; iCount < 4; iCount++ ){
 		D3DXMATRIXA16	matWorld, matPosition, matScale, matRotation;
 		D3DXMatrixIdentity( &matWorld );
 		D3DXMatrixRotationZ( &matRotation, fRad );

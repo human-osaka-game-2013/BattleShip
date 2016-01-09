@@ -267,7 +267,7 @@ public:
 	*/
 	void ChangeVertexColor( CUSTOMVERTEX (&_vertex)[4], const unsigned long _color )
 	{
-		for( int i = 0; i < 4; i++ ){
+		for ( int i = 0; i < 4; i++ ){
 			_vertex[i].color = _color;
 		}
 	}
@@ -277,7 +277,7 @@ public:
 	*/
 	void ChangeVertexColor( CUSTOMVERTEX (&_vertex)[4], const int _A, const int _R, const int _G, const int _B )
 	{
-		for( int i = 0; i < 4; i++ ){
+		for ( int i = 0; i < 4; i++ ){
 			_vertex[i].color = D3DCOLOR_ARGB( _A, _R, _G, _B );
 		}
 	}

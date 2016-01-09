@@ -15,24 +15,8 @@
 
 #define _PLAYER_ID_	1
 
-class CScene
-{
-protected:
-	CRenderManager* const m_pRenderManager;	///< 3D描画管理クラスポインタ(constポインタ)
-	CDrawManager*	const m_pDrawManager;	///< 2D描画管理クラスポインタ(constポインタ)
-	CKey*			const m_pKey;			///< キー管理クラスポインタ	(constポインタ)
-	CMouse*			const m_pMouse;			///< マウス管理クラスポインタ(constポインタ)
-	Audio*			const m_pAudio;			///< 音声再生クラスポインタ(constポインタ)
-
-protected:
-	int m_sceneID;	//	シーンID保存変数(コンストラクタの時にシーンIDが入る)
-	int m_count;	//	シーン内でのカウント
-
-private:
-	bool			m_sceneEndFlag;		///<	シーンの終了or遷移をさせるフラグ（フェードイン＆アウトの開始に使う）
-	unsigned int	m_sceneTime;		///<	シーン内での秒数カウント(0.1秒分までカウントしています
-
-public:
+class CScene {
+ public:
 	/**
 	*@brief	コンストラクタ
 	*@details	使わない管理ポインタがある場合NULLポインタを入れる
@@ -42,18 +26,20 @@ public:
 	*@param[in]	_pKey			キー管理のポインタ
 	*@param[in]	_pMouse		マウス管理のポインタ
 	*/
-	CScene( int _id, CRenderManager* const _pRenderManager,
-		CDrawManager*	const _pDrawManager,
-		CKey* const _pKey, CMouse* const _pMouse, Audio* const _pAudio);
+	CScene( int _id, 
+			CRenderManager* const _pRenderManager,
+			CDrawManager*	const _pDrawManager,
+			CKey* const _pKey,
+			CMouse* const _pMouse,
+			Audio* const _pAudio );
+
 	/**
 	*@briefデストラクタ
 	*/
-	virtual ~CScene()
-	{
+	virtual ~CScene() {
 		
 	}
 
-public:
 	/**
 	*@brief	初期化の純粋仮想関数
 	*@return	初期化の結果
@@ -73,22 +59,18 @@ public:
 	virtual void Draw()	= 0;		///< 2D描画の仮想関数
 	virtual void Render() = 0;		///< 3D描画の仮想関数
 
-public:
-	
 	/**
 	*@brief	各シーン内での経過時間のカウント
 	*@details	60FPSで回っていて、この関数は1フレームのループで1度のみ呼ばれている前提である
 	*/
-	void CountTimeInScene(){
+	void CountTimeInScene() {
 		static DWORD SyncOld = 0;
 		static DWORD SyncNow = 0;
 
 		SyncNow = timeGetTime();
 
-		if (SyncNow - SyncOld >= 1000 / 10)
-		{
+		if (SyncNow - SyncOld >= 1000 / 10) {
 			m_sceneTime++;
-
 			SyncOld = SyncNow;
 		}
 	}
@@ -119,6 +101,21 @@ public:
 	*@brief	シーン終了フラグの更新
 	*/
 	void SetSceneEndFlag( bool _flag ){ m_sceneEndFlag = _flag; }
+
+ protected:
+	CRenderManager* const m_pRenderManager;	///< 3D描画管理クラスポインタ(constポインタ)
+	CDrawManager*	const m_pDrawManager;	///< 2D描画管理クラスポインタ(constポインタ)
+	CKey*			const m_pKey;			///< キー管理クラスポインタ	(constポインタ)
+	CMouse*			const m_pMouse;			///< マウス管理クラスポインタ(constポインタ)
+	Audio*			const m_pAudio;			///< 音声再生クラスポインタ(constポインタ)
+
+	int m_sceneID;	//	シーンID保存変数(コンストラクタの時にシーンIDが入る)
+	int m_count;	//	シーン内でのカウント
+
+ private:
+	bool			m_sceneEndFlag;		///<	シーンの終了or遷移をさせるフラグ（フェードイン＆アウトの開始に使う）
+	unsigned int	m_sceneTime;		///<	シーン内での秒数カウント(0.1秒分までカウントしています
+
 };
 
 #endif

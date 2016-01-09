@@ -14,26 +14,17 @@
 *@brief	ゲーム中でのログの文字列情報クラス
 *@details	GameLogクラスでvectorなどでこのオブジェクトを追加していく予定
 */
-class LogStream
-{
-private:
-	std::string		m_logStr;	///<	ログで表示させたい1行分文字列
-	
-	long			m_x;		///<	文字列の基準点X
-	long			m_y;		///<	文字列の基準点Y
-	unsigned int	m_width;	///<	一文字分の横幅
-	unsigned int	m_height;	///<	一文字分の縦幅
-	D3DXCOLOR		m_color;	///<	文字のカラー値
-	unsigned long	m_format;	///<	文字列を表示する時のフォーマット（DrawText関数依存）
-
-public:
+class LogStream {
+ public:
 	/**
 	*@brief	コンストラクタ
 	*/
-	LogStream( const char* _str, const long _x, const long _y,
-		const unsigned int& _width = _LOG_FONT_WIDTH_, const unsigned int& _height = _LOG_FONT_HEIGHT_, 
-		const D3DXCOLOR& _color = 0xFFFFFF, unsigned long _format = DT_LEFT ):m_format( _format )
-	{
+	LogStream( const char* _str,const long _x,const long _y,
+			   const unsigned int& _width = _LOG_FONT_WIDTH_,
+			   const unsigned int& _height = _LOG_FONT_HEIGHT_,
+			   const D3DXCOLOR& _color = 0xFFFFFF,
+			   unsigned long _format = DT_LEFT ):m_format( _format ) {
+
 		SetString( _str );
 		SetPosition( _x, _y );
 		SetSize( _width, _height );
@@ -44,8 +35,7 @@ public:
 	*@brief	文字列セット
 	*@param[in] _str　セットしたい文字列
 	*/
-	inline void SetString( const char* _str )
-	{
+	inline void SetString( const char* _str ) {
 		m_logStr = _str;
 	}
 
@@ -54,8 +44,7 @@ public:
 	*@param[in] _width	1文字の横幅
 	*@param[in] _height	1文字の縦幅
 	*/
-	inline void SetSize( const unsigned int& _width, const unsigned int& _height )
-	{
+	inline void SetSize( const unsigned int& _width, const unsigned int& _height ) {
 		m_width	= _width;
 		m_height= _height;
 	}
@@ -65,8 +54,7 @@ public:
 	*@param[in] _x
 	*@param[in] _y
 	*/
-	inline void SetPosition( const long& _x, const long& _y )
-	{
+	inline void SetPosition( const long& _x, const long& _y ) {
 		m_x = _x;
 		m_y = _y;
 	}
@@ -74,8 +62,7 @@ public:
 	/**
 	*@brief	文字列のカラー値セット
 	*/
-	inline void SetColor( const D3DXCOLOR& _color )
-	{
+	inline void SetColor( const D3DXCOLOR& _color ) {
 		m_color = _color;
 	}
 
@@ -89,8 +76,7 @@ public:
 	*@param[out] _width		1文字の横幅
 	*@param[out] _height	1文字の縦幅
 	*/
-	inline void GetSize( unsigned int& _width, unsigned int& _height)
-	{
+	inline void GetSize( unsigned int& _width, unsigned int& _height) {
 		_width	= m_width;
 		_height	= m_height;
 	}
@@ -100,8 +86,7 @@ public:
 	*@param[out] _x
 	*@param[out] _y
 	*/
-	inline void GetPosition( long& _x, long& _y)
-	{
+	inline void GetPosition( long& _x, long& _y) {
 		_x = m_x;
 		_y = m_y;
 	}
@@ -115,15 +100,24 @@ public:
 
 	unsigned long GetFormat(){ return m_format; }
 
-	inline void AppendStr( const char* _str )
-	{
+	inline void AppendStr( const char* _str ) {
 		m_logStr.append(_str);
 	}
 
-	inline void DeleteStr()
-	{
+	inline void DeleteStr() {
 		m_logStr.erase();
 	}
+
+ private:
+	std::string		m_logStr;	///<	ログで表示させたい1行分文字列
+	
+	long			m_x;		///<	文字列の基準点X
+	long			m_y;		///<	文字列の基準点Y
+	unsigned int	m_width;	///<	一文字分の横幅
+	unsigned int	m_height;	///<	一文字分の縦幅
+	D3DXCOLOR		m_color;	///<	文字のカラー値
+	unsigned long	m_format;	///<	文字列を表示する時のフォーマット（DrawText関数依存）
+
 };
 
 #endif

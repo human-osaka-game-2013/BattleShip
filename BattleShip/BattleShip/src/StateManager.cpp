@@ -77,10 +77,10 @@ void StateManager::StateInit()
 
 	m_beforeShip = -1;	///<前フレームで選択（対象）されている駒を保持しておく。最初に入ってきた場合は初期値として-1を入れている。	
 
-	for( int iPlayer=0; iPlayer<_PLAYER_NUM_; iPlayer++ )	///<表示位置などを予め初期化しておき、描画時や当たり判定時などにも利用する。
+	for ( int iPlayer=0; iPlayer<_PLAYER_NUM_; iPlayer++ )	///<表示位置などを予め初期化しておき、描画時や当たり判定時などにも利用する。
 	{
 		//	艦種分ループで全ての駒を初期化
-		for( int iShip=0; iShip<ShipObject::TYPE_MAX; iShip++ ){
+		for ( int iShip=0; iShip<ShipObject::TYPE_MAX; iShip++ ){
 
 		//	------自駒のステータス（損害情報）の初期化------
 			tempW = _BLOCK_WIDTH_SIZE_;
@@ -91,7 +91,7 @@ void StateManager::StateInit()
 			//	駒の向きの初期化
 			ShipObject* tempShip;
 			
-			if( iPlayer == 0 ){
+			if ( iPlayer == 0 ){
 				tempX += tempW*5;	///<プレイヤー1は1マス目から5マス分ずらすので
 				tempShip = m_pPlayer1->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
 			}else{
@@ -113,7 +113,7 @@ int StateManager::StateCotrol()
 	gameResult = -1;
 
 #endif
-	if( gameResult == 1 )	///<	ステートのルーチン処理の結果シーンが変わる必要があれば
+	if ( gameResult == 1 )	///<	ステートのルーチン処理の結果シーンが変わる必要があれば
 	{
 		switch( m_currentState )	///<	変更するステートは順番がある程度決まっているので分岐
 		{
@@ -135,11 +135,11 @@ int StateManager::StateCotrol()
 			break;
 		}
 	}
-	else if( gameResult == 2 )
+	else if ( gameResult == 2 )
 	{
 		ChangeState(STATE_ACTION_REPORT);
 	}
-	else if( gameResult == -1 )
+	else if ( gameResult == -1 )
 	{
 		m_pAudio->SoundAllStop();
 		/*
@@ -170,7 +170,7 @@ int StateManager::CheckState()
 	//	駒が配置され、配置情報などの送受信が完了するまでループ
 	case STATE_SET_SHIP:
 		//	駒配置を促すログを出す
-		if( m_beforeShip != m_currentShip && m_currentShip != ShipObject::TYPE_MAX )
+		if ( m_beforeShip != m_currentShip && m_currentShip != ShipObject::TYPE_MAX )
 		{
 			m_tempStr2 = m_gameLog.m_fixedPhrase.m_phrase[FixedPhrase::SET_PHRASE_STR];
 			
@@ -178,25 +178,25 @@ int StateManager::CheckState()
 			m_gameLog.AddStream( m_tempStr1.c_str() );
 		}
 
-		if( m_currentShip >= ShipObject::TYPE_MAX && !m_connectFlag )	///<　全ての駒がセットされた
+		if ( m_currentShip >= ShipObject::TYPE_MAX && !m_connectFlag )	///<　全ての駒がセットされた
 			checkResult = 1;
 		break;
 	//	選択が完了して、その情報の送受信が完了するまでループ
 	case STATE_SELECTION:
-		if( stateResult == 1 ){	///<　結果が1且つ、通信が完了していた場合
+		if ( stateResult == 1 ){	///<　結果が1且つ、通信が完了していた場合
 			static bool selectTimeUpdateFlag = false;	///< 行動決定までの時間計測の更新のためのフラグ
 			
-			if( !selectTimeUpdateFlag )
+			if ( !selectTimeUpdateFlag )
 			{
 				Player* _pPlayer = m_playerID%_PLAYER_NUM_? m_pPlayer1: m_pPlayer2;
 				bool deadFlag = _pPlayer->CheckDestroy( m_currentShip );
 				//	もし駒が轟沈していた場合、行動選択の更新をしてしまうとダメなので調べておく
-				if(!deadFlag)
+				if (!deadFlag)
 					m_reportData.UpdateSelectAveTime( m_pGameState->GetElapsedTimeFromStateInstance() );	///< 行動決定までの時間の更新
 				
 				selectTimeUpdateFlag = true;
 			}
-			if( !m_connectFlag )
+			if ( !m_connectFlag )
 			{
 				Selection* pSelection = dynamic_cast<Selection*>(m_pGameState);	///<Selectionの関数にアクセスする必要があるので、ダウンキャストする。
 				m_plyaerSelectType = pSelection->GetSelectionType();
@@ -210,14 +210,14 @@ int StateManager::CheckState()
 		break;
 	//	エフェクトが終わるまでループ
 	case STATE_STAGE_EFFECT:
-		if( stateResult == 1 ){	///<　結果が1(ステージの演出が完了)の場合
+		if ( stateResult == 1 ){	///<　結果が1(ステージの演出が完了)の場合
 			
 			checkResult = 1;
 		}
 		break;
 
 	case STATE_ACTION_REPORT:
-		if( stateResult == 1 ){	///<　結果が1(戦績結果終了)の場合
+		if ( stateResult == 1 ){	///<　結果が1(戦績結果終了)の場合
 			
 			checkResult = -1;
 		}
@@ -233,11 +233,11 @@ int StateManager::CheckState()
 		m_reportData.SetTurnCount(m_turnCount);
 
 		//勝利or敗北or戦闘終了
-		if( stateResult == Result::TYPE_VICTORY ||
+		if ( stateResult == Result::TYPE_VICTORY ||
 			stateResult == Result::TYPE_DEFEAT ||
 			stateResult == Result::TYPE_STALEMATE )
 		{
-			if( stateResult != Result::TYPE_DEFEAT )
+			if ( stateResult != Result::TYPE_DEFEAT )
 				checkResult = 2;	//StateManager側に戦闘結果＝戦闘終了した事を教えてやる。
 			else
 				checkResult = -1;	///負けた時は戦績の報告はしない。
@@ -249,17 +249,17 @@ int StateManager::CheckState()
 			/*
 			戦闘終了に伴う戦況の最終結果をログに表示
 			*/
-			if( m_resultBattle == Result::TYPE_STALEMATE )
+			if ( m_resultBattle == Result::TYPE_STALEMATE )
 			{
 				m_tempStr1 = m_gameLog.GetPhrase( FixedPhrase::RESULT_STALEMATE_STR );
 				m_pAudio->SoundPlay( Audio::_LOSE_BGM_, true );
 			}
-			else if( m_resultBattle == Result::TYPE_VICTORY )
+			else if ( m_resultBattle == Result::TYPE_VICTORY )
 			{
 				m_tempStr1 = m_gameLog.GetPhrase( FixedPhrase::RESULT_VICTORY_STR );
 				m_pAudio->SoundPlay( Audio::_WIN_BGM_, true );
 			}
-			else if( m_resultBattle == Result::TYPE_DEFEAT )
+			else if ( m_resultBattle == Result::TYPE_DEFEAT )
 			{
 				m_tempStr1 = m_gameLog.GetPhrase( FixedPhrase::RESULT_DEFEAT_STR );
 				m_pAudio->SoundPlay( Audio::_LOSE_BGM_, true );
@@ -276,7 +276,7 @@ int StateManager::CheckState()
 			m_pStageObject->ResetSelect();	//判定を取ったので選択情報は消す
 			
 			// Selectionステートに移る前に現在のターンが終了したので次の駒を指定
-			if( m_currentShip < ShipObject::TYPE_SUBMARINE){
+			if ( m_currentShip < ShipObject::TYPE_SUBMARINE){
 
 				m_currentShip = static_cast< ShipObject::_SHIP_TYPE_NUM_ >( m_beforeShip+1 );
 			}else{
@@ -298,14 +298,14 @@ int StateManager::CheckState()
 //	ステートパターンの切り替え
 bool StateManager::ChangeState( _STATE_NUM_ _stateType )
 {
-	if( _stateType > STATE_STAGE_EFFECT&& _stateType < STATE_SET_SHIP )
+	if ( _stateType > STATE_STAGE_EFFECT&& _stateType < STATE_SET_SHIP )
 	{
 		MessageBoxA(0,"ステートパターンの変更に失敗しました！\n引数を確認して下さい！(＞＜;)",NULL,MB_OK);
 		return false;
 	}
 	
 	//	すでにステートが決まっていた場合（変更する際）は前のインスタンス生成したものを消す必要がある。
-	if( m_beforeState != STATE_NONE )
+	if ( m_beforeState != STATE_NONE )
 	{
 		CLASS_DELETE(m_pGameState); 
 	}
@@ -345,7 +345,7 @@ bool StateManager::ChangeState( _STATE_NUM_ _stateType )
 
 	m_currentState = _stateType;	///<	現在のステート変数を更新
 	
-	if( m_currentShip >= ShipObject::TYPE_MAX )	///<	ステート変更のついでに選択駒が範囲を超えているかチェック
+	if ( m_currentShip >= ShipObject::TYPE_MAX )	///<	ステート変更のついでに選択駒が範囲を超えているかチェック
 		m_currentShip = ShipObject::TYPE_AIRCARRIER;	///<	空母に変更
 
 	//	ステートが変わったので、一連の初期化を行う
@@ -367,7 +367,7 @@ void StateManager::StateDraw()
 	DrawPlayersShipInfo();
 
 	//	プレイヤー数ループして、駒とマス目を描画する
-	for( int ip=0; ip<_PLAYER_NUM_; ip++ )
+	for ( int ip=0; ip<_PLAYER_NUM_; ip++ )
 	{
 		DrawShipObject( ip );
 		DrawStageBlock( ip );
@@ -377,7 +377,7 @@ void StateManager::StateDraw()
 	*@brief	各ステート描画
 	*@details	例外的にActionReportステートとSelectionだけは最後に描画させる。
 	*/
-	if( m_currentState != STATE_ACTION_REPORT &&
+	if ( m_currentState != STATE_ACTION_REPORT &&
 		m_currentState != STATE_SELECTION )
 		m_pGameState->Draw();
 
@@ -386,13 +386,13 @@ void StateManager::StateDraw()
 	DrawLog();
 
 	//	ActionReportとSelectionのみ最後に描画
-	if( m_currentState == STATE_ACTION_REPORT ||
+	if ( m_currentState == STATE_ACTION_REPORT ||
 		m_currentState == STATE_SELECTION )
 		m_pGameState->Draw();
 
 
 	//	通信待ち中
-	if( GetConnectFlag() )
+	if ( GetConnectFlag() )
 	{
 		m_pGameState->ComStandby( m_gameConnectState );
 	}
@@ -402,7 +402,7 @@ void StateManager::DrawPlayersShipInfo()
 {
 	float tempX, tempY;
 
-	if( m_playerID == 1 )
+	if ( m_playerID == 1 )
 	{
 		//	プレイヤー1枠表示
 		m_PlayerFrame[0].GetPosition( &tempX, &tempY );
@@ -458,60 +458,65 @@ void StateManager::DrawStageFrame()
 void StateManager::DrawShipObject( const int _playerIndex )
 {
 	//	プレイヤー別の駒情報の表示
-	for( int iShip=0; iShip<ShipObject::TYPE_MAX; iShip++ )
+	for ( int iShip=0; iShip<ShipObject::TYPE_MAX; iShip++ )
 	{
 		//	ステージ上の駒の表示
 		float tempW = _BLOCK_WIDTH_SIZE_;	
 		float tempH = _BLOCK_HEIGHT_SIZE_;
 		
-		/**
-		*@todo	現在は自身の駒のみを表示している。
-		*/
-		if( _playerIndex == m_playerID-1 )	///<今は自分のプレイヤーの駒しか表示しない
+		if ( _playerIndex == m_playerID-1 )	///<自分のプレイヤーの駒しか表示しない
 		{
-			Player* tempPlayer = m_playerID%_PLAYER_NUM_ ? m_pPlayer1:m_pPlayer2;
-			ShipObject* tempShip = tempPlayer->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
-				
-			if( !tempShip->GetDeadFlag() )
-			{
+			Player* tempPlayer = m_playerID%_PLAYER_NUM_ ? m_pPlayer1:m_pPlayer2;	//描画に必要なプレイヤー情報を取得
+			ShipObject* tempShip = tempPlayer->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip ); //描画に必要な駒情報を取得
+			const int texNum = iShip+_TEX_AIRCARRIER_;	//描画する対象の駒テクスチャを取得（）
+			const float shipRotation = tempShip->GetDirection()*90.f;
+
+			if (!tempShip->GetDeadFlag()) {
 				//	盤面上に置かれている自分の駒を描画
-				m_pDrawManager->VertexTransform( iShip + _TEX_AIRCARRIER_, tempShip->m_vertex, 
-					tempShip->GetPositionX(), tempShip->GetPositionY(), 1.f, 1.f, tempShip->GetDirection()*90.f );
-				
-				if( _playerIndex== 0 ){	//	プレイヤー1の場合
-					//	配置したものからプレイヤー側の所持駒情報も描画
-					m_pDrawManager->VertexTransform( iShip + _TEX_AIRCARRIER_, tempShip->m_vertex, 
-						(_BOARD_OF_SHIPDATA_LINE_P1_*tempW)+(tempW/2), ((_BOARD_OF_SHIPDATA_COLUMN_+iShip)*tempH) + (tempH/2),
-						1.f, 1.f, CGameObject::CH_RIGHT*90.f );
+				m_pDrawManager->VertexTransform( texNum,tempShip->m_vertex, 
+												 tempShip->GetPositionX(),
+												 tempShip->GetPositionY(),
+												 1.f,1.f,tempShip->GetDirection()*90.f );
 
-				}else{	//	プレイヤー2の場合
+				if (_playerIndex== 0) {	//	プレイヤー1の場合
 
 					//	配置したものからプレイヤー側の所持駒情報も描画
-					m_pDrawManager->VertexTransform( iShip + _TEX_AIRCARRIER_, tempShip->m_vertex, 
-						(_BOARD_OF_SHIPDATA_LINE_P2_*tempW)+(tempW/2), ((_BOARD_OF_SHIPDATA_COLUMN_+iShip)*tempH) + (tempH/2),
-						1.f, 1.f, CGameObject::CH_RIGHT*90.f );
+					m_pDrawManager->VertexTransform( texNum,tempShip->m_vertex,
+													 (_BOARD_OF_SHIPDATA_LINE_P1_*tempW)+(tempW/2),
+													 ((_BOARD_OF_SHIPDATA_COLUMN_+iShip)*tempH)+(tempH/2),
+													 1.f,1.f,CGameObject::CH_RIGHT*90.f );
+				}
+				else {	//	プレイヤー2の場合
+
+					//	配置したものからプレイヤー側の所持駒情報も描画
+					m_pDrawManager->VertexTransform( texNum,tempShip->m_vertex,
+													 (_BOARD_OF_SHIPDATA_LINE_P2_*tempW)+(tempW/2),
+													 ((_BOARD_OF_SHIPDATA_COLUMN_+iShip)*tempH)+(tempH/2),
+													 1.f,1.f,CGameObject::CH_RIGHT*90.f );
 				}
 				
 			}
-			else if( m_currentState != STATE_SET_SHIP )
-			{
+			else if (m_currentState != STATE_SET_SHIP) {
 				//	撃沈された艦はカラー値を暗めにして描画
-				if( tempShip->m_vertex[0].color != _DEAD_COLOR_OF_SHIP_ ){
+				if (tempShip->m_vertex[0].color != _DEAD_COLOR_OF_SHIP_) {
 					m_pDrawManager->ChangeVertexColor( tempShip->m_vertex, _DEAD_COLOR_OF_SHIP_ );
 				}
 
-				if( _playerIndex== 0 ){	//	プレイヤー1の場合
+				if (_playerIndex== 0) {	//	プレイヤー1の場合
 					//	配置したものからプレイヤー側の所持駒情報も描画
-					m_pDrawManager->VertexTransform( iShip + _TEX_AIRCARRIER_, tempShip->m_vertex, 
-						(_BOARD_OF_SHIPDATA_LINE_P1_*tempW)+(tempW/2), ((_BOARD_OF_SHIPDATA_COLUMN_+iShip)*tempH) + (tempH/2),
-						1.f, 1.f, CGameObject::CH_RIGHT*90.f );
+					m_pDrawManager->VertexTransform( texNum,tempShip->m_vertex,
+													 (_BOARD_OF_SHIPDATA_LINE_P1_*tempW)+(tempW/2),
+													 ((_BOARD_OF_SHIPDATA_COLUMN_+iShip)*tempH)+(tempH/2),
+													 1.f,1.f,CGameObject::CH_RIGHT*90.f );
 
-				}else{	//	プレイヤー2の場合
+				}
+				else {	//	プレイヤー2の場合
 
 					//	配置したものからプレイヤー側の所持駒情報も描画
-					m_pDrawManager->VertexTransform( iShip + _TEX_AIRCARRIER_, tempShip->m_vertex, 
-						(_BOARD_OF_SHIPDATA_LINE_P2_*tempW)+(tempW/2), ((_BOARD_OF_SHIPDATA_COLUMN_+iShip)*tempH) + (tempH/2),
-						1.f, 1.f, CGameObject::CH_RIGHT*90.f );
+					m_pDrawManager->VertexTransform( texNum,tempShip->m_vertex,
+													 (_BOARD_OF_SHIPDATA_LINE_P2_*tempW)+(tempW/2),
+													 ((_BOARD_OF_SHIPDATA_COLUMN_+iShip)*tempH)+(tempH/2),
+													 1.f,1.f,CGameObject::CH_RIGHT*90.f );
 				}
 			}
 		}
@@ -526,10 +531,10 @@ void StateManager::DrawStageBlock( const int _playerIndex )
 	float tempX, tempY;
 
 	//	行
-	for( int ic=0; ic<_STAGE_COLUMN_MAX_; ic++ )
+	for ( int ic=0; ic<_STAGE_COLUMN_MAX_; ic++ )
 	{	
 		//	列
-		for( int il=0; il<_STAGE_LINE_MAX_; il++ )
+		for ( int il=0; il<_STAGE_LINE_MAX_; il++ )
 		{
 			m_pStageObject->m_stageBlock[_playerIndex][ic][il].GetPosition( &tempX, &tempY );
 			
@@ -537,7 +542,7 @@ void StateManager::DrawStageBlock( const int _playerIndex )
 			int tempArrayData = m_pStageObject->m_stageArray[_playerIndex][ic][il];
 		
 			//	選択マスor損傷マスは見えるようにする
-			if( StageObject::SelectOfData(tempArrayData) != StageObject::_SELECT_NOMAL_ ||
+			if ( StageObject::SelectOfData(tempArrayData) != StageObject::_SELECT_NOMAL_ ||
 				StageObject::ConditionOfData(tempArrayData) == StageObject::_CONDITION_DAMAGE_)
 			{
 					
@@ -598,7 +603,7 @@ void StateManager::DrawLog()
 	long lTempX = 0, lTempY = 0;
 
 	//ログの枠表示
-	if( m_playerID == 1 )
+	if ( m_playerID == 1 )
 	{
 		//	ゲームログ表示
 		m_PlayerFrame[1].GetPosition( &fTempX, &fTempY );
@@ -618,7 +623,7 @@ void StateManager::DrawLog()
 	}
 	
 	//	戦闘系ログ
-	if( !m_gameLog.m_logStream.empty() )
+	if ( !m_gameLog.m_logStream.empty() )
 	{
 		logValue = m_gameLog.m_logStream.size();
 		lTempX = 0; 
@@ -628,14 +633,14 @@ void StateManager::DrawLog()
 		std::string* pStr;
 		LPCSTR lpTempStr;
 		std::list<LogStream*>::const_iterator itEnd = m_gameLog.m_logStream.end();
-		for( std::list<LogStream*>::iterator it = m_gameLog.m_logStream.begin();
+		for ( std::list<LogStream*>::iterator it = m_gameLog.m_logStream.begin();
 			it != itEnd; ++it)
 		{
 			(*it)->GetPosition( lTempX, lTempY );
 			(*it)->GetSize( iTempW, iTempH );
 			pStr = (*it)->GetStringPtr();
 			lpTempStr = const_cast<char *>(pStr->c_str());
-			if(pDxFont->DrawA( lTempX, lTempY, static_cast<unsigned long>(_LOG_FONT_WIDTH_), 
+			if (pDxFont->DrawA( lTempX, lTempY, static_cast<unsigned long>(_LOG_FONT_WIDTH_), 
 							iTempH, lpTempStr, (*it)->GetColor(), (*it)->GetFormat() ))
 			{
 
@@ -644,7 +649,7 @@ void StateManager::DrawLog()
 	}
 #ifdef _DEBUG
 	//	経過時間ログ
-	if( !m_gameElapsed.m_logStream.empty() )
+	if ( !m_gameElapsed.m_logStream.empty() )
 	{
 		logValue = m_gameElapsed.m_logStream.size();
 		lTempX = 0; 
@@ -658,14 +663,14 @@ void StateManager::DrawLog()
 		(*it)->GetSize( iTempW, iTempH );
 		pStr = (*it)->GetStringPtr();
 		lpTempStr = const_cast<char *>(pStr->c_str());
-		if(pDxFont->DrawA( lTempX, lTempY, iTempW, iTempH, lpTempStr, (*it)->GetColor(), (*it)->GetFormat() ))
+		if (pDxFont->DrawA( lTempX, lTempY, iTempW, iTempH, lpTempStr, (*it)->GetColor(), (*it)->GetFormat() ))
 		{
 
 		}
 	}
 #endif
 	//	ターン数ログ
-	if( !m_gameTurn.m_logStream.empty() )
+	if ( !m_gameTurn.m_logStream.empty() )
 	{
 		logValue = m_gameTurn.m_logStream.size();
 		lTempX = 0; 
@@ -686,7 +691,7 @@ void StateManager::DrawLog()
 
 		pStr = (*it)->GetStringPtr();
 		lpTempStr = const_cast<char *>(pStr->c_str());
-		if(pDxFont->DrawA( lTempX+static_cast<long>(_LOG_POS_TWEAK_), lTempY+static_cast<long>(_LOG_POS_TWEAK_),
+		if (pDxFont->DrawA( lTempX+static_cast<long>(_LOG_POS_TWEAK_), lTempY+static_cast<long>(_LOG_POS_TWEAK_),
 						static_cast<unsigned long>(_LOG_FONT_WIDTH_), 
 						iTempH, lpTempStr, (*it)->GetColor(), (*it)->GetFormat() ))
 		{
@@ -696,10 +701,10 @@ void StateManager::DrawLog()
 
 
 	//	通信待ち中
-	if( GetConnectFlag() )
+	if ( GetConnectFlag() )
 	{
 		//	通信中ログ
-		if( !m_gameConnectState.m_logStream.empty() )
+		if ( !m_gameConnectState.m_logStream.empty() )
 		{
 			logValue = m_gameConnectState.m_logStream.size();
 			lTempX = 0; 
@@ -713,7 +718,7 @@ void StateManager::DrawLog()
 			(*it)->GetSize( iTempW, iTempH );
 			pStr = (*it)->GetStringPtr();
 			lpTempStr = const_cast<char *>(pStr->c_str());
-			if(pDxFont->DrawA( lTempX, lTempY, iTempW, iTempH, lpTempStr, (*it)->GetColor(), (*it)->GetFormat() ))
+			if (pDxFont->DrawA( lTempX, lTempY, iTempW, iTempH, lpTempStr, (*it)->GetColor(), (*it)->GetFormat() ))
 			{
 
 			}

@@ -4,7 +4,7 @@
 //	コンストラクタ
 CMouse::CMouse(IDirectInputDevice8* const _pMouseDevice ): m_pMouseDevice(_pMouseDevice)
 {
-	for( int iCount = 0; iCount < MOUSEMAX; iCount++)
+	for ( int iCount = 0; iCount < MOUSEMAX; iCount++)
 	{
 		m_mouse[iCount] = OFF;
 		m_preMouse[iCount] = false;

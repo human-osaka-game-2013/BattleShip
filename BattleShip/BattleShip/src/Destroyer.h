@@ -8,15 +8,12 @@
 
 #include "ShipObject.h"
 
-class Destroyer : public ShipObject
-{
-
-public:
+class Destroyer : public ShipObject {
+ public:
 	/**
 	*@brief コンストラクタ
 	*/
-	Destroyer::Destroyer( int _userID ):ShipObject( _userID )
-	{
+	Destroyer::Destroyer( int _userID ) : ShipObject( _userID ) {
 
 	}
 

@@ -76,7 +76,7 @@ void CRenderManager::Transform( int _id, D3DXVECTOR3 _vecPosition, D3DXVECTOR3 _
 	m_pD3Device->LightEnable(0,TRUE);
 
 	//ƒŒƒ“ƒ_ƒŠƒ“ƒO
-	for(DWORD i=0;	i < MeshInfo[ _id ].dwNumMaterials ; i++)
+	for (DWORD i=0;	i < MeshInfo[ _id ].dwNumMaterials ; i++)
 	{
 		m_pD3Device->SetMaterial(&MeshInfo[ _id ].pMeshMaterials[i]);
 		m_pD3Device->SetTexture(0,MeshInfo[ _id ].pMeshTextures[i]);

@@ -4,7 +4,7 @@
 char Button::Contorl( const float _x, const float _y, const char _inputState ) 
 {
 
-	if( HitBlockCheck( _x, _y ) && m_state != STATE_SELECT )
+	if ( HitBlockCheck( _x, _y ) && m_state != STATE_SELECT )
 	{
 		SetPosition( defaultPosX-(selectVol/2.f), defaultPosY-(selectVol/2.f), 0.5f );
 		SetColor( 255, 200, 200, 200 );
@@ -13,13 +13,13 @@ char Button::Contorl( const float _x, const float _y, const char _inputState )
 		m_state = STATE_ON_CURSOR;
 
 		//	¶ƒNƒŠƒbƒN
-		if( _inputState==PUSH )
+		if ( _inputState==PUSH )
 		{
 			m_pAudio->SoundPlay( Audio::_CLICK_SE_ );
 			m_state = STATE_SELECT;
 		}
 	}
-	else if( _inputState==OFF && m_state != STATE_SELECT)
+	else if ( _inputState==OFF && m_state != STATE_SELECT)
 	{
 		SetPosition( defaultPosX, defaultPosY, 0.5f );
 		SetColor( 255, 255, 255, 255 );
@@ -27,7 +27,7 @@ char Button::Contorl( const float _x, const float _y, const char _inputState )
 		SetHeight( defaultHeight );
 		m_state = STATE_OFF_CURSOR;
 	}
-	if( m_state == STATE_SELECT )
+	if ( m_state == STATE_SELECT )
 	{
 		SetPosition( defaultPosX+(selectVol/2.f), defaultPosY+(selectVol/2.f), 0.5f );
 		SetColor( 255, 100, 100, 100 );

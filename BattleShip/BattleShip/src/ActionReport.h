@@ -10,22 +10,14 @@
 *@brief	戦績の報告を行うクラス
 *@details	戦闘中にReportResultクラスに蓄積されたデータを元に、
 			戦績の判定などを行うクラス
-*@todo		勲章などの取得なども出来るようにしたいです。
 */
-class ActionReport : public GameState, public ReadFile
-{
-private:
-	ReportResult	m_reportResult;
-	ReportResult	m_reportConditions[_REWARD_MAX_];	
-	Reward			m_reward;
-	
-public:
+class ActionReport : public GameState, public ReadFile {
+ public:
 	/**
 	*@brief	コンストラクタ
 	*/
-	ActionReport(ShipObject::_SHIP_TYPE_NUM_& _type, GameLog* _pGameLog, ReportData& _pReportData ):
-	  GameState( _type, _pGameLog )
-	{
+	ActionReport(ShipObject::_SHIP_TYPE_NUM_& _type, GameLog* _pGameLog, ReportData& _pReportData )
+				 : GameState( _type, _pGameLog ) {
 		//	戦闘中のデータを結果方式に整理
 		m_reportResult.ArrangementReport( _pReportData );
 	}
@@ -38,23 +30,19 @@ public:
 
 	void SetTable( char* _p, int _iColumn = _REWARD_MAX_, int _iLine = _MAX_REPORT_VAR_);
 
-	~ActionReport()
-	{
+	~ActionReport() {
 		m_reward.SaveReward();
 	}
 
-private:
+ private:
 	/**
 	*@brief	全ての称号の判定
 	*/
-	void AllCheckReward()
-	{
-		for( int i = 0; i < _REWARD_MAX_; i++ )
-		{
+	void AllCheckReward() {
+		for ( int i = 0; i < _REWARD_MAX_; i++ ) {
 			bool result = false;
 			result = m_reward.CheckReward( i );
-			if( result )
-			{
+			if (result) {
 				JudgmentReward( i );
 			}
 		}
@@ -69,27 +57,29 @@ private:
 	/**
 	*@brief	勲章の条件要素のチェック
 	*/
-	bool CheckJudgeItem( T _item, T _val )
-	{
+	bool CheckJudgeItem( T _item, T _val ) {
 		//	0は条件に当てはまらない
-		if( _val == 0 )
-		{
+		if (_val == 0) {
 			return true;
 		}
 		//	マイナス値だったら_valの絶対値>_itemで判定
-		if( _val < 0 )
-		{
-			if( abs(_val) >= _item )
+		if (_val < 0) {
+			if (abs(_val) >= _item) {
 				return true;
+			}
 		}
 		//	プラス値だったら_val<_itemで判定
-		else if( _val > 0 )
-		{
-			if( abs(_val) <= _item )
+		else if (_val > 0) {
+			if (abs(_val) <= _item) {
 				return true;
+			}
 		}
 		return false;
 	}
+
+	ReportResult	m_reportResult;
+	ReportResult	m_reportConditions[_REWARD_MAX_];	
+	Reward			m_reward;
 
 };
 

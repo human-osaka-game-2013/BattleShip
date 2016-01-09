@@ -10,15 +10,15 @@ void ShipObject::SetTable( char* _p, int _iColumn, int _iLine)
 	int iColumnTemp = _iColumn%_SHIP_ARRAY_INDEX_;
 	int iTemp = atoi(_p);
 
-	if( _iColumn < TABLE_ACTION )
+	if ( _iColumn < TABLE_ACTION )
 	{
 		m_shipArray[iColumnTemp][_iLine] = iTemp;
 	}
-	else if( _iColumn < TABLE_SEARCH )
+	else if ( _iColumn < TABLE_SEARCH )
 	{
 		m_actionArray[iColumnTemp][_iLine] = iTemp;
 	}
-	else if( _iColumn < TABLE_MOVE )
+	else if ( _iColumn < TABLE_MOVE )
 	{
 		m_searchArray[iColumnTemp][_iLine] = iTemp;
 	}
@@ -39,13 +39,13 @@ bool ShipObject::RotationShip( int _arrayType, bool _rotType )
 	switch( _arrayType )
 	{
 	case 0:	///<	駒配列
-		if( _rotType ){	///<右回転
-			if( dir+1 < CH_DIRECTION_MAX )
+		if ( _rotType ){	///<右回転
+			if ( dir+1 < CH_DIRECTION_MAX )
 				SetDirection( (CHARADIRECTION)(dir+1) );
 			else
 				SetDirection( (CHARADIRECTION)((int)CH_NONE+1) );
 		} else {		///<左回転	
-			if( dir-1 > CH_NONE )
+			if ( dir-1 > CH_NONE )
 				SetDirection( (CHARADIRECTION)(dir-1) );
 			else
 				SetDirection( (CHARADIRECTION)((int)CH_DIRECTION_MAX-1) );
@@ -66,28 +66,28 @@ bool ShipObject::RotationShip( int _arrayType, bool _rotType )
 	}
 
 	// 回転前ブロックを一時保存
-	for( int iColumn = 0; iColumn < _SHIP_ARRAY_INDEX_; iColumn++)
+	for ( int iColumn = 0; iColumn < _SHIP_ARRAY_INDEX_; iColumn++)
 	{
-		for( int iLine = 0; iLine < _SHIP_ARRAY_INDEX_; iLine++)
+		for ( int iLine = 0; iLine < _SHIP_ARRAY_INDEX_; iLine++)
 		{
 			tempArray[iColumn][iLine] = _array[iColumn][iLine];
-			if( _array2 != NULL )
+			if ( _array2 != NULL )
 				tempArray2[iColumn][iLine] = _array2[iColumn][iLine];
 		}
 	}
 
 	// ブロックを回転
-	for( int iColumn = 0; iColumn < _SHIP_ARRAY_INDEX_; iColumn++)
+	for ( int iColumn = 0; iColumn < _SHIP_ARRAY_INDEX_; iColumn++)
 	{
-		for( int iLine = 0; iLine < _SHIP_ARRAY_INDEX_; iLine++)
+		for ( int iLine = 0; iLine < _SHIP_ARRAY_INDEX_; iLine++)
 		{
-			if( _rotType ){
+			if ( _rotType ){
 				_array[iLine][(_SHIP_ARRAY_INDEX_-1)-iColumn] = tempArray[iColumn][iLine];
-				if( _array2 != NULL )
+				if ( _array2 != NULL )
 					_array2[iLine][(_SHIP_ARRAY_INDEX_-1)-iColumn] = tempArray2[iColumn][iLine];
 			} else {
 				_array[iColumn][iLine] = tempArray[iLine][(_SHIP_ARRAY_INDEX_-1)-iColumn];
-				if( _array2 != NULL )
+				if ( _array2 != NULL )
 					_array2[iColumn][iLine] = tempArray2[iLine][(_SHIP_ARRAY_INDEX_-1)-iColumn];
 			}
 		}

@@ -12,17 +12,12 @@
 /**
 *@brief	背景オブジェクトクラス
 */
-class Background : public CGameObject
-{
-private:
-	float fWidth ,fHeight;
-
-public:
+class Background : public CGameObject {
+ public:
 	/**
 	*@brief	コンストラクタ
 	*/
-	Background() : CGameObject()
-	{
+	Background() : CGameObject() {
 
 	}
 
@@ -36,8 +31,7 @@ public:
 	/**
 	*@brief	初期化
 	*/
-	void Init( float _x = 0.f, float _y = 0.f, float _w =WIDTH, float _h = HEIGHT )
-	{
+	void Init( float _x = 0.f, float _y = 0.f, float _w =WIDTH, float _h = HEIGHT ) {
 		SetPosition(_x, _y, 0.5f);
 		fWidth = _w;
 		fHeight = _h;
@@ -46,6 +40,9 @@ public:
 	void Draw(){};
 	inline float GetWidth(){ return fWidth; }
 	inline float GetHeight(){ return fHeight; }
+
+ private:
+	float fWidth, fHeight;
 };
 
 

@@ -8,16 +8,12 @@
 
 #include "ShipObject.h"
 
-class AircraftCarrier : public ShipObject
-{
-	
-
-public:
+class AircraftCarrier : public ShipObject {
+ public:
 	/**
 	*@brief コンストラクタ
 	*/
-	AircraftCarrier::AircraftCarrier( int _userID ):ShipObject( _userID )
-	{
+	AircraftCarrier::AircraftCarrier( int _userID ) : ShipObject( _userID ) {
 
 	}
 
@@ -28,7 +24,6 @@ public:
 	*@pragma[in]	_userID	
 	*/
 	void Init();
-
 
 };
 

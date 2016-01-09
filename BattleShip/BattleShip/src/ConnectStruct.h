@@ -3,8 +3,7 @@
 
 #include "StageDefineList.h"
 
-struct ConnectShip
-{
+struct ConnectShip {
 	int m_userID;
 	int m_posColumn;
 	int m_posLine;
@@ -14,9 +13,7 @@ struct ConnectShip
 	int m_moveArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の移動範囲配列
 };
 
-struct ConnectStage
-{
+struct ConnectStage {
 	int	m_stageArray[_PLAYER_NUM_][_STAGE_COLUMN_MAX_][_STAGE_LINE_MAX_];	///<ステージ上の情報
-	
 };
 #endif

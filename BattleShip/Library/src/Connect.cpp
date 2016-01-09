@@ -19,7 +19,7 @@ bool Connect::Init()
 	int result = 0;
 	result = WSAStartup( MAKEWORD(2,0), &m_wsaData );	///< Winsockの初期化
 
-	if( result != 0 )
+	if ( result != 0 )
 	{
 		switch(result)
 		{
@@ -48,7 +48,7 @@ bool Connect::Init()
 	
 	MakeSocket();	///<	ソケット作成
 
-	if( !SettingSocket() )
+	if ( !SettingSocket() )
 		return false;
 
 	return true;
@@ -61,15 +61,15 @@ void Connect::SetTable( char* _p, int _iColumn, int _iLine )
 	switch( _iColumn )
 	{
 	case SOCK_TYPE:
-		if( memcmp( _p, "Server", 6) == 0 ){
+		if ( memcmp( _p, "Server", 6) == 0 ){
 			m_sockType = false;
-		}else if( memcmp( _p, "Client",6) == 0 ){
+		}else if ( memcmp( _p, "Client",6) == 0 ){
 			m_sockType = true;
 		}
 		break;
 	case DOMAIN_STR:
-		if( m_sockType ){	///<	ドメイン名が必要なのはクライアント側だけなので
-			if( memcmp( _p, "localhost", 9) == 0 ){
+		if ( m_sockType ){	///<	ドメイン名が必要なのはクライアント側だけなので
+			if ( memcmp( _p, "localhost", 9) == 0 ){
 				m_domainStr = "127.0.0.1";
 			}else{
 				m_domainStr = _p;
@@ -88,7 +88,7 @@ bool Connect::MakeSocket()
 {
 	//	ソケットの生成
 	m_ownSock = socket( AF_INET, SOCK_STREAM, 0 );
-	if( m_ownSock == INVALID_SOCKET ) 
+	if ( m_ownSock == INVALID_SOCKET ) 
 	{
 		DebugMsgBox("socket : %d\n", WSAGetLastError());
 		return false;
@@ -101,18 +101,18 @@ bool Connect::SettingSocket()
 	// fd_setの初期化します
 	FD_ZERO(&m_readfds);
 
-	if( m_sockType )
+	if ( m_sockType )
 	{
 		// 接続先指定用構造体の準備
 		m_addr.sin_family = AF_INET;
 		m_addr.sin_port = htons(m_ports);	///<	ポート番号
 		m_addr.sin_addr.S_un.S_addr = inet_addr( m_domainStr.c_str() );
 		//	m_domainStrがIPアドレスが入っていなかった場合
-		if( m_addr.sin_addr.S_un.S_addr == 0xffffffff )
+		if ( m_addr.sin_addr.S_un.S_addr == 0xffffffff )
 		{
 			//	ドメイン名が入っている可能性があるので、IPアドレスに変換する。
 			struct hostent* host = gethostbyname( (char*)m_domainStr.c_str() );
-			if( host == NULL )
+			if ( host == NULL )
 			{
 				return false;
 			}
@@ -139,7 +139,7 @@ bool Connect::SettingSocket()
 //	受信メソッド
 bool Connect::Connection()
 {
-	if( m_sockType ){
+	if ( m_sockType ){
 		// サーバーに接続
 		if (connect(m_ownSock, (struct sockaddr *)&m_addr, sizeof(m_addr)))
 		{
@@ -183,7 +183,7 @@ bool Connect::Receive( char *_buf, int _bufSize )
 	// fdsに設定されたソケットが読み込み可能になるまで待ちます
 	m_selectResult = select( 0, &m_fds, NULL, NULL, &m_tv );
 	// タイムアウトの場合にselectは0を返します
-	if( m_selectResult == 0 )
+	if ( m_selectResult == 0 )
 	{
 		// ループから抜けます
 		return false;
@@ -191,10 +191,10 @@ bool Connect::Receive( char *_buf, int _bufSize )
 	//	念のためバッファーの初期化
 	memset(_buf,0,_bufSize);
 	int iRecvResult = 0;
-	if( m_sockType )
+	if ( m_sockType )
 	{
 		// 自身のソケットにに読み込み可能データがある場合
-		if( FD_ISSET( m_ownSock, &m_fds) )
+		if ( FD_ISSET( m_ownSock, &m_fds) )
 		{
 			iRecvResult = recv(m_ownSock, _buf, _bufSize, 0 );
 		}
@@ -202,7 +202,7 @@ bool Connect::Receive( char *_buf, int _bufSize )
 	else 
 	{
 		// 相手のソケットにに読み込み可能データがある場合
-		if( FD_ISSET( m_partnersSock, &m_fds) ) 
+		if ( FD_ISSET( m_partnersSock, &m_fds) ) 
 		{
 			iRecvResult = recv(m_partnersSock, _buf, _bufSize, 0 );
 		}
@@ -220,7 +220,7 @@ bool Connect::Receive( char *_buf, int _bufSize )
 bool Connect::Send( char *_buf, int _bufSize )
 {
 	int iSendResult = 0;
-	if( m_sockType ){
+	if ( m_sockType ){
 		iSendResult = send( m_ownSock, (const char*)_buf, _bufSize, 0);
 	}
 	else{
@@ -240,7 +240,7 @@ bool Connect::Send( char *_buf, int _bufSize )
 //	通信終了
 void Connect::EndConnect()
 {
-	if( m_partnersSock != NULL )
+	if ( m_partnersSock != NULL )
 		closesocket(m_partnersSock);
 	
 	closesocket(m_ownSock);

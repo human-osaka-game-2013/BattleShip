@@ -61,9 +61,9 @@ void CGameObject::GetPosition ( float* p_x, float* p_y )
 */
 bool CGameObject::HitCheck( float _left, float _top, float _right, float _bottom )	
 {
-	if( _left < m_posX && _right > m_posX )
+	if ( _left < m_posX && _right > m_posX )
 	{
-		if( _top > m_posY && _bottom < m_posY )
+		if ( _top > m_posY && _bottom < m_posY )
 		{
 			return true;
 		}

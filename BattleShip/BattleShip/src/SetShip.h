@@ -10,15 +10,17 @@
 #include "Player.h"
 #include "StageObject.h"
 
-class SetShip : public GameState
-{
-
-public:
+/**
+*@brief	駒の配置ステートクラス
+*/
+class SetShip : public GameState {
+ public:
 	/**
 	*@brief	コンストラクタ
 	*@param	_type	現在選択している艦の種類
 	*/
-	SetShip( ShipObject::_SHIP_TYPE_NUM_& _type, GameLog* _pGameLog ): GameState( _type, _pGameLog ){}
+	SetShip( ShipObject::_SHIP_TYPE_NUM_& _type, GameLog* _pGameLog )
+			 : GameState( _type, _pGameLog ) {}
 
 	~SetShip(){};
 
@@ -39,7 +41,7 @@ public:
 	*/
 	void Draw();
 	
-private:	
+ private:	
 	/**
 	*@brief	盤面総チェックのルーチン処理
 	*@return	判定結果	0：クリックの判定を通らなかった。@n

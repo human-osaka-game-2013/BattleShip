@@ -15,25 +15,18 @@
 #define _TAB_SELECT_BIT_	0x2
 #define _AREA_SELECT_BIT_	0x4
 
-class Selection : public GameState
-{
-private:
-	unsigned char m_selectionFlag;	///<	行動・タブ・行動選択開始ログ表示の管理フラグ	
-	_SELECT_NUM_ m_plyaerSelectType;	///< 選択した行動の種類
-	int m_arrayCheckResult;		///< 行動選択時の範囲チェックの結果
-	
-	BoardOfFrame m_actionFrame;	///< 攻撃枠
-	BoardOfFrame m_searchFrame;	///< 索敵枠
-	BoardOfFrame m_moveFrame;	///< 移動枠
-
-	int(*m_tempArray)[_SHIP_ARRAY_INDEX_];	///<どの配列データとのチェックを行うかの格納用
-
-public:
+/**
+*@brief	行動選択ステートクラス
+*@details	攻撃、移動、索敵を決定するステートです。
+*/
+class Selection : public GameState {
+ public:
 	/**
 	*@brief	コンストラクタ
 	*@param	_type	現在選択している艦の種類
 	*/
-	Selection( ShipObject::_SHIP_TYPE_NUM_& _type, GameLog* _pGameLog ): GameState( _type, _pGameLog ){
+	Selection( ShipObject::_SHIP_TYPE_NUM_& _type, GameLog* _pGameLog )
+			   : GameState( _type, _pGameLog ) {
 		m_selectionFlag = 0x0;
 		m_arrayCheckResult = 0;
 		m_plyaerSelectType = _SELECT_NONE_;
@@ -64,8 +57,7 @@ public:
 	*/
 	int GetSelectionType(){ return static_cast< int >(m_plyaerSelectType); }
 
-private:
-
+ private:
 	/**
 	*@brief	タブのクリックの判定
 	*/
@@ -75,7 +67,6 @@ private:
 	*@brief	行動選択別の配列をセット
 	*@details	後にチェックする配列データはタブを選択した際にどれを使うか決まっているため、
 				メンバに仮保存する為、ここで一度だけ配列データをセットする。
-	*@todo	もし違う行動を選択する場合にはフラグの管理の関係からここはタブを再選択された際に再度通る予定。
 	*/
 	bool SetTypeArray();
 
@@ -95,6 +86,17 @@ private:
 	*@brief	タブ選択状態リセット
 	*/
 	void ResetTabSelect();
+
+	unsigned char m_selectionFlag;	///<	行動・タブ・行動選択開始ログ表示の管理フラグ	
+	_SELECT_NUM_ m_plyaerSelectType;	///< 選択した行動の種類
+	int m_arrayCheckResult;		///< 行動選択時の範囲チェックの結果
+	
+	BoardOfFrame m_actionFrame;	///< 攻撃枠
+	BoardOfFrame m_searchFrame;	///< 索敵枠
+	BoardOfFrame m_moveFrame;	///< 移動枠
+
+	int(*m_tempArray)[_SHIP_ARRAY_INDEX_];	///<どの配列データとのチェックを行うかの格納用
+
 };
 
 #endif

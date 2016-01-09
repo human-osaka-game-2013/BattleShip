@@ -3,7 +3,7 @@
 
 void Reward::SetTable( char* _p, int _iColumn, int _iLine)
 {
-	if( _iLine == _REWARD_NAME_ )
+	if ( _iLine == _REWARD_NAME_ )
 	{
 		int page = _iColumn/_PAGE_LIMIT_REWARD_;
 		int rewardNum = _iColumn%_PAGE_LIMIT_REWARD_;
@@ -40,16 +40,16 @@ void Reward::InitReward( Audio* _pAudio )
 	x += tweak;
 	/**/
 	
-	for( int i = 0; i < _REWARD_FRAME_MAX_; i++ )
+	for ( int i = 0; i < _REWARD_FRAME_MAX_; i++ )
 	{
 		const int page = i/_PAGE_LIMIT_REWARD_;
 		
-		if( i%_REWARD_WIDTH_LIMIT_ == 0 )
+		if ( i%_REWARD_WIDTH_LIMIT_ == 0 )
 		{
 			m_frame.GetPositionX();
 			y += (tweak)+h;
 		}
-		if( i%_PAGE_LIMIT_REWARD_ == 0 )
+		if ( i%_PAGE_LIMIT_REWARD_ == 0 )
 		{
 			m_frame.GetPosition( &x, &y);
 			w = blockW*2;
@@ -92,7 +92,7 @@ void Reward::InitReward( Audio* _pAudio )
 
 void Reward::DrawReward()
 {
-	if( m_drawFlag )
+	if ( m_drawFlag )
 	{
 		float x=0.f, y=0.f, w=0.f, h=0.f;
 		const float tweak=_BLOCK_WIDTH_SIZE_/9;
@@ -104,7 +104,7 @@ void Reward::DrawReward()
 							 m_frame.GetWidth(),  m_frame.GetHeight(),
 							 0.f,0.f,1.f,1.f);
 
-		for( int i = 0; i<_PAGE_LIMIT_REWARD_; i++ )
+		for ( int i = 0; i<_PAGE_LIMIT_REWARD_; i++ )
 		{
 			m_rewardFrame[m_selectRewardPage][i].GetPosition( &x, &y);
 			w=m_rewardFrame[m_selectRewardPage][i].GetWidth();
@@ -116,7 +116,7 @@ void Reward::DrawReward()
 
 			//	ŒMÍ‚ªƒQƒbƒgo—ˆ‚Ä‚¢‚½‚ç
 			bool rewardGetCheck = CheckReward(i+(m_selectRewardPage*_PAGE_LIMIT_REWARD_));
-			if( rewardGetCheck )
+			if ( rewardGetCheck )
 			{
 				int wDiv = i%_REWARD_WIDTH_LIMIT_;
 				int hDiv = (m_selectRewardPage*_REWARD_PAGE_MAX_)+i/_REWARD_WIDTH_LIMIT_;
@@ -142,7 +142,7 @@ void Reward::DrawReward()
 								D3DCOLOR_ARGB(tempA,tempR,tempG,tempB));
 
 		//	–îˆóƒ{ƒ^ƒ“•`‰æ
-		for( int i = 0; i < _ARROW_MAX_; i++ )
+		for ( int i = 0; i < _ARROW_MAX_; i++ )
 		{
 			bool flipFlag = i%_ARROW_MAX_ ? true:false;
 			m_arrowButton[i].GetPosition( &x, &y);
@@ -175,7 +175,7 @@ void Reward::RewardNameDraw( int _rewardNum )
 	(*it)->GetSize( iTempW, iTempH );
 	pStr = (*it)->GetStringPtr();
 	lpTempStr = const_cast<char *>(pStr->c_str());
-	if(pDxFont->DrawA( lTempX, lTempY, iTempW, iTempH, lpTempStr, (*it)->GetColor(), (*it)->GetFormat() ))
+	if (pDxFont->DrawA( lTempX, lTempY, iTempW, iTempH, lpTempStr, (*it)->GetColor(), (*it)->GetFormat() ))
 	{
 
 	}

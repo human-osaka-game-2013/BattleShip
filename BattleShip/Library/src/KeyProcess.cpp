@@ -4,7 +4,7 @@
 //	コンストラクタ
 CKey::CKey( IDirectInputDevice8* const _pKeyDevice ): m_pKeyDevice(_pKeyDevice)
 {
-	for( int iCount = 0; iCount < KEYMAX; iCount++)
+	for ( int iCount = 0; iCount < KEYMAX; iCount++)
 	{
 		m_key[iCount] = OFF;
 		m_preKey[iCount] = false;
@@ -18,7 +18,7 @@ void CKey::KeyCheck ( int _dik, int _st )
 	HRESULT hr = m_pKeyDevice->Acquire();		//デバイスへのアクセス権の再取得
 	
 	//	デバイスへのアクセス権はあるか
-	if( (hr==DI_OK) || (hr==S_FALSE) )	
+	if ( (hr==DI_OK) || (hr==S_FALSE) )	
 	{
 		BYTE diks[256];
 		//	デバイス情報を取得
@@ -59,9 +59,9 @@ bool CKey::StCheck(int _st, int _keySt)
 
 int CKey::CheckStateToAllKey( int _keySt )
 {
-	for( int i = 0; i < KEYMAX; i++ )
+	for ( int i = 0; i < KEYMAX; i++ )
 	{
-		if(m_key[i] == _keySt)
+		if (m_key[i] == _keySt)
 			return i;
 	}
 	return -1;

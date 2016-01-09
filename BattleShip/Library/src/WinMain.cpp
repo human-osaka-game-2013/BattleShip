@@ -32,7 +32,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	CDevice deviceObj( &hWnd );	///<デバイス管理クラスオブジェクト
 
-	if( FAILED (deviceObj.InitDevice())) return 0;	///<デバイス管理クラスの初期化
+	if ( FAILED (deviceObj.InitDevice())) return 0;	///<デバイス管理クラスの初期化
 
 	//	シーン管理オブジェクトの生成
 	CSceneManager* pSceneManage = new CSceneManager( CSceneManager::SCENE_TITLE, &deviceObj, false );

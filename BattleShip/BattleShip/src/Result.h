@@ -21,14 +21,16 @@
 #define _BIT_D_ 0x08
 #define _BIT_S_ 0x10
 
-class Result : public GameState
-{
-public:
+/**
+*@brief	戦闘結果判定ステートクラス
+*@details ここで戦闘による判定などをします。
+*/
+class Result : public GameState {
+ public:
 	/**
 	*@brief	行動選択によるの戦闘結果
 	*/	
-	enum _ACTION_RESULT_
-	{
+	enum _ACTION_RESULT_ {
 		RESULT_NONE,
 		RESULT_SEARCH,
 		RESULT_ATTACK,
@@ -37,8 +39,7 @@ public:
 	/**
 	*@brief	戦況の種類
 	*/
-	enum _PROGRESS_OF_BATTLE_TYPE_
-	{
+	enum _PROGRESS_OF_BATTLE_TYPE_ {
 		TYPE_DEFEAT,		///<	敗北
 		TYPE_INFERIORITY,	///<	劣勢
 		TYPE_DRAW,			///<	引き分け
@@ -47,19 +48,12 @@ public:
 		TYPE_STALEMATE		///<	手詰まり
 	};
 
-private:
-	int m_resultPlayer;	///<	プレイヤー側に起きている戦闘結果
-	int m_resultEnemy;	///<	敵側に起きている戦闘結果
-	int m_resultBattle;	///<	両者の戦況結果
-	unsigned char m_seachFlag;	///< 索敵で発見された艦種
-	unsigned char m_bitFlag[ShipObject::TYPE_MAX];
-
-public:
 	/**
 	*@brief	コンストラクタ
 	*@param	_type	現在選択している艦の種類
 	*/
-	Result( ShipObject::_SHIP_TYPE_NUM_& _type, GameLog* _pGameLog ): GameState( _type, _pGameLog ){
+	Result( ShipObject::_SHIP_TYPE_NUM_& _type, GameLog* _pGameLog )
+			: GameState( _type, _pGameLog ) {
 		m_resultPlayer	= 0;
 		m_resultEnemy	= 0;
 		m_resultBattle	= 0;
@@ -94,8 +88,7 @@ public:
 	*@param[in] _resultPlayer
 	*@param[in] _resultEnemy
 	*/
-	inline void GetResultPlayerAndEnemy( int& _resultPlayer, int& _resultEnemy )
-	{
+	inline void GetResultPlayerAndEnemy( int& _resultPlayer, int& _resultEnemy ) {
 		_resultPlayer = m_resultPlayer;
 		_resultEnemy = m_resultEnemy;
 	}
@@ -105,7 +98,7 @@ public:
 	*/
 	void GetResultOfBattle( int& _resultBattle ){ _resultBattle = m_resultBattle; }
 
-private:
+ private:
 	/**
 	*@brief	行動選択による結果
 	*@details	戦闘結果は、各駒１つの行動選択の結果なので、判定としては下記の３種類になる。
@@ -148,6 +141,13 @@ private:
 	*@return	_PROGRESS_OF_BATTLE_TYPE_に合わせた値
 	*/
 	int ProgressOfBattle( int& _plHitCount, int& _enHitCount );
+
+	int m_resultPlayer;	///<	プレイヤー側に起きている戦闘結果
+	int m_resultEnemy;	///<	敵側に起きている戦闘結果
+	int m_resultBattle;	///<	両者の戦況結果
+	unsigned char m_seachFlag;	///< 索敵で発見された艦種
+	unsigned char m_bitFlag[ShipObject::TYPE_MAX];
+
 };
 
 #endif

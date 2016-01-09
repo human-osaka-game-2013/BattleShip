@@ -15,17 +15,17 @@ bool Result::Init()
 int Result::Control()
 {
 	
-	if( !m_StateCompFlag ){
+	if ( !m_StateCompFlag ){
 		//	先にプレイヤーの配列指数として、修正しておく
 		int tempPlID = (m_playerID%2) ? 0 : 1;
 		int tempEnID = (m_playerID%2) ? 1 : 0;
 		m_resultPlayer = ResultOfAction(tempPlID);
 		m_resultEnemy = ResultOfAction(tempEnID);
-		if( m_resultPlayer != 0 )
+		if ( m_resultPlayer != 0 )
 		{
 
 		}
-		if( m_resultEnemy != 0 )
+		if ( m_resultEnemy != 0 )
 		{
 
 		}
@@ -47,8 +47,8 @@ int Result::Control()
 		{
 		case RESULT_SEARCH:
 			m_tempStr2 = "敵の";
-			for( int i = 0; i < ShipObject::TYPE_MAX; i++ ){
-				if( (m_seachFlag&m_bitFlag[i]) == m_bitFlag[i] ){
+			for ( int i = 0; i < ShipObject::TYPE_MAX; i++ ){
+				if ( (m_seachFlag&m_bitFlag[i]) == m_bitFlag[i] ){
 					m_tempStr2 +=  m_pGameLog->GetPhrase(static_cast<FixedPhrase::_PHRASE_STR_TYPE_>(i));
 				}
 			}
@@ -59,10 +59,10 @@ int Result::Control()
 			break;
 		}
 		//	何かイベントがあった場合、ログに追加する
-		if( m_resultPlayer > 0 )
+		if ( m_resultPlayer > 0 )
 			m_pGameLog->AddStream( m_tempStr1.c_str(), _LOG_COLOR_WARNING_ );
 			
-		if( m_resultEnemy > 0 ){
+		if ( m_resultEnemy > 0 ){
 			m_pGameLog->AddStream( m_tempStr2.c_str(), _LOG_COLOR_SUCCESS_ );
 		}
 		switch( m_resultBattle )
@@ -103,9 +103,9 @@ int Result::ResultOfAction( const int _playerIndex )
 				ローカルのデータ内で自分と相手のデータ情報を判定してしまう。
 	*/
 
-	for( int ic=0; ic<_STAGE_COLUMN_MAX_; ic++ )	//	行
+	for ( int ic=0; ic<_STAGE_COLUMN_MAX_; ic++ )	//	行
 	{	
-		for( int il=0; il<_STAGE_LINE_MAX_; il++ )	//	列
+		for ( int il=0; il<_STAGE_LINE_MAX_; il++ )	//	列
 		{
 			//	ステージの各桁情報は何度もアクセスする可能性が高い為、コピーして少しでもアクセスのロスを減らす
 			const int iSelectNum = StageObject::SelectOfData(m_pStage->m_stageArray[_playerIndex][ic][il]);
@@ -113,7 +113,7 @@ int Result::ResultOfAction( const int _playerIndex )
 			const int iShipNum = StageObject::ShipTypeOfData(m_pStage->m_stageArray[_playerIndex][ic][il]);
 			
 			//	索敵or攻撃の指示がされていて、且つ駒があるマスだったら
-			if( iConditionNum == StageObject::_CONDITION_NOMAL_ && iSelectNum >= StageObject::_SEARCH_NOMAL_ )
+			if ( iConditionNum == StageObject::_CONDITION_NOMAL_ && iSelectNum >= StageObject::_SEARCH_NOMAL_ )
 			{
 				JudgmentOfActionProcess( iReturn, _playerIndex, ic, il, iSelectNum, iShipNum );
 			}
@@ -130,10 +130,10 @@ void Result::JudgmentOfActionProcess( int& _iReturn, const int _plIndex, int& _c
 {
 	bool resultDamageCtrl = false;
 	//	全ての艦種に効果のある指示だった場合（_SEARCH_ALL_or_ACTION_ALL_）
-	if( _selectNum%2 == 0 )
+	if ( _selectNum%2 == 0 )
 	{
 		//	指示されている行動が索敵で、駒があれば
-		if( _selectNum < StageObject::_ACTION_NOMAL_ &&
+		if ( _selectNum < StageObject::_ACTION_NOMAL_ &&
 			_shipNum < ShipObject::TYPE_MAX )
 		{
 			_iReturn = RESULT_SEARCH;
@@ -141,12 +141,12 @@ void Result::JudgmentOfActionProcess( int& _iReturn, const int _plIndex, int& _c
 
 		}
 		//	指示されている行動が攻撃で、駒があれば
-		else if( _selectNum >= StageObject::_ACTION_NOMAL_ &&
+		else if ( _selectNum >= StageObject::_ACTION_NOMAL_ &&
 				_shipNum < ShipObject::TYPE_MAX)
 		{
 			//	そのマスに攻撃指示が出ていた場合、プレイヤーが持っている駒にヒットの判断させる。
 			resultDamageCtrl = m_pPlayer[_plIndex]->DamageControl( _column, _line, (ShipObject::_SHIP_TYPE_NUM_)_shipNum);
-			if( resultDamageCtrl )
+			if ( resultDamageCtrl )
 			{
 				//	駒に攻撃が当たったので、ステージ側のデータも損傷状態（２桁目を_CONDITION_DAMAGE_に）をつける
 				m_pStage->m_stageArray[_plIndex][_column][_line] += 10;
@@ -165,7 +165,7 @@ void Result::JudgmentOfActionProcess( int& _iReturn, const int _plIndex, int& _c
 		case ShipObject::TYPE_CRUISER:
 		case ShipObject::TYPE_DESTROYER:
 			//	指示されている行動が索敵で、駒があれば
-			if( _selectNum < StageObject::_ACTION_NOMAL_ &&
+			if ( _selectNum < StageObject::_ACTION_NOMAL_ &&
 					_shipNum < ShipObject::TYPE_MAX )
 			{
 				_iReturn = RESULT_SEARCH; 
@@ -173,12 +173,12 @@ void Result::JudgmentOfActionProcess( int& _iReturn, const int _plIndex, int& _c
 
 			}
 			//	指示されている行動が攻撃で、駒があれば
-			else if( _selectNum >= StageObject::_ACTION_NOMAL_ &&
+			else if ( _selectNum >= StageObject::_ACTION_NOMAL_ &&
 					_shipNum < ShipObject::TYPE_MAX)
 			{
 				//	そのマスに攻撃指示が出ていた場合、プレイヤーが持っている駒にヒットの判断させる。
 				resultDamageCtrl = m_pPlayer[_plIndex]->DamageControl( _column, _line, (ShipObject::_SHIP_TYPE_NUM_)_shipNum);
-				if( resultDamageCtrl )
+				if ( resultDamageCtrl )
 				{
 					//	駒に攻撃が当たったので、ステージ側のデータも損傷状態（２桁目を_CONDITION_DAMAGE_に）をつける
 					m_pStage->m_stageArray[_plIndex][_column][_line] += 10;
@@ -196,7 +196,7 @@ int Result::ResultOfBattle( const int _playerIndex, const int _enemyIndex )
 	int iResult = -1;
 	int iHitCount[_PLAYER_NUM_] ={0,0};
 	
-	for( int iShip = 0; iShip < ShipObject::TYPE_MAX; iShip++ )
+	for ( int iShip = 0; iShip < ShipObject::TYPE_MAX; iShip++ )
 	{
 		//	プレイヤーの駒を調べる
 		iHitCount[_playerIndex] += m_pPlayer[_playerIndex]->CheckHitCount( static_cast<ShipObject::_SHIP_TYPE_NUM_>(iShip) );
@@ -212,24 +212,24 @@ int Result::ResultOfBattle( const int _playerIndex, const int _enemyIndex )
 int Result::ProgressOfBattle( int& _plHitCount, int& _enHitCount )
 {
 	int iResult;
-	if( _plHitCount >= _ANNIHILATION_NUM_ && _enHitCount >= _ANNIHILATION_NUM_ )
+	if ( _plHitCount >= _ANNIHILATION_NUM_ && _enHitCount >= _ANNIHILATION_NUM_ )
 	{
 		return TYPE_STALEMATE;
 	}
 
-	if( _plHitCount == _enHitCount )
+	if ( _plHitCount == _enHitCount )
 	{
 		iResult = TYPE_DRAW;
 	}
-	else if( _plHitCount >= _ANNIHILATION_NUM_ )
+	else if ( _plHitCount >= _ANNIHILATION_NUM_ )
 	{
 		iResult = TYPE_DEFEAT;
 	}
-	else if( _enHitCount >= _ANNIHILATION_NUM_ )
+	else if ( _enHitCount >= _ANNIHILATION_NUM_ )
 	{
 		iResult = TYPE_VICTORY;
 	}
-	else if( _plHitCount < _enHitCount )
+	else if ( _plHitCount < _enHitCount )
 	{
 		iResult = TYPE_SUPERIORITY;
 	}

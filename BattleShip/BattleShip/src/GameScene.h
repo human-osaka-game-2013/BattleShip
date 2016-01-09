@@ -26,26 +26,8 @@
 			Init、Control、Draw、Render関数がライブラリのサブルーチン側で呼ばれるので、宣言すること。@n
 			今回は2D描画のみの予定なのでRender関数は宣言をしているが、中身はない。
 */
-class GameScene : public CScene
-{
-private:
-	StateManager*	m_stateManager;		///<	戦闘内でのステートを管理するオブジェクト
-	std::vector<Player*>	m_Player;	///<	プレイヤークラス
-	StageObject*	m_pStageObject;		///<	ステージオブジェクト
-	int				m_playerID;			///<	起動側のプレイヤーID
-	Background		m_background;		///<	背景オブジェクト
-	Connect			m_Connect;			///<	通信デバイスクラス
-	ScreenMask		m_screenMask;		///<	画面遷移時のフェード用
-	
-
-	bool	m_fadeInFlag;		///<ゲーム開始時はフェードインさせる。
-	bool	m_fadeOutFlag;		///<ゲーム終了時にフェードアウトさせる。
-	
-	bool	m_connectionResult; ///<通信クラスのConnection関数の結果を格納
-	unsigned char	m_connectFlag;	///< ビット管理の通信管理フラグ
-	int		m_sendShipCount;		///<駒の情報を送っていた回数
-
-public:
+class GameScene : public CScene {
+ public:
 	/**
 	*@brief	コンストラクタ
 	*@details	使わない管理ポインタがある場合NULLポインタを入れる
@@ -55,11 +37,13 @@ public:
 	*@param[in]	_pKey			キー管理のポインタ
 	*@param[in]	m_pMouse		マウス管理のポインタ
 	*/
-	GameScene(int _id, CRenderManager* const _pRenderManager,
-		CDrawManager*	const _pDrawManager, CKey* const _pKey, 
-		CMouse* const m_pMouse, Audio* const _pAudio )
-		: CScene( _id, _pRenderManager,	_pDrawManager, _pKey, m_pMouse, _pAudio )
-	{
+	GameScene(int _id,
+			  CRenderManager* const _pRenderManager,
+			  CDrawManager*	const _pDrawManager,
+			  CKey* const _pKey,
+			  CMouse* const m_pMouse, Audio* const _pAudio )
+			  : CScene( _id, _pRenderManager, _pDrawManager, _pKey, m_pMouse, _pAudio ) {
+
 		m_playerID = 0;
 		m_sendShipCount = 0;
 		m_connectFlag = 0x0;
@@ -69,8 +53,8 @@ public:
 	/**
 	*@brief	デストラクタ
 	*/
-	~GameScene(){
-		for( unsigned int iCount = 0; iCount < m_Player.size(); iCount++ ){
+	~GameScene() {
+		for ( unsigned int iCount = 0; iCount < m_Player.size(); iCount++ ) {
 			delete m_Player[iCount];
 		}
 		m_Player.clear();
@@ -78,8 +62,6 @@ public:
 		delete m_pStageObject;
 		delete m_stateManager;
 	};
-
-public:
 	
 	/**
 	*@brief	ゲームメインの初期化関数
@@ -103,7 +85,7 @@ public:
 	void Draw();
 	void Render(){};
 
-private:
+ private:
 	/**
 	*@brief	背景部分の描画
 	*@details	ちょっとした描画に処理を加えたくて、関数を分けました。
@@ -116,7 +98,6 @@ private:
 	void ScreenMaskDrawa();
 
 //	通信処理系
-private:
 	/**
 	*@brief	通信処理
 	*@details	Connectクラスメンバを使用して、相手側のデータとのやり取りをここで行う
@@ -134,6 +115,21 @@ private:
 	*@brief	駒情報通信処理
 	*/
 	bool ComShipsData();
+
+	StateManager*	m_stateManager;		///<	戦闘内でのステートを管理するオブジェクト
+	std::vector<Player*>	m_Player;	///<	プレイヤークラス
+	StageObject*	m_pStageObject;		///<	ステージオブジェクト
+	int				m_playerID;			///<	起動側のプレイヤーID
+	Background		m_background;		///<	背景オブジェクト
+	Connect			m_Connect;			///<	通信デバイスクラス
+	ScreenMask		m_screenMask;		///<	画面遷移時のフェード用
+	
+	bool	m_fadeInFlag;		///<ゲーム開始時はフェードインさせる。
+	bool	m_fadeOutFlag;		///<ゲーム終了時にフェードアウトさせる。
+	
+	bool	m_connectionResult; ///<通信クラスのConnection関数の結果を格納
+	unsigned char	m_connectFlag;	///< ビット管理の通信管理フラグ
+	int		m_sendShipCount;		///<駒の情報を送っていた回数
 
 };
 

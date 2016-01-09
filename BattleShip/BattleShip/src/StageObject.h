@@ -15,16 +15,14 @@
 *@brief	ステージオブジェクトクラス
 *@details	ゲーム中のステージを管理するクラス
 */
-class StageObject : public CGameObject
-{
-public:
+class StageObject : public CGameObject {
+ public:
 	/*
 	*@brief	ステージの配列データの種類の列挙（選択など）
 	*@details	盤面のマスが選択されているかや、行動可能範囲などの種類の列挙。
 				索敵や攻撃位置の情報もこちらで管理する。
 	*/
-	enum _ARRAY_DATA_TYPE_SELECT_
-	{
+	enum _ARRAY_DATA_TYPE_SELECT_ {
 		_SELECT_NOMAL_,	///<選択されていない
 		_SELECT_TRUE_,	///<選択されている
 		_SELECT_FALSE_,	///<選択出来ない
@@ -39,23 +37,16 @@ public:
 	*@brief	ステージの配列データの種類の列挙（損害状況）
 	*@details	盤面のマスの駒があるかどうかは、ステージでは2桁目が0の時点で駒は存在しないはずです。
 	*/
-	enum _ARRAY_DATA_TYPE_CONDITION_
-	{
+	enum _ARRAY_DATA_TYPE_CONDITION_ {
 		_CONDITION_NONE_,	///<駒が無い
 		_CONDITION_NOMAL_,	///<駒がある
 		_CONDITION_DAMAGE_	///<駒が損傷している
 	};
 
-
-public:
-	int				m_stageArray[_PLAYER_NUM_][_STAGE_COLUMN_MAX_][_STAGE_LINE_MAX_];	///<ステージ上の情報
-	BoardOfFrame	m_stageBlock[_PLAYER_NUM_][_STAGE_COLUMN_MAX_][_STAGE_LINE_MAX_];	///<ステージブロックの座標
-
-public:
 	/**
 	*@brief	コンストラクタ
 	*/
-	StageObject() : CGameObject(){
+	StageObject() : CGameObject() {
 			
 	}
 
@@ -85,13 +76,16 @@ public:
 				2：指定したブロックの範囲にすでにステージ上で何かが存在していた場合。@n
 				-1：上記以外の事が発生した場合。
 	*/
-	int CheckStageBlock( int _player, const int _column, const int _line, ShipObject* _ship,  
-							ShipObject::_SHIP_ARRAY_TYPE_ _arrayType, const int _shipNum );
+	int CheckStageBlock( int _player,
+						 const int _column,const int _line,
+						 ShipObject* _ship,
+						 ShipObject::_SHIP_ARRAY_TYPE_ _arrayType,
+						 const int _shipNum );
 	
 	/**
 	*@brief	あるステージ上の範囲と画面上の座標XYとの判定
 	*@details	主に画面上の座標が指しているブロックの中身を調べる。@n
-	*@todo		今回は移動可能範囲を指している場合を調べるための関数として作りました。
+				今回は移動可能範囲を指している場合を調べるための関数として作りました。
 	*@param[out] _column	指している座標の行の値
 	*@param[out] _line		指している座標の列の値	
 	*@param[in]	_player	プレイヤーのID
@@ -104,8 +98,10 @@ public:
 				2：選択不可能ブロックを指している場合。@n
 				-1：上記以外の事が発生した場合（またはそもそもブロックに接触していない場合）。
 	*/
-	int CheckRangeOnStage( int& _column, int& _line, 
-							int _player, const float _x, const float _y, ShipObject* _ship, ShipObject::_SHIP_ARRAY_TYPE_ _arrayType );
+	int CheckRangeOnStage( int& _column,int& _line,int _player,
+						   const float _x,const float _y,
+						   ShipObject* _ship,
+						   ShipObject::_SHIP_ARRAY_TYPE_ _arrayType );
 
 	/**
 	*@brief		ステージブロックと指定範囲のセット
@@ -119,8 +115,9 @@ public:
 	*@return	true：範囲セットが成功
 				false：範囲セットが失敗した場合。
 	*/
-	bool SetStageToRange( int _player, ShipObject* _ship, 
-		const int(*_array)[_SHIP_ARRAY_INDEX_], const int _shipNum );
+	bool SetStageToRange( int _player,ShipObject* _ship,
+						  const int(*_array)[_SHIP_ARRAY_INDEX_],
+						  const int _shipNum );
 
 	/**
 	*@brief	ステージブロックへ駒情報をセット
@@ -157,8 +154,10 @@ public:
 	*@return	false：何らかの原因でセットが失敗。@n
 				true：無事に情報をセット完了。
 	*/
-	bool SetRange( int _player, const int _column, const int _line, 
-					const int(*_array)[_SHIP_ARRAY_INDEX_], const int _selectNum );
+	bool SetRange( int _player,
+				   const int _column,const int _line,
+				   const int(*_array)[_SHIP_ARRAY_INDEX_],
+				   const int _selectNum );
 
 	/**
 	*@brief	ステージブロックへ指定範囲情報をセット
@@ -171,8 +170,10 @@ public:
 	*@return	false：何らかの原因でセットが失敗。@n
 				true：無事に情報をセット完了。
 	*/
-	bool SetRange( int _player, const int _column, const int _line, const int(*_array)[_SHIP_ARRAY_INDEX_], 
-					const _ARRAY_DATA_TYPE_SELECT_ _setType );
+	bool SetRange( int _player,
+				   const int _column,const int _line,
+				   const int(*_array)[_SHIP_ARRAY_INDEX_],
+				   const _ARRAY_DATA_TYPE_SELECT_ _setType );
 
 
 	/**
@@ -197,32 +198,33 @@ public:
 	*/
 	bool MargeStage( ConnectStage* _pStage, const int _playerID, const int _enemyID, const int _customMargeType );
 
-public:
-	
 	/**
 	*@brief	選択情報計算関数
 	*/
-	inline static int SelectOfData( int _num ){
+	inline static int SelectOfData( int _num ) {
 		return _num/100;
 	}
 	/**
 	*@brief	損傷情報計算関数
 	*/
-	inline static int ConditionOfData( int _num ){
+	inline static int ConditionOfData( int _num ) {
 		return (_num/10)%10;
 	}
 	/**
 	*@brief	艦種情報計算関数
 	*/
-	inline static int ShipTypeOfData( int _num ){
+	inline static int ShipTypeOfData( int _num ) {
 		return _num%10;
 	}
 	/**
 	*@brief	駒情報計算関数
 	*/
-	inline static int ShipOfData( int _num ){
+	inline static int ShipOfData( int _num ) {
 		return _num%100;
 	}
+
+	int				m_stageArray[_PLAYER_NUM_][_STAGE_COLUMN_MAX_][_STAGE_LINE_MAX_];	///<ステージ上の情報
+	BoardOfFrame	m_stageBlock[_PLAYER_NUM_][_STAGE_COLUMN_MAX_][_STAGE_LINE_MAX_];	///<ステージブロックの座標
 
 };
 

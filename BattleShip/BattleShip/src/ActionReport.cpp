@@ -10,7 +10,7 @@ bool ActionReport::Init()
 
 	m_reward.SetDrawFlag(true);
 
-	for( int i = 0; i < _REWARD_MAX_; i++ )
+	for ( int i = 0; i < _REWARD_MAX_; i++ )
 		JudgmentReward( i );
 
 	return true;
@@ -21,11 +21,11 @@ int ActionReport::Control()
 	m_tempX = static_cast<float>(m_pMouse->GetCursorPosX());
 	m_tempY = static_cast<float>(m_pMouse->GetCursorPosY());
 
-	if( !m_StateCompFlag )
+	if ( !m_StateCompFlag )
 	{
 		char inputState = m_pMouse->GetMouseSt( MOUSE_L );
 		char buttonResult = m_reward.ControlReward( m_tempX, m_tempY, inputState );
-		if( buttonResult == Button::STATE_SELECT )
+		if ( buttonResult == Button::STATE_SELECT )
 		{
 			m_StateCompFlag = true;
 		}
@@ -73,14 +73,8 @@ void ActionReport::SetTable( char* _p, int _iColumn, int _iLine )
 void ActionReport::JudgmentReward( int _rewardNum )
 {
 	bool result = false;
-	for( int i = 0; i < _MAX_REPORT_VAR_; i++ )
-	{
-		/**
-		*@details	全ての条件に合うかチェック。
-		*@todo	書き方がベタ書きでもっといい方法が無いか検討中
-		*/
-		switch( i )
-		{
+	for ( int i = 0; i < _MAX_REPORT_VAR_; i++ )	{
+		switch( i ) {
 		case _ATT_COUNT_:
 			result = CheckJudgeItem( m_reportResult.GetAttackCount(),
 				m_reportConditions[_rewardNum].GetAttackCount());
@@ -115,14 +109,12 @@ void ActionReport::JudgmentReward( int _rewardNum )
 			break;
 		}
 		//	条件を満たさなかった
-		if( !result )
-		{
+		if (!result) {
 			break;
 		}
 	}
 	//	全ての条件を満たしていたので勲章を取得
-	if( result )
-	{
+	if (result) {
 		m_reward.GetReward( _rewardNum );
 	}
 }

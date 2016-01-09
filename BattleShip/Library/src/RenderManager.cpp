@@ -16,7 +16,7 @@ CRenderManager::CRenderManager( IDirect3DDevice9* const _pD3Device,
 	LEFT_ROT(0.f*D3DX_PI/180.f, 90.f*D3DX_PI/180.f, 0.f), RIGHT_ROT(0.f*D3DX_PI/180.f, -90.f*D3DX_PI/180.f, 0.f ),
 	CENTER_ROT(0.f*D3DX_PI/180.f, 0.f*D3DX_PI/180.f, 0.f), vecCursorPos( 0.f,0.f, 0.f )
 {
-	if( !AllLoadXFile() ){
+	if ( !AllLoadXFile() ){
 
 	}
 	

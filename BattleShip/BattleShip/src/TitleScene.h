@@ -20,24 +20,11 @@
 #define _REWARD_BUTTON_X_	50.f
 #define _REWARD_BUTTON_Y_	650.f
 
-
-class TitleScene : public CScene
-{
-private:
-	Background	m_background;	///<背景オブジェクト
-	Background	m_title;		///<タイトルオブジェクト
-	Background	m_rudder;		///<舵のオブジェクト（ゲームの雰囲気作りの為
-
-	ScreenMask	m_screenMask;	///<画面遷移時のフェード用
-	Button		m_button;		///<ボタンオブジェクト（現時点ではゲームをスタートする時に使用）
-	Button		m_rewardButton;
-	ConnectSetting	m_connectSetting;
-	Reward		m_reward;
-	
-	bool		m_changeSceneFlag;
-	bool		m_stopFadeFlag;	///<フェード停止（終了）フラグ
-
-public:
+/**
+*@brief	タイトルシーンクラス
+*/
+class TitleScene : public CScene {
+ public:
 	/**
 	*@brief	コンストラクタ
 	*@details	使わない管理ポインタがある場合NULLポインタを入れる
@@ -47,18 +34,18 @@ public:
 	*@param[in]	_pKey			キー管理のポインタ
 	*@param[in]	m_pMouse		マウス管理のポインタ
 	*/
-	TitleScene(int _id, CRenderManager* const _pRenderManager,
-		CDrawManager*	const _pDrawManager, CKey* const _pKey,
-		CMouse* const m_pMouse, Audio* const _pAudio )
-		: CScene( _id, _pRenderManager,	_pDrawManager, _pKey, m_pMouse, _pAudio)
-	{
-
-	}
+	TitleScene(int _id,
+			   CRenderManager* const _pRenderManager,
+			   CDrawManager* const _pDrawManager,
+			   CKey* const _pKey,
+			   CMouse* const m_pMouse,
+			   Audio* const _pAudio )
+			   : CScene( _id, _pRenderManager, _pDrawManager, _pKey, m_pMouse, _pAudio) {}
 
 	/**
 	*@breif	デストラクタ
 	*/
-	~TitleScene(){
+	~TitleScene() {
 
 	}
 
@@ -83,6 +70,20 @@ public:
 	*/
 	void Draw();
 	void Render(){};
+
+ private:
+	Background	m_background;	///<背景オブジェクト
+	Background	m_title;		///<タイトルオブジェクト
+	Background	m_rudder;		///<舵のオブジェクト（ゲームの雰囲気作りの為
+
+	ScreenMask	m_screenMask;	///<画面遷移時のフェード用
+	Button		m_button;		///<ボタンオブジェクト（現時点ではゲームをスタートする時に使用）
+	Button		m_rewardButton;
+	ConnectSetting	m_connectSetting;
+	Reward		m_reward;
+	
+	bool		m_changeSceneFlag;
+	bool		m_stopFadeFlag;	///<フェード停止（終了）フラグ
 
 };
 

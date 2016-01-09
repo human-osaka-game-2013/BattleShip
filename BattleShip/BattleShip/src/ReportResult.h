@@ -25,24 +25,12 @@ enum _REPORT_RESULT_VAR_
 *@brief	戦績の判定用のデータクラス
 *@details	ReportDataクラスで収集したデータを、勲章獲得
 */
-class ReportResult
-{
-private:
-	int		attackCount;	///< 攻撃回数
-	int		searchCount;	///< 索敵回数
-	int		selectAveTime;	///< 行動選択までの時間
-	int		turnCount;		///< ターン数カウント
-	int		damageCount;	///< 被弾カウント
-	unsigned char	KOCount;  ///< 轟沈数
-	float	hitProbability;	  ///< 命中率
-	float	sightProbability; ///< 発見率
-
-public:
+class ReportResult {
+ public:
 	/**
 	*@brief	コンストラクタ
 	*/
-	ReportResult()
-	{
+	ReportResult() {
 		searchCount	= 0;
 		attackCount	= 0;
 		selectAveTime = 0;
@@ -56,8 +44,7 @@ public:
 	/**
 	*@brief	戦績データの整理
 	*/
-	void ArrangementReport( ReportData& _reportData )
-	{
+	void ArrangementReport( ReportData& _reportData ) {
 		searchCount	= _reportData.GetSearchCount();
 		attackCount	= _reportData.GetAttackCount();
 		selectAveTime = _reportData.GetAveTime();
@@ -68,7 +55,6 @@ public:
 		sightProbability = _reportData.GetSightProbability();
 	}
 
-public:
 	inline int GetSearchCount()	{ return searchCount; }
 	inline int GetAttackCount()	{ return attackCount; }
 	inline int GetAveTime()	{ return selectAveTime; }
@@ -86,6 +72,17 @@ public:
 	inline void SetKOCount( unsigned char _koFlag )		{ KOCount = _koFlag; }
 	inline void SetHitProbability( float _hitProbability ){ hitProbability = _hitProbability; }
 	inline void SetSightProbability( float _sightProbability){ sightProbability = _sightProbability; }
+
+ private:
+	int		attackCount;	///< 攻撃回数
+	int		searchCount;	///< 索敵回数
+	int		selectAveTime;	///< 行動選択までの時間
+	int		turnCount;		///< ターン数カウント
+	int		damageCount;	///< 被弾カウント
+	unsigned char	KOCount;  ///< 轟沈数
+	float	hitProbability;	  ///< 命中率
+	float	sightProbability; ///< 発見率
+
 };
 
 #endif

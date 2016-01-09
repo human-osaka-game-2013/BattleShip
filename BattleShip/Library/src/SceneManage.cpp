@@ -11,7 +11,7 @@ CSceneManager::CSceneManager(  int _scene , CDevice* const _pDevice, bool _bRend
 	m_sceneObj( NULL ), iCurrentScene( _scene ), bChangeSceneFlag( false ),
 		m_pDevice( _pDevice), m_bRenderType(_bRenderType)
 {
-	if(_bRenderType){
+	if (_bRenderType){
 		//	3D描画の管理オブジェクトの生成
 		m_pRenderManager = new CRenderManager( m_pDevice->Getd3Device(), m_pDevice->GetMouseDevice());
 	}else{

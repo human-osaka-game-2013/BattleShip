@@ -49,28 +49,28 @@ int TitleScene::Control()
 	int	result = 0;
 
 	//	シーンが代わる時
-	if( m_changeSceneFlag )
+	if ( m_changeSceneFlag )
 	{
-		if( m_stopFadeFlag == false)
+		if ( m_stopFadeFlag == false)
 		{
 			m_stopFadeFlag = m_screenMask.FadeOut(_FADE_OUT_TIME_);
 		}
 
 		//	シーン変更
-		if( m_stopFadeFlag )
+		if ( m_stopFadeFlag )
 		{
 			result = 1;
 		}
 	}
 	else
 	{
-		if( m_screenMask.FadeIn(_FADE_IN_TIME_) )
+		if ( m_screenMask.FadeIn(_FADE_IN_TIME_) )
 		{
 			char inputState = m_pMouse->GetMouseSt( MOUSE_L );
 			char buttonResult = m_button.Contorl( tempX, tempY, inputState );
 			
 			//	ゲームスタートボタン上にカーソルがあったら
-			if( buttonResult == Button::STATE_SELECT )
+			if ( buttonResult == Button::STATE_SELECT )
 			{
 				m_changeSceneFlag = true;
 			}
@@ -80,11 +80,11 @@ int TitleScene::Control()
 				勲章関連の処理
 			*/
 			bool rewardFlag = m_reward.GetDrawFlag();
-			if(!rewardFlag)
+			if (!rewardFlag)
 			{
 				buttonResult = m_rewardButton.Contorl( tempX, tempY, inputState );
 			
-				if( buttonResult == Button::STATE_SELECT )
+				if ( buttonResult == Button::STATE_SELECT )
 				{
 					m_reward.SetDrawFlag(true);
 				}
@@ -93,7 +93,7 @@ int TitleScene::Control()
 			else
 			{
 				buttonResult = m_reward.ControlReward( tempX, tempY, inputState );
-				if( buttonResult == Button::STATE_SELECT )
+				if ( buttonResult == Button::STATE_SELECT )
 				{
 					m_reward.SetDrawFlag(false);
 				}

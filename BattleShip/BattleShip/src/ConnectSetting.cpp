@@ -25,7 +25,7 @@ void ConnectSetting::Init( CMouse* const _pMouse, CKey* const _pKey, Audio* cons
 	SetKeyPtr( _pKey );
 	SetAudioPtr( _pAudio );
 
-	if( sockType ){
+	if ( sockType ){
 		m_clientButton.SetState( Button::STATE_SELECT );
 	}else{
 		m_serverButton.SetState( Button::STATE_SELECT );
@@ -39,15 +39,15 @@ void ConnectSetting::SetTable( char* _p, int _iColumn, int _iLine )
 	switch( _iColumn )
 	{
 	case 0:
-		if( memcmp( _p, "Server", 6) == 0 ){
+		if ( memcmp( _p, "Server", 6) == 0 ){
 			sockType = false;
-		}else if( memcmp( _p, "Client",6) == 0 ){
+		}else if ( memcmp( _p, "Client",6) == 0 ){
 			sockType = true;
 		}
 		break;
 	case 1:
-		if( sockType ){	///<	ドメイン名が必要なのはクライアント側だけなので
-			if( memcmp( _p, "localhost", 9) == 0 ){
+		if ( sockType ){	///<	ドメイン名が必要なのはクライアント側だけなので
+			if ( memcmp( _p, "localhost", 9) == 0 ){
 				strAddr = "127.0.0.1";
 			}else{
 				strAddr.append(_p);
@@ -69,7 +69,7 @@ bool ConnectSetting::ConvertDataFileFromStr( std::string* _outStr )
 	std::string* pTempStr;
 
 	//	サーバーorクライアント
-	if( sockType ){
+	if ( sockType ){
 		_outStr->append("Client\n");
 	}else{
 		_outStr->append("Server\n");
@@ -77,7 +77,7 @@ bool ConnectSetting::ConvertDataFileFromStr( std::string* _outStr )
 
 	//	アドレス
 	pTempStr = m_ipAddr.m_str.GetStringPtr();
-	if( pTempStr->size() < _IP_STR_MIN_ || pTempStr->size() > _IP_STR_MAX_ ){
+	if ( pTempStr->size() < _IP_STR_MIN_ || pTempStr->size() > _IP_STR_MAX_ ){
 		//	アドレスが入力（or数値が足らない）されていなかったら、ダミーとしてローカルホストを入れる
 		DebugMsgBox("IPが入力されていません。またはIPアドレスとして認識出来ませんでした。確認してください。");
 		_outStr->append("localhost\n");
@@ -88,7 +88,7 @@ bool ConnectSetting::ConvertDataFileFromStr( std::string* _outStr )
 
 	//	ポート
 	pTempStr = m_port.m_str.GetStringPtr();
-	if( pTempStr->size() <= 2 ){
+	if ( pTempStr->size() <= 2 ){
 		//	ポート番号が入力（or数値が足らない）されていなかったら、失敗とみなす。
 		DebugMsgBox("ポート番号が入力されていません。確認してください。");
 		return false;
@@ -112,12 +112,12 @@ void ConnectSetting::Control()
 
 
 	//	---サーバーとクライアントの切り替えボタンの処理---
-	if( m_serverButton.Contorl( tempX, tempY, inputState ) == 2 )
+	if ( m_serverButton.Contorl( tempX, tempY, inputState ) == 2 )
 	{
 		m_clientButton.SetState( Button::STATE_OFF_CURSOR );
 		sockType = false;
 	}
-	if( m_clientButton.Contorl( tempX, tempY, inputState ) == 2 )
+	if ( m_clientButton.Contorl( tempX, tempY, inputState ) == 2 )
 	{
 		m_serverButton.SetState( Button::STATE_OFF_CURSOR );
 		sockType = true;
@@ -125,42 +125,42 @@ void ConnectSetting::Control()
 
 	//	通信設定情報の更新ボタンの処理
 	//	すでにクリックされていたら一度状態をリセット
-	if( m_updateButton.GetState() == Button::STATE_SELECT )
+	if ( m_updateButton.GetState() == Button::STATE_SELECT )
 	{
 		m_updateButton.SetState( Button::STATE_OFF_CURSOR );
 	}
 
 	//	押されていたら
-	if( m_updateButton.Contorl( tempX, tempY, inputState ) == 2 )
+	if ( m_updateButton.Contorl( tempX, tempY, inputState ) == 2 )
 	{
 		//	ファイルデータを更新する。
 		std::string tempStr;
-		if( !ConvertDataFileFromStr( &tempStr ))
+		if ( !ConvertDataFileFromStr( &tempStr ))
 			m_serverButton.SetState( Button::STATE_OFF_CURSOR );
 		SetDataFile( tempStr );
 	}
 	
 	//	IP＆ポート番号のテキストフィールド処理
-	if( m_pMouse->MouseStCheck( MOUSE_L, PUSH ))
+	if ( m_pMouse->MouseStCheck( MOUSE_L, PUSH ))
 	{
-		if(m_ipAddr.SelectCheck( tempX, tempY ) || m_port.SelectCheck( tempX, tempY ))
+		if (m_ipAddr.SelectCheck( tempX, tempY ) || m_port.SelectCheck( tempX, tempY ))
 		{
 			m_pAudio->SoundPlay( Audio::_FAILED_SE_ );
 		}
 	}
 	//	IPアドレスのテキストフィールドが選択中
-	if( m_ipAddr.m_settingFlag )
+	if ( m_ipAddr.m_settingFlag )
 	{
 		pushKey = m_pKey->CheckStateToAllKey( PUSH );
-		if( pushKey != -1 ){
+		if ( pushKey != -1 ){
 			m_ipAddr.AddStr( pushKey );
 		}
 	}
 	//	ポート番号のテキストフィールドが選択中
-	if( m_port.m_settingFlag )
+	if ( m_port.m_settingFlag )
 	{
 		pushKey = m_pKey->CheckStateToAllKey( PUSH );
-		if( pushKey != -1 ){
+		if ( pushKey != -1 ){
 			m_port.AddStr( pushKey );
 		}
 	}

@@ -20,11 +20,11 @@ bool StageEffect::Init()
 
 void StageEffect::CheckSelectOfStage()
 {
-	for( int iPlayer = 0; iPlayer < _PLAYER_NUM_; iPlayer++ )
+	for ( int iPlayer = 0; iPlayer < _PLAYER_NUM_; iPlayer++ )
 	{
-		for( int iColumn = 0; iColumn < _STAGE_COLUMN_MAX_; iColumn++ )
+		for ( int iColumn = 0; iColumn < _STAGE_COLUMN_MAX_; iColumn++ )
 		{
-			for( int iLine = 0; iLine < _STAGE_LINE_MAX_; iLine++ )
+			for ( int iLine = 0; iLine < _STAGE_LINE_MAX_; iLine++ )
 			{
 
 				int selectType = StageObject::SelectOfData( m_pStage->m_stageArray[iPlayer][iColumn][iLine]);
@@ -35,7 +35,7 @@ void StageEffect::CheckSelectOfStage()
 				case StageObject::_SEARCH_ALL_:
 				case StageObject::_ACTION_NOMAL_:
 				case StageObject::_ACTION_ALL_:
-					if( iPlayer == m_playerID/_PLAYER_NUM_ )	///<プレイヤー側のマス（敵による行動選択）
+					if ( iPlayer == m_playerID/_PLAYER_NUM_ )	///<プレイヤー側のマス（敵による行動選択）
 					{
 						m_enemySelect.push_back(m_pStage->m_stageBlock[iPlayer][iColumn][iLine] );
 						//	敵の選択した行動をプレイヤー側の選択されたマスから判断する
@@ -63,7 +63,7 @@ void StageEffect::CheckSelectOfStage()
 	}
 	D3DXVECTOR2 tempVec;	//正規化を行う際の仮保存ベクトル
 	//	ちゃんとプレイヤーは攻撃or索敵をしているなら
-	if( !m_playerSelect.empty() )
+	if ( !m_playerSelect.empty() )
 	{
 		//	エフェクトに必要な座標やベクトルをセットしてあげる。
 		m_plTargetPointX = m_playerSelect[m_playerSelect.size()/2].GetPositionX();
@@ -75,7 +75,7 @@ void StageEffect::CheckSelectOfStage()
 
 		//	移動速度を掛けてやる。
 		//	描画時にこの処理を毎回するのは面倒。
-		if( m_ShipCount >= ShipObject::TYPE_DESTROYER )
+		if ( m_ShipCount >= ShipObject::TYPE_DESTROYER )
 		{
 			float tempX =( m_plTargetPointX-m_myShipBlock.GetPositionX() ) / static_cast<float>( TIME_CHANGE_EFFECT );
 			float tempY =( m_plTargetPointY-m_myShipBlock.GetPositionY() ) / static_cast<float>( TIME_CHANGE_EFFECT );
@@ -89,12 +89,12 @@ void StageEffect::CheckSelectOfStage()
 		}
 	}
 	//	敵の場合も
-	if( !m_enemySelect.empty() )
+	if ( !m_enemySelect.empty() )
 	{
 		//	エフェクトに必要な座標やベクトルをセットしてあげる。
 		//	敵の場合はX軸のみを適応させて、正確な位置から飛んできた様に見えない様にさせる。
 		//	ただし、エフェクト演出時にプレイヤー側に出てくるまで透過などをするつもり	
-		for( unsigned int i=0; i<m_enemySelect.size(); i++ )
+		for ( unsigned int i=0; i<m_enemySelect.size(); i++ )
 		{
 			m_enTargetPointX += m_enemySelect[i].GetPositionX();
 			m_enTargetPointY += m_enemySelect[i].GetPositionY();
@@ -111,7 +111,7 @@ void StageEffect::CheckSelectOfStage()
 		
 		//	移動速度を掛けてやる。
 		//	描画時にこの処理を毎回するのは面倒。
-		if( m_ShipCount >= ShipObject::TYPE_DESTROYER )
+		if ( m_ShipCount >= ShipObject::TYPE_DESTROYER )
 		{
 			m_enTargetVector.x *= ( fabs(((m_playerID%_PLAYER_NUM_) * WIDTH )-m_enTargetPointX) ) / TIME_CHANGE_EFFECT;
 			m_enTargetVector.y *= (m_enTargetPointY-m_enTargetPointY) / TIME_CHANGE_EFFECT;
@@ -140,19 +140,19 @@ int StageEffect::Control()
 	//	ここではログに追加などをする。
 	//	一度だけ駒が両者とも死んでいないか確認する
 	static bool destroyShipsCheck = false;
-	if(!destroyShipsCheck)
+	if (!destroyShipsCheck)
 	{
 		bool checkFlag[2];
 		checkFlag[0] = m_pPlayer[0]->CheckDestroy(static_cast<ShipObject::_SHIP_TYPE_NUM_>(m_ShipCount));
 		checkFlag[1] = m_pPlayer[1]->CheckDestroy(static_cast<ShipObject::_SHIP_TYPE_NUM_>(m_ShipCount));
 		//	どちらも駒が死んでいたのでエフェクトは終了させる
-		if( checkFlag[0] && checkFlag[1] )
+		if ( checkFlag[0] && checkFlag[1] )
 			return 1;
 
 		destroyShipsCheck = true;
 	}
 
-	if( m_elapsedTimeFormStateInstance < TIME_END_RUSULT_EFFECT  )
+	if ( m_elapsedTimeFormStateInstance < TIME_END_RUSULT_EFFECT  )
 	{
 		EffectSoundControl();
 	}
@@ -170,19 +170,19 @@ int StageEffect::Control()
 void StageEffect::Draw()
 {
 	//	エフェクトを再生する際に基準にするカウンタ分岐
-	if( m_elapsedTimeFormStateInstance < TIME_END_ACTION_EFFECT  )
+	if ( m_elapsedTimeFormStateInstance < TIME_END_ACTION_EFFECT  )
 	{
 		AttackStartControl();
 		SearchStartControl();
 		
 	}
-	else if( m_elapsedTimeFormStateInstance < TIME_CHANGE_EFFECT )
+	else if ( m_elapsedTimeFormStateInstance < TIME_CHANGE_EFFECT )
 	{
 		//	駆逐艦などの場合は魚雷を徐々に目標マスに近づけたいので攻撃エフェクト描画を挟む
-		if( m_ShipCount >= ShipObject::TYPE_DESTROYER )
+		if ( m_ShipCount >= ShipObject::TYPE_DESTROYER )
 			AttackStartControl();
 	}
-	else if( m_elapsedTimeFormStateInstance < TIME_END_RUSULT_EFFECT )
+	else if ( m_elapsedTimeFormStateInstance < TIME_END_RUSULT_EFFECT )
 	{
 		HitEffectControl();
 		SearchResultControl();
@@ -194,13 +194,13 @@ void StageEffect::Draw()
 void StageEffect::AttackStartControl()
 {
 	//	プレイヤー側
-	if( m_plyaerSelectType == _SELECT_ACTION_ )
+	if ( m_plyaerSelectType == _SELECT_ACTION_ )
 	{
-		if( m_ShipCount == static_cast<int>(ShipObject::TYPE_AIRCARRIER) )
+		if ( m_ShipCount == static_cast<int>(ShipObject::TYPE_AIRCARRIER) )
 		{
 			AircraftEffect( m_myShipBlock, 0 );
 		}
-		else if( m_ShipCount >= static_cast<int>(ShipObject::TYPE_DESTROYER) )
+		else if ( m_ShipCount >= static_cast<int>(ShipObject::TYPE_DESTROYER) )
 		{
 			TorpedoEffect( m_myShipBlock );
 		}
@@ -212,13 +212,13 @@ void StageEffect::AttackStartControl()
 	}
 	
 	//	敵側
-	if( m_enemySelectType == _SELECT_ACTION_ )
+	if ( m_enemySelectType == _SELECT_ACTION_ )
 	{
-		if( m_ShipCount == static_cast<int>(ShipObject::TYPE_AIRCARRIER) )
+		if ( m_ShipCount == static_cast<int>(ShipObject::TYPE_AIRCARRIER) )
 		{
 			AircraftEffect( m_myShipBlock, 0, true );
 		}
-		else if( m_ShipCount >= static_cast<int>(ShipObject::TYPE_DESTROYER) )
+		else if ( m_ShipCount >= static_cast<int>(ShipObject::TYPE_DESTROYER) )
 		{
 			TorpedoEffect( m_myShipBlock, true );
 		}
@@ -230,9 +230,9 @@ void StageEffect::SearchStartControl()
 {
 	
 	//	プレイヤー側
-	if( m_plyaerSelectType == _SELECT_SEARCH_ )
+	if ( m_plyaerSelectType == _SELECT_SEARCH_ )
 	{
-		if( m_ShipCount >= static_cast<int>(ShipObject::TYPE_DESTROYER) )
+		if ( m_ShipCount >= static_cast<int>(ShipObject::TYPE_DESTROYER) )
 		{
 			SonarEffect( m_myShipBlock );
 		}
@@ -242,10 +242,10 @@ void StageEffect::SearchStartControl()
 		}
 	}
 	//	敵側
-	if( m_enemySelectType == _SELECT_SEARCH_ )
+	if ( m_enemySelectType == _SELECT_SEARCH_ )
 	{
 		//	敵側は駆逐潜水以外は索敵機を飛ばす
-		if( m_ShipCount < static_cast<int>(ShipObject::TYPE_DESTROYER) )
+		if ( m_ShipCount < static_cast<int>(ShipObject::TYPE_DESTROYER) )
 		{
 			AircraftEffect( m_myShipBlock, 1, true );
 		}
@@ -259,18 +259,18 @@ void StageEffect::HitEffectControl()
 	*/
 
 	//	プレイヤー側
-	if( m_plyaerSelectType == _SELECT_ACTION_ )
+	if ( m_plyaerSelectType == _SELECT_ACTION_ )
 	{
-		for( unsigned int i = 0; i< m_playerSelect.size(); i++ )
+		for ( unsigned int i = 0; i< m_playerSelect.size(); i++ )
 		{
 			ExplosionEffect( m_playerSelect[i] );
 		}
 	}
 	
 	//	敵側
-	if( m_enemySelectType == _SELECT_ACTION_ )
+	if ( m_enemySelectType == _SELECT_ACTION_ )
 	{
-		for( unsigned int i = 0; i< m_enemySelect.size(); i++ )
+		for ( unsigned int i = 0; i< m_enemySelect.size(); i++ )
 		{
 			ExplosionEffect( m_enemySelect[i] );
 		}
@@ -284,16 +284,16 @@ void StageEffect::SearchResultControl()
 	*@details	選択されたマス分エフェクトを出す
 	*/
 
-	if( m_plyaerSelectType == _SELECT_SEARCH_ )
+	if ( m_plyaerSelectType == _SELECT_SEARCH_ )
 	{
-		for( unsigned int i = 0; i< m_playerSelect.size(); i++ )
+		for ( unsigned int i = 0; i< m_playerSelect.size(); i++ )
 		{
 			SonarEffect( m_playerSelect[i] );
 		}
 	}
-	if( m_enemySelectType == _SELECT_SEARCH_ )
+	if ( m_enemySelectType == _SELECT_SEARCH_ )
 	{
-		for( unsigned int i = 0; i< m_enemySelect.size(); i++ )
+		for ( unsigned int i = 0; i< m_enemySelect.size(); i++ )
 		{
 			SonarEffect( m_enemySelect[i] );
 		}
@@ -344,7 +344,7 @@ void StageEffect::AircraftEffect( BoardOfFrame& _block, int _aircraftType, bool 
 	static const int multiplOfAircraftAlpha = 8;	///< 航空機のアルファ値をtimeから乗算して出す際の数
 	//int texNum;
 
-	if( !_appearanceInvisibility )
+	if ( !_appearanceInvisibility )
 	{
 		//	航空機の移動先の位置をゲームカウントで制御
 		tempX = _block.GetPositionX()+(m_plTargetVector.x)*m_elapsedTimeFormStateInstance;
@@ -365,7 +365,7 @@ void StageEffect::AircraftEffect( BoardOfFrame& _block, int _aircraftType, bool 
 									
 		alpha = m_elapsedTimeFormStateInstance*multiplOfAircraftAlpha;
 		
-		if( alpha >= 255 )
+		if ( alpha >= 255 )
 			alpha = 255;
 
 		color = D3DCOLOR_ARGB( alpha, 255, 255, 255 );	///< アルファ値をカラー値に入れる
@@ -395,7 +395,7 @@ void StageEffect::TorpedoEffect( BoardOfFrame& _block, bool _appearanceInvisibil
 	unsigned long color = 0xc8a0a0ff;	///< 魚雷のデフォルトカラー値（青っぽくすることで、水中を進んでいるように表現）
 	static const int multiplOfTorpedoAlpha = 4;	///< 魚雷のアルファ値をtimeから乗算して出す際の数
 	
-	if( !_appearanceInvisibility )
+	if ( !_appearanceInvisibility )
 	{
 		//	航空機の移動先の位置をゲームカウントで制御
 		tempX = _block.GetPositionX()+((m_plTargetVector.x)*m_elapsedTimeFormStateInstance);
@@ -416,7 +416,7 @@ void StageEffect::TorpedoEffect( BoardOfFrame& _block, bool _appearanceInvisibil
 									
 		alpha = m_elapsedTimeFormStateInstance*multiplOfTorpedoAlpha;
 		
-		if( alpha >= 200 )
+		if ( alpha >= 200 )
 			alpha = 200;
 
 		color = D3DCOLOR_ARGB( alpha, 160, 160, 255 );	///< アルファ値をカラー値に入れる
@@ -441,7 +441,7 @@ void StageEffect::SonarEffect( BoardOfFrame& _block )
 	const int xalpha = 20;
 	const float blockW = _BLOCK_WIDTH_SIZE_, blockH = _BLOCK_HEIGHT_SIZE_;
 
-	if( m_elapsedTimeFormStateInstance <= TIME_CHANGE_EFFECT+8 || m_elapsedTimeFormStateInstance >= TIME_CHANGE_EFFECT+12 )
+	if ( m_elapsedTimeFormStateInstance <= TIME_CHANGE_EFFECT+8 || m_elapsedTimeFormStateInstance >= TIME_CHANGE_EFFECT+12 )
 	{
 		float tempX, tempY, tempW, tempH;
 		unsigned int Alpha = 200;
@@ -456,7 +456,7 @@ void StageEffect::SonarEffect( BoardOfFrame& _block )
 									   false,false,0,3,
 									   D3DCOLOR_ARGB(Alpha,255,255,255));
 	}
-	if( m_elapsedTimeFormStateInstance >= TIME_CHANGE_EFFECT+4 || m_elapsedTimeFormStateInstance <= TIME_CHANGE_EFFECT+12 )
+	if ( m_elapsedTimeFormStateInstance >= TIME_CHANGE_EFFECT+4 || m_elapsedTimeFormStateInstance <= TIME_CHANGE_EFFECT+12 )
 	{
 		float tempX, tempY, tempW, tempH;
 		unsigned int Alpha = 200;
@@ -486,7 +486,7 @@ void StageEffect::EffectSoundControl()
 		//	攻撃
 	case _SELECT_ACTION_:
 		//	エフェクト開始
-		if( m_elapsedTimeFormStateInstance == 0 ){
+		if ( m_elapsedTimeFormStateInstance == 0 ){
 			switch(m_ShipCount)
 			{
 			case ShipObject::TYPE_AIRCARRIER:
@@ -507,12 +507,12 @@ void StageEffect::EffectSoundControl()
 		
 		}
 		//	エフェクト中盤
-		if( m_elapsedTimeFormStateInstance == TIME_END_ACTION_EFFECT ){
-			if( m_ShipCount == ShipObject::TYPE_AIRCARRIER ) 
+		if ( m_elapsedTimeFormStateInstance == TIME_END_ACTION_EFFECT ){
+			if ( m_ShipCount == ShipObject::TYPE_AIRCARRIER ) 
 				m_pAudio->SoundPlay( Audio::_AC_ATTACK_SE_ );
 		}
 		//	エフェクト終盤
-		if( m_elapsedTimeFormStateInstance == TIME_CHANGE_EFFECT ){
+		if ( m_elapsedTimeFormStateInstance == TIME_CHANGE_EFFECT ){
 			m_pAudio->SoundPlay( Audio::_WATER_SE_ );
 			m_pAudio->SoundPlay( Audio::_EXPLOSION_SE_ );
 		}
@@ -522,19 +522,19 @@ void StageEffect::EffectSoundControl()
 		//	索敵
 	case _SELECT_SEARCH_:
 		//	エフェクト開始
-		if( m_elapsedTimeFormStateInstance == 0 ){
-			if( m_ShipCount <= ShipObject::TYPE_CRUISER ){
+		if ( m_elapsedTimeFormStateInstance == 0 ){
+			if ( m_ShipCount <= ShipObject::TYPE_CRUISER ){
 				m_pAudio->SoundPlay( Audio::_AIRCRAFT_SE_ );
 			}else{
 				m_pAudio->SoundPlay( Audio::_SONAR_SE_ );
 			}
 		}
 		//	エフェクト中盤
-		if( m_elapsedTimeFormStateInstance == TIME_END_ACTION_EFFECT ){
+		if ( m_elapsedTimeFormStateInstance == TIME_END_ACTION_EFFECT ){
 			
 		}
 		//	エフェクト終盤
-		if( m_elapsedTimeFormStateInstance == TIME_CHANGE_EFFECT ){
+		if ( m_elapsedTimeFormStateInstance == TIME_CHANGE_EFFECT ){
 			m_pAudio->SoundPlay( Audio::_SONAR_SE_ );
 		}
 		break;
@@ -546,7 +546,7 @@ void StageEffect::EffectSoundControl()
 		//	攻撃
 	case _SELECT_ACTION_:
 		//	エフェクト開始
-		if( m_elapsedTimeFormStateInstance == 0 ){
+		if ( m_elapsedTimeFormStateInstance == 0 ){
 			switch(m_ShipCount)
 			{
 			case ShipObject::TYPE_AIRCARRIER:
@@ -567,12 +567,12 @@ void StageEffect::EffectSoundControl()
 		
 		}
 		//	エフェクト中盤
-		if( m_elapsedTimeFormStateInstance == TIME_END_ACTION_EFFECT ){
-			if( m_ShipCount == ShipObject::TYPE_AIRCARRIER ) 
+		if ( m_elapsedTimeFormStateInstance == TIME_END_ACTION_EFFECT ){
+			if ( m_ShipCount == ShipObject::TYPE_AIRCARRIER ) 
 				m_pAudio->SoundPlay( Audio::_AC_ATTACK_SE_ );
 		}
 		//	エフェクト終盤
-		if( m_elapsedTimeFormStateInstance == TIME_CHANGE_EFFECT ){
+		if ( m_elapsedTimeFormStateInstance == TIME_CHANGE_EFFECT ){
 			m_pAudio->SoundPlay( Audio::_WATER_SE_ );
 			m_pAudio->SoundPlay( Audio::_EXPLOSION_SE_ );
 		}
@@ -582,19 +582,19 @@ void StageEffect::EffectSoundControl()
 		//	索敵
 	case _SELECT_SEARCH_:
 		//	エフェクト開始
-		if( m_elapsedTimeFormStateInstance == 0 ){
-			if( m_ShipCount <= ShipObject::TYPE_CRUISER ){
+		if ( m_elapsedTimeFormStateInstance == 0 ){
+			if ( m_ShipCount <= ShipObject::TYPE_CRUISER ){
 				m_pAudio->SoundPlay( Audio::_AIRCRAFT_SE_ );
 			}else{
 				m_pAudio->SoundPlay( Audio::_SONAR_SE_ );
 			}
 		}
 		//	エフェクト中盤
-		if( m_elapsedTimeFormStateInstance == TIME_END_ACTION_EFFECT ){
+		if ( m_elapsedTimeFormStateInstance == TIME_END_ACTION_EFFECT ){
 			
 		}
 		//	エフェクト終盤
-		if( m_elapsedTimeFormStateInstance == TIME_CHANGE_EFFECT ){
+		if ( m_elapsedTimeFormStateInstance == TIME_CHANGE_EFFECT ){
 			m_pAudio->SoundPlay( Audio::_SONAR_SE_ );
 		}
 		break;

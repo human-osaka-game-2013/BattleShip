@@ -22,8 +22,6 @@
 	アプリ終了時にリリース処理で呼出
 			ReleaseXAudio2
 */
-
-
 class Audio
 {
 
@@ -74,7 +72,7 @@ public:
 		//	メンバ変数をNULLで初期化しよう
 		pXAudio2 = NULL;
 		pMasteringVo = NULL;
-		for( int i = 0; i < SOUND_MAX; i++ )
+		for ( int i = 0; i < SOUND_MAX; i++ )
 		{
 			pSourceVo[i] = NULL;
 			buffer[i].pAudioData = NULL;

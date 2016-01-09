@@ -110,14 +110,12 @@ public:
 public:
 	/**
 	*@brief	 シーン管理
-	*@todo	この関数はゲーム側で設定してやるべき
 	*/
 	virtual void Manage ();
 
 	/**
 	*@brief	シーンオブジェクトの解放
-	*@todo	SceneManager側に解放しないといけないメンバを追加した場合は、@n
-			そのたびに追加してやる。
+	*@details	SceneManager側に解放しないといけないメンバを追加した場合は、そのたびに追加してやる。
 	*/
 	virtual bool DeleteSceneObj();
 };

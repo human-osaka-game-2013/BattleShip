@@ -22,7 +22,7 @@ void CXInput::CheckButton( int _user )
 {
 	WORD wTemp = xCurrentkState.Gamepad.wButtons;
 
-	for( int iType = 0; iType < STICK_TYPE_MAX; iType++ )
+	for ( int iType = 0; iType < STICK_TYPE_MAX; iType++ )
 	{
 		WORD wConst = 0;
 		BYTE bTrigger = 0;
@@ -86,23 +86,23 @@ void CXInput::CheckButton( int _user )
 			break;
 		}
 
-		if( wTemp & wConst && iType < L_TRIGGER )
+		if ( wTemp & wConst && iType < L_TRIGGER )
 		{
-			if( stTemp > ON )
+			if ( stTemp > ON )
 				StickState[_user].Button[iType] = PUSH;
 			else
 				StickState[_user].Button[iType] = ON;
 		}
-		else if( iType >= L_TRIGGER && bTrigger > 0  )
+		else if ( iType >= L_TRIGGER && bTrigger > 0  )
 		{
-			if( stTemp )
+			if ( stTemp )
 				StickState[_user].Button[iType] = ON;
 			else
 				StickState[_user].Button[iType] = PUSH;
 		}
 		else
 		{
-			if( stTemp < RELEASE )
+			if ( stTemp < RELEASE )
 				StickState[_user].Button[iType] = RELEASE;
 			else
 				StickState[_user].Button[iType] = OFF;
@@ -132,9 +132,9 @@ void CXInput::CheckLRStick( int _user )
 //	スティック情報配列の初期化
 void CXInput::Initialize()
 {
-	for( int iUser = 0; iUser < XUSER_MAX_COUNT; iUser++ )
+	for ( int iUser = 0; iUser < XUSER_MAX_COUNT; iUser++ )
 	{
-		for( int iType = 0; iType < STICK_TYPE_MAX; iType++ )
+		for ( int iType = 0; iType < STICK_TYPE_MAX; iType++ )
 			StickState[iUser].Button[iType] = OFF;
 	}
 
@@ -147,7 +147,7 @@ void CXInput::UpdateStick()
 {
 	DWORD dwResult;	//	XInputGetState関数の結果用
 
-	for( int iStick = 0; iStick < XUSER_MAX_COUNT; iStick++ )
+	for ( int iStick = 0; iStick < XUSER_MAX_COUNT; iStick++ )
 	{
 		//	XINPUT_STATE型のはZeroMemoryで
 		//ZeroMemory( &xCurrentkState, sizeof(XINPUT_STATE) );
@@ -155,7 +155,7 @@ void CXInput::UpdateStick()
 		//	現在のスティック状態を取得
 		dwResult = XInputGetState( iStick, &xCurrentkState );
 
-		if( dwResult == ERROR_SUCCESS )	// スティックがつながっている
+		if ( dwResult == ERROR_SUCCESS )	// スティックがつながっている
 		{ 
 			CheckButton( iStick );
 			CheckTrigger( iStick );
@@ -177,7 +177,7 @@ bool CXInput::CheckStickState( int _user, eSTICK_TYPE _type, eSTICK_STATE _state
 {
 	bool bCheckF = false;
 
-	if( StickState[_user].Button[_type] == _state )
+	if ( StickState[_user].Button[_type] == _state )
 		bCheckF = true;
 
 	return bCheckF;

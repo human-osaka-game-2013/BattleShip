@@ -18,7 +18,7 @@ void CSceneManager::Manage ()
 	if ( iBeforeScene != iCurrentScene )
 	{
 		//	本当にシーンの切り替わりであるか（m_sceneObjにまだデータが入っていなかった場合を考慮）
-		if( iBeforeScene != SCENE_NONE )
+		if ( iBeforeScene != SCENE_NONE )
 		{
 			CLASS_DELETE( m_sceneObj );	
 		}
@@ -47,7 +47,7 @@ void CSceneManager::Manage ()
 bool CSceneManager::DeleteSceneObj()
 {
 
-	if( m_pRenderManager != NULL )
+	if ( m_pRenderManager != NULL )
 		CLASS_DELETE( m_pRenderManager );
 	CLASS_DELETE( m_pDrawManager );
 	CLASS_DELETE( m_pKey );
@@ -56,19 +56,19 @@ bool CSceneManager::DeleteSceneObj()
 	CLASS_DELETE( m_sceneObj );
 	CLASS_DELETE( m_pAudio );
 
-	if( m_sceneObj != NULL )
+	if ( m_sceneObj != NULL )
 		return false;
-	if( m_pRenderManager != NULL )
+	if ( m_pRenderManager != NULL )
 		return false;
-	if( m_pDrawManager != NULL )
+	if ( m_pDrawManager != NULL )
 		return false;
-	if( m_pKey != NULL )
+	if ( m_pKey != NULL )
 		return false;
-	if( m_pMouse != NULL )
+	if ( m_pMouse != NULL )
 		return false;
-	if( m_pXInput != NULL )
+	if ( m_pXInput != NULL )
 		return false;
-	if( m_pAudio != NULL )
+	if ( m_pAudio != NULL )
 		return false;
 	return true;
 }

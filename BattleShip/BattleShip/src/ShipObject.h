@@ -19,14 +19,12 @@
 /**
 *@brief	駒の基底クラス
 */
-class ShipObject:public CGameObject, public ReadFile
-{
-public:
+class ShipObject:public CGameObject, public ReadFile {
+ public:
 	/**
 	*@brief	駒の艦種類列挙
 	*/
-	enum _SHIP_TYPE_NUM_
-	{
+	enum _SHIP_TYPE_NUM_ {
 		TYPE_NONE=-1,
 		TYPE_AIRCARRIER,	///<空母
 		TYPE_BATTLESHIP,	///<戦艦
@@ -39,8 +37,7 @@ public:
 	/**
 	*@brief	駒の配列種類
 	*/
-	enum _SHIP_ARRAY_TYPE_
-	{
+	enum _SHIP_ARRAY_TYPE_ {
 		ARRAY_TYPE_SHIP,
 		ARRAY_TYPE_ACTION,
 		ARRAY_TYPE_SEARCH,
@@ -51,8 +48,7 @@ public:
 	/**
 	*@brief	駒のテーブル情報種類
 	*/
-	enum _SHIP_TABLE_NUM_
-	{
+	enum _SHIP_TABLE_NUM_ {
 		TABLE_SHIP,
 		TABLE_ACTION = _SHIP_ARRAY_INDEX_,
 		TABLE_SEARCH = TABLE_ACTION+_SHIP_ARRAY_INDEX_,
@@ -60,27 +56,13 @@ public:
 		TABLE_MAX = TABLE_MOVE+_SHIP_ARRAY_INDEX_
 	};
 
-private:
-	int m_userID;
-	int m_posColumn;
-	int m_posLine;
-
-public:
-	int m_shipArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の実体配列
-	CUSTOMVERTEX	m_vertex[4];	///<	駒の矩形生成時のローカル座標
-
-	int m_actionArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の攻撃範囲配列
-	int m_searchArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の索敵範囲配列
-	int m_moveArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の移動範囲配列
-	
-public:
 	/**
 	*@brief	コンストラクタ
 	*@details	駒配列の初期化とCGameObjectのコンストラクタを呼び出し
 	*/
-	ShipObject::ShipObject( int _userID ) : CGameObject(){
-		for( int iColumn = 0; iColumn < _SHIP_ARRAY_INDEX_; iColumn++ ){
-			for( int iLine = 0; iLine < _SHIP_ARRAY_INDEX_; iLine++ )	{
+	ShipObject::ShipObject( int _userID ) : CGameObject() {
+		for ( int iColumn = 0; iColumn < _SHIP_ARRAY_INDEX_; iColumn++ ) {
+			for ( int iLine = 0; iLine < _SHIP_ARRAY_INDEX_; iLine++ ) {
 				m_shipArray[iColumn][iLine]=0;
 				m_actionArray[iColumn][iLine]=0;
 				m_searchArray[iColumn][iLine]=0;
@@ -123,7 +105,6 @@ public:
 	*/
 	void InitVertex( _SHIP_TYPE_NUM_ _shipType );
 
-public:
 	/**
 	*@brief	駒の持ち主ID取得
 	*/
@@ -132,7 +113,7 @@ public:
 	/**
 	*@brief	ステージ上での駒の中心位置のセット
 	*/
-	inline void SetArrayPos( int _column, int _line ){ 
+	inline void SetArrayPos( int _column, int _line ) { 
 		m_posColumn = _column;
 		m_posLine	= _line;
 	}
@@ -140,7 +121,7 @@ public:
 	/**
 	*@brief	ステージ上での駒の中心位置の取得
 	*/
-	inline void GetArrayPos( int& _column, int& _line ){ 
+	inline void GetArrayPos( int& _column, int& _line ) { 
 		_column	= m_posColumn;
 		_line	= m_posLine;
 	}
@@ -164,6 +145,19 @@ public:
 				相手側データにセット
 	*/
 	void SetShipData( ConnectShip* _pCShip );
+
+	int m_shipArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の実体配列
+	CUSTOMVERTEX	m_vertex[4];	///<	駒の矩形生成時のローカル座標
+
+	int m_actionArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の攻撃範囲配列
+	int m_searchArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の索敵範囲配列
+	int m_moveArray[_SHIP_ARRAY_INDEX_][_SHIP_ARRAY_INDEX_];	///<	駒の移動範囲配列
+
+ private:
+	int m_userID;
+	int m_posColumn;
+	int m_posLine;
+
 };
 
 

@@ -8,7 +8,7 @@ void CDrawManager::BeginDraw( bool _b3dView )
 	{
 
 	}
-	if( _b3dView || !_SetStateFlag )
+	if ( _b3dView || !_SetStateFlag )
 	{
 		// ステージステートの設定
 		m_pD3Device -> SetTextureStageState ( 0, D3DTSS_COLORARG1,	D3DTA_TEXTURE	);
@@ -29,9 +29,9 @@ void CDrawManager::BeginDraw( bool _b3dView )
 	}
 
 	// 画面の消去
-	if( !_b3dView )
+	if ( !_b3dView )
 	{
-		if(	m_pD3Device -> Clear (0, NULL,
+		if (	m_pD3Device -> Clear (0, NULL,
 								D3DCLEAR_TARGET ,
 								D3DCOLOR_XRGB ( 0x00, 0x00, 0x00 ),
 								1.0, 0 ) != D3D_OK)

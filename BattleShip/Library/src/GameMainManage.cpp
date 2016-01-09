@@ -26,7 +26,7 @@ void CSceneManager::SceneRoutingManage ()
 
 		break;
 	case 1:
-		if( GetCurrentScene()+1 < SCENE_MAX  )
+		if ( GetCurrentScene()+1 < SCENE_MAX  )
 		{
 			iCurrentScene++;
 		}

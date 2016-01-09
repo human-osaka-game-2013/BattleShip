@@ -21,7 +21,7 @@ bool GameScene::Init()
 	m_connectionResult = m_Connect.Connection();
 	
 #endif
-	for( int iCount=0; iCount<_PLAYER_NUM_; iCount++ ) {
+	for ( int iCount=0; iCount<_PLAYER_NUM_; iCount++ ) {
 		m_Player.push_back( new Player( iCount ));	///<	プレイヤーの初期化
 	}
 
@@ -58,21 +58,21 @@ bool GameScene::Init()
 int GameScene::Control()
 {
 	//もし接続に失敗していた状態でここまで来ていた場合、タイトルに戻す
-	if( !m_connectionResult )
+	if ( !m_connectionResult )
 		return 1;
 
 	m_stateManager->UpdateStatInTime( GetTimeInScene() );	///<経過時間の更新状態をステート側に伝える
 
-	if( m_stateManager->GetConnectFlag() )
+	if ( m_stateManager->GetConnectFlag() )
 	{
 #ifdef _NOT_USE_COM_
-		if(1)//通信が完了した場合
+		if (1)//通信が完了した場合
 		{
 			m_stateManager->SetConnectFlag( false );
 		}
 
 #else
-		if( CommunicationProcessing() )	//通信が完了した場合
+		if ( CommunicationProcessing() )	//通信が完了した場合
 		{
 			m_stateManager->SetConnectFlag( false );
 		}		
@@ -80,30 +80,30 @@ int GameScene::Control()
 #endif
 	}
 
-	if( m_fadeInFlag )
+	if ( m_fadeInFlag )
 	{
-		if( m_screenMask.FadeIn(_FADE_IN_TIME_) )
+		if ( m_screenMask.FadeIn(_FADE_IN_TIME_) )
 			m_fadeInFlag = false;
 	}
-	else if( !GetSceneEndFlag() )
+	else if ( !GetSceneEndFlag() )
 	{
 		//	フェードインし終わって、かつ戦闘が終了していないので
 		//	各ステート管理の処理へ移る
-		if( m_stateManager->StateCotrol() == -1)
+		if ( m_stateManager->StateCotrol() == -1)
 		{
 			//各ステートの結果により戦闘が終了されたので、
 			//フェードアウトさせてからこのシーンを終了させる。
 			SetSceneEndFlag( true );
 		}
 	}
-	else if( m_pMouse->MouseStCheck( MOUSE_L, PUSH ) )
+	else if ( m_pMouse->MouseStCheck( MOUSE_L, PUSH ) )
 	{
 		m_fadeOutFlag = true;
 	}
 	//	フェードアウトさせていき、完了すればシーンを終了させる
-	if( m_fadeOutFlag )
+	if ( m_fadeOutFlag )
 	{
-		if( m_screenMask.FadeOut(_FADE_OUT_TIME_) )
+		if ( m_screenMask.FadeOut(_FADE_OUT_TIME_) )
 		{
 			m_fadeInFlag = false;
 			return 1;	//シーンを終了させる
@@ -157,18 +157,18 @@ bool GameScene::CommunicationProcessing()
 	{
 	case StateManager::STATE_SET_SHIP:
 	case StateManager::STATE_SELECTION:
-		if( !(m_connectFlag&_BIT_STAGE_R_) )
+		if ( !(m_connectFlag&_BIT_STAGE_R_) )
 		{
 			result = ComStageData();
 		}
-		else if( !(m_connectFlag&_BIT_SHIP_R_) )
+		else if ( !(m_connectFlag&_BIT_SHIP_R_) )
 		{
 			result = ComShipsData();
 		}
 		break;
 	}
 	//	全部の情報の送受信が完了していたら
-	if( m_sendShipCount==ShipObject::TYPE_MAX && (m_connectFlag==_BIT_ALL_SR_) )
+	if ( m_sendShipCount==ShipObject::TYPE_MAX && (m_connectFlag==_BIT_ALL_SR_) )
 	{
 		m_connectFlag = m_connectFlag^_BIT_ALL_SR_;
 		m_sendShipCount = 0;
@@ -190,12 +190,12 @@ bool GameScene::ComStageData()
 	bool result = false;
 
 	//	まだ送信を完了してなかったら
-	if( !(m_connectFlag&_BIT_STAGE_S_) )
+	if ( !(m_connectFlag&_BIT_STAGE_S_) )
 	{
 		memmove_s( bufStage.m_stageArray, sizeof(int [_PLAYER_NUM_][_STAGE_COLUMN_MAX_][_STAGE_LINE_MAX_]),
 		m_pStageObject->m_stageArray, sizeof(int [_PLAYER_NUM_][_STAGE_COLUMN_MAX_][_STAGE_LINE_MAX_]));
 
-		if( m_Connect.Send( (char*)&bufStage, bufStageSize ))
+		if ( m_Connect.Send( (char*)&bufStage, bufStageSize ))
 		{
 			m_connectFlag += _BIT_STAGE_S_;
 		}
@@ -205,9 +205,9 @@ bool GameScene::ComStageData()
 		}
 	}
 	//	まだ受信を完了してなかったら
-	if( !(m_connectFlag&_BIT_STAGE_R_) )
+	if ( !(m_connectFlag&_BIT_STAGE_R_) )
 	{
-		if( m_Connect.Receive( (char*)&bufStage, bufStageSize ) )
+		if ( m_Connect.Receive( (char*)&bufStage, bufStageSize ) )
 		{
 			m_pStageObject->MargeStage( &bufStage, m_playerID, enemyID, (int)m_stateManager->GetState() );
 			m_connectFlag += _BIT_STAGE_R_;
@@ -233,15 +233,15 @@ bool GameScene::ComShipsData()
 	ShipObject* tempShip;
 	bool result = false;
 
-	for( int iShip = m_sendShipCount; iShip < ShipObject::TYPE_MAX; iShip++ )
+	for ( int iShip = m_sendShipCount; iShip < ShipObject::TYPE_MAX; iShip++ )
 	{
 		//	まだ送信を完了してなかったら
-		if( !(m_connectFlag&_BIT_SHIP_S_) )
+		if ( !(m_connectFlag&_BIT_SHIP_S_) )
 		{
 			ShipObject* tempShip = m_Player[m_playerID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
 			tempShip->SetConnectShipData( &bufShip[iShip] );
 
-			if( m_Connect.Send( (char*)&bufShip[iShip], bufShipSize ))
+			if ( m_Connect.Send( (char*)&bufShip[iShip], bufShipSize ))
 			{
 				m_connectFlag += _BIT_SHIP_S_;
 			}
@@ -251,9 +251,9 @@ bool GameScene::ComShipsData()
 			}
 		}
 		//	まだ受信を完了してなかったら
-		if( !(m_connectFlag&_BIT_SHIP_R_) )
+		if ( !(m_connectFlag&_BIT_SHIP_R_) )
 		{
-			if( m_Connect.Receive( (char*)&bufShip[iShip], bufShipSize ))
+			if ( m_Connect.Receive( (char*)&bufShip[iShip], bufShipSize ))
 			{
 				tempShip = m_Player[enemyID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)iShip );
 				tempShip->SetShipData( &bufShip[iShip] );
@@ -268,7 +268,7 @@ bool GameScene::ComShipsData()
 				result = false;
 			}
 		}
-		if( result == false )
+		if ( result == false )
 			break;
 	}
 	return result;

@@ -3,7 +3,7 @@
 void GameLog::Init( const long& _x, const long& _y, const char* _firstStr, const D3DXCOLOR& _color )
 {
 	SetPosition( _x, _y );
-	if( _firstStr != NULL )
+	if ( _firstStr != NULL )
 	{
 		AddStream( _firstStr, _color );
 	}
@@ -15,7 +15,7 @@ void GameLog::AddStream( const char* _str, const D3DXCOLOR& _color,
 {
 	long tempX = m_posX, tempY = m_posY;
 
-	if( !m_logStream.empty() ){
+	if ( !m_logStream.empty() ){
 		//	最終に追加した文字列の座標を基に、その文字の下に配置出来るようにする
 		LogStream* const logBack = m_logStream.back();
 		logBack->GetPosition( tempX, tempY );
@@ -32,10 +32,10 @@ bool GameLog::CheckStream( const unsigned int _height )
 
 	unsigned int allStreamHeight = 0;	///< 登録されている全て文字列の縦幅を加算
 	//	要素が空で無かったら
-	if( !m_logStream.empty() ){
+	if ( !m_logStream.empty() ){
 		//	全部の要素の確認をする
 		std::list<LogStream*>::const_iterator itEnd = m_logStream.end();
-		for( std::list<LogStream*>::iterator it = m_logStream.begin(); it != itEnd; ++it)
+		for ( std::list<LogStream*>::iterator it = m_logStream.begin(); it != itEnd; ++it)
 		{
 			allStreamHeight += (*it)->GetHeight();	///< 縦幅の加算
 		}
@@ -45,7 +45,7 @@ bool GameLog::CheckStream( const unsigned int _height )
 	}
 	
 	//	登録されている全ての文字列の幅が指定した値より多かったら
-	if( allStreamHeight > _height )
+	if ( allStreamHeight > _height )
 	{
 		int tempHeight = 0;	///< 削除する対象の文字列の高さを保持しておく
 		//	一番先頭（古い）データを解放＆削除
@@ -54,7 +54,7 @@ bool GameLog::CheckStream( const unsigned int _height )
 		RealignmentStream();
 
 		//	削除した文字の高さ分を引いて再度計算して、まだはみ出ていたらもう一度削除させる。
-		if( allStreamHeight-tempHeight > _height )
+		if ( allStreamHeight-tempHeight > _height )
 			CheckStream( _height );
 		result = true;	///< 中身を削除した事を伝える為にtrue
 	}
@@ -67,7 +67,7 @@ void GameLog::RealignmentStream()
 	long beforeHeight = 0;	///<一つ前の文字列の高さが分かれば、Y座標をずらす事が出来る
 
 	std::list<LogStream*>::const_iterator itEnd = m_logStream.end();
-	for( std::list<LogStream*>::iterator it = m_logStream.begin();
+	for ( std::list<LogStream*>::iterator it = m_logStream.begin();
 		it != itEnd; ++it)
 	{
 		tempY += beforeHeight;

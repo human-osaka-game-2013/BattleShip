@@ -7,21 +7,9 @@
 *@brief	戦績保存クラス
 *@details	戦闘中に戦績判定に必要なデータを収集するクラス
 */
-class ReportData
-{
-private:
-	int		attackCount;
-	int		searchCount;
-	int		hitCount;
-	int		sightCount;
-	int		selectAveTime;
-	int		turnCount;
-	int		damageCount;
-	unsigned char	KOCount;
-
-public:
-	ReportData()
-	{
+class ReportData {
+ public:
+	ReportData() {
 		searchCount	= 0;
 		attackCount	= 0;
 		hitCount	= 0;
@@ -35,14 +23,10 @@ public:
 	/**
 	*@brief	行動選択までの平均時間
 	*/
-	void UpdateSelectAveTime( const int _elapsed )
-	{
-		if( selectAveTime == 0 )
-		{
+	void UpdateSelectAveTime( const int _elapsed ) {
+		if (selectAveTime == 0) {
 			selectAveTime = _elapsed;
-		}
-		else
-		{
+		}else {
 			selectAveTime += _elapsed;
 			selectAveTime = selectAveTime/2;
 		}
@@ -51,10 +35,8 @@ public:
 	/**
 	*@brief	行動選択の回数のカウント更新
 	*/
-	void UpdateSelectCount( const int _selectType )
-	{
-		switch( _selectType )
-		{
+	void UpdateSelectCount( const int _selectType ) {
+		switch(_selectType) {
 		case 0:	///<攻撃
 			attackCount++;
 			break;
@@ -67,10 +49,8 @@ public:
 	/**
 	*@brief	戦闘結果の回数のカウント更新
 	*/
-	void UpdateResultCount( const int _result )
-	{
-		switch( _result )
-		{
+	void UpdateResultCount( const int _result ) {
+		switch(_result) {
 		case 1:	///<発見
 			sightCount++;
 			
@@ -86,15 +66,12 @@ public:
 	*@brief	撃沈フラグの更新
 	*@details	撃沈フラグと被弾回数の更新
 	*/
-	void UpdateKOCount( Player* const _pPlayer )
-	{
+	void UpdateKOCount( Player* const _pPlayer ) {
 		int hitCheckCount = 0;
 		bool destroyFlag = false;
-		for( int iShip = 0; iShip < ShipObject::TYPE_MAX; iShip++ )
-		{			
+		for ( int iShip = 0; iShip < ShipObject::TYPE_MAX; iShip++ ) {			
 			destroyFlag = _pPlayer->CheckDestroy(static_cast<ShipObject::_SHIP_TYPE_NUM_>(iShip));
-			if( destroyFlag )
-			{
+			if (destroyFlag) {
 				KOCount++;
 			}
 			hitCheckCount+=_pPlayer->CheckHitCount(static_cast<ShipObject::_SHIP_TYPE_NUM_>(iShip));
@@ -102,7 +79,6 @@ public:
 		SetDamageCount(hitCheckCount);
 	}
 
-public:
 	inline int GetSearchCount()	{ return searchCount; }
 	inline int GetAttackCount()	{ return attackCount; }
 	inline int GetHitCount()	{ return hitCount; }
@@ -111,14 +87,14 @@ public:
 	inline int GetTurnCount()	{ return turnCount; }
 	inline int GetDamageCount()	{ return damageCount; }
 	inline unsigned char GetKOCount() { return KOCount; }
-	inline float GetHitProbability()
-	{
+	
+	inline float GetHitProbability() {
 		float hitProbability = 0.f;
 		hitProbability = (static_cast<float>(hitCount)/static_cast<float>(attackCount))*100.f;
 		return hitProbability; 
 	}
-	inline float GetSightProbability()
-	{
+	
+	inline float GetSightProbability() {
 		float sightProbability = 0.f;
 		sightProbability = (static_cast<float>(sightCount)/static_cast<float>(searchCount))*100.f;
 		return sightProbability; 
@@ -132,6 +108,17 @@ public:
 	inline void SetTurnCount( int _turnCount )		{ turnCount = _turnCount; }
 	inline void SetDamageCount( int _damageCount )	{ damageCount = _damageCount; }
 	inline void SetKOCount( unsigned char _koFlag )		{ KOCount = _koFlag; }
+
+ private:
+	int		attackCount;
+	int		searchCount;
+	int		hitCount;
+	int		sightCount;
+	int		selectAveTime;
+	int		turnCount;
+	int		damageCount;
+	unsigned char	KOCount;
+
 };
 
 #endif

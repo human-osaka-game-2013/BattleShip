@@ -24,48 +24,20 @@
 #include "read_file.h"
 #include "ConnectStruct.h"
 
-
 #define _RECV_TIMEOUT_SECOND_	0	///< 受信のタイムアウトをするまでの秒数
 
 /**
 *@brief	通信管理クラス
 */
-class Connect : public ReadFile
-{
-public:
-	bool m_sockType;	///<	ソケットのフラグ（true：Client、false：Server）
-
-private:	
-	WSADATA	m_wsaData;		///< Winsockデータ
-	SOCKET	m_ownSock;		///< ソケットメンバ
-	SOCKET	m_partnersSock;	///< 相手側のソケット情報
-	struct 	sockaddr_in m_addr;		///< 接続先指定用構造体（自身）
-	struct 	sockaddr_in m_client;	///< 接続先指定用構造体（クライアント側）
-	std::string 	m_domainStr;///< サーバー側のドメイン名（orIPアドレス）（クライアント時）
-	int		m_ports;			///< サーバー側のポート番号（クライアント時）
-	fd_set	m_fds, m_readfds;	///< select関数に渡す為のソケットデータコピー用
-	int m_selectResult;		///< selectの結果
-	struct timeval m_tv;	///< selectでのタイムアウト用
-
-private:
+class Connect : public ReadFile {
+ public:
 	/**
-	*@brief	通信に必要なデータの種類
+	*@brief	デストラクタ
 	*/
-	enum _CONNECT_INFO_TYPE_
-	{
-		SOCK_TYPE,
-		DOMAIN_STR,
-		PORTS_NUM,
-		CONNECT_INFO_MAX
-	};
-
-public:
-	~Connect()
-	{
+	~Connect() {
 		EndConnect();
 	}
-
-public:
+	
 	/**
 	*@brief	初期化
 	*/
@@ -101,7 +73,19 @@ public:
 	*/
 	void EndConnect();
 
-private:
+	bool m_sockType;	///<	ソケットのフラグ（true：Client、false：Server）
+
+ private:
+	/**
+	*@brief	通信に必要なデータの種類
+	*/
+	enum _CONNECT_INFO_TYPE_ {
+		SOCK_TYPE,
+		DOMAIN_STR,
+		PORTS_NUM,
+		CONNECT_INFO_MAX
+	};
+
 	/**
 	*@brief	読み取ったデータをテーブルにセット
 	*@details	通信に必要なデータを外部ファイルから読み取り、それに合うメンバ変数にセットする。
@@ -117,6 +101,17 @@ private:
 	*@brief	ソケット生成メソッド
 	*/
 	bool MakeSocket();
+
+	WSADATA	m_wsaData;		///< Winsockデータ
+	SOCKET	m_ownSock;		///< ソケットメンバ
+	SOCKET	m_partnersSock;	///< 相手側のソケット情報
+	struct 	sockaddr_in m_addr;		///< 接続先指定用構造体（自身）
+	struct 	sockaddr_in m_client;	///< 接続先指定用構造体（クライアント側）
+	std::string 	m_domainStr;///< サーバー側のドメイン名（orIPアドレス）（クライアント時）
+	int		m_ports;			///< サーバー側のポート番号（クライアント時）
+	fd_set	m_fds, m_readfds;	///< select関数に渡す為のソケットデータコピー用
+	int m_selectResult;		///< selectの結果
+	struct timeval m_tv;	///< selectでのタイムアウト用
 
 };
 

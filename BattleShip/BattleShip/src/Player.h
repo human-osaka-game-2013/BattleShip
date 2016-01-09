@@ -9,28 +9,21 @@
 #include "Destroyer.h"
 #include "Submarine.h"
 
-class Player
-{
-private:
-	int m_userID;
-	std::vector<ShipObject*> m_pShip;
-
-public:
+class Player {
+ public:
 	/**
 	*@brief	コンストラクタ
 	*/
-	Player( int _userID ): m_userID( _userID )
-	{
+	Player( int _userID ): m_userID( _userID ) {
 		Init( _userID );
 	}
 
 	/**
 	*@brief	デストラクタ
 	*/
-	~Player(){
-		for( unsigned int iCount = 0; iCount < m_pShip.size(); iCount++ ){
-
-		delete m_pShip[iCount];
+	~Player() {
+		for ( unsigned int iCount = 0; iCount < m_pShip.size(); iCount++ ) {
+			delete m_pShip[iCount];
 		}
 		m_pShip.clear();
 	}
@@ -73,6 +66,11 @@ public:
 	bool CheckDestroy( const ShipObject::_SHIP_TYPE_NUM_ _shipType );
 
 	int	CheckHitCount( const ShipObject::_SHIP_TYPE_NUM_ _shipType );
+
+ private:	
+	int m_userID;
+	std::vector<ShipObject*> m_pShip;
+
 };
 
 #endif 

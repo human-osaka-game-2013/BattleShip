@@ -7,9 +7,8 @@
 /**
 *@brief	簡易なボタンオブジェクト用クラス
 */
-class Button: public CGameObject
-{
-public:
+class Button: public CGameObject {
+ public:
 	enum BUTTON_STATE
 	{
 		STATE_OFF_CURSOR,
@@ -17,37 +16,27 @@ public:
 		STATE_SELECT
 	};
 
-private:
-	float defaultPosX, defaultPosY;		///< ボタンの初期基準位置
-	float selectVol;					///< ボタンの（選択時の）拡大率
-	float defaultWidth, defaultHeight;	///< ボタンの初期基準幅高さ
-	float fWidth ,fHeight;
-	int iA, iR, iG, iB;
-	BUTTON_STATE m_state;
-	Audio*	m_pAudio;
-
-public:
 	/**
 	*@brief コンストラクタ
 	*/
-	Button() : CGameObject()
-	{
+	Button() : CGameObject() {
 		m_state = STATE_OFF_CURSOR;
 	}
 
 	/**
 	*@breif	デストラクタ
 	*/
-	~Button()
-	{
+	~Button() {
 
 	}
 
 	/**
 	*@brief	初期化
 	*/
-	void Init( float _fx, float _fy, float _fWidth, float _fHeight,  Audio* const _pAudio, float _selectVol = 2.f )
-	{
+	void Init( float _fx,float _fy,
+			   float _fWidth,float _fHeight,
+			   Audio* const _pAudio,float _selectVol = 2.f ) {
+
 		SetPosition(_fx, _fy, 0.5f);
 		selectVol = _selectVol;
 		defaultPosX = _fx;
@@ -82,8 +71,7 @@ public:
 	inline int GetGreen()	{ return iG; }
 	inline int GetBlue()	{ return iB; }
 
-	void GetColor( int& _iA, int& _iR, int& _iG, int& _iB )
-	{
+	void GetColor( int& _iA, int& _iR, int& _iG, int& _iB ) {
 		_iA = iA;
 		_iR	= iR;
 		_iG	= iG;
@@ -95,8 +83,7 @@ public:
 	inline void SetWidth( const float& _width  ){ fWidth = _width; }
 	inline void SetHeight( const float& _height ){ fHeight = _height; }
 
-	void SetColor( const int& _iA, const int& _iR, const int& _iG, const int& _iB )
-	{
+	void SetColor( const int& _iA, const int& _iR, const int& _iG, const int& _iB ) {
 		iA = _iA;
 		iR = _iR;
 		iG = _iG;
@@ -111,13 +98,10 @@ public:
 	*@param[in]	_x	x座標
 	*@param[in]	_y	y座標
 	*/
-	bool HitBlockCheck( float _x, float _y )
-	{
+	bool HitBlockCheck( float _x, float _y ) {
 		float tempX = GetPositionX(), tempY = GetPositionY();
-		if( tempX < _x && tempX + fWidth > _x )
-		{
-			if(	tempY < _y && tempY + fHeight > _y )
-			{
+		if (tempX < _x && tempX + fWidth > _x) {
+			if (tempY < _y && tempY + fHeight > _y) {
 				return true;
 			}
 		}
@@ -125,6 +109,15 @@ public:
 	}
 
 	void SetAudioPtr( Audio* const _pAudio ){ m_pAudio = _pAudio; }
+
+ private:
+	float defaultPosX, defaultPosY;		///< ボタンの初期基準位置
+	float selectVol;					///< ボタンの（選択時の）拡大率
+	float defaultWidth, defaultHeight;	///< ボタンの初期基準幅高さ
+	float fWidth ,fHeight;
+	int iA, iR, iG, iB;
+	BUTTON_STATE m_state;
+	Audio*	m_pAudio;
 };
 
 

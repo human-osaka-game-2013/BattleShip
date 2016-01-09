@@ -19,21 +19,21 @@ int SetShip::Control()
 	m_tempY = (float)m_pMouse->GetCursorPosY();	///<	マウス座標の更新
 	m_tempShip = m_pPlayer[m_playerID-1]->GetShip( (ShipObject::_SHIP_TYPE_NUM_)m_ShipCount );
 			
-	if( !m_StateCompFlag )
+	if ( !m_StateCompFlag )
 	{
 		int iCheckResult = 0;
 		//	駒が置ける置けない関係なく、右クリックで駒を回転させる
-		if( m_pMouse->MouseStCheck( MOUSE_R, PUSH ) ) {
+		if ( m_pMouse->MouseStCheck( MOUSE_R, PUSH ) ) {
 			//	プレイヤーによって右回り左回りを変える
 			m_tempShip->RotationShip( 0, m_playerID%_PLAYER_NUM_? true:false );
 			m_pAudio->SoundPlay( Audio::_FAILED_SE_ );
 		}
 		iCheckResult = CheckBoard();
 
-		if( iCheckResult == 2 )
+		if ( iCheckResult == 2 )
 			m_ShipCount++;
 
-		if( m_ShipCount >= ShipObject::TYPE_MAX ){
+		if ( m_ShipCount >= ShipObject::TYPE_MAX ){
 			m_StateCompFlag = true;
 			m_connectFlag = true;
 			m_pStage->ResetSelect();
@@ -50,20 +50,20 @@ int SetShip::CheckBoard()
 	bool resultBlockHit = false;
 
 	//	行
-	for( int iColumn=0; iColumn<_STAGE_COLUMN_MAX_; iColumn++ ){	
+	for ( int iColumn=0; iColumn<_STAGE_COLUMN_MAX_; iColumn++ ){	
 		//	列
-		for( int iLine=0; iLine<_STAGE_LINE_MAX_; iLine++ ){
+		for ( int iLine=0; iLine<_STAGE_LINE_MAX_; iLine++ ){
 
 			resultBlockHit = m_pStage->m_stageBlock[m_playerID-1][iColumn][iLine].HitBlockCheck( m_tempX, m_tempY );
 
-			if( resultBlockHit )
+			if ( resultBlockHit )
 			{
 				int iCheckResult=0;
 				
 				//	ステージブロックのチェック
 				iCheckResult = m_pStage->CheckStageBlock( m_playerID, iColumn, iLine, m_tempShip, ShipObject::ARRAY_TYPE_SHIP, m_ShipCount );
 				
-				if( iCheckResult != 0 )	///<駒を置けるマスじゃなかった。
+				if ( iCheckResult != 0 )	///<駒を置けるマスじゃなかった。
 				{	
 					//	置けない範囲だった場合も、置けないという情報をステージにセットする
 					m_pStage->SetRange( m_playerID, iColumn, iLine, m_tempShip->m_shipArray, StageObject::_SELECT_FALSE_ );
@@ -73,7 +73,7 @@ int SetShip::CheckBoard()
 				{
 					m_pStage->SetRange( m_playerID, iColumn, iLine, m_tempShip->m_shipArray, StageObject::_SELECT_TRUE_);
 					//	駒が置けるマスであり、左クリックを押した時
-					if( m_pMouse->MouseStCheck( MOUSE_L, PUSH )) {
+					if ( m_pMouse->MouseStCheck( MOUSE_L, PUSH )) {
 						m_pStage->SetShip( m_playerID, iColumn, iLine, m_tempShip );
 						m_pAudio->SoundPlay( Audio::_CLICK_SE_ );
 
@@ -90,7 +90,7 @@ int SetShip::CheckBoard()
 //	
 void SetShip::Draw()
 {
-	if( m_ShipCount < ShipObject::TYPE_MAX )
+	if ( m_ShipCount < ShipObject::TYPE_MAX )
 	{
 		m_pDrawManager->VertexTransform( m_ShipCount + _TEX_AIRCARRIER_, m_tempShip->m_vertex, m_tempX, m_tempY, 1.f, 1.f, m_tempShip->GetDirection()*90.f );
 	}
