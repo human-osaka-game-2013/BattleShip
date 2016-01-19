@@ -22,13 +22,10 @@
 	アプリ終了時にリリース処理で呼出
 			ReleaseXAudio2
 */
-class Audio
-{
+class Audio {
+ public:
+	enum SOUND_ID {
 
-
-public:
-	enum SOUND_ID
-	{
 		//　BGMの曲数を用意
 		_TITLE_BGM_,
 		_BATTLE_BGM_,
@@ -52,28 +49,16 @@ public:
 
 		//配列０補正
 		SOUND_MAX
-
 	};
-	
 
-private:
-	//デバイスの準備
-	IXAudio2*				pXAudio2;
-	IXAudio2MasteringVoice*	pMasteringVo;
-	IXAudio2SourceVoice*	pSourceVo[SOUND_MAX];
-	XAUDIO2_BUFFER			buffer[SOUND_MAX];
-	
-public:
 	/**
 	*@brief	コンストラクタ
 	*/
-	Audio()
-	{
+	Audio() {
 		//	メンバ変数をNULLで初期化しよう
 		pXAudio2 = NULL;
 		pMasteringVo = NULL;
-		for ( int i = 0; i < SOUND_MAX; i++ )
-		{
+		for ( int i = 0; i < SOUND_MAX; i++ ) {
 			pSourceVo[i] = NULL;
 			buffer[i].pAudioData = NULL;
 		}
@@ -85,16 +70,13 @@ public:
 	/**
 	*@brief	デストラクタ
 	*/
-	~Audio()
-	{
+	~Audio() {
 		SoundAllStop();
 		
 		ReleaseAllSoundFile();
 		
 		ReleaseXAudio2();
 	}
-	
-public:
 	
 	//サウンド再生
 	void SoundPlay(int ID, bool LOOP = false);
@@ -104,8 +86,10 @@ public:
 
 	//サウンド全停止
 	void SoundAllStop(void);
-	
-private:	
+
+
+ private:
+
 	//XAudioの初期化
 	bool InitXAudio2(void);
 
@@ -126,6 +110,12 @@ private:
 
 	//XAudioの解放
 	bool ReleaseXAudio2(void);
+
+	//デバイスの準備
+	IXAudio2*				pXAudio2;
+	IXAudio2MasteringVoice*	pMasteringVo;
+	IXAudio2SourceVoice*	pSourceVo[SOUND_MAX];
+	XAUDIO2_BUFFER			buffer[SOUND_MAX];
 
 };
 

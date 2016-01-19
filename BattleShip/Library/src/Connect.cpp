@@ -21,7 +21,7 @@ bool Connect::Init()
 
 	if ( result != 0 )
 	{
-		switch(result)
+		switch (result)
 		{
 		case WSASYSNOTREADY:///<	ネットワークサブシステムがネットワークへの接続を準備できていない
 			MessageBoxA(0,"WSASYSNOTREADY\n",NULL,MB_OK);
@@ -58,7 +58,7 @@ bool Connect::Init()
 void Connect::SetTable( char* _p, int _iColumn, int _iLine )
 {
 	
-	switch( _iColumn )
+	switch ( _iColumn )
 	{
 	case SOCK_TYPE:
 		if ( memcmp( _p, "Server", 6) == 0 ){

@@ -14,9 +14,8 @@
 *@details	textやCSV形式のファイルを読み込み、数値をテーブルにセットするためのクラス。@n
 			テーブルにセットする際はSetTable関数の実態をこのクラスを継承した先でつくること。
 */
-class ReadFile
-{
-public:
+class ReadFile {
+ public:
 	/**
 	*@brief	テーブルデータの読み取り
 	*/
@@ -46,14 +45,11 @@ public:
 	/**
 	*@brief	文字列から01のバイトデータに書き換え
 	*/
-	static unsigned char StrToUChar(const char *ptr)
-	{
+	static unsigned char StrToUChar(const char *ptr) {
 	    unsigned char val = 0x00;
 		int i = 0;
-	    while( *ptr != '\0' ) 
-		{
-	        switch( *ptr++ ) 
-			{
+	    while ( *ptr != '\0' ) {
+	        switch ( *ptr++ ) {
 	            case '0':
 	                val = val|(0x00<<i);
 	                break;

@@ -4,7 +4,7 @@
 const unsigned char TextField::ConvertNumFromWord( int _num )
 {
 	unsigned char result = 0;
-	switch( _num )
+	switch ( _num )
 	{
 	case 0:
 	case 1:

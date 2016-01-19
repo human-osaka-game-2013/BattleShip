@@ -70,6 +70,8 @@ class TextField {
 		return m_settingFlag;
 	}
 
+	void ResetSettingFlag(){ m_settingFlag = false; }
+
 	bool	m_settingFlag;	///<	入力受付中フラグ
 	LogStream m_str;		///<	入力情報格納文字列クラス
 	float fWidth ,fHeight;	///<	テキストフィールド自体の幅高さ

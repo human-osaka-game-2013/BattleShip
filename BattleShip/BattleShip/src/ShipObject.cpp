@@ -36,7 +36,7 @@ bool ShipObject::RotationShip( int _arrayType, bool _rotType )
 	int (*_array2)[_SHIP_ARRAY_INDEX_] = NULL;
 	CHARADIRECTION dir = GetDirection();
 
-	switch( _arrayType )
+	switch ( _arrayType )
 	{
 	case 0:	///<	駒配列
 		if ( _rotType ){	///<右回転
@@ -101,7 +101,7 @@ void ShipObject::InitVertex( _SHIP_TYPE_NUM_ _shipType )
 {
 	int frontBlockNum;	///<	中心ブロックの前方にあるブロックの数
 	int backBlockNum;	///<	中心ブロックの後方にあるブロックの数
-	switch( _shipType )	///<	艦種別に設定
+	switch ( _shipType )	///<	艦種別に設定
 	{
 		case TYPE_AIRCARRIER:
 			frontBlockNum = 2;

@@ -41,7 +41,7 @@ void ActionReport::Draw()
 
 void ActionReport::SetTable( char* _p, int _iColumn, int _iLine )
 {
-	switch( _iLine )
+	switch ( _iLine )
 	{
 	case _ATT_COUNT_:
 		m_reportConditions[_iColumn].SetAttackCount(atoi(_p));
@@ -74,7 +74,7 @@ void ActionReport::JudgmentReward( int _rewardNum )
 {
 	bool result = false;
 	for ( int i = 0; i < _MAX_REPORT_VAR_; i++ )	{
-		switch( i ) {
+		switch ( i ) {
 		case _ATT_COUNT_:
 			result = CheckJudgeItem( m_reportResult.GetAttackCount(),
 				m_reportConditions[_rewardNum].GetAttackCount());

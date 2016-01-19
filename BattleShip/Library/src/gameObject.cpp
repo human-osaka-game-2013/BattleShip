@@ -12,8 +12,8 @@
 	@return	‚È‚µ
 */
 CGameObject::CGameObject()	
-	: m_posX( 0.f ), m_posY( 0.f ), m_posZ( 0.f ),
-	  m_Dir( CH_NONE ), m_State( STATE_NONE ), m_deadFlag( true ), m_id(0)
+	: m_posX( -500.f ), m_posY( -500.f ), m_posZ( 0.f ),
+	  m_Dir( CH_NONE ), m_State( STATE_NONE ), m_deadFlag( false ), m_id(0)
 {
 
 }

@@ -10,8 +10,7 @@
 *@brief	使用するキーの種類
 *@details	KeyCheckと共に使うキーが増えればココに種類を追加していく
 */ 
-enum eKEYKIND
-{
+enum eKEYKIND {
 	/*
 		数値の入力など（ここの並びは変えないで下さい。）
 	*/
@@ -38,22 +37,14 @@ enum eKEYKIND
 /**
 *@brief	キーの状態管理クラス
 */
-class CKey
-{
-private:
-	int m_key[KEYMAX];		///< キーの状態を種類別に格納する変数
-	bool m_preKey[KEYMAX];	///< キーの種類別に押されているかのフラグ
-	IDirectInputDevice8* const	m_pKeyDevice;	///<	キーデバイスオブジェクトのポインタ
-
-public:
+class CKey {
+ public:
 	/**
 	*@brief	コンストラクタ
 	*@param[in]
 	*/
 	CKey( IDirectInputDevice8* const _pKeyDevice);
 
-public:
-	
 	/**
 	*@brief	複数のキーの状態をまとめてチェック
 	*@details	KeyCheck関数をまとめて呼び出す
@@ -73,13 +64,18 @@ public:
 				一番最初に合致したキーのIDを返す。該当しなかった場合は-1を返す
 	*/
 	int CheckStateToAllKey( int _keySt );
-private:
+
+ private:
 	/**
 	*@brief	キー状態チェック
 	*@param[in]	_dik	キーの定数
 	*@param[in]	_st		キーの種類
 	*/
 	void KeyCheck ( int _dik, int _st );
+
+	int m_key[KEYMAX];		///< キーの状態を種類別に格納する変数
+	bool m_preKey[KEYMAX];	///< キーの種類別に押されているかのフラグ
+	IDirectInputDevice8* const	m_pKeyDevice;	///<	キーデバイスオブジェクトのポインタ
 
 };
 #endif

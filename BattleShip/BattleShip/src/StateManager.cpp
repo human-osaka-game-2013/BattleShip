@@ -115,7 +115,7 @@ int StateManager::StateCotrol()
 #endif
 	if ( gameResult == 1 )	///<	ステートのルーチン処理の結果シーンが変わる必要があれば
 	{
-		switch( m_currentState )	///<	変更するステートは順番がある程度決まっているので分岐
+		switch ( m_currentState )	///<	変更するステートは順番がある程度決まっているので分岐
 		{
 		case STATE_SET_SHIP:
 			ChangeState(STATE_SELECTION);
@@ -165,7 +165,7 @@ int StateManager::CheckState()
 	stateResult = m_pGameState->Control();	///<　ステートごとの処理に移行
 	SetConnectFlag( m_pGameState->GetConnectFlag() );	//	ステート内でのフラグ変更を反映させる
 	
-	switch( m_currentState )	///<　シーン毎にステートの結果への対処が変わるので分岐
+	switch ( m_currentState )	///<　シーン毎にステートの結果への対処が変わるので分岐
 	{
 	//	駒が配置され、配置情報などの送受信が完了するまでループ
 	case STATE_SET_SHIP:
@@ -310,7 +310,7 @@ bool StateManager::ChangeState( _STATE_NUM_ _stateType )
 		CLASS_DELETE(m_pGameState); 
 	}
 	//	各ステート別にステート生成
-	switch( _stateType )
+	switch ( _stateType )
 	{
 	case STATE_SET_SHIP:
 		m_tempStr1 = m_gameLog.m_fixedPhrase.m_phrase[FixedPhrase::STATE_SET_SHIP_STR];
@@ -547,7 +547,7 @@ void StateManager::DrawStageBlock( const int _playerIndex )
 			{
 					
 				//	範囲指定桁チェック
-				switch( StageObject::SelectOfData(tempArrayData) )
+				switch ( StageObject::SelectOfData(tempArrayData) )
 				{
 				case StageObject::_SELECT_TRUE_:	///<選択されているマス
 					tempA = 100;
@@ -566,7 +566,7 @@ void StateManager::DrawStageBlock( const int _playerIndex )
 				}
 	
 				//	損傷状態桁チェック
-				switch( StageObject::ConditionOfData(tempArrayData) )
+				switch ( StageObject::ConditionOfData(tempArrayData) )
 				{
 				case StageObject::_CONDITION_NONE_:
 				case StageObject::_CONDITION_NOMAL_:

@@ -10,9 +10,10 @@
 #include "DrawStructList.h"
 #include "DirectXFont.h"
 
-// テクスチャの番号とテクスチャ全体の縦横の大きさ
-struct TEXTUREINFO
-{
+/**
+*@brief	テクスチャの番号とテクスチャ全体の縦横の大きさ
+*/
+struct TEXTUREINFO {
 	// テクスチャの格納ポインタ
 	LPDIRECT3DTEXTURE9	pTexture;
 
@@ -23,10 +24,11 @@ struct TEXTUREINFO
 	float divTuSize, divTvSize; ///< アニメーションの際のUVの分割サイズ 
 };
 
-// 使用するテクスチャ
-// 使いたいテクスチャがあれば列挙子内に追加していく
-enum TEXTURES
-{
+/** 
+*@brief	使用するテクスチャ
+		使いたいテクスチャがあれば列挙子内に追加していく
+*/
+enum TEXTURES {
 	//	ゲームメイン中
 	_TEX_BACKGROUND_,
 
@@ -66,16 +68,8 @@ enum TEXTURES
 *@details	シーン管理クラスに実体を持たせ、各シーンクラスにポインタを渡す。	
 *@todo	アドレスをconstにするのは初めてなので、修正する可能性もあり。
 */
-class CDrawManager
-{
-private:
-	TEXTUREINFO m_TextureInfo [_TEXTURE_MAX_];	///<テクスチャ情報格納配列
-	IDirect3DDevice9* const m_pD3Device;		///<D3Dデバイスポインタ
-
-public:
-	DirectXFont m_dxFont;	///<DirectFont
-
-public:
+class CDrawManager {
+ public:
 	/**
 	*@brief	コンストラクタ
 	*/
@@ -85,7 +79,6 @@ public:
 	*/
 	~CDrawManager();
 
-public:
 	/**
 	*@brief 描画前処理
 	*param[in] _b3dView：3D描画などをする場合など、@n
@@ -114,7 +107,6 @@ public:
 	
 	void ReleaseAllTexture ();
 
-public:
 	/**
 	*@brief	矩形描画
 	*@details	外部から矩形情報を貰う場合の描画
@@ -136,8 +128,10 @@ public:
 	*@param[in]	_fTu2		矩形の右下頂点テクスチャ座標U
 	*@param[in]	_fTv2		矩形の右下頂点テクスチャ座標V
 	*/
-	void VertexDraw ( int _textuerNumber, float _fXpos, float _fYpos, float _fWidth, float _fHeight,
-				float _fTu, float _fTv, float _fTu2, float _fTv2);
+	void VertexDraw ( int _textuerNumber,
+					  float _fXpos,float _fYpos,
+					  float _fWidth,float _fHeight,
+					  float _fTu,float _fTv,float _fTu2,float _fTv2 );
 	
 	/**
 	*@brief	矩形描画
@@ -156,8 +150,11 @@ public:
 	*@param[in]	_iG			矩形のカラー値（緑）
 	*@param[in]	_iB			矩形のカラー値（青）
 	*/
-	void VertexDraw ( int _textuerNumber, float _fXpos, float _fYpos, float _fWidth, float _fHeight,
-					float _fTu, float _fTv, float _fTu2, float _fTv2, int _iA, int _iR, int _iG, int _iB );
+	void VertexDraw ( int _textuerNumber,
+					  float _fXpos,float _fYpos,
+					  float _fWidth,float _fHeight,
+					  float _fTu,float _fTv,float _fTu2,float _fTv2,
+					  int _iA,int _iR,int _iG,int _iB );
 	
 	/**
 	*@brief	中心基準の矩形描画
@@ -172,8 +169,10 @@ public:
 	*@param[in]	_fTu2		矩形の右下頂点テクスチャ座標U
 	*@param[in]	_fTv2		矩形の右下頂点テクスチャ座標V
 	*/
-	void CenterDraw ( int _textuerNumber, float _fXpos, float _fYpos, float _fWidth, float _fHeight,
-							float _fTu1, float _fTv1, float _fTu2, float _fTv2 );
+	void CenterDraw ( int _textuerNumber,
+					  float _fXpos,float _fYpos,
+					  float _fWidth,float _fHeight,
+					  float _fTu1,float _fTv1,float _fTu2,float _fTv2 );
 	
 	/**
 	*@brief	中心基準の矩形描画
@@ -189,8 +188,11 @@ public:
 	*@param[in]	_fTu2		矩形の右下頂点テクスチャ座標U
 	*@param[in]	_fTv2		矩形の右下頂点テクスチャ座標V
 	*/
-	void CenterDraw ( int _textuerNumber, float _fXpos, float _fYpos, float _fAngle, float _fWidth, float _fHeight,
-							float _fTu1, float _fTv1, float _fTu2, float _fTv2 );
+	void CenterDraw ( int _textuerNumber,
+					  float _fXpos,float _fYpos,
+					  float _fAngle,
+					  float _fWidth,float _fHeight,
+					  float _fTu1,float _fTv1,float _fTu2,float _fTv2 );
 	
 	/**
 	*@brief	中心基準の矩形描画
@@ -210,8 +212,12 @@ public:
 	*@param[in]	_iG			矩形のカラー値（緑）
 	*@param[in]	_iB			矩形のカラー値（青）
 	*/
-	void CenterDraw ( int _textuerNumber, float _fXpos, float _fYpos, float _fAngle, float _fWidth, float _fHeight,
-							float _fTu1, float _fTv1, float _fTu2, float _fTv2, int _iA, int _iR, int _iG, int _iB );
+	void CenterDraw ( int _textuerNumber, 
+					  float _fXpos,float _fYpos,
+					  float _fAngle,
+					  float _fWidth,float _fHeight,
+					  float _fTu1,float _fTv1,float _fTu2,float _fTv2,
+					  int _iA,int _iR,int _iG,int _iB );
 
 	/**
 	*@brief	左上基準のアニメーション矩形描画
@@ -225,8 +231,10 @@ public:
 	*@param[in]	_tuSize		左上のUV値をテクスチャのどの位置にしたいかを指定
 	*@param[in]	_tvSize		左上のUV値をテクスチャのどの位置にしたいかを指定
 	*/
-	void AnimationDraw( int _textuerNumber, float _fXpos, float _fYpos, float _fWidth, float _fHeight, 
-						unsigned int _tuSize = 0, unsigned int _tvSize = 0 );
+	void AnimationDraw( int _textuerNumber, 
+						float _fXpos,float _fYpos,
+						float _fWidth,float _fHeight, 
+						unsigned int _tuSize = 0,unsigned int _tvSize = 0 );
 
 	/**
 	*@brief	左上基準のアニメーション矩形描画
@@ -242,9 +250,12 @@ public:
 	*@param[in]	_hDiv	分割した場合のY軸の何番目に並んだテクスチャか
 	*@param[in] _color	色調も変えたい場合は値を入れる。
 	*/
-	void AnimationDraw( int _textuerNumber, float _fXpos, float _fYpos, float _fWidth, float _fHeight,
-						bool _flipHorizontal=false, bool _flipVertical=false, 
-						int _wDiv = 0, int _hDiv=0, unsigned long _color = 0xffffffff );
+	void AnimationDraw( int _textuerNumber,
+						float _fXpos,float _fYpos,
+						float _fWidth,float _fHeight,
+						bool _flipHorizontal=false,bool _flipVertical=false, 
+						int _wDiv = 0,int _hDiv=0,
+						unsigned long _color = 0xffffffff );
 
 	/**
 	*@brief	矩形の座標変換
@@ -257,34 +268,45 @@ public:
 	*@param[in]	_fScaleY	矩形の拡縮Y
 	*@param[in]	_fRotationY	矩形の回転角度
 	*/
-	void VertexTransform(  int _textuerNumber, CUSTOMVERTEX (&_vertex)[4], float _fPosX, float _fPosY, 
-		float _fScaleX, float _fScaleY, float _fRotationZ);
+	void VertexTransform( int _textuerNumber,
+						  CUSTOMVERTEX (&_vertex)[4],
+						  float _fPosX,float _fPosY,
+						  float _fScaleX,float _fScaleY,
+						  float _fRotationZ );
 
-public:
 	/**
 	*@brief	矩形のカラー値を一度に全て変える
 	*@details	unsigned long型で16進数型で指定したい際
 	*/
-	void ChangeVertexColor( CUSTOMVERTEX (&_vertex)[4], const unsigned long _color )
-	{
+	void ChangeVertexColor( CUSTOMVERTEX (&_vertex)[4],
+							const unsigned long _color ) {
+
 		for ( int i = 0; i < 4; i++ ){
 			_vertex[i].color = _color;
 		}
 	}
+
 	/**
 	*@brief	矩形のカラー値を一度に全て変える
 	*@details	各カラー値をint型で指定したい際
 	*/
-	void ChangeVertexColor( CUSTOMVERTEX (&_vertex)[4], const int _A, const int _R, const int _G, const int _B )
-	{
-		for ( int i = 0; i < 4; i++ ){
+	void ChangeVertexColor( CUSTOMVERTEX (&_vertex)[4],
+							const int _A,const int _R,const int _G,const int _B ) {
+		
+		for ( int i = 0; i < 4; i++ ) {
 			_vertex[i].color = D3DCOLOR_ARGB( _A, _R, _G, _B );
 		}
 	}
 
-public:
 	//	使用する全ての画像を読み込み
 	virtual bool AllLoadTexture ();
+
+	DirectXFont m_dxFont;	///<DirectFont
+
+ private:
+	TEXTUREINFO m_TextureInfo [_TEXTURE_MAX_];	///<テクスチャ情報格納配列
+	IDirect3DDevice9* const m_pD3Device;		///<D3Dデバイスポインタ
+
 };
 
 #endif

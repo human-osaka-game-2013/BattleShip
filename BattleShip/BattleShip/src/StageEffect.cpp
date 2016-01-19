@@ -29,7 +29,7 @@ void StageEffect::CheckSelectOfStage()
 
 				int selectType = StageObject::SelectOfData( m_pStage->m_stageArray[iPlayer][iColumn][iLine]);
 				//	エフェクトは攻撃索敵のみ
-				switch( selectType )
+				switch ( selectType )
 				{
 				case StageObject::_SEARCH_NOMAL_:
 				case StageObject::_SEARCH_ALL_:
@@ -39,7 +39,7 @@ void StageEffect::CheckSelectOfStage()
 					{
 						m_enemySelect.push_back(m_pStage->m_stageBlock[iPlayer][iColumn][iLine] );
 						//	敵の選択した行動をプレイヤー側の選択されたマスから判断する
-						switch(selectType)
+						switch (selectType)
 						{
 						case StageObject::_SEARCH_NOMAL_:
 						case StageObject::_SEARCH_ALL_:
@@ -372,7 +372,7 @@ void StageEffect::AircraftEffect( BoardOfFrame& _block, int _aircraftType, bool 
 		flipHorizontal = m_playerID/_PLAYER_NUM_ ? false : true;	///< 消している方は今の時点では自身とは
 	}
 	////	航空機のテクスチャを設定
-	//switch( _aircraftType )
+	//switch ( _aircraftType )
 	//{
 	//case 0:
 	//	texNum = _TEX_AIRCRAFT_;
@@ -481,13 +481,13 @@ void StageEffect::EffectSoundControl()
 	/*
 		不格好ですが取り敢えず時間に合わせて各艦別に発生SEを変えたりしています
 	*/
-	switch(m_plyaerSelectType)
+	switch (m_plyaerSelectType)
 	{
 		//	攻撃
 	case _SELECT_ACTION_:
 		//	エフェクト開始
 		if ( m_elapsedTimeFormStateInstance == 0 ){
-			switch(m_ShipCount)
+			switch (m_ShipCount)
 			{
 			case ShipObject::TYPE_AIRCARRIER:
 				m_pAudio->SoundPlay( Audio::_AIRCRAFT_SE_ );
@@ -541,13 +541,13 @@ void StageEffect::EffectSoundControl()
 	}		 
 	
 	//	敵側
-	switch(m_enemySelectType)
+	switch (m_enemySelectType)
 	{
 		//	攻撃
 	case _SELECT_ACTION_:
 		//	エフェクト開始
 		if ( m_elapsedTimeFormStateInstance == 0 ){
-			switch(m_ShipCount)
+			switch (m_ShipCount)
 			{
 			case ShipObject::TYPE_AIRCARRIER:
 				m_pAudio->SoundPlay( Audio::_AIRCRAFT_SE_ );

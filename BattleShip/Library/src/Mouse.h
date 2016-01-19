@@ -7,8 +7,7 @@
 /**
 *@brief	マウスボタンの列挙
 */
-enum eMOUSEKIND
-{
+enum eMOUSEKIND {
 	MOUSE_L,
 	MOUSE_R,
 	MOUSE_C,
@@ -21,27 +20,15 @@ enum eMOUSEKIND
 *@details	D3DXVECTOR3だとマウス座標取得に用意されているPOINT構造体との、@n
 			型が違うため、自前で用意している。
 */
-struct	MOUSE_VOL
-{
+struct	MOUSE_VOL {
 	long	lMVolX, lMVolY, lMVolZ;
 };
 
 /**
 *@brief	マウスクラス
 */
-class CMouse
-{
-private:
-	int		m_mouse[MOUSEMAX];	///<	マウスの状態を種類別に格納する変数
-	bool	m_preMouse[MOUSEMAX];	///<	マウスの種類別に押されているかのフラグ
-
-	POINT	m_poCurrentCursor;	///<	現在のマウス座標
-	POINT	m_poBeforeCursor;	///<	前のマウス座標
-	MOUSE_VOL	m_moveMouseVol;	///<	マウスの移動量
-
-	IDirectInputDevice8* const	m_pMouseDevice;	///<	キーデバイスオブジェクトのポインタ
-
-public:
+class CMouse {
+ public:
 	/**
 	*@brief	コンストラクタ
 	*@details	メンバ変数などの初期化程度
@@ -52,8 +39,6 @@ public:
 	*/
 	~CMouse();	
 
-public:
-	
 	/**
 	*@brief	マウス座標の取得X
 	*/
@@ -92,11 +77,20 @@ public:
 	//	引数1：ウインドウハンドル
 	void CursorSet(HWND* hWnd);
 
-private:
+ private:
 	/**
 	*@brief	マウス状態チェック
 	*/
 	void MouseCheck ( int st );
+
+	int		m_mouse[MOUSEMAX];	///<	マウスの状態を種類別に格納する変数
+	bool	m_preMouse[MOUSEMAX];	///<	マウスの種類別に押されているかのフラグ
+
+	POINT	m_poCurrentCursor;	///<	現在のマウス座標
+	POINT	m_poBeforeCursor;	///<	前のマウス座標
+	MOUSE_VOL	m_moveMouseVol;	///<	マウスの移動量
+
+	IDirectInputDevice8* const	m_pMouseDevice;	///<	キーデバイスオブジェクトのポインタ
 
 };
 

@@ -9,7 +9,7 @@ void Player::Init( int _userID )
 	while( iCount < ShipObject::TYPE_MAX )
 	{
 		//	クラス別に艦種クラスを生成
-		switch( iCount )
+		switch ( iCount )
 		{
 		case ShipObject::TYPE_AIRCARRIER:
 			m_pShip.push_back( new AircraftCarrier( _userID ) );
@@ -72,7 +72,7 @@ bool Player::CheckDestroy( const ShipObject::_SHIP_TYPE_NUM_ _shipType )
 	hitCount = CheckHitCount( _shipType );
 	
 	//	各艦のマス数に応じてカウントと照らしあわせて判定
-	switch( _shipType )
+	switch ( _shipType )
 	{
 	case ShipObject::TYPE_AIRCARRIER:
 		if ( hitCount >= 5 )

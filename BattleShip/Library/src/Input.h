@@ -2,9 +2,11 @@
 #ifndef	_INPUT_H_
 #define _INPUT_H_
 
-// キーの状態の種類
-enum eKEYSTATE
-{
+/**
+*@brief	キーの状態の種類
+*/
+enum eKEYSTATE {
+
 	OFF,
 	PUSH,
 	RELEASE,

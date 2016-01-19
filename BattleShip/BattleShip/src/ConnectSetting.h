@@ -26,8 +26,7 @@
 /**
 *@brief	通信設定クラス
 */
-class ConnectSetting : public ReadFile
-{
+class ConnectSetting : public ReadFile {
  public:
 	/**
 	*@brief	コンストラクタ

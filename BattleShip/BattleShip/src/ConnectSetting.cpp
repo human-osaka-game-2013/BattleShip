@@ -25,9 +25,9 @@ void ConnectSetting::Init( CMouse* const _pMouse, CKey* const _pKey, Audio* cons
 	SetKeyPtr( _pKey );
 	SetAudioPtr( _pAudio );
 
-	if ( sockType ){
+	if ( sockType ) {
 		m_clientButton.SetState( Button::STATE_SELECT );
-	}else{
+	}else {
 		m_serverButton.SetState( Button::STATE_SELECT );
 	}
 }
@@ -36,7 +36,7 @@ void ConnectSetting::Init( CMouse* const _pMouse, CKey* const _pKey, Audio* cons
 void ConnectSetting::SetTable( char* _p, int _iColumn, int _iLine )
 {
 	
-	switch( _iColumn )
+	switch ( _iColumn )
 	{
 	case 0:
 		if ( memcmp( _p, "Server", 6) == 0 ){
@@ -46,11 +46,19 @@ void ConnectSetting::SetTable( char* _p, int _iColumn, int _iLine )
 		}
 		break;
 	case 1:
-		if ( sockType ){	///<	ドメイン名が必要なのはクライアント側だけなので
-			if ( memcmp( _p, "localhost", 9) == 0 ){
+		if ( sockType ) {	///<	ドメイン名が必要なのはクライアント側だけなので
+			if ( memcmp( _p, "localhost", 9) == 0 ) {
 				strAddr = "127.0.0.1";
-			}else{
+			}else {
 				strAddr.append(_p);
+				strAddr.pop_back();
+			}
+		}else {
+			if ( memcmp( _p, "localhost", 9) == 0 ) {
+				strAddr = "127.0.0.1";
+			}else {
+				strAddr.append(_p);
+				strAddr.pop_back();
 			}
 		}
 		break;
@@ -81,10 +89,15 @@ bool ConnectSetting::ConvertDataFileFromStr( std::string* _outStr )
 		//	アドレスが入力（or数値が足らない）されていなかったら、ダミーとしてローカルホストを入れる
 		DebugMsgBox("IPが入力されていません。またはIPアドレスとして認識出来ませんでした。確認してください。");
 		_outStr->append("localhost\n");
+		strAddr = "127.0.0.1";
 	}else{
 		_outStr->append( pTempStr->c_str() );
 		_outStr->append("\n");
+		strAddr = pTempStr->c_str();
 	}
+
+	m_ipAddr.ResetStr();
+	m_ipAddr.AddStr(strAddr.c_str());
 
 	//	ポート
 	pTempStr = m_port.m_str.GetStringPtr();
@@ -94,8 +107,11 @@ bool ConnectSetting::ConvertDataFileFromStr( std::string* _outStr )
 		return false;
 	}else{
 		_outStr->append( pTempStr->c_str() );
-		//_outStr->append("\n");
+		strPort = pTempStr->c_str();
 	}
+
+	m_port.ResetStr();
+	m_port.AddStr(strPort.c_str());
 
 	return true;
 }
@@ -143,7 +159,11 @@ void ConnectSetting::Control()
 	//	IP＆ポート番号のテキストフィールド処理
 	if ( m_pMouse->MouseStCheck( MOUSE_L, PUSH ))
 	{
-		if (m_ipAddr.SelectCheck( tempX, tempY ) || m_port.SelectCheck( tempX, tempY ))
+		bool ipSetting = false, portSetting = false;
+		ipSetting = m_ipAddr.SelectCheck( tempX, tempY );
+		portSetting = m_port.SelectCheck( tempX, tempY );
+
+		if (ipSetting || portSetting)
 		{
 			m_pAudio->SoundPlay( Audio::_FAILED_SE_ );
 		}

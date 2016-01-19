@@ -36,7 +36,7 @@ class ReportData {
 	*@brief	行動選択の回数のカウント更新
 	*/
 	void UpdateSelectCount( const int _selectType ) {
-		switch(_selectType) {
+		switch (_selectType) {
 		case 0:	///<攻撃
 			attackCount++;
 			break;
@@ -50,7 +50,7 @@ class ReportData {
 	*@brief	戦闘結果の回数のカウント更新
 	*/
 	void UpdateResultCount( const int _result ) {
-		switch(_result) {
+		switch (_result) {
 		case 1:	///<発見
 			sightCount++;
 			

@@ -8,32 +8,16 @@
 #define _FONT_WIDTH_	16
 #define	_FONT_HEIGHT_	16
 
-class DirectXFont
-{
-private:
-	LPD3DXFONT m_font;		///< @brief 描画先フォント
-	UINT m_font_heigh;		///< @brief フォントの高さ
-	UINT m_font_width;		///< @brief フォントの幅
-	
-private:
-
-	/** @brief フォントハンドルの解放*/
-	void ReleaseFont()
-	{
-		m_font->Release();
-	}
-
-public:
-	DirectXFont()
-	{
+class DirectXFont {
+ public:
+	DirectXFont() {
 		m_font = NULL;		
 		m_font_heigh = _FONT_HEIGHT_;		
 		m_font_width = 0;		
 	};
 
 	/** @brief メンバ解放*/
-	~DirectXFont()
-	{
+	~DirectXFont() {
 		ReleaseFont();
 	}
 
@@ -49,8 +33,7 @@ public:
 	bool Init(
 		const LPDIRECT3DDEVICE9 _dev,
 		const UINT _font_heigh = _FONT_HEIGHT_,
-		const UINT _font_width = 0
-	);
+		const UINT _font_width = 0 );
 
 	/**
 	@brief	フォントの描画
@@ -65,14 +48,22 @@ public:
 	@return	true	成功
 	@return	false	失敗
 	*/
-	bool DrawA( 
-		LONG _draw_pos_x,
-		LONG _draw_pos_y,
-		LONG _w, LONG _h,
-		LPCSTR _font,
-		const D3DXCOLOR *_font_color = &D3DXCOLOR(0xffffffff),
-		unsigned long _format = DT_LEFT
-		);
+	bool DrawA(	LONG _draw_pos_x,
+				LONG _draw_pos_y,
+				LONG _w, LONG _h,
+				LPCSTR _font,
+				const D3DXCOLOR *_font_color = &D3DXCOLOR(0xffffffff),
+				unsigned long _format = DT_LEFT );
+
+ private:
+	/** @brief フォントハンドルの解放*/
+	void ReleaseFont() {
+		m_font->Release();
+	}
+
+	LPD3DXFONT m_font;		///< @brief 描画先フォント
+	UINT m_font_heigh;		///< @brief フォントの高さ
+	UINT m_font_width;		///< @brief フォントの幅
 
 };
 

@@ -10,9 +10,8 @@
 *@brief	ゲームオブジェクトクラス
 *@details	ゲーム内で使うオブジェクトの
 */
-class CGameObject
-{
-public:	
+class CGameObject {
+ public:	
 	/**
 	*@brief	オブジェクトの向き
 	*/
@@ -40,19 +39,6 @@ public:
 		CH_STATE_MAX,
 	};
 
-private:	//	メンバ変数
-	CHARADIRECTION	m_Dir;		///<	向き
-	CHARASTATE		m_State;	///<	状態
-
-	float m_posX;		///<	X座標
-	float m_posY;		///<	Y座標
-	float m_posZ;		///<	Z座標
-
-	int	m_id;	///<	識別番号（オブジェクト固有のID)
-
-	bool m_deadFlag;	///<	表示などオブジェクトが存在出来るかの判断に使う
-
-public:
 	/**
 	*@brief	コンストラクタ
 	*/
@@ -63,7 +49,6 @@ public:
 	*/
 	virtual ~CGameObject();
 
-public:	
 	/**
 	*@brief	移動の仮想関数
 	*/
@@ -84,7 +69,7 @@ public:
 	*/
 	bool HitCheck( float _left, float _top, float _right, float _bottom );
 
-public:	// アクセッサ
+// アクセッサ
 	/*
 	*@brief	向きをセット
 	*@param[in]	_dir	向き（右or左）
@@ -169,6 +154,20 @@ public:	// アクセッサ
 	*@return	識別番号（bool型）
 	*/
 	bool GetDeadFlag(){	return m_deadFlag;	}
+
+ private:
+//	メンバ変数
+	CHARADIRECTION	m_Dir;		///<	向き
+	CHARASTATE		m_State;	///<	状態
+
+	float m_posX;		///<	X座標
+	float m_posY;		///<	Y座標
+	float m_posZ;		///<	Z座標
+
+	int	m_id;	///<	識別番号（オブジェクト固有のID)
+
+	bool m_deadFlag;	///<	表示などオブジェクトが存在出来るかの判断に使う
+
 };
 
 #endif

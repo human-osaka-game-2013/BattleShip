@@ -21,9 +21,8 @@
 *@brief	シーン管理クラス
 *@details	管理クラスを一つ作り、そこから各シーンクラスを生成→破棄を繰り返す。
 */
-class CSceneManager
-{
-public:
+class CSceneManager {
+ public:
 	/**
 	*@brief	シーン番号
 	*/
@@ -35,27 +34,11 @@ public:
 		SCENE_MAX
 	};
 
-private:
-	CScene*			m_sceneObj;			///< シーンオブジェクトポインタ
-	CDevice* const	m_pDevice;			///< デバイスクラスポインタ
-	CRenderManager* m_pRenderManager;	///< 3D描画オブジェクトポインタ
-	CDrawManager*	m_pDrawManager;		///< 2D描画オブジェクトポインタ
-	CKey*			m_pKey;				///< キー管理クラスオブジェクトポインタ
-	CMouse*			m_pMouse;			///< マウス管理クラスオブジェクトポインタ
-	CXInput*		m_pXInput;			///< ジョイスティック管理クラス
-	Audio*			m_pAudio;			///< 音声再生クラスオブジェクトポインタ
-
-	int		iCurrentScene;		///<	今のシーン
-	bool	bChangeSceneFlag;	///<	シーン変更フラグ
-	bool	m_bRenderType;		///<	描画タイプの判定
-
-public:	
 	/**
 	*@brief	 コンストラクタ
 	*/
 	CSceneManager( int _scene , CDevice* const _pDevice, bool _bRenderType );	//	コンストラクタ
 
-public:
 	/**
 	*@brief	 ゲームメイン関数
 	*/
@@ -88,7 +71,6 @@ public:
 	*/
 	void EndRender ();
 
-public:
 	/**
 	*@brief	今のシーン状態を取得
 	*@return	iCurrentScene	現在のシーン
@@ -106,8 +88,6 @@ public:
 	*/
 	void CSceneManager::UpdateChangeFlag( bool _bTemp ) { bChangeSceneFlag = _bTemp; }
 
-
-public:
 	/**
 	*@brief	 シーン管理
 	*/
@@ -118,6 +98,21 @@ public:
 	*@details	SceneManager側に解放しないといけないメンバを追加した場合は、そのたびに追加してやる。
 	*/
 	virtual bool DeleteSceneObj();
+
+ private:
+	CScene*			m_sceneObj;			///< シーンオブジェクトポインタ
+	CDevice* const	m_pDevice;			///< デバイスクラスポインタ
+	CRenderManager* m_pRenderManager;	///< 3D描画オブジェクトポインタ
+	CDrawManager*	m_pDrawManager;		///< 2D描画オブジェクトポインタ
+	CKey*			m_pKey;				///< キー管理クラスオブジェクトポインタ
+	CMouse*			m_pMouse;			///< マウス管理クラスオブジェクトポインタ
+	CXInput*		m_pXInput;			///< ジョイスティック管理クラス
+	Audio*			m_pAudio;			///< 音声再生クラスオブジェクトポインタ
+
+	int		iCurrentScene;		///<	今のシーン
+	bool	bChangeSceneFlag;	///<	シーン変更フラグ
+	bool	m_bRenderType;		///<	描画タイプの判定
+
 };
 
 #endif

@@ -136,7 +136,7 @@ bool Selection::TabCheck()
 bool Selection::SetTypeArray()
 {
 	bool result = false;
-	switch( m_plyaerSelectType )
+	switch ( m_plyaerSelectType )
 	{
 	case _SELECT_ACTION_:
 		m_tempArray = m_tempShip->m_actionArray;
@@ -190,7 +190,7 @@ int Selection::SelectArrayCheck( )
 	int iLine;
 
 	//	攻撃と索敵なら相手側ID、移動なら自分側のIDをtempIDに入れる
-	switch( m_plyaerSelectType )
+	switch ( m_plyaerSelectType )
 	{
 	case _SELECT_ACTION_:
 	case _SELECT_SEARCH_:
@@ -203,7 +203,7 @@ int Selection::SelectArrayCheck( )
 				if ( resultBlockHit )
 				{
 					//	ステージブロックのチェック
-					switch( m_plyaerSelectType )
+					switch ( m_plyaerSelectType )
 					{
 					case _SELECT_ACTION_:
 						iCheckResult = m_pStage->CheckStageBlock( tempID, iColumn, iLine, m_tempShip, 

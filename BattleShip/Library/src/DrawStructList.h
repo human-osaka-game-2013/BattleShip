@@ -2,9 +2,11 @@
 #define _DRAWSTRUCTLIST_H_
 
 
-// 画像の頂点座標などの構造体
-struct CUSTOMVERTEX
-{
+/**
+*@brief	画像の頂点座標などの構造体
+*/
+struct CUSTOMVERTEX {
+
 	float	x, y, z, rhw;
 
 	unsigned long	color;

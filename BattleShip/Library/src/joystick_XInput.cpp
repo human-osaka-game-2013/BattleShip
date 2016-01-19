@@ -28,7 +28,7 @@ void CXInput::CheckButton( int _user )
 		BYTE bTrigger = 0;
 		eSTICK_STATE stTemp = StickState[_user].Button[iType];
 
-		switch( iType )
+		switch ( iType )
 		{
 		case CROSS_UP:
 			wConst = XINPUT_GAMEPAD_DPAD_UP;

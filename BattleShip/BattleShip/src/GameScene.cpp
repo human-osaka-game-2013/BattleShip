@@ -153,7 +153,7 @@ bool GameScene::CommunicationProcessing()
 {
 	bool result = false;
 
-	switch( m_stateManager->GetState() )
+	switch ( m_stateManager->GetState() )
 	{
 	case StateManager::STATE_SET_SHIP:
 	case StateManager::STATE_SELECTION:

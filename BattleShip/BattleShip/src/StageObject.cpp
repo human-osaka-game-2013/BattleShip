@@ -43,7 +43,7 @@ int StageObject::CheckStageBlock( int _player, const int _column, const int _lin
 	_player--;	///<	配列指数用に直す
 	
 	//---どの配列データをチェックするかの分岐---
-	switch( _arrayType )
+	switch ( _arrayType )
 	{
 	case ShipObject::ARRAY_TYPE_SHIP:
 		_array = _ship->m_shipArray;
@@ -115,7 +115,7 @@ int StageObject::CheckRangeOnStage(  int& _column, int& _line,
 				if (m_stageBlock[_player][iStageCol][iStageLine].HitBlockCheck( _x, _y ))
 				{
 					int iHitResult = SelectOfData(m_stageArray[_player][iStageCol][iStageLine]);
-					switch(iHitResult)
+					switch (iHitResult)
 					{
 					case 0:
 					case 1:
@@ -278,7 +278,7 @@ bool StageObject::SetRange( int _player, const int _column, const int _line,
 
 			//	ステージ内で、今調べてる配列情報の中身が0じゃ無かったら（駒や攻撃などの範囲情報があれば）
 			if ( !bStageOutside && _array[iColumn][iLine] != _CONDITION_NONE_  ){
-				switch( _selectNum )
+				switch ( _selectNum )
 				{
 				case GameState::_SELECT_ACTION_:
 					//	ステージ内で、今調べてる配列情報の中身が0じゃ無かったら（駒や攻撃などの範囲情報があれば）

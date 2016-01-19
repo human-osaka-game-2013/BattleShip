@@ -33,7 +33,7 @@ int Result::Control()
 
 		//	戦闘結果の仮表示
 		//	自プレイヤー側に起きたイベント（敵の行動選択による結果）
-		switch( m_resultPlayer )
+		switch ( m_resultPlayer )
 		{
 		case RESULT_SEARCH:
 			m_tempStr1 = m_pGameLog->GetPhrase(FixedPhrase::RESULT_DISCOVERED_STR);
@@ -43,7 +43,7 @@ int Result::Control()
 			break;
 		}
 		//	敵側に起きたイベント（自プレイヤーの行動選択による結果
-		switch( m_resultEnemy )
+		switch ( m_resultEnemy )
 		{
 		case RESULT_SEARCH:
 			m_tempStr2 = "敵の";
@@ -65,7 +65,7 @@ int Result::Control()
 		if ( m_resultEnemy > 0 ){
 			m_pGameLog->AddStream( m_tempStr2.c_str(), _LOG_COLOR_SUCCESS_ );
 		}
-		switch( m_resultBattle )
+		switch ( m_resultBattle )
 		{
 		case TYPE_INFERIORITY:
 			m_tempStr1 = m_pGameLog->GetPhrase(FixedPhrase::RESULT_INFERIORITY_STR);
@@ -157,7 +157,7 @@ void Result::JudgmentOfActionProcess( int& _iReturn, const int _plIndex, int& _c
 	//	一部の艦種に効果がある指示だった場合（_SEARCH_NOMAL_or_ACTION_NOMAL_）
 	else
 	{
-		switch( _shipNum )
+		switch ( _shipNum )
 		{
 		//	潜水艦以外だったら
 		case ShipObject::TYPE_AIRCARRIER:
